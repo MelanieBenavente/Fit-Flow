@@ -1,8 +1,10 @@
-package com.fit.fitndflow;
+package app.fit.fitndflow.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.fit.fitndflow.R;
 
 public class MainActivity extends AppCompatActivity {
 

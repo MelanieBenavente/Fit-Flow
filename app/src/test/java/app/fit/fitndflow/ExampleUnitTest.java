@@ -1,4 +1,4 @@
-package com.fit.fitndflow;
+package app.fit.fitndflow;
 
 import org.junit.Test;
 
