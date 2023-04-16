@@ -1,4 +1,4 @@
-package app.fit.fitndflow.ui.fragment;
+package app.fit.fitndflow.ui.features.common.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,30 +9,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.fit.fitndflow.R;
-import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
-public class MainListFragment extends Fragment {
+public abstract class CommonToolbarFragment extends Fragment {
 
-    private MainListFragmentBinding binding;
+    protected abstract Toolbar getToolbar();
+    protected abstract int rMenu();
 
     @Nullable
     @Override
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = MainListFragmentBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
-        return view;
+        ((AppCompatActivity)getActivity()).setSupportActionBar(getToolbar());
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.items,menu);
+        inflater.inflate(rMenu(),menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -58,4 +59,6 @@ public class MainListFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

@@ -1,4 +1,4 @@
-package app.fit.fitndflow.ui.activity;
+package app.fit.fitndflow.ui.features.common.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.fit.fitndflow.R;
 
-import app.fit.fitndflow.ui.fragment.MainListFragment;
+import app.fit.fitndflow.ui.features.main.fragment.MainListFragment;
 
 public class MainActivity extends AppCompatActivity {
 
