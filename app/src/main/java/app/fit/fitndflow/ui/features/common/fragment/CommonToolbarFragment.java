@@ -22,10 +22,10 @@ public abstract class CommonToolbarFragment extends Fragment {
 
     protected abstract Toolbar getToolbar();
     protected abstract int rMenu();
+    protected abstract boolean showToolbar();
 
     @Nullable
     @Override
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ((AppCompatActivity)getActivity()).setSupportActionBar(getToolbar());
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -40,7 +40,7 @@ public abstract class CommonToolbarFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(showToolbar());
     }
 
     @Override
