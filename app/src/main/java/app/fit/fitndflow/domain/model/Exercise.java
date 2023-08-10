@@ -1,4 +1,4 @@
-package app.fit.fitndflow.domain;
+package app.fit.fitndflow.domain.model;
 
 public class Exercise {
 

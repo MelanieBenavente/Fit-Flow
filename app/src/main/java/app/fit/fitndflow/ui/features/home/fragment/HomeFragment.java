@@ -1,4 +1,4 @@
-package app.fit.fitndflow.ui.features.main.fragment;
+package app.fit.fitndflow.ui.features.home.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,10 +12,10 @@ import androidx.appcompat.widget.Toolbar;
 import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
-import app.fit.fitndflow.domain.User;
+import app.fit.fitndflow.domain.model.User;
 import app.fit.fitndflow.ui.features.common.fragment.CommonToolbarFragment;
 
-public class MainListFragment extends CommonToolbarFragment {
+public class HomeFragment extends CommonToolbarFragment {
 
     private MainListFragmentBinding binding;
 
@@ -27,11 +27,6 @@ public class MainListFragment extends CommonToolbarFragment {
     @Override
     protected int rMenu() {
         return R.menu.itemsmain;
-    }
-
-    @Override
-    protected boolean showToolbar() {
-        return true;
     }
 
     @Nullable

@@ -37,9 +37,23 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    //lifecycle
+
+    //Server calls
+    implementation('com.squareup.retrofit2:retrofit:2.3.0')
+            {
+                exclude module: 'okhttp'
+            }
+
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    //viewModelImplementation
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.0.0"
+
 
     //testing
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,29 +17,29 @@ import androidx.fragment.app.Fragment;
 
 import com.fit.fitndflow.R;
 
-public abstract class CommonToolbarFragment extends Fragment {
+public abstract class CommonToolbarFragment extends CommonFragment {
 
     protected abstract Toolbar getToolbar();
+
     protected abstract int rMenu();
-    protected abstract boolean showToolbar();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ((AppCompatActivity)getActivity()).setSupportActionBar(getToolbar());
+        ((AppCompatActivity) getActivity()).setSupportActionBar(getToolbar());
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(rMenu(),menu);
+        inflater.inflate(rMenu(), menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(showToolbar());
+        setHasOptionsMenu(true);
     }
 
     @Override
