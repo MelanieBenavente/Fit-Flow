@@ -14,10 +14,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 
 import com.fit.fitndflow.R;
 
-public abstract class CommonToolbarFragment extends CommonFragment {
+
+
+
+
+public abstract class CommonToolbarFragment<V extends ViewModel> extends CommonFragment<V> {
 
     protected abstract Toolbar getToolbar();
 

@@ -6,9 +6,10 @@ import app.fit.fitndflow.data.dto.RazaApi;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.domain.common.repository.CommonRepository;
 import io.reactivex.Observable;
+import retrofit2.Call;
 
 public interface FitnFlowRepository extends CommonRepository {
-    Observable<List<RazaApi>> requestRazaList();
+    Call<List<RazaApi>> requestRazaList();
 
-    Observable<UserDto> registerUser(UserDto userDto);
+    UserDto registerUser(UserDto userDto) throws Exception;
 }

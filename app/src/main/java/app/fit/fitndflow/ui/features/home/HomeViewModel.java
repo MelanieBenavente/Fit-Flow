@@ -1,20 +1,17 @@
 package app.fit.fitndflow.ui.features.home;
 
+import android.content.Context;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import app.fit.fitndflow.domain.common.model.ErrorModel;
-import app.fit.fitndflow.domain.common.model.None;
+import app.fit.fitndflow.domain.common.arq.FitObserver;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCase;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class HomeViewModel extends ViewModel {
     private MutableLiveData<UserModel> mutableUserModel = new MutableLiveData<>();
-
-    private MutableLiveData<ErrorModel> mutableError = new MutableLiveData<>(null);
+    private MutableLiveData<Boolean> mutableError = new MutableLiveData<>(false);
 
     /*
     getters
@@ -23,27 +20,25 @@ public class HomeViewModel extends ViewModel {
         return mutableUserModel;
     }
 
-    public MutableLiveData<ErrorModel> getMutableError() {
+    public MutableLiveData<Boolean> getMutableError() {
         return mutableError;
     }
     //end getters
 
-    public void requestRegisterEmptyUser() {
+    public void requestRegisterEmptyUser(Context context) {
         UserModel emptyUserModel = new UserModel();
-        Observable<UserModel> userObservable = new RegisterUserUseCase().executeUseCase(emptyUserModel);
-        userObservable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onRazaListReceived, this::onRazaListError);
-    }
+        new RegisterUserUseCase(emptyUserModel, context).execute(new FitObserver<UserModel>() {
+            @Override
+            public void onSuccess(UserModel apiRegisterResponse) {
+                mutableUserModel.setValue(apiRegisterResponse);
+                mutableError.setValue(false);
+            }
 
-    private void onRazaListReceived(UserModel user) {
-        mutableUserModel.setValue(user);
-        mutableError.setValue(null);
+            @Override
+            public void onError(Throwable e) {
+                mutableError.setValue(true);
+            }
+        });
     }
-
-    private void onRazaListError(Throwable throwable) {
-        mutableError.setValue(null);
-    }
-
 
 }
