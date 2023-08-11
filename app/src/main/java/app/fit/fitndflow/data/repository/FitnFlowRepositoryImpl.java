@@ -1,6 +1,5 @@
 package app.fit.fitndflow.data.repository;
 
-import java.io.IOException;
 import java.util.List;
 
 import app.fit.fitndflow.data.common.RetrofitUtils;
@@ -8,7 +7,6 @@ import app.fit.fitndflow.data.common.model.ExcepcionApi;
 import app.fit.fitndflow.data.dto.RazaApi;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
-import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.Response;
 

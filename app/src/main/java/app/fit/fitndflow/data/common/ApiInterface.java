@@ -5,7 +5,6 @@ import java.util.List;
 
 import app.fit.fitndflow.data.dto.RazaApi;
 import app.fit.fitndflow.data.dto.UserDto;
-import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

@@ -1,16 +1,12 @@
 package app.fit.fitndflow.ui.features.common.fragment;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.CallSuper;
-import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
-import androidx.viewbinding.ViewBinding;
 
 import app.fit.fitndflow.ui.features.common.activity.CommonActivity;
 
