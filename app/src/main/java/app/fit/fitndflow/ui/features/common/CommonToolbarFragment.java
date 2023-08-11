@@ -1,4 +1,4 @@
-package app.fit.fitndflow.ui.features.common.fragment;
+package app.fit.fitndflow.ui.features.common;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

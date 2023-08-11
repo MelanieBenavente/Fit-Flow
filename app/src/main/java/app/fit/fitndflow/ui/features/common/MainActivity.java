@@ -1,4 +1,4 @@
-package app.fit.fitndflow.ui.features.common.activity;
+package app.fit.fitndflow.ui.features.common;
 
 import android.os.Bundle;
 

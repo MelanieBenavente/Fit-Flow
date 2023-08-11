@@ -16,7 +16,7 @@ import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.model.UserModel;
-import app.fit.fitndflow.ui.features.common.fragment.CommonToolbarFragment;
+import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
 
 public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
     private MainListFragmentBinding binding;

@@ -16,7 +16,7 @@
         android:theme="@style/Theme.FitFlow"
         tools:targetApi="31">
         <activity
-            android:name="app.fit.fitndflow.ui.features.common.activity.MainActivity"
+            android:name="app.fit.fitndflow.ui.features.common.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

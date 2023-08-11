@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="#F6F1F6"
-    tools:context="app.fit.fitndflow.ui.features.common.activity.MainActivity">
+    tools:context="app.fit.fitndflow.ui.features.common.MainActivity">
 
 </FrameLayout>
