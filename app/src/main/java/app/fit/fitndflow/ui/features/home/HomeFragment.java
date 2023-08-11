@@ -1,4 +1,4 @@
-package app.fit.fitndflow.ui.features.home.fragment;
+package app.fit.fitndflow.ui.features.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,20 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
-import java.util.List;
-
 import app.fit.fitndflow.data.common.SharedPrefs;
-import app.fit.fitndflow.data.dto.UserDto;
-import app.fit.fitndflow.domain.model.User;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.ui.features.common.fragment.CommonToolbarFragment;
-import app.fit.fitndflow.ui.features.home.HomeViewModel;
 
 public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
     private MainListFragmentBinding binding;

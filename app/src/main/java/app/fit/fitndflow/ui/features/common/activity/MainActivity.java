@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.fit.fitndflow.R;
 
-import app.fit.fitndflow.ui.features.home.fragment.HomeFragment;
+import app.fit.fitndflow.ui.features.home.HomeFragment;
 
 public class MainActivity extends CommonActivity {
 
