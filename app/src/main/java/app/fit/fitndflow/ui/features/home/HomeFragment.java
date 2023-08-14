@@ -62,7 +62,7 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
     private void setClickListeners() {
         binding.btnLeft.setOnClickListener(view -> viewModel.dayBefore());
         binding.btnRight.setOnClickListener(view -> viewModel.dayAfter());
-        binding.buttonPanel.setOnClickListener(view -> Toast.makeText(requireContext(), "add trainning", Toast.LENGTH_SHORT).show());
+        binding.buttonPanel.setOnClickListener(view -> nextFragment(new CategoriesListFragment()));
     }
 
     private void setViewModelObservers() {
@@ -81,12 +81,17 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
             public void onChanged(Date date) {
                 if (Utils.isYesterday(date)) {
                     binding.dateName.setText(R.string.yesterday_date_selector);
+                    binding.dayOfWeek.setVisibility(View.GONE);
                 } else if (Utils.isToday(date)) {
                     binding.dateName.setText(R.string.today_date_selector);
+                    binding.dayOfWeek.setVisibility(View.GONE);
                 } else if (Utils.isTomorrow(date)) {
                     binding.dateName.setText(R.string.tomorrow_date_selector);
+                    binding.dayOfWeek.setVisibility(View.GONE);
                 } else {
-                    binding.dateName.setText(Utils.getSpanishFormatDate(date));
+                    binding.dateName.setText(Utils.getCalendarFormatDate(date));
+                    binding.dayOfWeek.setText(Utils.dayOfWeek(date));
+                    binding.dayOfWeek.setVisibility(View.VISIBLE);
                 }
             }
         };

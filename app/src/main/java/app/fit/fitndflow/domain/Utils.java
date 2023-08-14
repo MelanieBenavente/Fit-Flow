@@ -12,6 +12,22 @@ public class Utils {
         return dateFormat.format(date);
     }
 
+    public static String getCalendarFormatDate(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd, MMM");
+        return dateFormat.format(date);
+    }
+
+    public static String dayOfWeek(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        String[] dayNames = {"Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"};
+
+        return dayNames[dayOfWeek - 1].substring(0, 3);
+    }
+
     public static boolean isYesterday(Date date){
         Calendar calYesterday = Calendar.getInstance();
         calYesterday.setTime(new Date());
