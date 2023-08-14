@@ -14,7 +14,10 @@ import androidx.lifecycle.Observer;
 import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
+import java.util.Date;
+
 import app.fit.fitndflow.data.common.SharedPrefs;
+import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
 
@@ -36,15 +39,6 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         return HomeViewModel.class;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //if is not registered... register now with empty user
-        if (SharedPrefs.getApikeyFromSharedPRefs(getContext()) == null) {
-            viewModel.requestRegisterEmptyUser(getContext());
-        }
-        setViewModelObservers();
-    }
 
     @Nullable
     @Override
@@ -53,6 +47,22 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (SharedPrefs.getApikeyFromSharedPRefs(getContext()) == null) {
+            viewModel.requestRegisterEmptyUser(getContext());
+        }
+        setViewModelObservers();
+        setClickListeners();
+    }
+
+    private void setClickListeners() {
+        binding.btnLeft.setOnClickListener(view -> viewModel.dayBefore());
+        binding.btnRight.setOnClickListener(view -> viewModel.dayAfter());
+        binding.buttonPanel.setOnClickListener(view -> Toast.makeText(requireContext(), "add trainning", Toast.LENGTH_SHORT).show());
     }
 
     private void setViewModelObservers() {
@@ -66,11 +76,27 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         //Observamos al listado del ViewModel y ejecutamos las acciones indicadas antes en el observer
         viewModel.getMutableUserModel().observe(getActivity(), userObserver);
 
+        final Observer<Date> actualDateObserver = new Observer<Date>() {
+            @Override
+            public void onChanged(Date date) {
+                if (Utils.isYesterday(date)) {
+                    binding.dateName.setText(R.string.yesterday_date_selector);
+                } else if (Utils.isToday(date)) {
+                    binding.dateName.setText(R.string.today_date_selector);
+                } else if (Utils.isTomorrow(date)) {
+                    binding.dateName.setText(R.string.tomorrow_date_selector);
+                } else {
+                    binding.dateName.setText(Utils.getSpanishFormatDate(date));
+                }
+            }
+        };
+        viewModel.getActualDate().observe(getActivity(), actualDateObserver);
+
         //observing error
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isError) {
-                if(isError) {
+                if (isError) {
                     Toast.makeText(requireContext(), "Error trying to register", Toast.LENGTH_LONG).show();
                 }
             }
