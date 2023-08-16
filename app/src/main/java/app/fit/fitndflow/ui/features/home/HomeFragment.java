@@ -19,6 +19,7 @@ import java.util.Date;
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.UserModel;
+import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
 import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
 
 public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
