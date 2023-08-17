@@ -12,13 +12,14 @@ import com.fit.fitndflow.R;
 
 import java.util.List;
 
-import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ItemModel;
+import app.fit.fitndflow.domain.model.ItemModel;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
-    List<CategoryModel> categoryList;
+    private List<ItemModel> ItemModelList;
 
-    public void setCategoryList(List<CategoryModel> categoryList) {
-        this.categoryList = categoryList;
+    public void setCategoryList(List<ItemModel> categoryList) {
+        this.ItemModelList = categoryList;
     }
     @NonNull
     @Override
@@ -29,14 +30,14 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesAdapter.ViewHolder holder, int position) {
-        CategoryModel category = categoryList.get(position);
+        ItemModel category = ItemModelList.get(position);
         holder.textList.setText(category.getName());
     }
 
     @Override
     public int getItemCount() {
-        if(categoryList != null){
-            return categoryList.size();
+        if(ItemModelList != null){
+            return ItemModelList.size();
         }
         return 0;
     }

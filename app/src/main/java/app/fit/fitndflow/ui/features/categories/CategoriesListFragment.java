@@ -17,13 +17,14 @@ import com.fit.fitndflow.databinding.FragmentCategoriesListBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ItemModel;
+import app.fit.fitndflow.domain.model.ItemModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.home.HomeViewModel;
 
 public class CategoriesListFragment extends CommonFragment {
 
-    private List<CategoryModel> categoryList = new ArrayList<>();
+    private List<ItemModel> categoryList = new ArrayList<>();
     private FragmentCategoriesListBinding binding;
     private CategoriesViewModel categoriesViewModel;
     private CategoriesAdapter categoriesAdapter;
@@ -54,9 +55,9 @@ public class CategoriesListFragment extends CommonFragment {
         categoriesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesViewModel.class);
 
         //observing RazaList
-        final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
+        final Observer<List<ItemModel>> observer = new Observer<List<ItemModel>>() {
             @Override
-            public void onChanged(List<CategoryModel> categories) {
+            public void onChanged(List<ItemModel> categories) {
                 printCategories(categories);
             }
         };
@@ -75,12 +76,13 @@ public class CategoriesListFragment extends CommonFragment {
         categoriesViewModel.getMutableError().observe(getActivity(), errorObserver);
     }
 
-    private void printCategories(List<CategoryModel> listRecived){
+    private void printCategories(List<ItemModel> listRecived){
         categoryList = listRecived;
         categoriesAdapter.setCategoryList(categoryList);
         categoriesAdapter.notifyDataSetChanged();
     }
     private void printError(){
+
         Toast.makeText(this.getContext(), "ERROR", Toast.LENGTH_SHORT).show();
 
     }
