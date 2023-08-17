@@ -49,10 +49,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="lun"
-            android:textSize="17dp"
-            android:fontFamily="casual"
-            android:textStyle="bold"
-            android:textColor="@color/dark_purpure"/>
+            style="@style/CalendarHeader"/>
         <TextView
             android:id="@+id/dateName"
             android:layout_gravity="center"
@@ -89,10 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="añadir entrenamiento"
-        android:fontFamily="monospace"
-        android:textStyle="bold"
-        android:textColor="@color/dark_purpure"
-        android:backgroundTint="@color/pink_letters"
+        style="@style/GenericButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

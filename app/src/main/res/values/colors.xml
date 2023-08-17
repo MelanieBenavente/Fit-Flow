@@ -10,5 +10,7 @@
     <color name="background_lightPink">#F6F1F6</color>
     <color name="dark_purpure">#241e28</color>
     <color name="pink_letters">#cdc0d8</color>
+    <color name="text_color_normal">#222023</color>
+
 
 </resources>

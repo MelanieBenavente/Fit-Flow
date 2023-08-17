@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ParentText">
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="NormalText" parent="ParentText">
+        <item name="android:textColor">@color/text_color_normal</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="GenericButton">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dark_purpure</item>
+        <item name="android:backgroundTint">@color/pink_letters</item>
+    </style>
+
+    <style name="CalendarHeader">
+        <item name="android:fontFamily">casual</item>
+        <item name="android:textSize">17dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dark_purpure</item>
+    </style>
+
+
+</resources>
