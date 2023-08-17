@@ -4,22 +4,22 @@ import java.util.List;
 
 public class ItemModel {
     private String name;
-    private List<ItemModel> itemModelList;
+    private List<ItemModel> exerciseList;
 
 
-    public ItemModel(String name, List<ItemModel> itemModelList) {
+    public ItemModel(String name, List<ItemModel> exerciseList) {
         this.name = name;
-        this.itemModelList = itemModelList;
+        this.exerciseList = exerciseList;
     }
 
     public ItemModel(String name) {
         this.name = name;
     }
-    public List<ItemModel> getItemModelList() {
-        return itemModelList;
+    public List<ItemModel> getExerciseList() {
+        return exerciseList;
     }
-    public void setItemModelList(List<ItemModel> itemModelList) {
-        this.itemModelList = itemModelList;
+    public void setExerciseList(List<ItemModel> exerciseList) {
+        this.exerciseList = exerciseList;
     }
 
     public String getName() {

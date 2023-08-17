@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.domain.model.ItemModel;
-import app.fit.fitndflow.domain.model.ItemModel;
 
 public class CategoriesViewModel extends ViewModel {
 
@@ -33,22 +32,18 @@ public class CategoriesViewModel extends ViewModel {
         ItemModel category1 = new ItemModel("Pecho");
         List<ItemModel> exerciseList = new ArrayList<>();
         exerciseList.add(new ItemModel("rascarme el toto"));
-        category1.setItemModelList(exerciseList);
+        category1.setExerciseList(exerciseList);
         categories.add(category1);
 
-        List<ItemModel> categories2 = new ArrayList<>();
         ItemModel category2 = new ItemModel("Espalda");
         List<ItemModel> exercise2 = new ArrayList<>();
         exercise2.add(new ItemModel("darme un masaje"));
-        category2.setItemModelList(exercise2);
-        categories2.add(category2);
+        category2.setExerciseList(exercise2);
+        categories.add(category2);
 
-        List<ItemModel> categories3 = new ArrayList<>();
+
         ItemModel category3 = new ItemModel("Cervicales");
-        List<ItemModel> exercise3 = new ArrayList<>();
-        exercise3.add(new ItemModel(null));
-        category3.setItemModelList(exercise3);
-        categories3.add(category3);
+        categories.add(category3);
 
 
         mutableCategory.setValue(categories);
