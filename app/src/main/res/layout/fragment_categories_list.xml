@@ -34,6 +34,15 @@
         app:layout_constraintStart_toEndOf="@id/icnSearch"
         android:hint="Search" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loading"
+        app:lottie_rawRes="@raw/animation_lkftjqt8"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:elevation="10dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@id/icnSearch"
         android:id="@+id/recyclerCategories"

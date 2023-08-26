@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.domain.common.arq.FitObserver;
@@ -17,9 +18,16 @@ public class CategoriesViewModel extends ViewModel {
 
     private MutableLiveData<Boolean> mutableError = new MutableLiveData<>(false);
 
+    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
+
     /*Getters*
      *
      * */
+
+    public MutableLiveData<Boolean> getIsLoading() {
+        return isLoading;
+    }
+
     public MutableLiveData<List<ItemModel>> getMutableCategory() {
         return mutableCategory;
     }
@@ -32,16 +40,26 @@ public class CategoriesViewModel extends ViewModel {
      *
      * */
     public void requestCategoriesFromModel(Context context) {
+
         new GetCategoriesUseCase(context).execute(new FitObserver<List<ItemModel>>() {
+            @Override
+            protected void onStart() {
+                super.onStart();
+                isLoading.setValue(true);
+                mutableCategory.setValue(new ArrayList<>());
+            }
+
             @Override
             public void onSuccess(List<ItemModel> categoryModels) {
                 mutableCategory.setValue(categoryModels);
                 mutableError.setValue(false);
+                isLoading.setValue(false);
             }
 
             @Override
             public void onError(Throwable e) {
                 mutableError.setValue(true);
+                isLoading.setValue(false);
             }
         });
     }

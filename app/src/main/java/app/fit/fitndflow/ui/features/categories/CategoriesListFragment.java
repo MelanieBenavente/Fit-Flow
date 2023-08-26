@@ -73,6 +73,18 @@ public class CategoriesListFragment extends CommonFragment {
             }
         };
         categoriesViewModel.getMutableError().observe(getActivity(), errorObserver);
+
+        final Observer<Boolean> observerLoading = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoading) {
+                if(isLoading) {
+                    binding.loading.setVisibility(View.VISIBLE);
+                } else {
+                    binding.loading.setVisibility(View.GONE);
+                }
+            }
+        };
+        categoriesViewModel.getIsLoading().observe(getActivity(), observerLoading);
     }
 
     private void printCategories(List<ItemModel> listRecived){
