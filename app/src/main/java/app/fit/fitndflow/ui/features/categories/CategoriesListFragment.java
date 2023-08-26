@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.domain.model.ItemModel;
-import app.fit.fitndflow.domain.model.ItemModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.home.HomeViewModel;
 
@@ -41,7 +40,7 @@ public class CategoriesListFragment extends CommonFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         instantiateAdapter();
         setViewModelObservers();
-        categoriesViewModel.requestCategoriesFromModel();
+        categoriesViewModel.requestCategoriesFromModel(requireContext());
         return view;
     }
 

@@ -2,13 +2,12 @@ package app.fit.fitndflow.domain.repository;
 
 import java.util.List;
 
-import app.fit.fitndflow.data.dto.RazaApi;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.domain.common.repository.CommonRepository;
-import retrofit2.Call;
+import app.fit.fitndflow.domain.model.ItemModel;
+import app.fit.fitndflow.domain.model.UserModel;
 
 public interface FitnFlowRepository extends CommonRepository {
-    Call<List<RazaApi>> requestRazaList();
-
-    UserDto registerUser(UserDto userDto) throws Exception;
+    UserModel registerUser(UserDto userDto) throws Exception;
+    List<ItemModel> getCategoryList(String apiKey) throws Exception;
 }

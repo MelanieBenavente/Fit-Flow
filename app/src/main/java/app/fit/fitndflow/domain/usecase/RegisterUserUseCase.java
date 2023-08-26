@@ -7,7 +7,6 @@ import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
 import app.fit.fitndflow.domain.common.usecase.FitUseCase;
 import app.fit.fitndflow.domain.model.UserModel;
-import app.fit.fitndflow.domain.model.mapper.UserModelMapper;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import io.reactivex.Single;
 
@@ -32,13 +31,12 @@ public class RegisterUserUseCase extends FitUseCase<UserModel, UserModel> {
                     userDto.email = inputParams.getEmail();
                     userDto.userNAme = inputParams.getName();
                 }
-                UserDto response = fitnFlowRepository.registerUser(userDto);
+                UserModel response = fitnFlowRepository.registerUser(userDto);
                 //When server responses, save apikey in sessionPRefs
-                SharedPrefs.saveApikeyToSharedPRefs(context, response.apiKey);
+                SharedPrefs.saveApikeyToSharedPRefs(context, response.getApiKey());
                 //map from dto to model before sending
-                UserModel responseMapped = UserModelMapper.toModel(response);
                 //emit response OnSucess
-                emitter.onSuccess(responseMapped);
+                emitter.onSuccess(response);
             } catch (Exception exception) {
                 emitter.onError(exception);
             }

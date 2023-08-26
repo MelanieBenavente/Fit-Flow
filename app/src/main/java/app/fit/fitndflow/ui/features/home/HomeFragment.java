@@ -53,8 +53,8 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (SharedPrefs.getApikeyFromSharedPRefs(getContext()) == null) {
-            viewModel.requestRegisterEmptyUser(getContext());
+        if (SharedPrefs.getApikeyFromSharedPRefs(requireContext()) == null) {
+            viewModel.requestRegisterEmptyUser(requireContext());
         }
         setViewModelObservers();
         setClickListeners();

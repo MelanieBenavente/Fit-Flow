@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 
 
-public abstract class FitUseCase<INPUT, Observer> {
+public abstract class FitUseCase<INPUT, OUTPUT> {
     protected INPUT inputParams;
     private final UIScheduler uiScheduler;
     private final JobScheduler jobScheduler;
@@ -22,10 +22,15 @@ public abstract class FitUseCase<INPUT, Observer> {
         this.inputParams = inputParams;
     }
 
-    public abstract Single<Observer> buildUseCaseObservable();
+    public FitUseCase() {
+        this.uiScheduler = new UIThread();
+        this.jobScheduler = new JobThread();
+    }
 
-    public Disposable execute(DisposableSingleObserver<Observer> observer) {
-        final Single<Observer> observable = this.buildUseCaseObservable()
+    public abstract Single<OUTPUT> buildUseCaseObservable();
+
+    public Disposable execute(DisposableSingleObserver<OUTPUT> observer) {
+        final Single<OUTPUT> observable = this.buildUseCaseObservable()
                 .observeOn(uiScheduler.getScheduler())
                 .subscribeOn(jobScheduler.getScheduler());
         return observable.subscribeWith(observer);

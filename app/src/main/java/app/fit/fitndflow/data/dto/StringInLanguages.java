@@ -2,20 +2,14 @@ package app.fit.fitndflow.data.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-public class RazaApi {
+import java.io.Serializable;
 
-    @SerializedName ("id")
-    public int id;
-
-    @SerializedName ("name")
-    public StringInLanguages name;
-
-    public class StringInLanguages{
+public class StringInLanguages implements Serializable {
 
         @SerializedName("es")
         public String spanish;
 
         @SerializedName("en")
         public String english;
-    }
+
 }
