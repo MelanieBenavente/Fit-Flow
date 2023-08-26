@@ -19,7 +19,6 @@ import java.util.List;
 
 import app.fit.fitndflow.domain.model.ItemModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
-import app.fit.fitndflow.ui.features.home.HomeViewModel;
 
 public class CategoriesListFragment extends CommonFragment {
 
@@ -30,7 +29,7 @@ public class CategoriesListFragment extends CommonFragment {
 
     @Override
     protected Class getViewModelClass() {
-        return HomeViewModel.class;
+        return CategoriesViewModel.class;
     }
 
     @Override
@@ -40,14 +39,9 @@ public class CategoriesListFragment extends CommonFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         instantiateAdapter();
         setViewModelObservers();
+        setOnClickListeners();
         categoriesViewModel.requestCategoriesFromModel(requireContext());
         return view;
-    }
-
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     private void setViewModelObservers() {
@@ -103,5 +97,14 @@ public class CategoriesListFragment extends CommonFragment {
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerCategories.setAdapter(categoriesAdapter);
+    }
+
+    private void setOnClickListeners(){
+        binding.floatingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nextFragment(new AddCategoryFragment());
+            }
+        });
     }
 }
