@@ -14,13 +14,21 @@ import com.fit.fitndflow.R;
 import java.util.List;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExcerciseModel;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
     private List<CategoryModel> categoryModelList;
 
+    private CategoryAdapterCallback adapterCallback;
+
+    public CategoriesAdapter(CategoryAdapterCallback adapterCallback) {
+        this.adapterCallback = adapterCallback;
+    }
+
     public void setCategoryList(List<CategoryModel> categoryList) {
         this.categoryModelList = categoryList;
     }
+
     @NonNull
     @Override
     public CategoriesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,7 +44,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
             @Override
             public void onClick(View view) {
                 if(categoryModelList.get(position).getExcerciseList() != null && !categoryModelList.get(position).getExcerciseList().isEmpty()){
-                    //todo!!!!! Implements ClickListener
+                    adapterCallback.showExcercises(categoryModelList.get(position).getExcerciseList());
                 }
             }
         });

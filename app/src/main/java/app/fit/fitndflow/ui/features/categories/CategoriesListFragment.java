@@ -18,9 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExcerciseModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
+import app.fit.fitndflow.ui.features.excercises.ExcercisesAdapter;
 
-public class CategoriesListFragment extends CommonFragment {
+public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback {
 
     private List<CategoryModel> categoryList = new ArrayList<>();
     private FragmentCategoriesListBinding binding;
@@ -93,7 +95,7 @@ public class CategoriesListFragment extends CommonFragment {
     }
 
     private void instantiateCategoriesAdapter(){
-        categoriesAdapter = new CategoriesAdapter();
+        categoriesAdapter = new CategoriesAdapter(this);
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerCategories.setAdapter(categoriesAdapter);
@@ -106,5 +108,10 @@ public class CategoriesListFragment extends CommonFragment {
                 nextFragment(new AddCategoryFragment());
             }
         });
+    }
+
+    @Override
+    public void showExcercises(List<ExcerciseModel> excerciseList) {
+        //todo !!!!!! nextFragment(); sending excerciseList throught bundle
     }
 }
