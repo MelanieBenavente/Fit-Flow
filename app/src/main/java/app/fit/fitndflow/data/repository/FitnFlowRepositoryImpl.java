@@ -6,7 +6,7 @@ import app.fit.fitndflow.data.common.RetrofitUtils;
 import app.fit.fitndflow.data.common.model.ExcepcionApi;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
-import app.fit.fitndflow.domain.model.ItemModel;
+import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.model.mapper.CategoryModelMapper;
 import app.fit.fitndflow.domain.model.mapper.UserModelMapper;
@@ -31,7 +31,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public List<ItemModel> getCategoryList(String apiKey) throws Exception {
+    public List<CategoryModel> getCategoryList(String apiKey) throws Exception {
         Response<List<CategoryDto>> response;
         try {
             response = RetrofitUtils.getRetrofitUtils().getCategoryDtoList(apiKey).execute();
@@ -41,7 +41,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         } catch (Exception e) {
             throw new Exception(e);
         }
-        List<ItemModel> mappedResponse = CategoryModelMapper.toModel(response.body());
+        List<CategoryModel> mappedResponse = CategoryModelMapper.toModel(response.body());
         return mappedResponse;
     }
 }

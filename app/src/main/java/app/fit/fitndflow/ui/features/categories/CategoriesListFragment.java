@@ -17,12 +17,12 @@ import com.fit.fitndflow.databinding.FragmentCategoriesListBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fit.fitndflow.domain.model.ItemModel;
+import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 
 public class CategoriesListFragment extends CommonFragment {
 
-    private List<ItemModel> categoryList = new ArrayList<>();
+    private List<CategoryModel> categoryList = new ArrayList<>();
     private FragmentCategoriesListBinding binding;
     private CategoriesViewModel categoriesViewModel;
     private CategoriesAdapter categoriesAdapter;
@@ -37,7 +37,7 @@ public class CategoriesListFragment extends CommonFragment {
         binding = FragmentCategoriesListBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
-        instantiateAdapter();
+        instantiateCategoriesAdapter();
         setViewModelObservers();
         setOnClickListeners();
         categoriesViewModel.requestCategoriesFromModel(requireContext());
@@ -48,9 +48,9 @@ public class CategoriesListFragment extends CommonFragment {
         categoriesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesViewModel.class);
 
         //observing RazaList
-        final Observer<List<ItemModel>> observer = new Observer<List<ItemModel>>() {
+        final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
             @Override
-            public void onChanged(List<ItemModel> categories) {
+            public void onChanged(List<CategoryModel> categories) {
                 printCategories(categories);
             }
         };
@@ -81,7 +81,7 @@ public class CategoriesListFragment extends CommonFragment {
         categoriesViewModel.getIsLoading().observe(getActivity(), observerLoading);
     }
 
-    private void printCategories(List<ItemModel> listRecived){
+    private void printCategories(List<CategoryModel> listRecived){
         categoryList = listRecived;
         categoriesAdapter.setCategoryList(categoryList);
         categoriesAdapter.notifyDataSetChanged();
@@ -92,7 +92,7 @@ public class CategoriesListFragment extends CommonFragment {
 
     }
 
-    private void instantiateAdapter(){
+    private void instantiateCategoriesAdapter(){
         categoriesAdapter = new CategoriesAdapter();
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));

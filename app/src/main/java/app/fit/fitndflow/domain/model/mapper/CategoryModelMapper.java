@@ -5,17 +5,19 @@ import java.util.List;
 
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import app.fit.fitndflow.data.dto.categories.ExerciseDto;
-import app.fit.fitndflow.domain.model.ItemModel;
+import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExcerciseModel;
+
 
 public class CategoryModelMapper {
 
-    public static List<ItemModel> toModel(List<CategoryDto> categoryDtoList){
-        List<ItemModel> categoryModelList = new ArrayList<>();
-        for(CategoryDto categoryDto : categoryDtoList){
-            ItemModel categoryModel = new ItemModel(categoryDto.name.spanish, new ArrayList<>());
-            for(ExerciseDto exerciseDto : categoryDto.exerciseDtoList){
-                ItemModel exerciseModel = new ItemModel(exerciseDto.exerciseName.spanish);
-                categoryModel.getExerciseList().add(exerciseModel);
+    public static List<CategoryModel> toModel(List<CategoryDto> categoryDtoList) {
+        List<CategoryModel> categoryModelList = new ArrayList<>();
+        for (CategoryDto categoryDto : categoryDtoList) {
+            CategoryModel categoryModel = new CategoryModel(categoryDto.id, categoryDto.name.spanish, new ArrayList<>());
+            for (ExerciseDto exerciseDto : categoryDto.exerciseDtoList) {
+                ExcerciseModel exerciseModel = new ExcerciseModel(exerciseDto.id, exerciseDto.exerciseName.spanish);
+                categoryModel.getExcerciseList().add(exerciseModel);
             }
             categoryModelList.add(categoryModel);
         }

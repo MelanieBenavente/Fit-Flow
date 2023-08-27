@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.domain.common.arq.FitObserver;
-import app.fit.fitndflow.domain.model.ItemModel;
+import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 
 public class CategoriesViewModel extends ViewModel {
 
-    private MutableLiveData<List<ItemModel>> mutableCategory = new MutableLiveData<>();
+    private MutableLiveData<List<CategoryModel>> mutableCategory = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> mutableError = new MutableLiveData<>(false);
 
@@ -28,7 +28,7 @@ public class CategoriesViewModel extends ViewModel {
         return isLoading;
     }
 
-    public MutableLiveData<List<ItemModel>> getMutableCategory() {
+    public MutableLiveData<List<CategoryModel>> getMutableCategory() {
         return mutableCategory;
     }
 
@@ -41,7 +41,7 @@ public class CategoriesViewModel extends ViewModel {
      * */
     public void requestCategoriesFromModel(Context context) {
 
-        new GetCategoriesUseCase(context).execute(new FitObserver<List<ItemModel>>() {
+        new GetCategoriesUseCase(context).execute(new FitObserver<List<CategoryModel>>() {
             @Override
             protected void onStart() {
                 super.onStart();
@@ -50,7 +50,7 @@ public class CategoriesViewModel extends ViewModel {
             }
 
             @Override
-            public void onSuccess(List<ItemModel> categoryModels) {
+            public void onSuccess(List<CategoryModel> categoryModels) {
                 mutableCategory.setValue(categoryModels);
                 mutableError.setValue(false);
                 isLoading.setValue(false);

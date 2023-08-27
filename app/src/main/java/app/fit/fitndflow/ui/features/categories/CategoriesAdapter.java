@@ -13,13 +13,13 @@ import com.fit.fitndflow.R;
 
 import java.util.List;
 
-import app.fit.fitndflow.domain.model.ItemModel;
+import app.fit.fitndflow.domain.model.CategoryModel;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
-    private List<ItemModel> itemModelList;
+    private List<CategoryModel> categoryModelList;
 
-    public void setCategoryList(List<ItemModel> categoryList) {
-        this.itemModelList = categoryList;
+    public void setCategoryList(List<CategoryModel> categoryList) {
+        this.categoryModelList = categoryList;
     }
     @NonNull
     @Override
@@ -30,14 +30,13 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesAdapter.ViewHolder holder, int position) {
-        ItemModel category = itemModelList.get(position);
+        CategoryModel category = categoryModelList.get(position);
         holder.textList.setText(category.getName());
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(itemModelList.get(position).getExerciseList() != null && !itemModelList.get(position).getExerciseList().isEmpty()){
-                    itemModelList = itemModelList.get(position).getExerciseList();
-                    notifyDataSetChanged();
+                if(categoryModelList.get(position).getExcerciseList() != null && !categoryModelList.get(position).getExcerciseList().isEmpty()){
+                    //todo!!!!! Implements ClickListener
                 }
             }
         });
@@ -45,8 +44,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
     @Override
     public int getItemCount() {
-        if(itemModelList != null){
-            return itemModelList.size();
+        if(categoryModelList != null){
+            return categoryModelList.size();
         }
         return 0;
     }
