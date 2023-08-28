@@ -14,7 +14,6 @@ import com.fit.fitndflow.R;
 import java.util.List;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
-import app.fit.fitndflow.domain.model.ExcerciseModel;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
     private List<CategoryModel> categoryModelList;

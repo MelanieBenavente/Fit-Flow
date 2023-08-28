@@ -37,6 +37,6 @@ public class AddCategoryFragment extends CommonFragment {
 
     @Override
     protected Class getViewModelClass() {
-        return CategoriesViewModel.class;
+        return CategoriesAndExcercisesViewModel.class;
     }
 }

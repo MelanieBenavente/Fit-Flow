@@ -10,10 +10,12 @@ import java.util.List;
 
 import app.fit.fitndflow.domain.common.arq.FitObserver;
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExcerciseModel;
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 
-public class CategoriesViewModel extends ViewModel {
+public class CategoriesAndExcercisesViewModel extends ViewModel {
 
+    private MutableLiveData<List<ExcerciseModel>> mutableExcercise = new MutableLiveData<>();
     private MutableLiveData<List<CategoryModel>> mutableCategory = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> mutableError = new MutableLiveData<>(false);
@@ -23,6 +25,10 @@ public class CategoriesViewModel extends ViewModel {
     /*Getters*
      *
      * */
+
+    public MutableLiveData<List<ExcerciseModel>> getMutableExcercise() {
+        return mutableExcercise;
+    }
 
     public MutableLiveData<Boolean> getIsLoading() {
         return isLoading;
