@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
+
 import app.fit.fitndflow.data.dto.StringInLanguages;
 
 public class CategoryDto implements Serializable {
