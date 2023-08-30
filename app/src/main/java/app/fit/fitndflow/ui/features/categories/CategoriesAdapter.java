@@ -43,7 +43,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
             @Override
             public void onClick(View view) {
                 if(categoryModelList.get(position).getExcerciseList() != null && !categoryModelList.get(position).getExcerciseList().isEmpty()){
-                    adapterCallback.showExcercises(categoryModelList.get(position).getExcerciseList());
+                    adapterCallback.showExcercises(categoryModelList.get(position));
                 }
             }
         });

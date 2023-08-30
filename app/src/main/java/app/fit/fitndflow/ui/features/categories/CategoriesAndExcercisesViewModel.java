@@ -15,7 +15,7 @@ import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 
 public class CategoriesAndExcercisesViewModel extends ViewModel {
 
-    private MutableLiveData<List<ExcerciseModel>> mutableExcercise = new MutableLiveData<>();
+    private MutableLiveData<CategoryModel> actualCategory = new MutableLiveData<>();
     private MutableLiveData<List<CategoryModel>> mutableCategory = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> mutableError = new MutableLiveData<>(false);
@@ -26,8 +26,8 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
      *
      * */
 
-    public MutableLiveData<List<ExcerciseModel>> getMutableExcercise() {
-        return mutableExcercise;
+    public MutableLiveData<CategoryModel> getActualCategory() {
+        return actualCategory;
     }
 
     public MutableLiveData<Boolean> getIsLoading() {

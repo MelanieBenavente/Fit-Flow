@@ -1,11 +1,9 @@
 package app.fit.fitndflow.ui.features.categories;
 
-import java.util.List;
-
-import app.fit.fitndflow.domain.model.ExcerciseModel;
+import app.fit.fitndflow.domain.model.CategoryModel;
 
 public interface CategoryAdapterCallback {
 
-    void showExcercises(List<ExcerciseModel> excerciseList);
+    void showExcercises(CategoryModel category);
 
 }

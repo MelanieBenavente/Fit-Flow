@@ -111,8 +111,8 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     }
 
     @Override
-    public void showExcercises(List<ExcerciseModel> excerciseList) {
-        categoriesAndExcercisesViewModel.getMutableExcercise().setValue(excerciseList);
+    public void showExcercises(CategoryModel category) {
+        categoriesAndExcercisesViewModel.getActualCategory().setValue(category);
         nextFragment(new ExcerciseListFragment());
     }
 }
