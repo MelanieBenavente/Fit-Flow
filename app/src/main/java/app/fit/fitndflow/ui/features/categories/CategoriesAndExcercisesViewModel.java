@@ -10,7 +10,6 @@ import java.util.List;
 
 import app.fit.fitndflow.domain.common.arq.FitObserver;
 import app.fit.fitndflow.domain.model.CategoryModel;
-import app.fit.fitndflow.domain.model.ExcerciseModel;
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 
 public class CategoriesAndExcercisesViewModel extends ViewModel {

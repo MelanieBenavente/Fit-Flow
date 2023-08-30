@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
-import app.fit.fitndflow.domain.model.ExcerciseModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.excercises.ExcerciseListFragment;
 

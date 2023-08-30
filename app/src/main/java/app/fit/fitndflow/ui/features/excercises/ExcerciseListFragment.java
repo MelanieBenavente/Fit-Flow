@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fit.fitndflow.databinding.FragmentExcercisesListBinding;
 
-import java.util.List;
-
 import app.fit.fitndflow.domain.model.CategoryModel;
-import app.fit.fitndflow.domain.model.ExcerciseModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesAndExcercisesViewModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 
