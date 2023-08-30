@@ -43,19 +43,21 @@ public class ExcerciseListFragment extends CommonFragment {
         final Observer<CategoryModel> observer = new Observer<CategoryModel>() {
             @Override
             public void onChanged(CategoryModel category) {
-                printExcercises(category);
+                printCategoryDetail(category);
             }
         };
         //Observamos al listado del ViewModel y ejecutamos las acciones indicadas antes en el observer
         categoriesAndExcercisesViewModel.getActualCategory().observe(getActivity(), observer);
     }
 
-    private void printExcercises(CategoryModel categoryRecived){
+    private void printCategoryDetail(CategoryModel categoryRecived){
         ExcercisesAdapter excercisesAdapter = new ExcercisesAdapter(categoryRecived.getExcerciseList());
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerCategories.setAdapter(excercisesAdapter);
         excercisesAdapter.notifyDataSetChanged();
+
+        binding.categoryTitle.setText(categoryRecived.getName());
     }
     private void printError(){
 

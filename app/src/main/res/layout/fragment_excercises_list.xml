@@ -25,9 +25,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/icnSearch"
         android:hint="Search" />
+    <FrameLayout
+        android:id="@+id/calendBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/txtSearch"
+        android:background="@color/pink_letters">
+    <TextView
+        android:id="@+id/categoryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtSearch"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:gravity="center"
+        android:text="category name"/>
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@id/icnSearch"
+        app:layout_constraintTop_toBottomOf="@id/calendBar"
         android:id="@+id/recyclerCategories"
         android:layout_width="match_parent"
         android:layout_height="0dp"
