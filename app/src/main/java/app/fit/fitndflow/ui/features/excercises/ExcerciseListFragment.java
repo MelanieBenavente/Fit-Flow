@@ -1,5 +1,8 @@
 package app.fit.fitndflow.ui.features.excercises;
 
+
+import static app.fit.fitndflow.ui.features.categories.AddCategoryFragment.KEY_CATEGORY;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.fit.fitndflow.databinding.FragmentExcercisesListBinding;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.ui.features.categories.AddCategoryFragment;
 import app.fit.fitndflow.ui.features.categories.CategoriesAndExcercisesViewModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 
@@ -33,6 +37,7 @@ public class ExcerciseListFragment extends CommonFragment {
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
         setViewModelObservers();
+        setOnClickListeners();
         return view;
     }
 
@@ -62,5 +67,18 @@ public class ExcerciseListFragment extends CommonFragment {
     private void printError(){
 
         Toast.makeText(this.getContext(), "ERROR", Toast.LENGTH_SHORT).show();
+    }
+
+    private void setOnClickListeners(){
+        binding.pencilFloatingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddCategoryFragment addCategoryFragment = new AddCategoryFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(KEY_CATEGORY, categoriesAndExcercisesViewModel.getActualCategory().getValue());
+                addCategoryFragment.setArguments(bundle);
+                nextFragment(addCategoryFragment);
+            }
+        });
     }
 }

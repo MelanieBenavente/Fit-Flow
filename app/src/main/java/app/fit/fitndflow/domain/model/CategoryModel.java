@@ -1,8 +1,9 @@
 package app.fit.fitndflow.domain.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CategoryModel {
+public class CategoryModel implements Serializable {
 
     private int id;
 

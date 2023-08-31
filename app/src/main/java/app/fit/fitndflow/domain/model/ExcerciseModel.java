@@ -1,6 +1,8 @@
 package app.fit.fitndflow.domain.model;
 
-public class ExcerciseModel {
+import java.io.Serializable;
+
+public class ExcerciseModel implements Serializable {
 
     private int id;
 
