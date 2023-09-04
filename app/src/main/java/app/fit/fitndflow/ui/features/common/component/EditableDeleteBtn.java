@@ -11,7 +11,7 @@ import com.fit.fitndflow.R;
 import app.fit.fitndflow.domain.model.ExcerciseModel;
 
 public class EditableDeleteBtn extends LinearLayout {
-    
+
     private EditText editText;
     private ImageButton deleteBtn;
 
