@@ -30,8 +30,8 @@ public class AddCategoryFragment extends CommonFragment {
         setViewModelObservers();
         setClickListeners();
         Bundle bundle = getArguments();
-        if(bundle != null){
-            CategoryModel categoryModel= (CategoryModel) bundle.getSerializable(KEY_CATEGORY);
+        if (bundle != null) {
+            CategoryModel categoryModel = (CategoryModel) bundle.getSerializable(KEY_CATEGORY);
             printCategoryDetail(categoryModel);
         }
         return view;
@@ -41,7 +41,7 @@ public class AddCategoryFragment extends CommonFragment {
         categoriesAndExcercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExcercisesViewModel.class);
     }
 
-    private void printCategoryDetail(CategoryModel categoryRecived){
+    private void printCategoryDetail(CategoryModel categoryRecived) {
         binding.newCategoryTxt.setText(categoryRecived.getName());
     }
 
