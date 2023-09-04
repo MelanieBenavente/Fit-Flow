@@ -62,7 +62,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isError) {
-                if(isError) {
+                if (isError) {
                     printError();
                 }
             }
@@ -72,7 +72,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
-                if(isLoading) {
+                if (isLoading) {
                     binding.loading.setVisibility(View.VISIBLE);
                 } else {
                     binding.loading.setVisibility(View.GONE);
@@ -82,25 +82,26 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         categoriesAndExcercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
     }
 
-    private void printCategories(List<CategoryModel> listRecived){
+    private void printCategories(List<CategoryModel> listRecived) {
         categoryList = listRecived;
         categoriesAdapter.setCategoryList(categoryList);
         categoriesAdapter.notifyDataSetChanged();
     }
-    private void printError(){
+
+    private void printError() {
 
         Toast.makeText(this.getContext(), "ERROR", Toast.LENGTH_SHORT).show();
 
     }
 
-    private void instantiateCategoriesAdapter(){
+    private void instantiateCategoriesAdapter() {
         categoriesAdapter = new CategoriesAdapter(this);
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerCategories.setAdapter(categoriesAdapter);
     }
 
-    private void setOnClickListeners(){
+    private void setOnClickListeners() {
         binding.floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
