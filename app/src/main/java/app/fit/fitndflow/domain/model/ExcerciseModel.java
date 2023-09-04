@@ -5,13 +5,16 @@ import java.io.Serializable;
 public class ExcerciseModel implements Serializable {
 
     private int id;
-
     private String name;
 
     private int primaryCategroy;
 
     public ExcerciseModel(int id, String name) {
         this.id = id;
+        this.name = name;
+    }
+
+    public ExcerciseModel(String name){
         this.name = name;
     }
 

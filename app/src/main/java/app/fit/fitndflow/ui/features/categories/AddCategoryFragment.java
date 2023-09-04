@@ -11,16 +11,21 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.fit.fitndflow.databinding.AddFragmentCategoryBinding;
 
-import app.fit.fitndflow.domain.model.CategoryModel;
-import app.fit.fitndflow.ui.features.common.CommonFragment;
+import java.util.ArrayList;
 
-public class AddCategoryFragment extends CommonFragment {
+import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExcerciseModel;
+import app.fit.fitndflow.ui.features.common.CommonFragment;
+import app.fit.fitndflow.ui.features.common.component.CategoryEditableListener;
+import app.fit.fitndflow.ui.features.common.component.EditableAddBtn;
+import app.fit.fitndflow.ui.features.common.component.EditableDeleteBtn;
+
+public class AddCategoryFragment extends CommonFragment implements CategoryEditableListener {
 
     public static final String KEY_CATEGORY = "actualCategory";
-
     private AddFragmentCategoryBinding binding;
     private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
-
+    private CategoryModel categoryModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,8 +36,10 @@ public class AddCategoryFragment extends CommonFragment {
         setClickListeners();
         Bundle bundle = getArguments();
         if(bundle != null){
-            CategoryModel categoryModel= (CategoryModel) bundle.getSerializable(KEY_CATEGORY);
+            categoryModel= (CategoryModel) bundle.getSerializable(KEY_CATEGORY);
             printCategoryDetail(categoryModel);
+        } else {
+            printEmptyExcerciseList();
         }
         return view;
     }
@@ -42,7 +49,18 @@ public class AddCategoryFragment extends CommonFragment {
     }
 
     private void printCategoryDetail(CategoryModel categoryRecived){
+        binding.editTxtContainer.removeAllViews();
         binding.newCategoryTxt.setText(categoryRecived.getName());
+        for(int position = 0; position < categoryRecived.getExcerciseList().size(); position++){
+            ExcerciseModel excercise = categoryRecived.getExcerciseList().get(position);
+            binding.editTxtContainer.addView(new EditableDeleteBtn(requireContext(), excercise, this, position));
+        }
+
+        binding.editTxtContainer.addView(new EditableAddBtn(requireContext(), this));
+    }
+
+    private void printEmptyExcerciseList(){
+        binding.editTxtContainer.addView(new EditableAddBtn(requireContext(), this));
     }
 
     private void setClickListeners() {
@@ -57,5 +75,24 @@ public class AddCategoryFragment extends CommonFragment {
     @Override
     protected Class getViewModelClass() {
         return CategoriesAndExcercisesViewModel.class;
+    }
+
+    @Override
+    public void onClickAdd(ExcerciseModel excercise) {
+        if(categoryModel == null){
+            String categoryName = binding.newCategoryTxt.getText().toString();
+            categoryModel = new CategoryModel(categoryName);
+        }
+        if(categoryModel.getExcerciseList() == null){
+            categoryModel.setExcerciseList(new ArrayList<>());
+        }
+        categoryModel.getExcerciseList().add(excercise);
+        printCategoryDetail(categoryModel);
+    }
+
+    @Override
+    public void onClickDelete(int position) {
+        categoryModel.getExcerciseList().remove(position);
+        printCategoryDetail(categoryModel);
     }
 }
