@@ -7,15 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fit.fitndflow.databinding.AddFragmentCategoryBinding;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
-import app.fit.fitndflow.ui.features.excercises.ExcercisesAdapter;
 
 public class AddCategoryFragment extends CommonFragment {
 

@@ -29,7 +29,9 @@ public class ExcerciseListFragment extends CommonFragment {
     private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
 
     @Override
-    protected Class getViewModelClass() {return CategoriesAndExcercisesViewModel.class;}
+    protected Class getViewModelClass() {
+        return CategoriesAndExcercisesViewModel.class;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class ExcerciseListFragment extends CommonFragment {
         categoriesAndExcercisesViewModel.getActualCategory().observe(getActivity(), observer);
     }
 
-    private void printCategoryDetail(CategoryModel categoryRecived){
+    private void printCategoryDetail(CategoryModel categoryRecived) {
         ExcercisesAdapter excercisesAdapter = new ExcercisesAdapter(categoryRecived.getExcerciseList());
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -64,12 +66,13 @@ public class ExcerciseListFragment extends CommonFragment {
 
         binding.categoryTitle.setText(categoryRecived.getName());
     }
-    private void printError(){
+
+    private void printError() {
 
         Toast.makeText(this.getContext(), "ERROR", Toast.LENGTH_SHORT).show();
     }
 
-    private void setOnClickListeners(){
+    private void setOnClickListeners() {
         binding.pencilFloatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
