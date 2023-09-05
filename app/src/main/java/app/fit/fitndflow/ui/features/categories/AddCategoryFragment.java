@@ -72,6 +72,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             @Override
             public void onClick(View view) {
                 updateScreenData();
+                categoriesAndExcercisesViewModel.saveCategory(requireContext(), categoryModel);
                 //todo call to viewmodel function savecategory!!!!!!!!!!!
             }
         });

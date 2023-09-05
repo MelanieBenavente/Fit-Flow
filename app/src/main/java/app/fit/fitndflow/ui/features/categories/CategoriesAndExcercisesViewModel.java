@@ -10,6 +10,7 @@ import java.util.List;
 
 import app.fit.fitndflow.domain.common.arq.FitObserver;
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.usecase.AddCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 
 public class CategoriesAndExcercisesViewModel extends ViewModel {
@@ -65,6 +66,20 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
             public void onError(Throwable e) {
                 mutableError.setValue(true);
                 isLoading.setValue(false);
+            }
+        });
+    }
+
+    public void saveCategory(Context context, CategoryModel categoryModel){
+        new AddCategoryUseCase(context, categoryModel). execute(new FitObserver<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
             }
         });
     }
