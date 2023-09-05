@@ -41,4 +41,8 @@ public class EditableAddBtn extends LinearLayout {
             }
         });
     }
+
+    public EditText getEditText() {
+        return editText;
+    }
 }

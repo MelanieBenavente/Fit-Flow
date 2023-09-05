@@ -27,6 +27,8 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
     private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
     private CategoryModel categoryModel;
 
+    private  EditableAddBtn lastEditable;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = AddFragmentCategoryBinding.inflate(getLayoutInflater());
@@ -56,20 +58,40 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             binding.editTxtContainer.addView(new EditableDeleteBtn(requireContext(), excercise, this, position));
         }
 
-        binding.editTxtContainer.addView(new EditableAddBtn(requireContext(), this));
+        lastEditable = new EditableAddBtn(requireContext(), this);
+        binding.editTxtContainer.addView(lastEditable);
     }
 
     private void printEmptyExcerciseList(){
-        binding.editTxtContainer.addView(new EditableAddBtn(requireContext(), this));
+        lastEditable = new EditableAddBtn(requireContext(), this);
+        binding.editTxtContainer.addView(lastEditable);
     }
 
     private void setClickListeners() {
         binding.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                updateScreenData();
                 //todo call to viewmodel function savecategory!!!!!!!!!!!
             }
         });
+    }
+
+    private void updateScreenData(){
+        if(categoryModel == null){
+            String categoryName = binding.newCategoryTxt.getText().toString();
+            categoryModel = new CategoryModel(categoryName);
+        } else {
+            String categoryName = binding.newCategoryTxt.getText().toString();
+            categoryModel.setName(categoryName);
+        }
+        if (!lastEditable.getEditText().getText().toString().equals("")){
+            if(categoryModel.getExcerciseList() == null){
+                categoryModel.setExcerciseList(new ArrayList<>());
+            }
+            ExcerciseModel excercise = new ExcerciseModel(lastEditable.getEditText().getText().toString());
+            categoryModel.getExcerciseList().add(excercise);
+        }
     }
 
     @Override
