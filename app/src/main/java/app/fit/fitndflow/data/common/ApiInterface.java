@@ -21,4 +21,7 @@ public interface ApiInterface {
     @GET("summary/categories/")
     Call<List<CategoryDto>> getCategoryDtoList(@Header(KEY) String apiKey);
 
+    @POST("category/")
+    Call <CategoryDto> saveCategory(@Body CategoryDto categoryDto, @Header(KEY) String apiKey);
+
 }

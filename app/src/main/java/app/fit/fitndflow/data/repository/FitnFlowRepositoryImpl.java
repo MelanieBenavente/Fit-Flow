@@ -44,4 +44,14 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         List<CategoryModel> mappedResponse = CategoryModelMapper.toModel(response.body());
         return mappedResponse;
     }
+
+    @Override
+    public Boolean saveCategoryAndExcercises(CategoryDto categoryDto, String apikey) throws Exception {
+        try {
+            CategoryDto response = RetrofitUtils.getRetrofitUtils().saveCategory(categoryDto, apikey).execute().body();
+            return true;
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+    }
 }

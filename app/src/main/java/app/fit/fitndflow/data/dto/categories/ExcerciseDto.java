@@ -7,7 +7,7 @@ import java.io.Serializable;
 import app.fit.fitndflow.data.dto.StringInLanguages;
 
 
-public class ExerciseDto implements Serializable {
+public class ExcerciseDto implements Serializable {
 
     @SerializedName("id")
     public int id;

@@ -16,63 +16,32 @@
         app:layout_constraintTop_toTopOf="parent"
         android:hint=" new category" />
 
-    <LinearLayout
+    <com.airbnb.lottie.LottieAnimationView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:layout_height="match_parent"
+        android:id="@+id/loading"
+        app:lottie_rawRes="@raw/animation_lkftjqt8"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:elevation="10dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/newCategoryTxt"
         app:layout_constraintBottom_toTopOf="@id/deleteBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/newCategoryTxt">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/editTxtContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="16dp">
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" />
 
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Ingrese texto" />
-
-            <ImageButton
-                android:id="@+id/button"
-                android:layout_width="@dimen/size_oval_btn"
-                android:layout_height="@dimen/size_oval_btn"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/add_btn"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="16dp">
-
-            <EditText
-                android:id="@+id/editText2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Ingrese texto" />
-
-            <ImageButton
-                android:id="@+id/button2"
-                android:layout_width="@dimen/size_oval_btn"
-                android:layout_height="@dimen/size_oval_btn"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/cancel_btn"
-                />
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/deleteBtn"

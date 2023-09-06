@@ -16,6 +16,6 @@ public class CategoryDto implements Serializable {
     public StringInLanguages name;
 
     @SerializedName("exercises")
-    public List<ExerciseDto> exerciseDtoList;
+    public List<ExcerciseDto> excerciseDtoList;
 
 }
