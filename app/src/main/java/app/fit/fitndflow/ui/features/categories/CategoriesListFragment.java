@@ -1,5 +1,7 @@
 package app.fit.fitndflow.ui.features.categories;
 
+import static app.fit.fitndflow.ui.features.categories.AddCategoryFragment.KEY_CATEGORY;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,6 +115,15 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     @Override
     public void showExcercises(CategoryModel category) {
         categoriesAndExcercisesViewModel.getActualCategory().setValue(category);
-        nextFragment(new ExcerciseListFragment());
+        if(category.getExcerciseList() != null && !category.getExcerciseList().isEmpty()){
+            nextFragment(new ExcerciseListFragment());
+        } else {
+            AddCategoryFragment addCategoryFragment = new AddCategoryFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(KEY_CATEGORY, category);
+            addCategoryFragment.setArguments(bundle);
+            nextFragment(addCategoryFragment);
+        }
+
     }
 }

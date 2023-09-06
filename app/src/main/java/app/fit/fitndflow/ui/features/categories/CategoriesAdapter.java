@@ -42,9 +42,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(categoryModelList.get(position).getExcerciseList() != null && !categoryModelList.get(position).getExcerciseList().isEmpty()){
                     adapterCallback.showExcercises(categoryModelList.get(position));
-                }
             }
         });
     }

@@ -23,11 +23,11 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
+            UserModel mappedResponse = UserModelMapper.toModel(response.body());
+            return mappedResponse;
         } catch (Exception e) {
             throw new Exception(e);
         }
-        UserModel mappedResponse = UserModelMapper.toModel(response.body());
-        return mappedResponse;
     }
 
     @Override
@@ -38,18 +38,36 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
+            List<CategoryModel> mappedResponse = CategoryModelMapper.toModel(response.body());
+            return mappedResponse;
         } catch (Exception e) {
             throw new Exception(e);
         }
-        List<CategoryModel> mappedResponse = CategoryModelMapper.toModel(response.body());
-        return mappedResponse;
     }
 
     @Override
     public Boolean saveCategoryAndExcercises(CategoryDto categoryDto, String apikey) throws Exception {
         try {
-            CategoryDto response = RetrofitUtils.getRetrofitUtils().saveCategory(categoryDto, apikey).execute().body();
-            return true;
+            Response<CategoryDto> response = RetrofitUtils.getRetrofitUtils().saveCategory(categoryDto, apikey).execute();
+            if (response.isSuccessful()) {
+                return true;
+            } else {
+                throw new Exception(new Exception("Error from Server"));
+            }
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+    }
+
+    @Override
+    public Boolean deleteCategoryAndExcercises(Integer categoryId, String apikey) throws Exception {
+        try {
+            Response<CategoryDto> response = RetrofitUtils.getRetrofitUtils().deleteCategory(categoryId, apikey).execute();
+            if (response.isSuccessful()) {
+                return true;
+            } else {
+                throw new Exception(new Exception("Error from Server"));
+            }
         } catch (Exception e) {
             throw new Exception(e);
         }

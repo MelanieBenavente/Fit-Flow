@@ -32,13 +32,15 @@ public class AddCategoryUseCase extends FitUseCase<CategoryModel, Boolean> {
             try {
                 String apiKey = SharedPrefs.getApikeyFromSharedPRefs(context);
                 List<ExcerciseDto> excerciseDtoList = new ArrayList<>();
-                for (int i = 0; i < inputParams.getExcerciseList().size(); i++) {
-                    ExcerciseModel excerciseModel = inputParams.getExcerciseList().get(i);
-                    ExcerciseDto excerciseDto = new ExcerciseDto();
-                    excerciseDto.id = excerciseModel.getId();
-                    excerciseDto.exerciseName = new StringInLanguages();
-                    excerciseDto.exerciseName.spanish = excerciseModel.getName();
-                    excerciseDtoList.add(excerciseDto);
+                if(inputParams.getExcerciseList() != null) {
+                    for (int i = 0; i < inputParams.getExcerciseList().size(); i++) {
+                        ExcerciseModel excerciseModel = inputParams.getExcerciseList().get(i);
+                        ExcerciseDto excerciseDto = new ExcerciseDto();
+                        excerciseDto.id = excerciseModel.getId();
+                        excerciseDto.exerciseName = new StringInLanguages();
+                        excerciseDto.exerciseName.spanish = excerciseModel.getName();
+                        excerciseDtoList.add(excerciseDto);
+                    }
                 }
                 CategoryDto categoryDto = new CategoryDto();
                 categoryDto.id = inputParams.getId();
