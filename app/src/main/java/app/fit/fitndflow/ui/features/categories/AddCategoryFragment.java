@@ -65,7 +65,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         final Observer<Boolean> observerIsSuccess = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSuccess) {
-                if(isSuccess){
+                if(isSuccess && isVisible()){
                     requireActivity().onBackPressed();
                 }
             }
