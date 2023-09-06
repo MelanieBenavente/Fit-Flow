@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.fit.fitndflow.databinding.AddFragmentCategoryBinding;
@@ -48,6 +49,28 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
 
     private void setViewModelObservers() {
         categoriesAndExcercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExcercisesViewModel.class);
+
+        final Observer<Boolean> observerLoading = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoading) {
+                if (isLoading) {
+                    binding.loading.setVisibility(View.VISIBLE);
+                } else {
+                    binding.loading.setVisibility(View.GONE);
+                }
+            }
+        };
+        categoriesAndExcercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
+
+        final Observer<Boolean> observerIsSuccess = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSuccess) {
+                if(isSuccess){
+                    requireActivity().onBackPressed();
+                }
+            }
+        };
+        categoriesAndExcercisesViewModel.getIsSuccess().observe(getActivity(), observerIsSuccess);
     }
 
     private void printCategoryDetail(CategoryModel categoryRecived){
@@ -73,7 +96,6 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             public void onClick(View view) {
                 updateScreenData();
                 categoriesAndExcercisesViewModel.saveCategory(requireContext(), categoryModel);
-                //todo call to viewmodel function savecategory!!!!!!!!!!!
             }
         });
     }

@@ -22,6 +22,8 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
 
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 
+    private MutableLiveData<Boolean> isSuccess = new MutableLiveData<>(false);
+
     /*Getters*
      *
      * */
@@ -33,6 +35,8 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
     public MutableLiveData<Boolean> getIsLoading() {
         return isLoading;
     }
+
+    public MutableLiveData<Boolean> getIsSuccess() {return isSuccess; }
 
     public MutableLiveData<List<CategoryModel>> getMutableCategory() {
         return mutableCategory;
@@ -72,14 +76,23 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
 
     public void saveCategory(Context context, CategoryModel categoryModel){
         new AddCategoryUseCase(context, categoryModel). execute(new FitObserver<Boolean>() {
+
+            @Override
+            protected void onStart() {
+                super.onStart();
+                isLoading.setValue(true);
+            }
+
             @Override
             public void onSuccess(Boolean aBoolean) {
+                isLoading.setValue(false);
+                isSuccess.setValue(true);
 
             }
 
             @Override
             public void onError(Throwable e) {
-
+                isLoading.setValue(false);
             }
         });
     }

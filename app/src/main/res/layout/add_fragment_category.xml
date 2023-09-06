@@ -16,6 +16,15 @@
         app:layout_constraintTop_toTopOf="parent"
         android:hint=" new category" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loading"
+        app:lottie_rawRes="@raw/animation_lkftjqt8"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:elevation="10dp"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
