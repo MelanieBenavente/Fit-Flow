@@ -1,9 +1,12 @@
 package app.fit.fitndflow.ui.features.home;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +23,7 @@ import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
+import app.fit.fitndflow.ui.features.common.CommonActivity;
 import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
 
 public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
@@ -40,12 +44,12 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         return HomeViewModel.class;
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = MainListFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        ((CommonActivity)requireActivity()).showErrorSlideContainer();
         super.onCreateView(inflater, container, savedInstanceState);
         return view;
     }
@@ -58,6 +62,7 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         }
         setViewModelObservers();
         setClickListeners();
+
     }
 
     private void setClickListeners() {
@@ -109,6 +114,4 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         };
         viewModel.getMutableError().observe(getActivity(), errorObserver);
     }
-
-
 }

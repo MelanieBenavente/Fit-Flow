@@ -51,6 +51,7 @@ public class HomeViewModel extends ViewModel {
         date = calendar.getTime();
         actualDate.setValue(date);
     }
+
     public void requestRegisterEmptyUser(Context context) {
         UserModel emptyUserModel = new UserModel();
         new RegisterUserUseCase(emptyUserModel, context).execute(new FitObserver<UserModel>() {

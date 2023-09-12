@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/MainActContainer"
+<FrameLayout android:id="@+id/MainActContainer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@color/background_lightPink"
-    tools:context="app.fit.fitndflow.ui.features.common.MainActivity">
+    tools:context="app.fit.fitndflow.ui.features.common.MainActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/errorContainer"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:background="@color/red"
+        android:visibility="gone"
+        android:elevation="100dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Este es un mensaje de error"
+            android:gravity="center"
+            android:paddingTop="30dp"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
 
 </FrameLayout>
