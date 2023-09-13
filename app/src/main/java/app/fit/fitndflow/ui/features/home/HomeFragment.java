@@ -1,12 +1,9 @@
 package app.fit.fitndflow.ui.features.home;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -49,7 +46,6 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = MainListFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-        ((CommonActivity)requireActivity()).showErrorSlideContainer();
         super.onCreateView(inflater, container, savedInstanceState);
         return view;
     }
@@ -108,7 +104,7 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
             @Override
             public void onChanged(Boolean isError) {
                 if (isError) {
-                    Toast.makeText(requireContext(), "Error trying to register", Toast.LENGTH_LONG).show();
+                    ((CommonActivity)requireActivity()).showErrorSlideContainer();
                 }
             }
         };
