@@ -11,6 +11,7 @@ import java.util.List;
 import app.fit.fitndflow.domain.common.arq.FitObserver;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.usecase.AddCategoryUseCase;
+import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 
 public class CategoriesAndExcercisesViewModel extends ViewModel {
@@ -88,6 +89,27 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
                 isLoading.setValue(false);
                 isSuccess.setValue(true);
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                isLoading.setValue(false);
+            }
+        });
+    }
+
+    public void deleteCategory(CategoryModel categoryModel, Context context){
+        new DeleteCategoryUseCase(categoryModel, context).execute(new FitObserver<Boolean>() {
+
+            @Override
+            protected void onStart(){
+                super.onStart();
+                isLoading.setValue(true);
+            }
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                isLoading.setValue(false);
+                isSuccess.setValue(true);
             }
 
             @Override

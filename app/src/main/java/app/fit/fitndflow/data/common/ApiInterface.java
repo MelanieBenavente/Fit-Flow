@@ -7,7 +7,9 @@ import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 
@@ -23,5 +25,8 @@ public interface ApiInterface {
 
     @POST("category/")
     Call <CategoryDto> saveCategory(@Body CategoryDto categoryDto, @Header(KEY) String apiKey);
+
+    @HTTP(method = "DELETE", path = "category/", hasBody = true)
+    Call <CategoryDto> deleteCategory(@Body Integer categoryId, @Header(KEY) String apiKey);
 
 }

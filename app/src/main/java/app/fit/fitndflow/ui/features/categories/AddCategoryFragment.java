@@ -98,6 +98,17 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
                 categoriesAndExcercisesViewModel.saveCategory(requireContext(), categoryModel);
             }
         });
+
+        binding.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(categoryModel == null || categoryModel.getId() == 0){
+                    requireActivity().onBackPressed();
+                } else {
+                    categoriesAndExcercisesViewModel.deleteCategory(categoryModel, requireContext());
+                }
+            }
+        });
     }
 
     private void updateScreenData(){
