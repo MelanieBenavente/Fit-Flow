@@ -1,6 +1,7 @@
 package app.fit.fitndflow.ui.features.categories;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,6 +126,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             }
             ExcerciseModel excercise = new ExcerciseModel(lastEditable.getEditText().getText().toString());
             categoryModel.getExcerciseList().add(excercise);
+            Log.i("Add", "added exercise");
         }
     }
 

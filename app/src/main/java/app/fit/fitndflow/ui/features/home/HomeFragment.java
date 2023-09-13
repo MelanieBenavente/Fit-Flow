@@ -20,6 +20,7 @@ import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
+import app.fit.fitndflow.ui.features.common.CommonActivity;
 import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
 
 public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
@@ -40,7 +41,6 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         return HomeViewModel.class;
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,6 +58,7 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         }
         setViewModelObservers();
         setClickListeners();
+
     }
 
     private void setClickListeners() {
@@ -103,12 +104,10 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
             @Override
             public void onChanged(Boolean isError) {
                 if (isError) {
-                    Toast.makeText(requireContext(), "Error trying to register", Toast.LENGTH_LONG).show();
+                    ((CommonActivity)requireActivity()).showErrorSlideContainer();
                 }
             }
         };
         viewModel.getMutableError().observe(getActivity(), errorObserver);
     }
-
-
 }

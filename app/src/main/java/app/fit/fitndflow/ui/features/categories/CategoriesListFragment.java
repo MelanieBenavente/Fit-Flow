@@ -3,10 +3,10 @@ package app.fit.fitndflow.ui.features.categories;
 import static app.fit.fitndflow.ui.features.categories.AddCategoryFragment.KEY_CATEGORY;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.ui.features.common.CommonActivity;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.excercises.ExcerciseListFragment;
 
@@ -49,6 +50,8 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
 
     private void setViewModelObservers() {
         categoriesAndExcercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExcercisesViewModel.class);
+        categoriesAndExcercisesViewModel.getMutableError().setValue(false);
+        categoriesAndExcercisesViewModel.getIsLoading().setValue(false);
 
         //observing RazaList
         final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
@@ -91,11 +94,12 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     }
 
     private void printError() {
-
-        Toast.makeText(this.getContext(), "ERROR", Toast.LENGTH_SHORT).show();
-
+        try {
+            ((CommonActivity)requireActivity()).showErrorSlideContainer();
+        }catch(Exception exception) {
+            Log.e("Error", "Error to print errorContainer");
+        }
     }
-
     private void instantiateCategoriesAdapter() {
         categoriesAdapter = new CategoriesAdapter(this);
         binding.recyclerCategories.setHasFixedSize(true);

@@ -56,6 +56,7 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
             @Override
             protected void onStart() {
                 super.onStart();
+                mutableError.setValue(false);
                 isLoading.setValue(true);
                 mutableCategory.setValue(new ArrayList<>());
             }
@@ -82,17 +83,20 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
             protected void onStart() {
                 super.onStart();
                 isLoading.setValue(true);
+                mutableError.setValue(false);
             }
 
             @Override
             public void onSuccess(Boolean aBoolean) {
                 isLoading.setValue(false);
                 isSuccess.setValue(true);
+                mutableError.setValue(false);
 
             }
 
             @Override
             public void onError(Throwable e) {
+                mutableError.setValue(true);
                 isLoading.setValue(false);
             }
         });
