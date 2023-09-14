@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExcerciseModel;
+import app.fit.fitndflow.ui.features.common.CommonActivity;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.common.component.CategoryEditableListener;
 import app.fit.fitndflow.ui.features.common.component.EditableAddBtn;
@@ -54,11 +55,17 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
-                if (isLoading) {
-                    binding.loading.setVisibility(View.VISIBLE);
-                } else {
-                    binding.loading.setVisibility(View.GONE);
+                try{
+                    if (isLoading) {
+                        ((CommonActivity) requireActivity()).showLoading();
+
+                    } else {
+                        ((CommonActivity) requireActivity()).hideLoading();
+                    }
+                }catch(Exception exception){
+                    Log.e("Error","show loading");
                 }
+
             }
         };
         categoriesAndExcercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
