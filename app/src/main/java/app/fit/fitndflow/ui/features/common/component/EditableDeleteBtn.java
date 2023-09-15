@@ -10,26 +10,26 @@ import com.fit.fitndflow.R;
 
 import app.fit.fitndflow.domain.model.ExcerciseModel;
 
-public class EditableDeleteBtn extends LinearLayout {
+public class EditableDeleteBtn extends EditableComponent {
 
-    private EditText editText;
+    private View view;
     private ImageButton deleteBtn;
 
     public EditableDeleteBtn(Context context, ExcerciseModel excercise, CategoryEditableListener categoryEditableListener, int position) {
-        super(context);
-        View view = inflate(context, R.layout.component_editable_delete_btn, this);
+        super(context, position);
+        view = inflate(context, R.layout.component_editable_delete_btn, this);
         bindViews(view);
+        super.bindViews();
         printExcercise(excercise);
         setClickListener(categoryEditableListener, position);
     }
 
     private void bindViews(View view){
-        editText = view.findViewById(R.id.editText);
         deleteBtn = view.findViewById(R.id.button);
     }
 
     private void printExcercise(ExcerciseModel excercise){
-        editText.setText(excercise.getName());
+        getEditText().setText(excercise.getName());
     }
 
     private void setClickListener(CategoryEditableListener categoryEditableListener,int position){
@@ -39,5 +39,10 @@ public class EditableDeleteBtn extends LinearLayout {
                 categoryEditableListener.onClickDelete(position);
             }
         });
+    }
+
+    @Override
+    protected View getView() {
+        return view;
     }
 }

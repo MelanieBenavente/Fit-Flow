@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.fit.fitndflow.databinding.AddFragmentCategoryBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExcerciseModel;
@@ -21,6 +22,7 @@ import app.fit.fitndflow.ui.features.common.CommonActivity;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.common.component.CategoryEditableListener;
 import app.fit.fitndflow.ui.features.common.component.EditableAddBtn;
+import app.fit.fitndflow.ui.features.common.component.EditableComponent;
 import app.fit.fitndflow.ui.features.common.component.EditableDeleteBtn;
 
 public class AddCategoryFragment extends CommonFragment implements CategoryEditableListener {
@@ -30,7 +32,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
     private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
     private CategoryModel categoryModel;
 
-    private  EditableAddBtn lastEditable;
+    private List<EditableComponent> editableComponentList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,16 +88,19 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         binding.newCategoryTxt.setText(categoryRecived.getName());
         for(int position = 0; position < categoryRecived.getExcerciseList().size(); position++){
             ExcerciseModel excercise = categoryRecived.getExcerciseList().get(position);
-            binding.editTxtContainer.addView(new EditableDeleteBtn(requireContext(), excercise, this, position));
+            EditableDeleteBtn editableDeleteBtn = new EditableDeleteBtn(requireContext(), excercise, this, position);
+            binding.editTxtContainer.addView(editableDeleteBtn);
+            editableComponentList.add(editableDeleteBtn);
         }
-
-        lastEditable = new EditableAddBtn(requireContext(), this);
-        binding.editTxtContainer.addView(lastEditable);
+        EditableAddBtn editableAddBtn = new EditableAddBtn(requireContext(), this, categoryRecived.getExcerciseList().size());
+        editableComponentList.add(editableAddBtn);
+        binding.editTxtContainer.addView(editableAddBtn);
     }
 
     private void printEmptyExcerciseList(){
-        lastEditable = new EditableAddBtn(requireContext(), this);
-        binding.editTxtContainer.addView(lastEditable);
+        EditableAddBtn editableAddBtn = new EditableAddBtn(requireContext(), this, 0);
+        binding.editTxtContainer.addView(editableAddBtn);
+        editableComponentList.add(editableAddBtn);
     }
 
     private void setClickListeners() {
@@ -127,13 +132,29 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             String categoryName = binding.newCategoryTxt.getText().toString();
             categoryModel.setName(categoryName);
         }
-        if (!lastEditable.getEditText().getText().toString().equals("")){
+        if (!editableComponentList.get(editableComponentList.size()-1).getEditText().getText().toString().equals("")){
             if(categoryModel.getExcerciseList() == null){
                 categoryModel.setExcerciseList(new ArrayList<>());
             }
-            ExcerciseModel excercise = new ExcerciseModel(lastEditable.getEditText().getText().toString());
-            categoryModel.getExcerciseList().add(excercise);
+            if(categoryModel.getExcerciseList().size() == editableComponentList.get(editableComponentList.size()-1).getPosition()){
+                ExcerciseModel excercise = new ExcerciseModel(editableComponentList.get(editableComponentList.size()-1).getEditText().getText().toString());
+                categoryModel.getExcerciseList().add(excercise);
+            } else {
+                categoryModel.getExcerciseList().set(editableComponentList.get(editableComponentList.size()-1).getPosition(), new ExcerciseModel(editableComponentList.get(editableComponentList.size()-1).getEditText().getText().toString()));
+            }
+
             Log.i("Add", "added exercise");
+        }
+        for(int i = 0; i < editableComponentList.size(); i++){
+
+            int position = editableComponentList.get(i).getPosition();
+            String name = editableComponentList.get(i).getEditText().getText().toString();
+            if (position >= categoryModel.getExcerciseList().size()){
+                categoryModel.getExcerciseList().add(new ExcerciseModel(name));
+            } else {
+                categoryModel.getExcerciseList().set(position, new ExcerciseModel(name));
+
+            }
         }
     }
 

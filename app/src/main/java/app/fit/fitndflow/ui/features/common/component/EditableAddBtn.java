@@ -10,21 +10,20 @@ import com.fit.fitndflow.R;
 
 import app.fit.fitndflow.domain.model.ExcerciseModel;
 
-public class EditableAddBtn extends LinearLayout {
-
-    private EditText editText;
-
+public class EditableAddBtn extends EditableComponent {
     private ImageButton addBtn;
 
-    public EditableAddBtn(Context context, CategoryEditableListener categoryEditableListener) {
-        super(context);
-        View view = inflate(context, R.layout.component_editable_add_btn, this);
+    private View view;
+
+    public EditableAddBtn(Context context, CategoryEditableListener categoryEditableListener, int position) {
+        super(context, position);
+        view = inflate(context, R.layout.component_editable_add_btn, this);
         bindViews(view);
+        super.bindViews();
         setClickListener(categoryEditableListener);
     }
 
     private void bindViews(View view){
-        editText = view.findViewById(R.id.editText);
         addBtn = view.findViewById(R.id.button);
     }
 
@@ -32,7 +31,7 @@ public class EditableAddBtn extends LinearLayout {
         addBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = editText.getText().toString();
+                String name = getEditText().getText().toString();
                 if(name != null && !name.equals("")){
                     ExcerciseModel excercise = new ExcerciseModel(name);
                     categoryEditableListener.onClickAdd(excercise);
@@ -42,7 +41,8 @@ public class EditableAddBtn extends LinearLayout {
         });
     }
 
-    public EditText getEditText() {
-        return editText;
+    @Override
+    protected View getView() {
+        return view;
     }
 }
