@@ -77,10 +77,15 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
-                if (isLoading) {
-                    binding.loading.setVisibility(View.VISIBLE);
-                } else {
-                    binding.loading.setVisibility(View.GONE);
+                try{
+                    if (isLoading) {
+                        ((CommonActivity) requireActivity()).showLoading();
+
+                    } else {
+                        ((CommonActivity) requireActivity()).hideLoading();
+                    }
+                }catch(Exception exception){
+                    Log.e("Error","show loading");
                 }
             }
         };

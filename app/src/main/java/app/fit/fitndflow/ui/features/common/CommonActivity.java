@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.LayoutRes;
@@ -16,6 +17,7 @@ import com.fit.fitndflow.R;
 
 public abstract class CommonActivity extends AppCompatActivity {
     private RelativeLayout container;
+    private FrameLayout loadingLottie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +26,15 @@ public abstract class CommonActivity extends AppCompatActivity {
         bindViews();
     }
 
-    private void bindViews(){
+    private void bindViews() {
+
         container = findViewById(R.id.errorContainer);
+        loadingLottie = findViewById(R.id.lottieContainer);
     }
 
     public abstract @LayoutRes int getResLayout();
 
-    public void showErrorSlideContainer(){
+    public void showErrorSlideContainer() {
         final Animation slideDown = new TranslateAnimation(0, 0, -1000, 0);
         slideDown.setDuration(1000); // Duración de la animación en milisegundos
         slideDown.setFillAfter(true);
@@ -60,7 +64,15 @@ public abstract class CommonActivity extends AppCompatActivity {
         }, 1000); // Esperar 1 segundo antes de mostrar el contenedor
     }
 
-    public void nextFragment(Fragment fragment){
+    public void showLoading() {
+        loadingLottie.setVisibility(View.VISIBLE);
+    }
+
+    public void hideLoading() {
+        loadingLottie.setVisibility(View.INVISIBLE);
+    }
+
+    public void nextFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.MainActContainer, fragment)

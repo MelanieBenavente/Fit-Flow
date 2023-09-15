@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="@color/background_lightPink"
-    tools:context="app.fit.fitndflow.ui.features.common.MainActivity">
+    tools:context="app.fit.fitndflow.ui.features.common.MainActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/errorContainer"
@@ -14,9 +15,7 @@
         android:orientation="vertical"
         android:background="@color/red"
         android:visibility="gone"
-        android:elevation="100dp"
-        >
-
+        android:elevation="100dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +23,26 @@
             android:gravity="center"
             android:paddingTop="30dp"
             android:textColor="@color/white"/>
-
     </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/lottieContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_loading"
+        android:alpha="0.9"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loading"
+            app:lottie_rawRes="@raw/animation_lkftjqt8"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:elevation="10dp"
+            />
+    </FrameLayout>
 
 </FrameLayout>
