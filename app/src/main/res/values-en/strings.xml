@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tomorrow_date_selector">Tomorrow</string>
+    <string name="today_date_selector">Today</string>
+    <string name="yesterday_date_selector">Yesterday</string>
+    <string name="save_btn">Save</string>
+    <string name="delete_btn">Delete</string>
+    <string name="añadir_entrenamiento">Add trainning</string>
+</resources>

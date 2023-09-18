@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">Fit&amp;Flow</string>
-    <string name="tomorrow_date_selector">MAÑANA</string>
-    <string name="today_date_selector">HOY</string>
-    <string name="yesterday_date_selector">AYER</string>
-    <string name="mensaje_error">ERROR</string>
-    <string name="save_btn">GUARDAR</string>
-    <string name="delete_btn">ELIMINAR</string>
+    <string name="app_name" translatable="false">Fit&amp;Flow</string>
+    <string name="tomorrow_date_selector">Mañana</string>
+    <string name="today_date_selector">Hoy</string>
+    <string name="mensaje_error" translatable="false">Error</string>
+    <string name="save_btn">Guardar</string>
+    <string name="delete_btn">Eliminar</string>
+    <string name="yesterday_date_selector">Ayer</string>
+    <string name="añadir_entrenamiento">Añadir entrenamiento</string>
 
 </resources>
