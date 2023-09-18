@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Este es un mensaje de error"
+            android:text="@string/mensaje_error"
             android:gravity="center"
             android:paddingTop="30dp"
             android:textColor="@color/white"/>

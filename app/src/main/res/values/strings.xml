@@ -3,6 +3,8 @@
     <string name="tomorrow_date_selector">MAÑANA</string>
     <string name="today_date_selector">HOY</string>
     <string name="yesterday_date_selector">AYER</string>
-
+    <string name="mensaje_error">ERROR</string>
+    <string name="save_btn">GUARDAR</string>
+    <string name="delete_btn">ELIMINAR</string>
 
 </resources>
