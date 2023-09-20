@@ -6,6 +6,6 @@
     <string name="save_btn">Guardar</string>
     <string name="delete_btn">Eliminar</string>
     <string name="yesterday_date_selector">Ayer</string>
-    <string name="añadir_entrenamiento">Añadir entrenamiento</string>
+    <string name="add_trainning">Añadir entrenamiento</string>
 
 </resources>
