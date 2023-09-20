@@ -5,5 +5,5 @@
     <string name="yesterday_date_selector">Yesterday</string>
     <string name="save_btn">Save</string>
     <string name="delete_btn">Delete</string>
-    <string name="añadir_entrenamiento">Add trainning</string>
+    <string name="add_trainning">Add trainning</string>
 </resources>
