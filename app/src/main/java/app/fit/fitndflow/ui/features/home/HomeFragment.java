@@ -1,6 +1,7 @@
 package app.fit.fitndflow.ui.features.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.MainListFragmentBinding;
@@ -19,6 +21,7 @@ import java.util.Date;
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.UserModel;
+import app.fit.fitndflow.ui.features.categories.CategoriesAndExcercisesViewModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
 import app.fit.fitndflow.ui.features.common.CommonActivity;
 import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
@@ -41,6 +44,8 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         return HomeViewModel.class;
     }
 
+    private HomeViewModel homeViewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,21 +67,42 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
     }
 
     private void setClickListeners() {
-        binding.btnLeft.setOnClickListener(view -> viewModel.dayBefore());
-        binding.btnRight.setOnClickListener(view -> viewModel.dayAfter());
-        binding.buttonPanel.setOnClickListener(view -> nextFragment(new CategoriesListFragment()));
+        binding.btnLeft.setOnClickListener(view ->{
+            if(!homeViewModel.getIsLoading().getValue()){
+                viewModel.dayBefore();
+            }
+        });
+        binding.btnRight.setOnClickListener(view ->{
+            if(!homeViewModel.getIsLoading().getValue()) {
+                viewModel.dayAfter();
+            }
+        });
+        binding.buttonPanel.setOnClickListener(view ->{
+            if(!homeViewModel.getIsLoading().getValue()) {
+                nextFragment(new CategoriesListFragment());
+            }
+        });
     }
 
     private void setViewModelObservers() {
-        final Observer<UserModel> userObserver = new Observer<UserModel>() {
+        homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
+        final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
-            public void onChanged(UserModel userModel) {
+            public void onChanged(Boolean isLoading) {
+                try{
+                    if (isLoading) {
+                        ((CommonActivity) requireActivity()).showLoading();
 
-                Toast.makeText(requireContext(), "User Registered Succesful", Toast.LENGTH_LONG).show();
+                    } else {
+                        ((CommonActivity) requireActivity()).hideLoading();
+                    }
+                }catch(Exception exception){
+                    Log.e("Error","show loading");
+                }
             }
         };
-        //Observamos al listado del ViewModel y ejecutamos las acciones indicadas antes en el observer
-        viewModel.getMutableUserModel().observe(getActivity(), userObserver);
+        homeViewModel.getIsLoading().observe(getActivity(), observerLoading);
+
 
         final Observer<Date> actualDateObserver = new Observer<Date>() {
             @Override

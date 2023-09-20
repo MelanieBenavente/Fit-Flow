@@ -13,9 +13,10 @@ import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCase;
 
 public class HomeViewModel extends ViewModel {
-    private MutableLiveData<UserModel> mutableUserModel = new MutableLiveData<>();
     private MutableLiveData<Boolean> mutableError = new MutableLiveData<>(false);
     private MutableLiveData<Date> actualDate = new MutableLiveData<>(new Date());
+
+    private MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 
     /*
     getters
@@ -23,12 +24,12 @@ public class HomeViewModel extends ViewModel {
     public MutableLiveData<Date> getActualDate() {
         return actualDate;
     }
-    public MutableLiveData<UserModel> getMutableUserModel() {
-        return mutableUserModel;
-    }
 
     public MutableLiveData<Boolean> getMutableError() {
         return mutableError;
+    }
+    public MutableLiveData<Boolean> getIsLoading() {
+        return isLoading;
     }
     //end getters
 
@@ -55,10 +56,16 @@ public class HomeViewModel extends ViewModel {
     public void requestRegisterEmptyUser(Context context) {
         UserModel emptyUserModel = new UserModel();
         new RegisterUserUseCase(emptyUserModel, context).execute(new FitObserver<UserModel>() {
+
+            protected void onStart() {
+                super.onStart();
+                isLoading.setValue(true);
+            }
             @Override
             public void onSuccess(UserModel apiRegisterResponse) {
-                mutableUserModel.setValue(apiRegisterResponse);
+                isLoading.setValue(false);
                 mutableError.setValue(false);
+
             }
 
             @Override
