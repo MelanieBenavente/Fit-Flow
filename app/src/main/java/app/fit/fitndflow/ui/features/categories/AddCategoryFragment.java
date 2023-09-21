@@ -1,5 +1,8 @@
 package app.fit.fitndflow.ui.features.categories;
 
+import static app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment.DELETE_CATEGORY;
+import static app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment.DELETE_EXERCISE;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +26,7 @@ import app.fit.fitndflow.ui.features.common.component.CategoryEditableListener;
 import app.fit.fitndflow.ui.features.common.component.EditableAddBtn;
 import app.fit.fitndflow.ui.features.common.component.EditableDeleteBtn;
 
-public class AddCategoryFragment extends CommonFragment implements CategoryEditableListener {
+public class AddCategoryFragment extends CommonFragment implements CategoryEditableListener, DialogCallbackDelete {
 
     public static final String KEY_CATEGORY = "actualCategory";
     private AddFragmentCategoryBinding binding;
@@ -102,6 +105,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             binding.saveBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     if(!categoriesAndExcercisesViewModel.getIsLoading().getValue()){
                         updateScreenData();
                         categoriesAndExcercisesViewModel.saveCategory(requireContext(), categoryModel);
@@ -116,7 +120,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
                     if (categoryModel == null || categoryModel.getId() == 0) {
                         requireActivity().onBackPressed();
                     } else {
-                        categoriesAndExcercisesViewModel.deleteCategory(categoryModel, requireContext());
+                        ConfirmationDialogFragment.newInstance(AddCategoryFragment.this, DELETE_CATEGORY, -1).show(getChildFragmentManager(), "ConfirmationDialog");
                     }
                 }
             }
@@ -161,6 +165,16 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
 
     @Override
     public void onClickDelete(int position) {
+        ConfirmationDialogFragment.newInstance(AddCategoryFragment.this, DELETE_EXERCISE, position).show(getChildFragmentManager(), "ConfirmationDialog");
+    }
+
+    @Override
+    public void onClickAcceptDeleteCategory() {
+        categoriesAndExcercisesViewModel.deleteCategory(categoryModel, requireContext());
+    }
+
+    @Override
+    public void onClickAcceptedExercise(int position) {
         categoryModel.getExcerciseList().remove(position);
         printCategoryDetail(categoryModel);
     }
