@@ -33,7 +33,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
     private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
     private CategoryModel categoryModel;
 
-    private  EditableAddBtn lastEditable;
+    private EditableAddBtn lastEditable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,8 +43,8 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         setViewModelObservers();
         setClickListeners();
         Bundle bundle = getArguments();
-        if(bundle != null){
-            categoryModel= (CategoryModel) bundle.getSerializable(KEY_CATEGORY);
+        if (bundle != null) {
+            categoryModel = (CategoryModel) bundle.getSerializable(KEY_CATEGORY);
             printCategoryDetail(categoryModel);
         } else {
             printEmptyExcerciseList();
@@ -58,15 +58,15 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
-                try{
+                try {
                     if (isLoading) {
                         ((CommonActivity) requireActivity()).showLoading();
 
                     } else {
                         ((CommonActivity) requireActivity()).hideLoading();
                     }
-                }catch(Exception exception){
-                    Log.e("Error","show loading");
+                } catch (Exception exception) {
+                    Log.e("Error", "show loading");
                 }
 
             }
@@ -76,7 +76,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         final Observer<Boolean> observerIsSuccess = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSuccess) {
-                if(isSuccess && isVisible()){
+                if (isSuccess && isVisible()) {
                     requireActivity().onBackPressed();
                 }
             }
@@ -84,10 +84,10 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         categoriesAndExcercisesViewModel.getIsSuccess().observe(getActivity(), observerIsSuccess);
     }
 
-    private void printCategoryDetail(CategoryModel categoryRecived){
+    private void printCategoryDetail(CategoryModel categoryRecived) {
         binding.editTxtContainer.removeAllViews();
         binding.newCategoryTxt.setText(categoryRecived.getName());
-        for(int position = 0; position < categoryRecived.getExcerciseList().size(); position++){
+        for (int position = 0; position < categoryRecived.getExcerciseList().size(); position++) {
             ExcerciseModel excercise = categoryRecived.getExcerciseList().get(position);
             binding.editTxtContainer.addView(new EditableDeleteBtn(requireContext(), excercise, this, position));
         }
@@ -96,22 +96,21 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         binding.editTxtContainer.addView(lastEditable);
     }
 
-    private void printEmptyExcerciseList(){
+    private void printEmptyExcerciseList() {
         lastEditable = new EditableAddBtn(requireContext(), this);
         binding.editTxtContainer.addView(lastEditable);
     }
 
     private void setClickListeners() {
-            binding.saveBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    if(!categoriesAndExcercisesViewModel.getIsLoading().getValue()){
-                        updateScreenData();
-                        categoriesAndExcercisesViewModel.saveCategory(requireContext(), categoryModel);
-                    }
+        binding.saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateScreenData();
+                if (!categoriesAndExcercisesViewModel.getIsLoading().getValue() && !categoryModel.getName().equals("")) {
+                    categoriesAndExcercisesViewModel.saveCategory(requireContext(), categoryModel);
                 }
-            });
+            }
+        });
 
         binding.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,16 +126,16 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         });
     }
 
-    private void updateScreenData(){
-        if(categoryModel == null){
+    private void updateScreenData() {
+        if (categoryModel == null) {
             String categoryName = binding.newCategoryTxt.getText().toString();
             categoryModel = new CategoryModel(categoryName);
         } else {
             String categoryName = binding.newCategoryTxt.getText().toString();
             categoryModel.setName(categoryName);
         }
-        if (!lastEditable.getEditText().getText().toString().equals("")){
-            if(categoryModel.getExcerciseList() == null){
+        if (!lastEditable.getEditText().getText().toString().equals("")) {
+            if (categoryModel.getExcerciseList() == null) {
                 categoryModel.setExcerciseList(new ArrayList<>());
             }
             ExcerciseModel excercise = new ExcerciseModel(lastEditable.getEditText().getText().toString());
@@ -152,11 +151,11 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
 
     @Override
     public void onClickAdd(ExcerciseModel excercise) {
-        if(categoryModel == null){
+        if (categoryModel == null) {
             String categoryName = binding.newCategoryTxt.getText().toString();
             categoryModel = new CategoryModel(categoryName);
         }
-        if(categoryModel.getExcerciseList() == null){
+        if (categoryModel.getExcerciseList() == null) {
             categoryModel.setExcerciseList(new ArrayList<>());
         }
         categoryModel.getExcerciseList().add(excercise);
