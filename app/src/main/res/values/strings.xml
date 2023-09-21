@@ -7,5 +7,9 @@
     <string name="delete_btn">Eliminar</string>
     <string name="yesterday_date_selector">Ayer</string>
     <string name="add_trainning">Añadir entrenamiento</string>
+    <string name="dialog_category_delete">¿Estás seguro de que deseas borrar esta categoría?</string>
+    <string name="dialog_btn_delete">Si, borrar</string>
+    <string name="dialog_exercise_delete">¿Estás seguro de que deseas borrar este ejercicio?</string>
+
 
 </resources>

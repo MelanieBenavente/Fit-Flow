@@ -6,4 +6,7 @@
     <string name="save_btn">Save</string>
     <string name="delete_btn">Delete</string>
     <string name="add_trainning">Add trainning</string>
+    <string name="dialog_category_delete">You\'re sure that you want to delete this category?</string>
+    <string name="dialog_btn_delete">Yes, delete</string>
+    <string name="dialog_exercise_delete">You\'re sure that you want to delete this exercise?</string>
 </resources>
