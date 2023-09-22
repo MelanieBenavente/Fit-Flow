@@ -134,10 +134,8 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             String categoryName = binding.newCategoryTxt.getText().toString();
             categoryModel.setName(categoryName);
         }
-        if (!lastEditable.getEditText().getText().toString().equals("")) {
-            if (categoryModel.getExcerciseList() == null) {
-                categoryModel.setExcerciseList(new ArrayList<>());
-            }
+        if (categoryModel.getExcerciseList() == null) {
+            categoryModel.setExcerciseList(new ArrayList<>());
             ExcerciseModel excercise = new ExcerciseModel(lastEditable.getEditText().getText().toString());
             categoryModel.getExcerciseList().add(excercise);
             Log.i("Add", "added exercise");

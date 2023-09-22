@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,8 +19,6 @@ import java.util.Date;
 
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.Utils;
-import app.fit.fitndflow.domain.model.UserModel;
-import app.fit.fitndflow.ui.features.categories.CategoriesAndExcercisesViewModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
 import app.fit.fitndflow.ui.features.common.CommonActivity;
 import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
