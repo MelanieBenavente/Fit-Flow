@@ -100,7 +100,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
 
     private void printError() {
         try {
-            ((CommonActivity)requireActivity()).showErrorSlideContainer();
+            ((CommonActivity)requireActivity()).showBlockError();
         }catch(Exception exception) {
             Log.e("Error", "Error to print errorContainer");
         }

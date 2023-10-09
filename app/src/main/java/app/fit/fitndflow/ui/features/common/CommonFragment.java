@@ -20,7 +20,9 @@ public abstract class CommonFragment<V extends ViewModel> extends Fragment {
     @CallSuper
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(getViewModelClass());
+        if (getViewModelClass() != null) {
+            viewModel = new ViewModelProvider(requireActivity()).get(getViewModelClass());
+        }
     }
 
 }

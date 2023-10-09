@@ -127,7 +127,7 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
             @Override
             public void onChanged(Boolean isError) {
                 if (isError) {
-                    ((CommonActivity)requireActivity()).showErrorSlideContainer();
+                    ((CommonActivity)requireActivity()).showBlockError();
                 }
             }
         };
