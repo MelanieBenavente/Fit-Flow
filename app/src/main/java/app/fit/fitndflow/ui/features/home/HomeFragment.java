@@ -88,10 +88,10 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
             public void onChanged(Boolean isLoading) {
                 try{
                     if (isLoading) {
-                        ((CommonActivity) requireActivity()).showLoading();
+                        showLoading();
 
                     } else {
-                        ((CommonActivity) requireActivity()).hideLoading();
+                        hideLoading();
                     }
                 }catch(Exception exception){
                     Log.e("Error","show loading");
@@ -127,7 +127,7 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
             @Override
             public void onChanged(Boolean isError) {
                 if (isError) {
-                    ((CommonActivity)requireActivity()).showErrorSlideContainer();
+                    showBlockError();
                 }
             }
         };

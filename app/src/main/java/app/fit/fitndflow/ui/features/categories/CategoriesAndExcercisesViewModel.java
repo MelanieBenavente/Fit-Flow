@@ -19,7 +19,9 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
     private MutableLiveData<CategoryModel> actualCategory = new MutableLiveData<>();
     private MutableLiveData<List<CategoryModel>> mutableCategory = new MutableLiveData<>();
 
-    private MutableLiveData<Boolean> mutableError = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> mutableSlideError = new MutableLiveData<>(false);
+
+    private MutableLiveData<Boolean> mutableFullScreenError = new MutableLiveData<>(false);
 
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 
@@ -43,8 +45,12 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
         return mutableCategory;
     }
 
-    public MutableLiveData<Boolean> getMutableError() {
-        return mutableError;
+    public MutableLiveData<Boolean> getMutableSlideError() {
+        return mutableSlideError;
+    }
+
+    public MutableLiveData<Boolean> getMutableFullScreenError() {
+        return mutableFullScreenError;
     }
 
     /*End Getters*
@@ -56,7 +62,7 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
             @Override
             protected void onStart() {
                 super.onStart();
-                mutableError.setValue(false);
+                mutableFullScreenError.setValue(false);
                 isLoading.setValue(true);
                 mutableCategory.setValue(new ArrayList<>());
             }
@@ -64,13 +70,13 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
             @Override
             public void onSuccess(List<CategoryModel> categoryModels) {
                 mutableCategory.setValue(categoryModels);
-                mutableError.setValue(false);
+                mutableFullScreenError.setValue(false);
                 isLoading.setValue(false);
             }
 
             @Override
             public void onError(Throwable e) {
-                mutableError.setValue(true);
+                mutableFullScreenError.setValue(true);
                 isLoading.setValue(false);
             }
         });
@@ -83,20 +89,20 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
             protected void onStart() {
                 super.onStart();
                 isLoading.setValue(true);
-                mutableError.setValue(false);
+                mutableSlideError.setValue(false);
             }
 
             @Override
             public void onSuccess(Boolean aBoolean) {
                 isLoading.setValue(false);
                 isSuccess.setValue(true);
-                mutableError.setValue(false);
+                mutableSlideError.setValue(false);
 
             }
 
             @Override
             public void onError(Throwable e) {
-                mutableError.setValue(true);
+                mutableSlideError.setValue(true);
                 isLoading.setValue(false);
             }
         });
@@ -109,16 +115,20 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
             protected void onStart(){
                 super.onStart();
                 isLoading.setValue(true);
+                mutableSlideError.setValue(false);
             }
             @Override
             public void onSuccess(Boolean aBoolean) {
                 isLoading.setValue(false);
                 isSuccess.setValue(true);
+                mutableSlideError.setValue(false);
             }
 
             @Override
             public void onError(Throwable e) {
+                mutableSlideError.setValue(true);
                 isLoading.setValue(false);
+
             }
         });
     }

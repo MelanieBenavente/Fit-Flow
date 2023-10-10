@@ -70,6 +70,7 @@ public class HomeViewModel extends ViewModel {
 
             @Override
             public void onError(Throwable e) {
+                isLoading.setValue(false);
                 mutableError.setValue(true);
             }
         });

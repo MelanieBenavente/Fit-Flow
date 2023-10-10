@@ -34,6 +34,10 @@ public abstract class CommonActivity extends AppCompatActivity {
 
     public abstract @LayoutRes int getResLayout();
 
+    public void showBlockError(){
+        nextFragment(new BlockErrorFragment());
+    }
+
     public void showErrorSlideContainer() {
         final Animation slideDown = new TranslateAnimation(0, 0, -1000, 0);
         slideDown.setDuration(1000); // Duración de la animación en milisegundos
@@ -64,11 +68,11 @@ public abstract class CommonActivity extends AppCompatActivity {
         }, 1000); // Esperar 1 segundo antes de mostrar el contenedor
     }
 
-    public void showLoading() {
+    public void showLoadingFromActivity() {
         loadingLottie.setVisibility(View.VISIBLE);
     }
 
-    public void hideLoading() {
+    public void hideLoadingFromActivity() {
         loadingLottie.setVisibility(View.INVISIBLE);
     }
 
@@ -79,4 +83,5 @@ public abstract class CommonActivity extends AppCompatActivity {
                 .addToBackStack(fragment.getTag())
                 .commit();
     }
+
 }
