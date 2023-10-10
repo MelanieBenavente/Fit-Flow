@@ -50,7 +50,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
 
     private void setViewModelObservers() {
         categoriesAndExcercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExcercisesViewModel.class);
-        categoriesAndExcercisesViewModel.getMutableError().setValue(false);
+        categoriesAndExcercisesViewModel.getMutableSlideError().setValue(false);
         categoriesAndExcercisesViewModel.getIsLoading().setValue(false);
 
         //observing RazaList
@@ -72,17 +72,17 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
                 }
             }
         };
-        categoriesAndExcercisesViewModel.getMutableError().observe(getActivity(), errorObserver);
+        categoriesAndExcercisesViewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
 
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
                 try{
                     if (isLoading) {
-                        ((CommonActivity) requireActivity()).showLoading();
+                        showLoading();
 
                     } else {
-                        ((CommonActivity) requireActivity()).hideLoading();
+                        hideLoading();
                     }
                 }catch(Exception exception){
                     Log.e("Error","show loading");
@@ -100,7 +100,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
 
     private void printError() {
         try {
-            ((CommonActivity)requireActivity()).showBlockError();
+            showBlockError();
         }catch(Exception exception) {
             Log.e("Error", "Error to print errorContainer");
         }

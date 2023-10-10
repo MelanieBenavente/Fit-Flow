@@ -68,11 +68,11 @@ public abstract class CommonActivity extends AppCompatActivity {
         }, 1000); // Esperar 1 segundo antes de mostrar el contenedor
     }
 
-    public void showLoading() {
+    public void showLoadingFromActivity() {
         loadingLottie.setVisibility(View.VISIBLE);
     }
 
-    public void hideLoading() {
+    public void hideLoadingFromActivity() {
         loadingLottie.setVisibility(View.INVISIBLE);
     }
 

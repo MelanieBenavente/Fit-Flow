@@ -60,10 +60,10 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             public void onChanged(Boolean isLoading) {
                 try {
                     if (isLoading) {
-                        ((CommonActivity) requireActivity()).showLoading();
+                        showLoading();
 
                     } else {
-                        ((CommonActivity) requireActivity()).hideLoading();
+                        hideLoading();
                     }
                 } catch (Exception exception) {
                     Log.e("Error", "show loading");
@@ -82,6 +82,16 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             }
         };
         categoriesAndExcercisesViewModel.getIsSuccess().observe(getActivity(), observerIsSuccess);
+
+        final Observer<Boolean> observerError = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isError) {
+                if(isError){
+                    showSlideError();
+                }
+            }
+        };
+        categoriesAndExcercisesViewModel.getMutableSlideError().observe(getActivity(), observerError);
     }
 
     private void printCategoryDetail(CategoryModel categoryRecived) {
