@@ -12,8 +12,12 @@ public abstract class CommonFragment<V extends ViewModel> extends Fragment {
     protected V viewModel;
     protected abstract Class<V> getViewModelClass();
 
-    public void nextFragment(Fragment fragment) {
-        ((CommonActivity) getActivity()).nextFragment(fragment);
+    public void addFragment(Fragment fragment) {
+        ((CommonActivity) getActivity()).addFragment(fragment);
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        ((CommonActivity) getActivity()).replaceFragment(fragment);
     }
 
     public void showLoading(){

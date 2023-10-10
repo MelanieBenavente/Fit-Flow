@@ -80,7 +80,7 @@ public class ExcerciseListFragment extends CommonFragment {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(KEY_CATEGORY, categoriesAndExcercisesViewModel.getActualCategory().getValue());
                 addCategoryFragment.setArguments(bundle);
-                nextFragment(addCategoryFragment);
+                addFragment(addCategoryFragment);
             }
         });
     }

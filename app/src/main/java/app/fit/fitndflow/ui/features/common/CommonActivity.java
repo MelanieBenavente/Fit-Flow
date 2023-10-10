@@ -35,7 +35,7 @@ public abstract class CommonActivity extends AppCompatActivity {
     public abstract @LayoutRes int getResLayout();
 
     public void showBlockError(){
-        nextFragment(new BlockErrorFragment());
+        addFragment(new BlockErrorFragment());
     }
 
     public void showErrorSlideContainer() {
@@ -76,11 +76,18 @@ public abstract class CommonActivity extends AppCompatActivity {
         loadingLottie.setVisibility(View.INVISIBLE);
     }
 
-    public void nextFragment(Fragment fragment) {
+    public void addFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.MainActContainer, fragment)
                 .addToBackStack(fragment.getTag())
+                .commit();
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.MainActContainer, fragment)
                 .commit();
     }
 

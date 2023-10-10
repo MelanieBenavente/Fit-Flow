@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
-import app.fit.fitndflow.ui.features.common.CommonActivity;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.excercises.ExcerciseListFragment;
 
@@ -116,7 +115,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         binding.floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextFragment(new AddCategoryFragment());
+                addFragment(new AddCategoryFragment());
             }
         });
     }
@@ -125,13 +124,13 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     public void showExcercises(CategoryModel category) {
         categoriesAndExcercisesViewModel.getActualCategory().setValue(category);
         if(category.getExcerciseList() != null && !category.getExcerciseList().isEmpty()){
-            nextFragment(new ExcerciseListFragment());
+            addFragment(new ExcerciseListFragment());
         } else {
             AddCategoryFragment addCategoryFragment = new AddCategoryFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(KEY_CATEGORY, category);
             addCategoryFragment.setArguments(bundle);
-            nextFragment(addCategoryFragment);
+            addFragment(addCategoryFragment);
         }
 
     }
