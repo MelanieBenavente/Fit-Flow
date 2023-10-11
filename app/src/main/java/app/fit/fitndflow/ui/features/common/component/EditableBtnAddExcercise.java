@@ -10,13 +10,13 @@ import com.fit.fitndflow.R;
 
 import app.fit.fitndflow.domain.model.ExcerciseModel;
 
-public class EditableAddBtn extends LinearLayout {
+public class EditableBtnAddExcercise extends LinearLayout {
 
     private EditText editText;
 
     private ImageButton addBtn;
 
-    public EditableAddBtn(Context context, CategoryEditableListener categoryEditableListener) {
+    public EditableBtnAddExcercise(Context context, CategoryEditableListener categoryEditableListener) {
         super(context);
         View view = inflate(context, R.layout.component_editable_add_btn, this);
         bindViews(view);

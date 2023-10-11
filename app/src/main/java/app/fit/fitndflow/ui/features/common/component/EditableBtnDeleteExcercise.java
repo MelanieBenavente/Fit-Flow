@@ -10,12 +10,12 @@ import com.fit.fitndflow.R;
 
 import app.fit.fitndflow.domain.model.ExcerciseModel;
 
-public class EditableDeleteBtn extends LinearLayout {
+public class EditableBtnDeleteExcercise extends LinearLayout {
 
     private EditText editText;
     private ImageButton deleteBtn;
 
-    public EditableDeleteBtn(Context context, ExcerciseModel excercise, CategoryEditableListener categoryEditableListener, int position) {
+    public EditableBtnDeleteExcercise(Context context, ExcerciseModel excercise, CategoryEditableListener categoryEditableListener, int position) {
         super(context);
         View view = inflate(context, R.layout.component_editable_delete_btn, this);
         bindViews(view);

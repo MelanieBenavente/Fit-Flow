@@ -20,11 +20,10 @@ import java.util.ArrayList;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExcerciseModel;
-import app.fit.fitndflow.ui.features.common.CommonActivity;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.common.component.CategoryEditableListener;
-import app.fit.fitndflow.ui.features.common.component.EditableAddBtn;
-import app.fit.fitndflow.ui.features.common.component.EditableDeleteBtn;
+import app.fit.fitndflow.ui.features.common.component.EditableBtnAddExcercise;
+import app.fit.fitndflow.ui.features.common.component.EditableBtnDeleteExcercise;
 
 public class AddCategoryFragment extends CommonFragment implements CategoryEditableListener, DialogCallbackDelete {
 
@@ -33,7 +32,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
     private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
     private CategoryModel categoryModel;
 
-    private EditableAddBtn lastEditable;
+    private EditableBtnAddExcercise lastEditable;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +49,14 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             printEmptyExcerciseList();
         }
         return view;
+    }
+
+    public static AddCategoryFragment newInstance(CategoryModel category){
+       AddCategoryFragment addCategoryFragment = new AddCategoryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(KEY_CATEGORY, category);
+        addCategoryFragment.setArguments(bundle);
+       return addCategoryFragment;
     }
 
     private void setViewModelObservers() {
@@ -99,15 +106,15 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         binding.newCategoryTxt.setText(categoryRecived.getName());
         for (int position = 0; position < categoryRecived.getExcerciseList().size(); position++) {
             ExcerciseModel excercise = categoryRecived.getExcerciseList().get(position);
-            binding.editTxtContainer.addView(new EditableDeleteBtn(requireContext(), excercise, this, position));
+            binding.editTxtContainer.addView(new EditableBtnDeleteExcercise(requireContext(), excercise, this, position));
         }
 
-        lastEditable = new EditableAddBtn(requireContext(), this);
+        lastEditable = new EditableBtnAddExcercise(requireContext(), this);
         binding.editTxtContainer.addView(lastEditable);
     }
 
     private void printEmptyExcerciseList() {
-        lastEditable = new EditableAddBtn(requireContext(), this);
+        lastEditable = new EditableBtnAddExcercise(requireContext(), this);
         binding.editTxtContainer.addView(lastEditable);
     }
 

@@ -18,10 +18,10 @@ import app.fit.fitndflow.domain.model.CategoryModel;
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
     private List<CategoryModel> categoryModelList;
 
-    private CategoryAdapterCallback adapterCallback;
+    private CategoryAdapterCallback categoryAdapterCallback;
 
-    public CategoriesAdapter(CategoryAdapterCallback adapterCallback) {
-        this.adapterCallback = adapterCallback;
+    public CategoriesAdapter(CategoryAdapterCallback categoryAdapterCallback) {
+        this.categoryAdapterCallback = categoryAdapterCallback;
     }
 
     public void setCategoryList(List<CategoryModel> categoryList) {
@@ -42,7 +42,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    adapterCallback.showExcercises(categoryModelList.get(position));
+                    categoryAdapterCallback.showExcercises(categoryModelList.get(position));
             }
         });
     }

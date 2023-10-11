@@ -18,11 +18,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.fit.fitndflow.databinding.FragmentExcercisesListBinding;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExcerciseModel;
 import app.fit.fitndflow.ui.features.categories.AddCategoryFragment;
 import app.fit.fitndflow.ui.features.categories.CategoriesAndExcercisesViewModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
+import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
+import app.fit.fitndflow.ui.features.training.SerieAdapterCallback;
 
-public class ExcerciseListFragment extends CommonFragment {
+public class ExcerciseListFragment extends CommonFragment implements SerieAdapterCallback {
 
     private FragmentExcercisesListBinding binding;
 
@@ -46,7 +49,6 @@ public class ExcerciseListFragment extends CommonFragment {
     private void setViewModelObservers() {
         categoriesAndExcercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExcercisesViewModel.class);
 
-        //observing RazaList
         final Observer<CategoryModel> observer = new Observer<CategoryModel>() {
             @Override
             public void onChanged(CategoryModel category) {
@@ -58,7 +60,7 @@ public class ExcerciseListFragment extends CommonFragment {
     }
 
     private void printCategoryDetail(CategoryModel categoryRecived) {
-        ExcercisesAdapter excercisesAdapter = new ExcercisesAdapter(categoryRecived.getExcerciseList());
+        ExcercisesAdapter excercisesAdapter = new ExcercisesAdapter(categoryRecived.getExcerciseList(), this);
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerCategories.setAdapter(excercisesAdapter);
@@ -76,12 +78,15 @@ public class ExcerciseListFragment extends CommonFragment {
         binding.pencilFloatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddCategoryFragment addCategoryFragment = new AddCategoryFragment();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(KEY_CATEGORY, categoriesAndExcercisesViewModel.getActualCategory().getValue());
-                addCategoryFragment.setArguments(bundle);
+                CategoryModel category = categoriesAndExcercisesViewModel.getActualCategory().getValue();
+                AddCategoryFragment addCategoryFragment = AddCategoryFragment.newInstance(category);
                 addFragment(addCategoryFragment);
             }
         });
+    }
+
+    @Override
+    public void showSeries(ExcerciseModel excercise) {
+        addFragment(new AddSerieTrainingFragment());
     }
 }

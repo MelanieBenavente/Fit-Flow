@@ -126,12 +126,8 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         if(category.getExcerciseList() != null && !category.getExcerciseList().isEmpty()){
             addFragment(new ExcerciseListFragment());
         } else {
-            AddCategoryFragment addCategoryFragment = new AddCategoryFragment();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(KEY_CATEGORY, category);
-            addCategoryFragment.setArguments(bundle);
+            AddCategoryFragment addCategoryFragment = AddCategoryFragment.newInstance(category);
             addFragment(addCategoryFragment);
         }
-
     }
 }

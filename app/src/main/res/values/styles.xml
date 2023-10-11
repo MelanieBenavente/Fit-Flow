@@ -17,6 +17,13 @@
         <item name="android:backgroundTint">@color/pink_letters</item>
     </style>
 
+    <style name="GenericButtonWhite">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dark_purpure</item>
+        <item name="android:background">@drawable/border_btn</item>
+    </style>
+
     <style name="CalendarHeader">
         <item name="android:fontFamily">casual</item>
         <item name="android:textSize">17dp</item>

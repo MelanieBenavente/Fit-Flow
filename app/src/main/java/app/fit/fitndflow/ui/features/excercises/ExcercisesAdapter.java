@@ -14,12 +14,17 @@ import com.fit.fitndflow.R;
 import java.util.List;
 
 import app.fit.fitndflow.domain.model.ExcerciseModel;
+import app.fit.fitndflow.ui.features.training.SerieAdapterCallback;
 
 public class ExcercisesAdapter extends RecyclerView.Adapter<ExcercisesAdapter.ViewHolder> {
 
     private List<ExcerciseModel> excerciseModelList;
-    public ExcercisesAdapter(List<ExcerciseModel> excerciseModelList) {
+
+    private SerieAdapterCallback serieAdapterCallback;
+
+    public ExcercisesAdapter(List<ExcerciseModel> excerciseModelList, SerieAdapterCallback serieAdapterCallback) {
         this.excerciseModelList = excerciseModelList;
+        this.serieAdapterCallback = serieAdapterCallback;
     }
 
     @NonNull
@@ -33,6 +38,12 @@ public class ExcercisesAdapter extends RecyclerView.Adapter<ExcercisesAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExcerciseModel excercise = excerciseModelList.get(position);
         holder.textList.setText(excercise.getName());
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                serieAdapterCallback.showSeries(excerciseModelList.get(position));
+            }
+        });
     }
 
     @Override
