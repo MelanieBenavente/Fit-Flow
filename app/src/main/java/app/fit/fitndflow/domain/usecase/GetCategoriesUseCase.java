@@ -14,12 +14,13 @@ import io.reactivex.Single;
 
 public class GetCategoriesUseCase extends FitUseCase<None, List<CategoryModel>> {
 
-    private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
+    private FitnFlowRepository fitnFlowRepository;
     private Context context;
 
-    public GetCategoriesUseCase(Context context) {
+    public GetCategoriesUseCase(Context context, FitnFlowRepository fitnFlowRepository) {
         super();
         this.context = context;
+        this.fitnFlowRepository = fitnFlowRepository;
     }
 
     @Override

@@ -8,11 +8,15 @@ import androidx.lifecycle.ViewModel;
 import java.util.Calendar;
 import java.util.Date;
 
+import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
 import app.fit.fitndflow.domain.common.arq.FitObserver;
 import app.fit.fitndflow.domain.model.UserModel;
+import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCase;
 
 public class HomeViewModel extends ViewModel {
+
+    private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
     private MutableLiveData<Boolean> mutableError = new MutableLiveData<>(false);
     private MutableLiveData<Date> actualDate = new MutableLiveData<>(new Date());
 
@@ -55,7 +59,7 @@ public class HomeViewModel extends ViewModel {
 
     public void requestRegisterEmptyUser(Context context) {
         UserModel emptyUserModel = new UserModel();
-        new RegisterUserUseCase(emptyUserModel, context).execute(new FitObserver<UserModel>() {
+        new RegisterUserUseCase(emptyUserModel, context, fitnFlowRepository).execute(new FitObserver<UserModel>() {
 
             protected void onStart() {
                 super.onStart();

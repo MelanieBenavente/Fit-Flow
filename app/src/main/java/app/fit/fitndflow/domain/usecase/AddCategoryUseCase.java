@@ -18,12 +18,13 @@ import io.reactivex.Single;
 
 public class AddCategoryUseCase extends FitUseCase<CategoryModel, Boolean> {
 
-    private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
+    private FitnFlowRepository fitnFlowRepository;
     private Context context;
 
-    public AddCategoryUseCase(Context context, CategoryModel inputParams) {
+    public AddCategoryUseCase(Context context, CategoryModel inputParams, FitnFlowRepository fitnFlowRepository) {
         super(inputParams);
         this.context = context;
+        this.fitnFlowRepository = fitnFlowRepository;
     }
 
     @Override

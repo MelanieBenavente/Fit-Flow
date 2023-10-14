@@ -15,6 +15,9 @@ import retrofit2.Response;
 
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
+    private List<CategoryModel> categoryListCachedResponse;
+
+
     @Override
     public UserModel registerUser(UserDto userDto) throws Exception {
         Response<UserDto> response;
@@ -23,8 +26,11 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
-            UserModel mappedResponse = UserModelMapper.toModel(response.body());
-            return mappedResponse;
+            if(response != null && response.body() != null) {
+                return UserModelMapper.toModel(response.body());
+            } else {
+                throw new Exception("Error register");
+            }
         } catch (Exception e) {
             throw new Exception(e);
         }
@@ -32,17 +38,23 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
     @Override
     public List<CategoryModel> getCategoryList(String apiKey) throws Exception {
-        Response<List<CategoryDto>> response;
-        try {
-            response = RetrofitUtils.getRetrofitUtils().getCategoryDtoList(apiKey).execute();
-            if (response != null && !response.isSuccessful()) {
-                throw new ExcepcionApi(response.code());
+        if (categoryListCachedResponse == null) {
+            Response<List<CategoryDto>> response;
+            try {
+                response = RetrofitUtils.getRetrofitUtils().getCategoryDtoList(apiKey).execute();
+                if (response != null && !response.isSuccessful()) {
+                    throw new ExcepcionApi(response.code());
+                }
+                if(response != null && response.body() != null) {
+                    categoryListCachedResponse = CategoryModelMapper.toModel(response.body());
+                } else {
+                    return null;
+                }
+            } catch (Exception e) {
+                throw new Exception(e);
             }
-            List<CategoryModel> mappedResponse = CategoryModelMapper.toModel(response.body());
-            return mappedResponse;
-        } catch (Exception e) {
-            throw new Exception(e);
         }
+        return categoryListCachedResponse;
     }
 
     @Override
@@ -50,6 +62,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         try {
             Response<CategoryDto> response = RetrofitUtils.getRetrofitUtils().saveCategory(categoryDto, apikey).execute();
             if (response.isSuccessful()) {
+                deleteCache();
                 return true;
             } else {
                 throw new Exception(new Exception("Error from Server"));
@@ -64,6 +77,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         try {
             Response<CategoryDto> response = RetrofitUtils.getRetrofitUtils().deleteCategory(categoryId, apikey).execute();
             if (response.isSuccessful()) {
+                deleteCache();
                 return true;
             } else {
                 throw new Exception(new Exception("Error from Server"));
@@ -71,5 +85,9 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         } catch (Exception e) {
             throw new Exception(e);
         }
+    }
+
+    private void deleteCache(){
+        categoryListCachedResponse = null;
     }
 }

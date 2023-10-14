@@ -11,12 +11,13 @@ import io.reactivex.Single;
 
 public class DeleteCategoryUseCase extends FitUseCase<CategoryModel, Boolean> {
 
-    private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
+    private FitnFlowRepository fitnFlowRepository;
     private Context context;
 
-    public DeleteCategoryUseCase(CategoryModel inputParams, Context context) {
+    public DeleteCategoryUseCase(CategoryModel inputParams, Context context, FitnFlowRepository fitnFlowRepository) {
         super(inputParams);
         this.context = context;
+        this.fitnFlowRepository = fitnFlowRepository;
     }
 
     @Override

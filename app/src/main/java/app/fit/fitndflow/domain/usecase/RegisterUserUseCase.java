@@ -12,12 +12,13 @@ import io.reactivex.Single;
 
 public class RegisterUserUseCase extends FitUseCase<UserModel, UserModel> {
 
-    private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
+    private FitnFlowRepository fitnFlowRepository;
     private Context context;
 
-    public RegisterUserUseCase(UserModel inputParams, Context context) {
+    public RegisterUserUseCase(UserModel inputParams, Context context, FitnFlowRepository fitnFlowRepository) {
         super(inputParams);
         this.context = context;
+        this.fitnFlowRepository = fitnFlowRepository;
     }
 
     @Override

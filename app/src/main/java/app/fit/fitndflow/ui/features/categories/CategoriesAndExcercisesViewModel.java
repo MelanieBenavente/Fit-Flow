@@ -8,14 +8,16 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
 import app.fit.fitndflow.domain.common.arq.FitObserver;
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import app.fit.fitndflow.domain.usecase.AddCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 
 public class CategoriesAndExcercisesViewModel extends ViewModel {
-
+    private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
     private MutableLiveData<CategoryModel> actualCategory = new MutableLiveData<>();
     private MutableLiveData<List<CategoryModel>> mutableCategory = new MutableLiveData<>();
 
@@ -57,8 +59,8 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
      *
      * */
     public void requestCategoriesFromModel(Context context) {
-
-        new GetCategoriesUseCase(context).execute(new FitObserver<List<CategoryModel>>() {
+            GetCategoriesUseCase getCategoriesUseCase = new GetCategoriesUseCase(context, fitnFlowRepository);
+        getCategoriesUseCase.execute(new FitObserver<List<CategoryModel>>() {
             @Override
             protected void onStart() {
                 super.onStart();
@@ -83,7 +85,7 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
     }
 
     public void saveCategory(Context context, CategoryModel categoryModel){
-        new AddCategoryUseCase(context, categoryModel). execute(new FitObserver<Boolean>() {
+        new AddCategoryUseCase(context, categoryModel, fitnFlowRepository). execute(new FitObserver<Boolean>() {
 
             @Override
             protected void onStart() {
@@ -109,7 +111,7 @@ public class CategoriesAndExcercisesViewModel extends ViewModel {
     }
 
     public void deleteCategory(CategoryModel categoryModel, Context context){
-        new DeleteCategoryUseCase(categoryModel, context).execute(new FitObserver<Boolean>() {
+        new DeleteCategoryUseCase(categoryModel, context, fitnFlowRepository).execute(new FitObserver<Boolean>() {
 
             @Override
             protected void onStart(){
