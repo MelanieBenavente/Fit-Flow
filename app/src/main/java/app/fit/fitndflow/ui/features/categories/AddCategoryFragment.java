@@ -18,7 +18,7 @@ import com.fit.fitndflow.databinding.AddFragmentCategoryBinding;
 
 import java.util.ArrayList;
 
-import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.CategoryModelKT;
 import app.fit.fitndflow.domain.model.ExcerciseModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.common.component.CategoryEditableListener;
@@ -30,7 +30,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
     public static final String KEY_CATEGORY = "actualCategory";
     private AddFragmentCategoryBinding binding;
     private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
-    private CategoryModel categoryModel;
+    private CategoryModelKT categoryModel;
 
     private EditableBtnAddExcercise lastEditable;
 
@@ -43,7 +43,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         setClickListeners();
         Bundle bundle = getArguments();
         if (bundle != null) {
-            categoryModel = (CategoryModel) bundle.getSerializable(KEY_CATEGORY);
+            categoryModel = (CategoryModelKT) bundle.getSerializable(KEY_CATEGORY);
             printCategoryDetail(categoryModel);
         } else {
             printEmptyExcerciseList();
@@ -51,7 +51,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         return view;
     }
 
-    public static AddCategoryFragment newInstance(CategoryModel category){
+    public static AddCategoryFragment newInstance(CategoryModelKT category){
        AddCategoryFragment addCategoryFragment = new AddCategoryFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(KEY_CATEGORY, category);
@@ -101,7 +101,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         categoriesAndExcercisesViewModel.getMutableSlideError().observe(getActivity(), observerError);
     }
 
-    private void printCategoryDetail(CategoryModel categoryRecived) {
+    private void printCategoryDetail(CategoryModelKT categoryRecived) {
         binding.editTxtContainer.removeAllViews();
         binding.newCategoryTxt.setText(categoryRecived.getName());
         for (int position = 0; position < categoryRecived.getExcerciseList().size(); position++) {
@@ -146,7 +146,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
     private void updateScreenData() {
         if (categoryModel == null) {
             String categoryName = binding.newCategoryTxt.getText().toString();
-            categoryModel = new CategoryModel(categoryName);
+            categoryModel = new CategoryModelKT(null, categoryName, null);
         } else {
             String categoryName = binding.newCategoryTxt.getText().toString();
             categoryModel.setName(categoryName);
@@ -168,7 +168,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
     public void onClickAdd(ExcerciseModel excercise) {
         if (categoryModel == null) {
             String categoryName = binding.newCategoryTxt.getText().toString();
-            categoryModel = new CategoryModel(categoryName);
+            categoryModel = new CategoryModelKT(null, categoryName, null);
         }
         if (categoryModel.getExcerciseList() == null) {
             categoryModel.setExcerciseList(new ArrayList<>());

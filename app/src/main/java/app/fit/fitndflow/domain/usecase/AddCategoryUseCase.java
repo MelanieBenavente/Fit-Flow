@@ -11,19 +11,20 @@ import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import app.fit.fitndflow.data.dto.categories.ExcerciseDto;
 import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
 import app.fit.fitndflow.domain.common.usecase.FitUseCase;
-import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.CategoryModelKT;
 import app.fit.fitndflow.domain.model.ExcerciseModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import io.reactivex.Single;
 
-public class AddCategoryUseCase extends FitUseCase<CategoryModel, Boolean> {
+public class AddCategoryUseCase extends FitUseCase<CategoryModelKT, Boolean> {
 
-    private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
+    private FitnFlowRepository fitnFlowRepository;
     private Context context;
 
-    public AddCategoryUseCase(Context context, CategoryModel inputParams) {
+    public AddCategoryUseCase(Context context, CategoryModelKT inputParams, FitnFlowRepository fitnFlowRepository) {
         super(inputParams);
         this.context = context;
+        this.fitnFlowRepository = fitnFlowRepository;
     }
 
     @Override

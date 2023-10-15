@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fit.fitndflow.databinding.FragmentExcercisesListBinding;
 
-import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.CategoryModelKT;
 import app.fit.fitndflow.domain.model.ExcerciseModel;
 import app.fit.fitndflow.ui.features.categories.AddCategoryFragment;
 import app.fit.fitndflow.ui.features.categories.CategoriesAndExcercisesViewModel;
@@ -49,9 +49,9 @@ public class ExcerciseListFragment extends CommonFragment implements SerieAdapte
     private void setViewModelObservers() {
         categoriesAndExcercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExcercisesViewModel.class);
 
-        final Observer<CategoryModel> observer = new Observer<CategoryModel>() {
+        final Observer<CategoryModelKT> observer = new Observer<CategoryModelKT>() {
             @Override
-            public void onChanged(CategoryModel category) {
+            public void onChanged(CategoryModelKT category) {
                 printCategoryDetail(category);
             }
         };
@@ -59,7 +59,7 @@ public class ExcerciseListFragment extends CommonFragment implements SerieAdapte
         categoriesAndExcercisesViewModel.getActualCategory().observe(getActivity(), observer);
     }
 
-    private void printCategoryDetail(CategoryModel categoryRecived) {
+    private void printCategoryDetail(CategoryModelKT categoryRecived) {
         ExcercisesAdapter excercisesAdapter = new ExcercisesAdapter(categoryRecived.getExcerciseList(), this);
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -78,7 +78,7 @@ public class ExcerciseListFragment extends CommonFragment implements SerieAdapte
         binding.pencilFloatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CategoryModel category = categoriesAndExcercisesViewModel.getActualCategory().getValue();
+                CategoryModelKT category = categoriesAndExcercisesViewModel.getActualCategory().getValue();
                 AddCategoryFragment addCategoryFragment = AddCategoryFragment.newInstance(category);
                 addFragment(addCategoryFragment);
             }

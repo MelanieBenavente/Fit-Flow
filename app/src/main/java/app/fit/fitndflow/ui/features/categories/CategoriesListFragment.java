@@ -19,13 +19,14 @@ import com.fit.fitndflow.databinding.FragmentCategoriesListBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.CategoryModelKT;
+import app.fit.fitndflow.ui.features.common.CommonActivity;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.excercises.ExcerciseListFragment;
 
 public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback {
 
-    private List<CategoryModel> categoryList = new ArrayList<>();
+    private List<CategoryModelKT> categoryList = new ArrayList<>();
     private FragmentCategoriesListBinding binding;
     private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
     private CategoriesAdapter categoriesAdapter;
@@ -53,9 +54,9 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         categoriesAndExcercisesViewModel.getIsLoading().setValue(false);
 
         //observing RazaList
-        final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
+        final Observer<List<CategoryModelKT>> observer = new Observer<List<CategoryModelKT>>() {
             @Override
-            public void onChanged(List<CategoryModel> categories) {
+            public void onChanged(List<CategoryModelKT> categories) {
                 printCategories(categories);
             }
         };
@@ -91,7 +92,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         categoriesAndExcercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
     }
 
-    private void printCategories(List<CategoryModel> listRecived) {
+    private void printCategories(List<CategoryModelKT> listRecived) {
         categoryList = listRecived;
         categoriesAdapter.setCategoryList(categoryList);
         categoriesAdapter.notifyDataSetChanged();
@@ -121,7 +122,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     }
 
     @Override
-    public void showExcercises(CategoryModel category) {
+    public void showExcercises(CategoryModelKT category) {
         categoriesAndExcercisesViewModel.getActualCategory().setValue(category);
         if(category.getExcerciseList() != null && !category.getExcerciseList().isEmpty()){
             addFragment(new ExcerciseListFragment());

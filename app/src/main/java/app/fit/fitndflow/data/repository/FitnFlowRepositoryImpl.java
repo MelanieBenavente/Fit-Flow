@@ -6,14 +6,17 @@ import app.fit.fitndflow.data.common.RetrofitUtils;
 import app.fit.fitndflow.data.common.model.ExcepcionApi;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
-import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.CategoryModelKT;
 import app.fit.fitndflow.domain.model.UserModel;
-import app.fit.fitndflow.domain.model.mapper.CategoryModelMapper;
+import app.fit.fitndflow.domain.model.mapper.CategoryModelKTMapper;
 import app.fit.fitndflow.domain.model.mapper.UserModelMapper;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import retrofit2.Response;
 
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
+
+    private List<CategoryModelKT> categoryListCachedResponse;
+
 
     @Override
     public UserModel registerUser(UserDto userDto) throws Exception {
@@ -23,26 +26,35 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
-            UserModel mappedResponse = UserModelMapper.toModel(response.body());
-            return mappedResponse;
+            if(response != null && response.body() != null) {
+                return UserModelMapper.toModel(response.body());
+            } else {
+                throw new Exception("Error register");
+            }
         } catch (Exception e) {
             throw new Exception(e);
         }
     }
 
     @Override
-    public List<CategoryModel> getCategoryList(String apiKey) throws Exception {
-        Response<List<CategoryDto>> response;
-        try {
-            response = RetrofitUtils.getRetrofitUtils().getCategoryDtoList(apiKey).execute();
-            if (response != null && !response.isSuccessful()) {
-                throw new ExcepcionApi(response.code());
+    public List<CategoryModelKT> getCategoryList(String apiKey) throws Exception {
+        if (categoryListCachedResponse == null) {
+            Response<List<CategoryDto>> response;
+            try {
+                response = RetrofitUtils.getRetrofitUtils().getCategoryDtoList(apiKey).execute();
+                if (response != null && !response.isSuccessful()) {
+                    throw new ExcepcionApi(response.code());
+                }
+                if(response != null && response.body() != null) {
+                    categoryListCachedResponse = CategoryModelKTMapper.toModel(response.body());
+                } else {
+                    return null;
+                }
+            } catch (Exception e) {
+                throw new Exception(e);
             }
-            List<CategoryModel> mappedResponse = CategoryModelMapper.toModel(response.body());
-            return mappedResponse;
-        } catch (Exception e) {
-            throw new Exception(e);
         }
+        return categoryListCachedResponse;
     }
 
     @Override
@@ -50,6 +62,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         try {
             Response<CategoryDto> response = RetrofitUtils.getRetrofitUtils().saveCategory(categoryDto, apikey).execute();
             if (response.isSuccessful()) {
+                deleteCache();
                 return true;
             } else {
                 throw new Exception(new Exception("Error from Server"));
@@ -64,6 +77,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         try {
             Response<CategoryDto> response = RetrofitUtils.getRetrofitUtils().deleteCategory(categoryId, apikey).execute();
             if (response.isSuccessful()) {
+                deleteCache();
                 return true;
             } else {
                 throw new Exception(new Exception("Error from Server"));
@@ -71,5 +85,9 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         } catch (Exception e) {
             throw new Exception(e);
         }
+    }
+
+    private void deleteCache(){
+        categoryListCachedResponse = null;
     }
 }
