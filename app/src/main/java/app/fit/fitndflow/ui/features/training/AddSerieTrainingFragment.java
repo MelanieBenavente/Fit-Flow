@@ -10,19 +10,19 @@ import androidx.annotation.Nullable;
 
 import com.fit.fitndflow.databinding.AddSerieTrainingFragmentBinding;
 
-import app.fit.fitndflow.domain.model.ExcerciseModel;
-import app.fit.fitndflow.ui.features.categories.CategoriesAndExcercisesViewModel;
+import app.fit.fitndflow.domain.model.ExerciseModel;
+import app.fit.fitndflow.ui.features.categories.CategoriesAndExercisesViewModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 
 public class AddSerieTrainingFragment extends CommonFragment {
 
-    public static final String KEY_EXCERCISE = "actualExcercise";
+    public static final String KEY_EXCERCISE = "actualExercise";
     private AddSerieTrainingFragmentBinding binding;
 
-    private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
+    private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
 
 
-    private ExcerciseModel excerciseModel;
+    private ExerciseModel exerciseModel;
 
     @Nullable
     @Override
@@ -32,21 +32,21 @@ public class AddSerieTrainingFragment extends CommonFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         Bundle bundle = getArguments();
         if(bundle != null){
-            excerciseModel = (ExcerciseModel) bundle.getSerializable(KEY_EXCERCISE);
+            exerciseModel = (ExerciseModel) bundle.getSerializable(KEY_EXCERCISE);
         }
-        binding.excerciseNameTitle.setText(excerciseModel.getName());
+        binding.exerciseNameTitle.setText(exerciseModel.getName());
         return view;
     }
 
     @Override
     protected Class getViewModelClass() {
-        return CategoriesAndExcercisesViewModel.class;
+        return CategoriesAndExercisesViewModel.class;
     }
 
-    public static AddSerieTrainingFragment newInstance(ExcerciseModel excercise){
+    public static AddSerieTrainingFragment newInstance(ExerciseModel exercise){
         AddSerieTrainingFragment addSerieTrainingFragment = new AddSerieTrainingFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_EXCERCISE, excercise);
+        bundle.putSerializable(KEY_EXCERCISE, exercise);
         addSerieTrainingFragment.setArguments(bundle);
         return addSerieTrainingFragment;
     }

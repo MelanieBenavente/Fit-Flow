@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/pink_letters">
         <TextView
-            android:id="@+id/excerciseNameTitle"
+            android:id="@+id/exerciseNameTitle"
             android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:textStyle="bold"
             android:textAllCaps="true"
             android:gravity="center"
-            android:text="excercise name"/>
+            android:text="exercise name"/>
     </FrameLayout>
 
     <ScrollView

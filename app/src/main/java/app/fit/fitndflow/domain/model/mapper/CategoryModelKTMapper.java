@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
-import app.fit.fitndflow.data.dto.categories.ExcerciseDto;
-import app.fit.fitndflow.domain.model.CategoryModelKT;
-import app.fit.fitndflow.domain.model.ExcerciseModel;
+import app.fit.fitndflow.data.dto.categories.ExerciseDto;
+import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExerciseModel;
 
 
 public class CategoryModelKTMapper {
 
-    public static List<CategoryModelKT> toModel(List<CategoryDto> categoryDtoList) {
-        List<CategoryModelKT> categoryModelKTList = new ArrayList<>();
+    public static List<CategoryModel> toModel(List<CategoryDto> categoryDtoList) {
+        List<CategoryModel> categoryModelList = new ArrayList<>();
         for (CategoryDto categoryDto : categoryDtoList) {
-            CategoryModelKT CategoryModelKT = new CategoryModelKT(categoryDto.id, categoryDto.name.spanish, new ArrayList<>());
-            for (ExcerciseDto excerciseDto : categoryDto.excerciseDtoList) {
-                ExcerciseModel exerciseModel = new ExcerciseModel(excerciseDto.id, excerciseDto.exerciseName.spanish);
-                CategoryModelKT.getExcerciseList().add(exerciseModel);
+            CategoryModel CategoryModel = new CategoryModel(categoryDto.getId(), categoryDto.getName().getSpanish(), new ArrayList<>());
+            for (ExerciseDto exerciseDto : categoryDto.getExerciseDtoList()) {
+                ExerciseModel exerciseModel = new ExerciseModel(exerciseDto.getId(), exerciseDto.getExerciseName().getSpanish());
+                CategoryModel.getExerciseList().add(exerciseModel);
             }
-            categoryModelKTList.add(CategoryModelKT);
+            categoryModelList.add(CategoryModel);
         }
-        return categoryModelKTList;
+        return categoryModelList;
     }
 }

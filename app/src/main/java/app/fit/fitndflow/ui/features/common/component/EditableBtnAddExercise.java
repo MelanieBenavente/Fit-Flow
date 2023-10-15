@@ -8,15 +8,15 @@ import android.widget.LinearLayout;
 
 import com.fit.fitndflow.R;
 
-import app.fit.fitndflow.domain.model.ExcerciseModel;
+import app.fit.fitndflow.domain.model.ExerciseModel;
 
-public class EditableBtnAddExcercise extends LinearLayout {
+public class EditableBtnAddExercise extends LinearLayout {
 
     private EditText editText;
 
     private ImageButton addBtn;
 
-    public EditableBtnAddExcercise(Context context, CategoryEditableListener categoryEditableListener) {
+    public EditableBtnAddExercise(Context context, CategoryEditableListener categoryEditableListener) {
         super(context);
         View view = inflate(context, R.layout.component_editable_add_btn, this);
         bindViews(view);
@@ -34,8 +34,8 @@ public class EditableBtnAddExcercise extends LinearLayout {
             public void onClick(View view) {
                 String name = editText.getText().toString();
                 if(name != null && !name.equals("")){
-                    ExcerciseModel excercise = new ExcerciseModel(name);
-                    categoryEditableListener.onClickAdd(excercise);
+                    ExerciseModel exercise = new ExerciseModel(null, name);
+                    categoryEditableListener.onClickAdd(exercise);
                 }
 
             }

@@ -8,18 +8,18 @@ import android.widget.LinearLayout;
 
 import com.fit.fitndflow.R;
 
-import app.fit.fitndflow.domain.model.ExcerciseModel;
+import app.fit.fitndflow.domain.model.ExerciseModel;
 
-public class EditableBtnDeleteExcercise extends LinearLayout {
+public class EditableBtnDeleteExercise extends LinearLayout {
 
     private EditText editText;
     private ImageButton deleteBtn;
 
-    public EditableBtnDeleteExcercise(Context context, ExcerciseModel excercise, CategoryEditableListener categoryEditableListener, int position) {
+    public EditableBtnDeleteExercise(Context context, ExerciseModel exercise, CategoryEditableListener categoryEditableListener, int position) {
         super(context);
         View view = inflate(context, R.layout.component_editable_delete_btn, this);
         bindViews(view);
-        printExcercise(excercise);
+        printExercise(exercise);
         setClickListener(categoryEditableListener, position);
     }
 
@@ -28,8 +28,8 @@ public class EditableBtnDeleteExcercise extends LinearLayout {
         deleteBtn = view.findViewById(R.id.button);
     }
 
-    private void printExcercise(ExcerciseModel excercise){
-        editText.setText(excercise.getName());
+    private void printExercise(ExerciseModel exercise){
+        editText.setText(exercise.getName());
     }
 
     private void setClickListener(CategoryEditableListener categoryEditableListener,int position){

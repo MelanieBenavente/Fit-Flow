@@ -1,7 +1,5 @@
 package app.fit.fitndflow.ui.features.categories;
 
-import static app.fit.fitndflow.ui.features.categories.AddCategoryFragment.KEY_CATEGORY;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,21 +17,20 @@ import com.fit.fitndflow.databinding.FragmentCategoriesListBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fit.fitndflow.domain.model.CategoryModelKT;
-import app.fit.fitndflow.ui.features.common.CommonActivity;
+import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
-import app.fit.fitndflow.ui.features.excercises.ExcerciseListFragment;
+import app.fit.fitndflow.ui.features.exercises.ExerciseListFragment;
 
 public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback {
 
-    private List<CategoryModelKT> categoryList = new ArrayList<>();
+    private List<CategoryModel> categoryList = new ArrayList<>();
     private FragmentCategoriesListBinding binding;
-    private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
+    private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
     private CategoriesAdapter categoriesAdapter;
 
     @Override
     protected Class getViewModelClass() {
-        return CategoriesAndExcercisesViewModel.class;
+        return CategoriesAndExercisesViewModel.class;
     }
 
     @Override
@@ -44,24 +41,24 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         instantiateCategoriesAdapter();
         setViewModelObservers();
         setOnClickListeners();
-        categoriesAndExcercisesViewModel.requestCategoriesFromModel(requireContext());
+        categoriesAndExercisesViewModel.requestCategoriesFromModel(requireContext());
         return view;
     }
 
     private void setViewModelObservers() {
-        categoriesAndExcercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExcercisesViewModel.class);
-        categoriesAndExcercisesViewModel.getMutableSlideError().setValue(false);
-        categoriesAndExcercisesViewModel.getIsLoading().setValue(false);
+        categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
+        categoriesAndExercisesViewModel.getMutableSlideError().setValue(false);
+        categoriesAndExercisesViewModel.getIsLoading().setValue(false);
 
         //observing RazaList
-        final Observer<List<CategoryModelKT>> observer = new Observer<List<CategoryModelKT>>() {
+        final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
             @Override
-            public void onChanged(List<CategoryModelKT> categories) {
+            public void onChanged(List<CategoryModel> categories) {
                 printCategories(categories);
             }
         };
         //Observamos al listado del ViewModel y ejecutamos las acciones indicadas antes en el observer
-        categoriesAndExcercisesViewModel.getMutableCategory().observe(getActivity(), observer);
+        categoriesAndExercisesViewModel.getMutableCategory().observe(getActivity(), observer);
 
         //observing error
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
@@ -72,7 +69,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
                 }
             }
         };
-        categoriesAndExcercisesViewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
+        categoriesAndExercisesViewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
 
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
@@ -89,10 +86,10 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
                 }
             }
         };
-        categoriesAndExcercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
+        categoriesAndExercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
     }
 
-    private void printCategories(List<CategoryModelKT> listRecived) {
+    private void printCategories(List<CategoryModel> listRecived) {
         categoryList = listRecived;
         categoriesAdapter.setCategoryList(categoryList);
         categoriesAdapter.notifyDataSetChanged();
@@ -122,10 +119,10 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     }
 
     @Override
-    public void showExcercises(CategoryModelKT category) {
-        categoriesAndExcercisesViewModel.getActualCategory().setValue(category);
-        if(category.getExcerciseList() != null && !category.getExcerciseList().isEmpty()){
-            addFragment(new ExcerciseListFragment());
+    public void showExercises(CategoryModel category) {
+        categoriesAndExercisesViewModel.getActualCategory().setValue(category);
+        if(category.getExerciseList() != null && !category.getExerciseList().isEmpty()){
+            addFragment(new ExerciseListFragment());
         } else {
             AddCategoryFragment addCategoryFragment = AddCategoryFragment.newInstance(category);
             addFragment(addCategoryFragment);

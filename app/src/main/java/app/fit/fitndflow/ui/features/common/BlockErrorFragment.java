@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.fit.fitndflow.databinding.BlockErrorFragmentBinding;
 
-import app.fit.fitndflow.ui.features.categories.CategoriesAndExcercisesViewModel;
+import app.fit.fitndflow.ui.features.categories.CategoriesAndExercisesViewModel;
 import app.fit.fitndflow.ui.features.home.HomeViewModel;
 
 public class BlockErrorFragment extends CommonFragment {

@@ -6,22 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.data.common.SharedPrefs;
-import app.fit.fitndflow.data.dto.StringInLanguages;
+import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
-import app.fit.fitndflow.data.dto.categories.ExcerciseDto;
-import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
+import app.fit.fitndflow.data.dto.categories.ExerciseDto;
 import app.fit.fitndflow.domain.common.usecase.FitUseCase;
-import app.fit.fitndflow.domain.model.CategoryModelKT;
-import app.fit.fitndflow.domain.model.ExcerciseModel;
+import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import io.reactivex.Single;
 
-public class AddCategoryUseCase extends FitUseCase<CategoryModelKT, Boolean> {
+public class AddCategoryUseCase extends FitUseCase<CategoryModel, Boolean> {
 
     private FitnFlowRepository fitnFlowRepository;
     private Context context;
 
-    public AddCategoryUseCase(Context context, CategoryModelKT inputParams, FitnFlowRepository fitnFlowRepository) {
+    public AddCategoryUseCase(Context context, CategoryModel inputParams, FitnFlowRepository fitnFlowRepository) {
         super(inputParams);
         this.context = context;
         this.fitnFlowRepository = fitnFlowRepository;
@@ -32,24 +31,24 @@ public class AddCategoryUseCase extends FitUseCase<CategoryModelKT, Boolean> {
         return Single.create(emitter -> {
             try {
                 String apiKey = SharedPrefs.getApikeyFromSharedPRefs(context);
-                List<ExcerciseDto> excerciseDtoList = new ArrayList<>();
-                if(inputParams.getExcerciseList() != null) {
-                    for (int i = 0; i < inputParams.getExcerciseList().size(); i++) {
-                        ExcerciseModel excerciseModel = inputParams.getExcerciseList().get(i);
-                        ExcerciseDto excerciseDto = new ExcerciseDto();
-                        excerciseDto.id = excerciseModel.getId();
-                        excerciseDto.exerciseName = new StringInLanguages();
-                        excerciseDto.exerciseName.spanish = excerciseModel.getName();
-                        excerciseDtoList.add(excerciseDto);
+                List<ExerciseDto> exerciseDtoList = new ArrayList<>();
+                if(inputParams.getExerciseList() != null) {
+                    for (int i = 0; i < inputParams.getExerciseList().size(); i++) {
+                        ExerciseModel exerciseModel = inputParams.getExerciseList().get(i);
+                        ExerciseDto exerciseDto = new ExerciseDto(null, null);
+                        exerciseDto.setId(exerciseModel.getId());
+                        exerciseDto.setExerciseName(new StringInLanguagesDto(null, null));
+                        exerciseDto.getExerciseName().setSpanish(exerciseModel.getName());
+                        exerciseDtoList.add(exerciseDto);
                     }
                 }
-                CategoryDto categoryDto = new CategoryDto();
-                categoryDto.id = inputParams.getId();
-                categoryDto.name = new StringInLanguages();
-                categoryDto.name.spanish = inputParams.getName();
-                categoryDto.excerciseDtoList = excerciseDtoList;
+                CategoryDto categoryDto = new CategoryDto(null, null, null);
+                categoryDto.setId(inputParams.getId());
+                categoryDto.setName(new StringInLanguagesDto(null, null));
+                categoryDto.getName().setSpanish(inputParams.getName());
+                categoryDto.setExerciseDtoList(exerciseDtoList);
 
-                Boolean response = fitnFlowRepository.saveCategoryAndExcercises(categoryDto, apiKey);
+                Boolean response = fitnFlowRepository.saveCategoryAndExercises(categoryDto, apiKey);
                 emitter.onSuccess(response);
             } catch (Exception exception) {
                 emitter.onError(exception);

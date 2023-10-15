@@ -1,7 +1,5 @@
-package app.fit.fitndflow.ui.features.excercises;
+package app.fit.fitndflow.ui.features.exercises;
 
-
-import static app.fit.fitndflow.ui.features.categories.AddCategoryFragment.KEY_CATEGORY;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,30 +13,30 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.fit.fitndflow.databinding.FragmentExcercisesListBinding;
+import com.fit.fitndflow.databinding.FragmentExercisesListBinding;
 
-import app.fit.fitndflow.domain.model.CategoryModelKT;
-import app.fit.fitndflow.domain.model.ExcerciseModel;
+import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.ui.features.categories.AddCategoryFragment;
-import app.fit.fitndflow.ui.features.categories.CategoriesAndExcercisesViewModel;
+import app.fit.fitndflow.ui.features.categories.CategoriesAndExercisesViewModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback;
 
-public class ExcerciseListFragment extends CommonFragment implements SerieAdapterCallback {
+public class ExerciseListFragment extends CommonFragment implements SerieAdapterCallback {
 
-    private FragmentExcercisesListBinding binding;
+    private FragmentExercisesListBinding binding;
 
-    private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
+    private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
 
     @Override
     protected Class getViewModelClass() {
-        return CategoriesAndExcercisesViewModel.class;
+        return CategoriesAndExercisesViewModel.class;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentExcercisesListBinding.inflate(getLayoutInflater());
+        binding = FragmentExercisesListBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
         setViewModelObservers();
@@ -47,24 +45,24 @@ public class ExcerciseListFragment extends CommonFragment implements SerieAdapte
     }
 
     private void setViewModelObservers() {
-        categoriesAndExcercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExcercisesViewModel.class);
+        categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
 
-        final Observer<CategoryModelKT> observer = new Observer<CategoryModelKT>() {
+        final Observer<CategoryModel> observer = new Observer<CategoryModel>() {
             @Override
-            public void onChanged(CategoryModelKT category) {
+            public void onChanged(CategoryModel category) {
                 printCategoryDetail(category);
             }
         };
         //Observamos al listado del ViewModel y ejecutamos las acciones indicadas antes en el observer
-        categoriesAndExcercisesViewModel.getActualCategory().observe(getActivity(), observer);
+        categoriesAndExercisesViewModel.getActualCategory().observe(getActivity(), observer);
     }
 
-    private void printCategoryDetail(CategoryModelKT categoryRecived) {
-        ExcercisesAdapter excercisesAdapter = new ExcercisesAdapter(categoryRecived.getExcerciseList(), this);
+    private void printCategoryDetail(CategoryModel categoryRecived) {
+        ExercisesAdapter exercisesAdapter = new ExercisesAdapter(categoryRecived.getExerciseList(), this);
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        binding.recyclerCategories.setAdapter(excercisesAdapter);
-        excercisesAdapter.notifyDataSetChanged();
+        binding.recyclerCategories.setAdapter(exercisesAdapter);
+        exercisesAdapter.notifyDataSetChanged();
 
         binding.categoryTitle.setText(categoryRecived.getName());
     }
@@ -78,7 +76,7 @@ public class ExcerciseListFragment extends CommonFragment implements SerieAdapte
         binding.pencilFloatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CategoryModelKT category = categoriesAndExcercisesViewModel.getActualCategory().getValue();
+                CategoryModel category = categoriesAndExercisesViewModel.getActualCategory().getValue();
                 AddCategoryFragment addCategoryFragment = AddCategoryFragment.newInstance(category);
                 addFragment(addCategoryFragment);
             }
@@ -86,9 +84,9 @@ public class ExcerciseListFragment extends CommonFragment implements SerieAdapte
     }
 
     @Override
-    public void showSeries(ExcerciseModel excercise) {
-        if(excercise.getId() != 0 && excercise.getName() != null){
-            addFragment(AddSerieTrainingFragment.newInstance(excercise));
+    public void showSeries(ExerciseModel exercise) {
+        if(exercise.getId() != 0 && exercise.getName() != null){
+            addFragment(AddSerieTrainingFragment.newInstance(exercise));
         } else {
             showBlockError();
         }

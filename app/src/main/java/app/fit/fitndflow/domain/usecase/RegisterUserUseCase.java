@@ -25,12 +25,12 @@ public class RegisterUserUseCase extends FitUseCase<UserModel, UserModel> {
     public Single<UserModel> buildUseCaseObservable() {
         return Single.create(emitter -> {
             try {
-                UserDto userDto = new UserDto();
+                UserDto userDto = new UserDto(null, null, null, null);
                 //converting the usermodel to userdto
                 if (inputParams != null) {
-                    userDto.apiKey = inputParams.getApiKey();
-                    userDto.email = inputParams.getEmail();
-                    userDto.userNAme = inputParams.getName();
+                    userDto.setApiKey(inputParams.getApiKey());
+                    userDto.setEmail(inputParams.getEmail());
+                    userDto.setUserName(inputParams.getName());
                 }
                 UserModel response = fitnFlowRepository.registerUser(userDto);
                 //When server responses, save apikey in sessionPRefs
