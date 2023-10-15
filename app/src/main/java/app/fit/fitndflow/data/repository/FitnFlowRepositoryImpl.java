@@ -6,16 +6,16 @@ import app.fit.fitndflow.data.common.RetrofitUtils;
 import app.fit.fitndflow.data.common.model.ExcepcionApi;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
-import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.CategoryModelKT;
 import app.fit.fitndflow.domain.model.UserModel;
-import app.fit.fitndflow.domain.model.mapper.CategoryModelMapper;
+import app.fit.fitndflow.domain.model.mapper.CategoryModelKTMapper;
 import app.fit.fitndflow.domain.model.mapper.UserModelMapper;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import retrofit2.Response;
 
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
-    private List<CategoryModel> categoryListCachedResponse;
+    private List<CategoryModelKT> categoryListCachedResponse;
 
 
     @Override
@@ -37,7 +37,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public List<CategoryModel> getCategoryList(String apiKey) throws Exception {
+    public List<CategoryModelKT> getCategoryList(String apiKey) throws Exception {
         if (categoryListCachedResponse == null) {
             Response<List<CategoryDto>> response;
             try {
@@ -46,7 +46,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                     throw new ExcepcionApi(response.code());
                 }
                 if(response != null && response.body() != null) {
-                    categoryListCachedResponse = CategoryModelMapper.toModel(response.body());
+                    categoryListCachedResponse = CategoryModelKTMapper.toModel(response.body());
                 } else {
                     return null;
                 }

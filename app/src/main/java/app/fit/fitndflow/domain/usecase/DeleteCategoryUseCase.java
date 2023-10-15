@@ -5,16 +5,16 @@ import android.content.Context;
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
 import app.fit.fitndflow.domain.common.usecase.FitUseCase;
-import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.CategoryModelKT;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import io.reactivex.Single;
 
-public class DeleteCategoryUseCase extends FitUseCase<CategoryModel, Boolean> {
+public class DeleteCategoryUseCase extends FitUseCase<CategoryModelKT, Boolean> {
 
     private FitnFlowRepository fitnFlowRepository;
     private Context context;
 
-    public DeleteCategoryUseCase(CategoryModel inputParams, Context context, FitnFlowRepository fitnFlowRepository) {
+    public DeleteCategoryUseCase(CategoryModelKT inputParams, Context context, FitnFlowRepository fitnFlowRepository) {
         super(inputParams);
         this.context = context;
         this.fitnFlowRepository = fitnFlowRepository;

@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fit.fitndflow.databinding.FragmentExcercisesListBinding;
 
-import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.CategoryModelKT;
 import app.fit.fitndflow.ui.features.categories.AddCategoryFragment;
 import app.fit.fitndflow.ui.features.categories.CategoriesAndExcercisesViewModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
@@ -47,9 +47,9 @@ public class ExcerciseListFragment extends CommonFragment {
         categoriesAndExcercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExcercisesViewModel.class);
 
         //observing RazaList
-        final Observer<CategoryModel> observer = new Observer<CategoryModel>() {
+        final Observer<CategoryModelKT> observer = new Observer<CategoryModelKT>() {
             @Override
-            public void onChanged(CategoryModel category) {
+            public void onChanged(CategoryModelKT category) {
                 printCategoryDetail(category);
             }
         };
@@ -57,7 +57,7 @@ public class ExcerciseListFragment extends CommonFragment {
         categoriesAndExcercisesViewModel.getActualCategory().observe(getActivity(), observer);
     }
 
-    private void printCategoryDetail(CategoryModel categoryRecived) {
+    private void printCategoryDetail(CategoryModelKT categoryRecived) {
         ExcercisesAdapter excercisesAdapter = new ExcercisesAdapter(categoryRecived.getExcerciseList());
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
