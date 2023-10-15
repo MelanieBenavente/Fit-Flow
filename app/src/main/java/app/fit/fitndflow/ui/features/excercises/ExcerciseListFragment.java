@@ -87,6 +87,10 @@ public class ExcerciseListFragment extends CommonFragment implements SerieAdapte
 
     @Override
     public void showSeries(ExcerciseModel excercise) {
-        addFragment(new AddSerieTrainingFragment());
+        if(excercise.getId() != 0 && excercise.getName() != null){
+            addFragment(AddSerieTrainingFragment.newInstance(excercise));
+        } else {
+            showBlockError();
+        }
     }
 }
