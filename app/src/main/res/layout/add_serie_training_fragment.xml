@@ -38,45 +38,11 @@
         app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-        <TableLayout
+            android:id="@+id/addSerieLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="40dp"
-            android:stretchColumns="4">
+            android:orientation="vertical">
 
-            <TableRow>
-                <EditText
-                    android:layout_width="1dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Introducir texto"
-                    android:padding="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Reps"
-                    android:padding="8dp" />
-
-                <EditText
-                    android:layout_width="1dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Introducir texto"
-                    android:padding="8dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Kg"
-                    android:padding="8dp" />
-            </TableRow>
-
-        </TableLayout>
         </LinearLayout>
     </ScrollView>
 

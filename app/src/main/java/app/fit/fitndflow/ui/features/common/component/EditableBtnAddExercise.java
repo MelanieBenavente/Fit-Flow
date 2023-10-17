@@ -18,7 +18,7 @@ public class EditableBtnAddExercise extends LinearLayout {
 
     public EditableBtnAddExercise(Context context, CategoryEditableListener categoryEditableListener) {
         super(context);
-        View view = inflate(context, R.layout.component_editable_add_btn, this);
+        View view = inflate(context, R.layout.component_editable_btn_add_exercise, this);
         bindViews(view);
         setClickListener(categoryEditableListener);
     }

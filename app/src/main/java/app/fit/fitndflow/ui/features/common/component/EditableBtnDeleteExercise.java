@@ -17,7 +17,7 @@ public class EditableBtnDeleteExercise extends LinearLayout {
 
     public EditableBtnDeleteExercise(Context context, ExerciseModel exercise, CategoryEditableListener categoryEditableListener, int position) {
         super(context);
-        View view = inflate(context, R.layout.component_editable_delete_btn, this);
+        View view = inflate(context, R.layout.component_editable_btn_delete_exercise, this);
         bindViews(view);
         printExercise(exercise);
         setClickListener(categoryEditableListener, position);

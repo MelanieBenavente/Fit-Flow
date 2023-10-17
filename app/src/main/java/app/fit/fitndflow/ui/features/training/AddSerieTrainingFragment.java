@@ -10,19 +10,24 @@ import androidx.annotation.Nullable;
 
 import com.fit.fitndflow.databinding.AddSerieTrainingFragmentBinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import app.fit.fitndflow.domain.model.ExerciseModel;
+import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesAndExercisesViewModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 
-public class AddSerieTrainingFragment extends CommonFragment {
+public class AddSerieTrainingFragment extends CommonFragment implements SerieEditableListener {
 
     public static final String KEY_EXCERCISE = "actualExercise";
     private AddSerieTrainingFragmentBinding binding;
 
     private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
 
+    private ExerciseModel exercise;
+    private List<SerieModel> serieModelList = new ArrayList<>();
 
-    private ExerciseModel exerciseModel;
 
     @Nullable
     @Override
@@ -32,9 +37,15 @@ public class AddSerieTrainingFragment extends CommonFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         Bundle bundle = getArguments();
         if(bundle != null){
-            exerciseModel = (ExerciseModel) bundle.getSerializable(KEY_EXCERCISE);
+            exercise = (ExerciseModel) bundle.getSerializable(KEY_EXCERCISE);
         }
-        binding.exerciseNameTitle.setText(exerciseModel.getName());
+        binding.exerciseNameTitle.setText(exercise.getName());
+        if (serieModelList.isEmpty()){
+            printEmptySerieDetail();
+        } else {
+            printSerieDetail();
+        }
+
         return view;
     }
 
@@ -51,4 +62,30 @@ public class AddSerieTrainingFragment extends CommonFragment {
         return addSerieTrainingFragment;
     }
 
+    private void printEmptySerieDetail(){
+        binding.addSerieLayout.removeAllViews();
+        binding.addSerieLayout.addView(new EditableBtnAddSerie(getContext(), this));
+    }
+
+    private void printSerieDetail(){
+        binding.addSerieLayout.removeAllViews();
+        for(int i = 0; i < serieModelList.size(); i++){
+            SerieModel serie = serieModelList.get(i);
+            binding.addSerieLayout.addView(new EditableBtnDeleteSerie(getContext(), this, serie, i ));
+        }
+        binding.addSerieLayout.addView(new EditableBtnAddSerie(getContext(), this));
+    }
+
+    @Override
+    public void onClickAdd(SerieModel serie) {
+        serie.setExercise(exercise);
+        serieModelList.add(serie);
+        printSerieDetail();
+    }
+
+    @Override
+    public void onClickDelete(int position) {
+        serieModelList.remove(position);
+        printSerieDetail();
+    }
 }
