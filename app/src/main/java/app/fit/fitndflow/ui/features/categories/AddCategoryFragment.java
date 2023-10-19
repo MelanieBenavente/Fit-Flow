@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 import app.fit.fitndflow.domain.model.CategoryModelKT;
 import app.fit.fitndflow.domain.model.ExcerciseModel;
-import app.fit.fitndflow.ui.features.common.CommonActivity;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.common.component.CategoryEditableListener;
 import app.fit.fitndflow.ui.features.common.component.EditableAddBtn;
@@ -30,7 +29,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
 
     public static final String KEY_CATEGORY = "actualCategory";
     private AddFragmentCategoryBinding binding;
-    private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
+    private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
     private CategoryModelKT categoryModel;
 
     private EditableAddBtn lastEditable;
@@ -47,13 +46,21 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             categoryModel = (CategoryModelKT) bundle.getSerializable(KEY_CATEGORY);
             printCategoryDetail(categoryModel);
         } else {
-            printEmptyExcerciseList();
+            printEmptyExerciseList();
         }
         return view;
     }
 
+    public static AddCategoryFragment newInstance(CategoryModelKT category){
+       AddCategoryFragment addCategoryFragment = new AddCategoryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(KEY_CATEGORY, category);
+        addCategoryFragment.setArguments(bundle);
+       return addCategoryFragment;
+    }
+
     private void setViewModelObservers() {
-        categoriesAndExcercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExcercisesViewModel.class);
+        categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
 
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
@@ -71,17 +78,27 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
 
             }
         };
-        categoriesAndExcercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
+        categoriesAndExercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
 
-        final Observer<Boolean> observerIsSuccess = new Observer<Boolean>() {
+        final Observer<Boolean> observerIsSaveSuccess = new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean isSuccess) {
-                if (isSuccess && isVisible()) {
+            public void onChanged(Boolean isSaveSuccess) {
+                if (isSaveSuccess && isVisible()) {
                     requireActivity().onBackPressed();
                 }
             }
         };
-        categoriesAndExcercisesViewModel.getIsSuccess().observe(getActivity(), observerIsSuccess);
+        categoriesAndExercisesViewModel.getIsSaveSuccess().observe(getActivity(), observerIsSaveSuccess);
+
+        final Observer<Boolean> observerIsDeleteSuccess = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isDeleteSuccess) {
+                if(isDeleteSuccess && isVisible()){
+                        popBackStack();
+                }
+            }
+        };
+        categoriesAndExercisesViewModel.getIsDeleteSuccess().observe(getActivity(), observerIsDeleteSuccess);
 
         final Observer<Boolean> observerError = new Observer<Boolean>() {
             @Override
@@ -91,7 +108,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
                 }
             }
         };
-        categoriesAndExcercisesViewModel.getMutableSlideError().observe(getActivity(), observerError);
+        categoriesAndExercisesViewModel.getMutableSlideError().observe(getActivity(), observerError);
     }
 
     private void printCategoryDetail(CategoryModelKT categoryRecived) {
@@ -106,7 +123,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         binding.editTxtContainer.addView(lastEditable);
     }
 
-    private void printEmptyExcerciseList() {
+    private void printEmptyExerciseList() {
         lastEditable = new EditableAddBtn(requireContext(), this);
         binding.editTxtContainer.addView(lastEditable);
     }
@@ -116,8 +133,8 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             @Override
             public void onClick(View view) {
                 updateScreenData();
-                if (!categoriesAndExcercisesViewModel.getIsLoading().getValue() && !categoryModel.getName().equals("")) {
-                    categoriesAndExcercisesViewModel.saveCategory(requireContext(), categoryModel);
+                if (!categoriesAndExercisesViewModel.getIsLoading().getValue() && !categoryModel.getName().equals("")) {
+                    categoriesAndExercisesViewModel.saveCategory(requireContext(), categoryModel);
                 }
             }
         });
@@ -125,7 +142,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         binding.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!categoriesAndExcercisesViewModel.getIsLoading().getValue()) {
+                if (!categoriesAndExercisesViewModel.getIsLoading().getValue()) {
                     if (categoryModel == null || categoryModel.getId() == 0) {
                         requireActivity().onBackPressed();
                     } else {
@@ -154,7 +171,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
 
     @Override
     protected Class getViewModelClass() {
-        return CategoriesAndExcercisesViewModel.class;
+        return CategoriesAndExercisesViewModel.class;
     }
 
     @Override
@@ -177,7 +194,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
 
     @Override
     public void onClickAcceptDeleteCategory() {
-        categoriesAndExcercisesViewModel.deleteCategory(categoryModel, requireContext());
+        categoriesAndExercisesViewModel.deleteCategory(categoryModel, requireContext());
     }
 
     @Override

@@ -19,18 +19,18 @@ import com.fit.fitndflow.databinding.FragmentExcercisesListBinding;
 
 import app.fit.fitndflow.domain.model.CategoryModelKT;
 import app.fit.fitndflow.ui.features.categories.AddCategoryFragment;
-import app.fit.fitndflow.ui.features.categories.CategoriesAndExcercisesViewModel;
+import app.fit.fitndflow.ui.features.categories.CategoriesAndExercisesViewModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 
 public class ExcerciseListFragment extends CommonFragment {
 
     private FragmentExcercisesListBinding binding;
 
-    private CategoriesAndExcercisesViewModel categoriesAndExcercisesViewModel;
+    private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
 
     @Override
     protected Class getViewModelClass() {
-        return CategoriesAndExcercisesViewModel.class;
+        return CategoriesAndExercisesViewModel.class;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ExcerciseListFragment extends CommonFragment {
     }
 
     private void setViewModelObservers() {
-        categoriesAndExcercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExcercisesViewModel.class);
+        categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
 
         //observing RazaList
         final Observer<CategoryModelKT> observer = new Observer<CategoryModelKT>() {
@@ -54,7 +54,7 @@ public class ExcerciseListFragment extends CommonFragment {
             }
         };
         //Observamos al listado del ViewModel y ejecutamos las acciones indicadas antes en el observer
-        categoriesAndExcercisesViewModel.getActualCategory().observe(getActivity(), observer);
+        categoriesAndExercisesViewModel.getActualCategory().observe(getActivity(), observer);
     }
 
     private void printCategoryDetail(CategoryModelKT categoryRecived) {
@@ -78,7 +78,7 @@ public class ExcerciseListFragment extends CommonFragment {
             public void onClick(View view) {
                 AddCategoryFragment addCategoryFragment = new AddCategoryFragment();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(KEY_CATEGORY, categoriesAndExcercisesViewModel.getActualCategory().getValue());
+                bundle.putSerializable(KEY_CATEGORY, categoriesAndExercisesViewModel.getActualCategory().getValue());
                 addCategoryFragment.setArguments(bundle);
                 nextFragment(addCategoryFragment);
             }
