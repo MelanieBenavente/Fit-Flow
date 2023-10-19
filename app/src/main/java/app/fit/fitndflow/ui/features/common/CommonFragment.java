@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.CallSuper;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -46,6 +47,11 @@ public abstract class CommonFragment<V extends ViewModel> extends Fragment {
         if (commonActivity != null) {
             commonActivity.showErrorSlideContainer();
         }
+    }
+
+    public void popBackStack(){
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-2).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @Override

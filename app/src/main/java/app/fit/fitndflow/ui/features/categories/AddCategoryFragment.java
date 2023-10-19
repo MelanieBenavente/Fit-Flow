@@ -80,15 +80,25 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         };
         categoriesAndExercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
 
-        final Observer<Boolean> observerIsSuccess = new Observer<Boolean>() {
+        final Observer<Boolean> observerIsSaveSuccess = new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean isSuccess) {
-                if (isSuccess && isVisible()) {
+            public void onChanged(Boolean isSaveSuccess) {
+                if (isSaveSuccess && isVisible()) {
                     requireActivity().onBackPressed();
                 }
             }
         };
-        categoriesAndExercisesViewModel.getIsSuccess().observe(getActivity(), observerIsSuccess);
+        categoriesAndExercisesViewModel.getIsSaveSuccess().observe(getActivity(), observerIsSaveSuccess);
+
+        final Observer<Boolean> observerIsDeleteSuccess = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isDeleteSuccess) {
+                if(isDeleteSuccess && isVisible()){
+                        popBackStack();
+                }
+            }
+        };
+        categoriesAndExercisesViewModel.getIsDeleteSuccess().observe(getActivity(), observerIsDeleteSuccess);
 
         final Observer<Boolean> observerError = new Observer<Boolean>() {
             @Override

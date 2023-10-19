@@ -127,5 +127,6 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             AddCategoryFragment addCategoryFragment = AddCategoryFragment.newInstance(category);
             addFragment(addCategoryFragment);
         }
+
     }
 }

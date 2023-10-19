@@ -27,11 +27,16 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
 
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 
-    private MutableLiveData<Boolean> isSuccess = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> isSaveSuccess = new MutableLiveData<>(false);
+
+    private MutableLiveData<Boolean> isDeleteSuccess = new MutableLiveData<>(false);
 
     /*Getters*
      *
      * */
+
+
+    public MutableLiveData<Boolean> getIsDeleteSuccess() {return isDeleteSuccess;}
 
     public MutableLiveData<CategoryModel> getActualCategory() {
         return actualCategory;
@@ -41,7 +46,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
         return isLoading;
     }
 
-    public MutableLiveData<Boolean> getIsSuccess() {return isSuccess; }
+    public MutableLiveData<Boolean> getIsSaveSuccess() {return isSaveSuccess; }
 
     public MutableLiveData<List<CategoryModel>> getMutableCategory() {
         return mutableCategory;
@@ -97,7 +102,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
             @Override
             public void onSuccess(Boolean aBoolean) {
                 isLoading.setValue(false);
-                isSuccess.setValue(true);
+                isSaveSuccess.setValue(true);
                 mutableSlideError.setValue(false);
 
             }
@@ -122,7 +127,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
             @Override
             public void onSuccess(Boolean aBoolean) {
                 isLoading.setValue(false);
-                isSuccess.setValue(true);
+                isDeleteSuccess.setValue(true);
                 mutableSlideError.setValue(false);
             }
 
