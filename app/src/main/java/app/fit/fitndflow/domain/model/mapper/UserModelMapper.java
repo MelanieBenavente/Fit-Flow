@@ -5,11 +5,11 @@ import app.fit.fitndflow.domain.model.UserModel;
 
 public class UserModelMapper {
     public static UserModel toModel(UserDto userDTO) {
-        UserModel userModel = new UserModel();
+        UserModel userModel = new UserModel(null, null, null, null);
         if (userDTO != null) {
-            userModel.setApiKey(userDTO.apiKey);
-            userModel.setName(userDTO.userNAme);
-            userModel.setEmail(userDTO.email);
+            userModel.setApiKey(userDTO.getApiKey());
+            userModel.setName(userDTO.getUserName());
+            userModel.setEmail(userDTO.getEmail());
         }
         return userModel;
     }

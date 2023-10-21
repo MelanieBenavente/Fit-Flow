@@ -58,7 +58,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void requestRegisterEmptyUser(Context context) {
-        UserModel emptyUserModel = new UserModel();
+        UserModel emptyUserModel = new UserModel(null, null, null, null);
         new RegisterUserUseCase(emptyUserModel, context, fitnFlowRepository).execute(new FitObserver<UserModel>() {
 
             protected void onStart() {

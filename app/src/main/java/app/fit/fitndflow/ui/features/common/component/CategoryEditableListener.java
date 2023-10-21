@@ -1,10 +1,10 @@
 package app.fit.fitndflow.ui.features.common.component;
 
-import app.fit.fitndflow.domain.model.ExcerciseModel;
+import app.fit.fitndflow.domain.model.ExerciseModel;
 
 public interface CategoryEditableListener {
 
-    void onClickAdd(ExcerciseModel excercise);
+    void onClickAdd(ExerciseModel exercise);
 
     void onClickDelete(int position);
 }

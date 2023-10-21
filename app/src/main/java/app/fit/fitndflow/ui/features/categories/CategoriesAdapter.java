@@ -13,18 +13,18 @@ import com.fit.fitndflow.R;
 
 import java.util.List;
 
-import app.fit.fitndflow.domain.model.CategoryModelKT;
+import app.fit.fitndflow.domain.model.CategoryModel;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
-    private List<CategoryModelKT> categoryModelList;
+    private List<CategoryModel> categoryModelList;
 
-    private CategoryAdapterCallback adapterCallback;
+    private CategoryAdapterCallback categoryAdapterCallback;
 
-    public CategoriesAdapter(CategoryAdapterCallback adapterCallback) {
-        this.adapterCallback = adapterCallback;
+    public CategoriesAdapter(CategoryAdapterCallback categoryAdapterCallback) {
+        this.categoryAdapterCallback = categoryAdapterCallback;
     }
 
-    public void setCategoryList(List<CategoryModelKT> categoryList) {
+    public void setCategoryList(List<CategoryModel> categoryList) {
         this.categoryModelList = categoryList;
     }
 
@@ -37,12 +37,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesAdapter.ViewHolder holder, int position) {
-        CategoryModelKT category = categoryModelList.get(position);
+        CategoryModel category = categoryModelList.get(position);
         holder.textList.setText(category.getName());
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    adapterCallback.showExcercises(categoryModelList.get(position));
+                    categoryAdapterCallback.showExercises(categoryModelList.get(position));
             }
         });
     }

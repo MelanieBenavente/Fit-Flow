@@ -6,7 +6,7 @@ import app.fit.fitndflow.data.common.RetrofitUtils;
 import app.fit.fitndflow.data.common.model.ExcepcionApi;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
-import app.fit.fitndflow.domain.model.CategoryModelKT;
+import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.model.mapper.CategoryModelKTMapper;
 import app.fit.fitndflow.domain.model.mapper.UserModelMapper;
@@ -15,7 +15,7 @@ import retrofit2.Response;
 
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
-    private List<CategoryModelKT> categoryListCachedResponse;
+    private List<CategoryModel> categoryListCachedResponse;
 
 
     @Override
@@ -37,7 +37,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public List<CategoryModelKT> getCategoryList(String apiKey) throws Exception {
+    public List<CategoryModel> getCategoryList(String apiKey) throws Exception {
         if (categoryListCachedResponse == null) {
             Response<List<CategoryDto>> response;
             try {
@@ -58,7 +58,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public Boolean saveCategoryAndExcercises(CategoryDto categoryDto, String apikey) throws Exception {
+    public Boolean saveCategoryAndExercises(CategoryDto categoryDto, String apikey) throws Exception {
         try {
             Response<CategoryDto> response = RetrofitUtils.getRetrofitUtils().saveCategory(categoryDto, apikey).execute();
             if (response.isSuccessful()) {
@@ -73,7 +73,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public Boolean deleteCategoryAndExcercises(Integer categoryId, String apikey) throws Exception {
+    public Boolean deleteCategoryAndExercises(Integer categoryId, String apikey) throws Exception {
         try {
             Response<CategoryDto> response = RetrofitUtils.getRetrofitUtils().deleteCategory(categoryId, apikey).execute();
             if (response.isSuccessful()) {

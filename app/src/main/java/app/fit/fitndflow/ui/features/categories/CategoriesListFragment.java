@@ -1,7 +1,5 @@
 package app.fit.fitndflow.ui.features.categories;
 
-import static app.fit.fitndflow.ui.features.categories.AddCategoryFragment.KEY_CATEGORY;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,13 +17,13 @@ import com.fit.fitndflow.databinding.FragmentCategoriesListBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fit.fitndflow.domain.model.CategoryModelKT;
+import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
-import app.fit.fitndflow.ui.features.excercises.ExcerciseListFragment;
+import app.fit.fitndflow.ui.features.exercises.ExerciseListFragment;
 
 public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback {
 
-    private List<CategoryModelKT> categoryList = new ArrayList<>();
+    private List<CategoryModel> categoryList = new ArrayList<>();
     private FragmentCategoriesListBinding binding;
     private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
     private CategoriesAdapter categoriesAdapter;
@@ -53,9 +51,9 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         categoriesAndExercisesViewModel.getIsLoading().setValue(false);
 
         //observing RazaList
-        final Observer<List<CategoryModelKT>> observer = new Observer<List<CategoryModelKT>>() {
+        final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
             @Override
-            public void onChanged(List<CategoryModelKT> categories) {
+            public void onChanged(List<CategoryModel> categories) {
                 printCategories(categories);
             }
         };
@@ -91,7 +89,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         categoriesAndExercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
     }
 
-    private void printCategories(List<CategoryModelKT> listRecived) {
+    private void printCategories(List<CategoryModel> listRecived) {
         categoryList = listRecived;
         categoriesAdapter.setCategoryList(categoryList);
         categoriesAdapter.notifyDataSetChanged();
@@ -115,22 +113,19 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         binding.floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextFragment(new AddCategoryFragment());
+                addFragment(new AddCategoryFragment());
             }
         });
     }
 
     @Override
-    public void showExcercises(CategoryModelKT category) {
+    public void showExercises(CategoryModel category) {
         categoriesAndExercisesViewModel.getActualCategory().setValue(category);
-        if(category.getExcerciseList() != null && !category.getExcerciseList().isEmpty()){
-            nextFragment(new ExcerciseListFragment());
+        if(category.getExerciseList() != null && !category.getExerciseList().isEmpty()){
+            addFragment(new ExerciseListFragment());
         } else {
-            AddCategoryFragment addCategoryFragment = new AddCategoryFragment();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(KEY_CATEGORY, category);
-            addCategoryFragment.setArguments(bundle);
-            nextFragment(addCategoryFragment);
+            AddCategoryFragment addCategoryFragment = AddCategoryFragment.newInstance(category);
+            addFragment(addCategoryFragment);
         }
 
     }

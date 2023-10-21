@@ -5,14 +5,13 @@ import android.content.Context;
 import java.util.List;
 
 import app.fit.fitndflow.data.common.SharedPrefs;
-import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
 import app.fit.fitndflow.domain.common.model.None;
 import app.fit.fitndflow.domain.common.usecase.FitUseCase;
-import app.fit.fitndflow.domain.model.CategoryModelKT;
+import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import io.reactivex.Single;
 
-public class GetCategoriesUseCase extends FitUseCase<None, List<CategoryModelKT>> {
+public class GetCategoriesUseCase extends FitUseCase<None, List<CategoryModel>> {
 
     private FitnFlowRepository fitnFlowRepository;
     private Context context;
@@ -24,11 +23,11 @@ public class GetCategoriesUseCase extends FitUseCase<None, List<CategoryModelKT>
     }
 
     @Override
-    public Single<List<CategoryModelKT>> buildUseCaseObservable() {
+    public Single<List<CategoryModel>> buildUseCaseObservable() {
         return Single.create(emitter -> {
             try {
                 String apiKey = SharedPrefs.getApikeyFromSharedPRefs(context);
-                List<CategoryModelKT> response = fitnFlowRepository.getCategoryList(apiKey);
+                List<CategoryModel> response = fitnFlowRepository.getCategoryList(apiKey);
                 emitter.onSuccess(response);
 
             } catch (Exception exception) {

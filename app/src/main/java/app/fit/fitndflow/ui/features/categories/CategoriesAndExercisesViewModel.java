@@ -10,7 +10,7 @@ import java.util.List;
 
 import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
 import app.fit.fitndflow.domain.common.arq.FitObserver;
-import app.fit.fitndflow.domain.model.CategoryModelKT;
+import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import app.fit.fitndflow.domain.usecase.AddCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase;
@@ -18,8 +18,8 @@ import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 
 public class CategoriesAndExercisesViewModel extends ViewModel {
     private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
-    private MutableLiveData<CategoryModelKT> actualCategory = new MutableLiveData<>();
-    private MutableLiveData<List<CategoryModelKT>> mutableCategory = new MutableLiveData<>();
+    private MutableLiveData<CategoryModel> actualCategory = new MutableLiveData<>();
+    private MutableLiveData<List<CategoryModel>> mutableCategory = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> mutableSlideError = new MutableLiveData<>(false);
 
@@ -38,7 +38,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getIsDeleteSuccess() {return isDeleteSuccess;}
 
-    public MutableLiveData<CategoryModelKT> getActualCategory() {
+    public MutableLiveData<CategoryModel> getActualCategory() {
         return actualCategory;
     }
 
@@ -48,7 +48,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getIsSaveSuccess() {return isSaveSuccess; }
 
-    public MutableLiveData<List<CategoryModelKT>> getMutableCategory() {
+    public MutableLiveData<List<CategoryModel>> getMutableCategory() {
         return mutableCategory;
     }
 
@@ -65,7 +65,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
      * */
     public void requestCategoriesFromModel(Context context) {
             GetCategoriesUseCase getCategoriesUseCase = new GetCategoriesUseCase(context, fitnFlowRepository);
-        getCategoriesUseCase.execute(new FitObserver<List<CategoryModelKT>>() {
+        getCategoriesUseCase.execute(new FitObserver<List<CategoryModel>>() {
             @Override
             protected void onStart() {
                 super.onStart();
@@ -75,7 +75,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
             }
 
             @Override
-            public void onSuccess(List<CategoryModelKT> categoryModels) {
+            public void onSuccess(List<CategoryModel> categoryModels) {
                 mutableCategory.setValue(categoryModels);
                 mutableFullScreenError.setValue(false);
                 isLoading.setValue(false);
@@ -89,7 +89,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
         });
     }
 
-    public void saveCategory(Context context, CategoryModelKT categoryModel){
+    public void saveCategory(Context context, CategoryModel categoryModel){
         new AddCategoryUseCase(context, categoryModel, fitnFlowRepository). execute(new FitObserver<Boolean>() {
 
             @Override
@@ -115,7 +115,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
         });
     }
 
-    public void deleteCategory(CategoryModelKT categoryModel, Context context){
+    public void deleteCategory(CategoryModel categoryModel, Context context){
         new DeleteCategoryUseCase(categoryModel, context, fitnFlowRepository).execute(new FitObserver<Boolean>() {
 
             @Override
