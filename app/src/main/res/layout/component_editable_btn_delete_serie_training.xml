@@ -21,7 +21,8 @@
                 android:layout_weight="1"
                 android:hint="num reps"
                 android:inputType="number"
-                android:padding="8dp" />
+                android:padding="8dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"

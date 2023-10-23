@@ -14,5 +14,8 @@
     <string name="save_and_exit_btn">Guardar y salir</string>
 
 
+    <string name="talkback_reps_edit_text">Introduce el numero de repeticiones</string>
+
+
 
 </resources>
