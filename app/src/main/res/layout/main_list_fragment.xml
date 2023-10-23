@@ -85,7 +85,7 @@
         android:id="@+id/buttonPanel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_trainning"
+        android:text="@string/add_training"
         style="@style/GenericButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
