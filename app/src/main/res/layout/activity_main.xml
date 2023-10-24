@@ -22,7 +22,8 @@
             android:text="@string/mensaje_error"
             android:gravity="center"
             android:paddingTop="30dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:contentDescription="@string/talkback_error"/>
     </RelativeLayout>
 
     <FrameLayout
@@ -33,7 +34,8 @@
         android:alpha="0.9"
         android:visibility="gone"
         tools:visibility="visible"
-        android:elevation="20dp">
+        android:elevation="20dp"
+        android:contentDescription="@string/loading">
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="wrap_content"

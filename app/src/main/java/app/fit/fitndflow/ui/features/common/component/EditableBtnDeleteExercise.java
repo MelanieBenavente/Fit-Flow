@@ -9,8 +9,10 @@ import android.widget.LinearLayout;
 import com.fit.fitndflow.R;
 
 import app.fit.fitndflow.domain.model.ExerciseModel;
+import app.fit.fitndflow.ui.features.common.AccessibilityInterface;
+import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
 
-public class EditableBtnDeleteExercise extends LinearLayout {
+public class EditableBtnDeleteExercise extends LinearLayout implements AccessibilityInterface {
 
     private EditText editText;
     private ImageButton deleteBtn;
@@ -21,6 +23,9 @@ public class EditableBtnDeleteExercise extends LinearLayout {
         bindViews(view);
         printExercise(exercise);
         setClickListener(categoryEditableListener, position);
+        initAccessibility();
+        editText.addTextChangedListener(AccessibilityUtils.createTextWatcher(this));
+
     }
 
     private void bindViews(View view){
@@ -39,5 +44,11 @@ public class EditableBtnDeleteExercise extends LinearLayout {
                 categoryEditableListener.onClickDelete(position);
             }
         });
+    }
+
+    @Override
+    public void initAccessibility() {
+        String exerciseText = getContext().getString(R.string.new_exercise);
+        editText.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(exerciseText + editText.getText().toString()));
     }
 }

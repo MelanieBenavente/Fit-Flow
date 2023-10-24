@@ -6,6 +6,10 @@
     <string name="save_btn">Guardar</string>
     <string name="delete_btn">Eliminar</string>
     <string name="yesterday_date_selector">Ayer</string>
+    <string name="search_category">buscar categoria</string>
+    <string name="search_exercise">buscar ejercicio</string>
+    <string name="name_category">nombre categoría</string>
+    <string name="new_exercise">nombre del ejercicio</string>
     <string name="add_training">Añadir entrenamiento</string>
     <string name="dialog_category_delete">¿Estás seguro de que deseas borrar esta categoría?</string>
     <string name="dialog_btn_delete">Si, borrar</string>
@@ -14,7 +18,18 @@
     <string name="save_and_exit_btn">Guardar y salir</string>
 
 
-    <string name="talkback_reps_edit_text">Introduce el numero de repeticiones</string>
+    <string name="talkback_reps_edit_text">Introduce el numero de repeticiones. Valor actual </string>
+    <string name="talkback_kg_edit_text">Introduce el número de kilos. Valor actual</string>
+    <string name="talkback_add_component_btn">añadir</string>
+    <string name="talkback_delete_component_btn">eliminar</string>
+    <string name="talkback_edit_btn">editar</string>
+    <string name="talkback_add_category_btn">añadir nueva categoría</string>
+    <string name="talkback_day_before_btn">dia anterior</string>
+    <string name="talkback_day_after_btn">siguiente dia</string>
+    <string name="talkback_block_error">Algo no ha ido bien, pantalla bloqueada. Revisa tu conexión a internet.</string>
+    <string name="talkback_error">Ha ocurrido un error.</string>
+    <string name="loading">Cargando</string>
+
 
 
 

@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/icnSearch"
-        android:hint="Search" />
+        android:hint="@string/search_exercise" />
     <FrameLayout
         android:id="@+id/calendBar"
         android:layout_width="match_parent"
@@ -65,6 +65,7 @@
         android:outlineSpotShadowColor="@color/dark_purpure"
         android:backgroundTint="@color/pink_letters"
         android:src="@drawable/baseline_mode_edit_24"
-        android:layout_margin="40dp" />
+        android:layout_margin="40dp"
+        android:contentDescription="@string/talkback_edit_btn"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

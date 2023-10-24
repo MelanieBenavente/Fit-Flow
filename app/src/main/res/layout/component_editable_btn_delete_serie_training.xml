@@ -52,6 +52,7 @@
         android:layout_width="@dimen/size_oval_btn"
         android:layout_height="@dimen/size_oval_btn"
         android:background="@drawable/cancel_btn"
-        android:layout_marginRight="30dp"/>
+        android:layout_marginRight="30dp"
+        android:contentDescription="@string/talkback_delete_component_btn"/>
 
 </LinearLayout>

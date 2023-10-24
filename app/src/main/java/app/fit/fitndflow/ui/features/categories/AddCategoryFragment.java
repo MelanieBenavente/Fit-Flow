@@ -14,18 +14,21 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.AddFragmentCategoryBinding;
 
 import java.util.ArrayList;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
+import app.fit.fitndflow.ui.features.common.AccessibilityInterface;
+import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.common.component.CategoryEditableListener;
 import app.fit.fitndflow.ui.features.common.component.EditableBtnAddExercise;
 import app.fit.fitndflow.ui.features.common.component.EditableBtnDeleteExercise;
 
-public class AddCategoryFragment extends CommonFragment implements CategoryEditableListener, DialogCallbackDelete {
+public class AddCategoryFragment extends CommonFragment implements CategoryEditableListener, DialogCallbackDelete, AccessibilityInterface {
 
     public static final String KEY_CATEGORY = "actualCategory";
     private AddFragmentCategoryBinding binding;
@@ -41,6 +44,8 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         super.onCreateView(inflater, container, savedInstanceState);
         setViewModelObservers();
         setClickListeners();
+        initAccessibility();
+        binding.newCategoryTxt.addTextChangedListener(AccessibilityUtils.createTextWatcher(this));
         Bundle bundle = getArguments();
         if (bundle != null) {
             categoryModel = (CategoryModel) bundle.getSerializable(KEY_CATEGORY);
@@ -201,5 +206,11 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
     public void onClickAcceptedExercise(int position) {
         categoryModel.getExerciseList().remove(position);
         printCategoryDetail(categoryModel);
+    }
+
+    @Override
+    public void initAccessibility() {
+        String categoryName = getContext().getString(R.string.name_category);
+        binding.newCategoryTxt.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(categoryName + binding.newCategoryTxt.getText().toString()));
     }
 }

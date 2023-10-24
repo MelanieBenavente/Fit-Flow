@@ -36,7 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_action_left"
-            android:background="@color/pink_letters"/>
+            android:background="@color/pink_letters"
+            android:contentDescription="@string/talkback_day_before_btn"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -70,7 +71,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_action_right"
-            android:background="@color/pink_letters"/>
+            android:background="@color/pink_letters"
+            android:contentDescription="@string/talkback_day_after_btn"/>
 
     </FrameLayout>
 

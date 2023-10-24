@@ -5,6 +5,10 @@
     <string name="yesterday_date_selector">Yesterday</string>
     <string name="save_btn">Save</string>
     <string name="delete_btn">Delete</string>
+    <string name="search_category">search category</string>
+    <string name="search_exercise">search exercise</string>
+    <string name="name_category">category name</string>
+    <string name="new_exercise">exercise name</string>
     <string name="add_training">Add training</string>
     <string name="dialog_category_delete">You\'re sure that you want to delete this category?</string>
     <string name="dialog_btn_delete">Yes, delete</string>
@@ -13,5 +17,18 @@
     <string name="save_and_exit_btn">Save and exit</string>
 
 
-    <string name="talkback_reps_edit_text">Enter number of reps</string>
+    <string name="talkback_reps_edit_text">Enter the number of repetitions. Actual value</string>
+    <string name="talkback_kg_edit_text">Enter the number of kilograms. Actual value</string>
+    <string name="talkback_add_component_btn">add</string>
+    <string name="talkback_delete_component_btn">delete</string>
+    <string name="talkback_edit_btn">edit</string>
+    <string name="talkback_add_category_btn">add new category</string>
+    <string name="talkback_day_before_btn">day before</string>
+    <string name="talkback_day_after_btn">next day</string>
+    <string name="talkback_block_error">Something was wrong. Screen are blocked, please check your internet connection.</string>
+    <string name="talkback_error">There is an error</string>
+    <string name="loading">loading</string>
+
+
+
 </resources>

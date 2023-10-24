@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/icnSearch"
-        android:hint="Search" />
+        android:hint="@string/search_category" />
 
     <androidx.recyclerview.widget.RecyclerView
         app:layout_constraintTop_toBottomOf="@id/icnSearch"
@@ -43,6 +43,7 @@
         android:outlineSpotShadowColor="@color/dark_purpure"
         android:backgroundTint="@color/pink_letters"
         android:src="@drawable/baseline_add_24"
-        android:layout_margin="40dp" />
+        android:layout_margin="40dp"
+        android:contentDescription="@string/talkback_add_category_btn"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

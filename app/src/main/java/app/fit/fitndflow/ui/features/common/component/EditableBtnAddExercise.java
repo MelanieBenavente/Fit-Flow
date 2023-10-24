@@ -9,18 +9,24 @@ import android.widget.LinearLayout;
 import com.fit.fitndflow.R;
 
 import app.fit.fitndflow.domain.model.ExerciseModel;
+import app.fit.fitndflow.ui.features.common.AccessibilityInterface;
+import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
+import app.fit.fitndflow.ui.features.training.SerieEditableListener;
 
-public class EditableBtnAddExercise extends LinearLayout {
+public class EditableBtnAddExercise extends LinearLayout implements AccessibilityInterface {
 
     private EditText editText;
 
     private ImageButton addBtn;
 
+
     public EditableBtnAddExercise(Context context, CategoryEditableListener categoryEditableListener) {
         super(context);
         View view = inflate(context, R.layout.component_editable_btn_add_exercise, this);
         bindViews(view);
+        initAccessibility();
         setClickListener(categoryEditableListener);
+        editText.addTextChangedListener(AccessibilityUtils.createTextWatcher(this));
     }
 
     private void bindViews(View view){
@@ -44,5 +50,11 @@ public class EditableBtnAddExercise extends LinearLayout {
 
     public EditText getEditText() {
         return editText;
+    }
+
+    @Override
+    public void initAccessibility() {
+        String exerciseText = getContext().getString(R.string.new_exercise);
+        editText.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(exerciseText + editText.getText().toString()));
     }
 }

@@ -12,16 +12,19 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.FragmentCategoriesListBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.ui.features.common.AccessibilityInterface;
+import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.exercises.ExerciseListFragment;
 
-public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback {
+public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback, AccessibilityInterface {
 
     private List<CategoryModel> categoryList = new ArrayList<>();
     private FragmentCategoriesListBinding binding;
@@ -41,6 +44,8 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         instantiateCategoriesAdapter();
         setViewModelObservers();
         setOnClickListeners();
+        initAccessibility();
+        binding.txtSearch.addTextChangedListener(AccessibilityUtils.createTextWatcher(this));
         categoriesAndExercisesViewModel.requestCategoriesFromModel(requireContext());
         return view;
     }
@@ -128,5 +133,11 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             addFragment(addCategoryFragment);
         }
 
+    }
+
+    @Override
+    public void initAccessibility() {
+        String searchCategory = getContext().getString(R.string.search_category);
+        binding.txtSearch.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(searchCategory + binding.txtSearch.getText().toString()));
     }
 }

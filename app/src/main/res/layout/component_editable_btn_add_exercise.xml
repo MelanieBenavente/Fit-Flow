@@ -11,12 +11,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:hint="Ingrese texto" />
+        android:hint="@string/new_exercise" />
 
     <ImageButton
         android:id="@+id/button"
         android:layout_width="@dimen/size_oval_btn"
         android:layout_height="@dimen/size_oval_btn"
         android:layout_marginLeft="40dp"
-        android:background="@drawable/add_btn"/>
+        android:background="@drawable/add_btn"
+        android:contentDescription="@string/talkback_add_component_btn"/>
 </LinearLayout>
