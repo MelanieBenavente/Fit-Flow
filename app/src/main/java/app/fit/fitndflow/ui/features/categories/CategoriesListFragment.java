@@ -1,6 +1,8 @@
 package app.fit.fitndflow.ui.features.categories;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.fit.fitndflow.databinding.FragmentCategoriesListBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.ui.features.common.AccessibilityInterface;
 import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
@@ -42,6 +45,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
         instantiateCategoriesAdapter();
+        addTextWatcher();
         setViewModelObservers();
         setOnClickListeners();
         initAccessibility();
@@ -98,6 +102,33 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         categoryList = listRecived;
         categoriesAdapter.setCategoryList(categoryList);
         categoriesAdapter.notifyDataSetChanged();
+    }
+
+    private void addTextWatcher(){
+        binding.txtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    List<CategoryModel> filteredList = new ArrayList<>();
+
+                for(int j = 0; j < categoryList.size(); j++){
+                    if(categoryList.get(j).getName().toUpperCase().contains(charSequence.toString().toUpperCase())){
+                        filteredList.add(categoryList.get(j));
+                    }
+                }
+                categoriesAdapter.setCategoryList(filteredList);
+                categoriesAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void printError() {
