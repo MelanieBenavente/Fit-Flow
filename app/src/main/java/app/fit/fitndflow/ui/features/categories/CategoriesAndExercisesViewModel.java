@@ -71,7 +71,6 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
                 super.onStart();
                 mutableFullScreenError.setValue(false);
                 isLoading.setValue(true);
-                mutableCategory.setValue(new ArrayList<>());
             }
 
             @Override

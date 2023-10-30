@@ -22,17 +22,23 @@ import java.util.List;
 
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.ui.features.common.AccessibilityInterface;
 import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.exercises.ExerciseListFragment;
+import app.fit.fitndflow.ui.features.exercises.ExercisesAdapter;
+import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
+import app.fit.fitndflow.ui.features.training.SerieAdapterCallback;
 
-public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback, AccessibilityInterface {
+public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback, AccessibilityInterface, SerieAdapterCallback {
 
     private List<CategoryModel> categoryList = new ArrayList<>();
     private FragmentCategoriesListBinding binding;
     private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
     private CategoriesAdapter categoriesAdapter;
+
+    private ExercisesAdapter exercisesAdapter;
 
     @Override
     protected Class getViewModelClass() {
@@ -45,12 +51,12 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
         instantiateCategoriesAdapter();
-        addTextWatcher();
         setViewModelObservers();
         setOnClickListeners();
         initAccessibility();
         binding.txtSearch.addTextChangedListener(AccessibilityUtils.createTextWatcher(this));
         categoriesAndExercisesViewModel.requestCategoriesFromModel(requireContext());
+        addTextWatcher();
         return view;
     }
 
@@ -113,15 +119,26 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    List<CategoryModel> filteredList = new ArrayList<>();
-
-                for(int j = 0; j < categoryList.size(); j++){
-                    if(categoryList.get(j).getName().toUpperCase().contains(charSequence.toString().toUpperCase())){
-                        filteredList.add(categoryList.get(j));
+                if (charSequence.toString().equals("")) {
+                    instantiateCategoriesAdapter();
+                    categoriesAdapter.setCategoryList(categoryList);
+                    categoriesAdapter.notifyDataSetChanged();
+                }else{
+                    List<ExerciseModel> filteredList = new ArrayList<>();
+                    for (int j = 0; j < categoryList.size(); j++) {
+                        CategoryModel category = categoryList.get(j);
+                        List<ExerciseModel> exerciseList = category.getExerciseList();
+                        for (int k = 0; k < exerciseList.size(); k++) {
+                            ExerciseModel exercise = exerciseList.get(k);
+                            if (exercise.getName().toUpperCase().contains(charSequence.toString().toUpperCase())) {
+                                filteredList.add(exercise);
+                            }
+                        }
                     }
+                    instantiateExercisesAdapter(filteredList);
+                    exercisesAdapter.setExerciseModelList(filteredList);
+                    exercisesAdapter.notifyDataSetChanged();
                 }
-                categoriesAdapter.setCategoryList(filteredList);
-                categoriesAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -143,6 +160,13 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerCategories.setAdapter(categoriesAdapter);
+    }
+
+    private void instantiateExercisesAdapter(List<ExerciseModel> filteredList){
+        exercisesAdapter = new ExercisesAdapter(filteredList, this);
+        binding.recyclerCategories.setHasFixedSize(true);
+        binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        binding.recyclerCategories.setAdapter(exercisesAdapter);
     }
 
     private void setOnClickListeners() {
@@ -170,5 +194,14 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     public void initAccessibility() {
         String searchCategory = getContext().getString(R.string.search_category);
         binding.txtSearch.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(searchCategory + binding.txtSearch.getText().toString()));
+    }
+
+    @Override
+    public void showSeries(ExerciseModel exercise) {
+        if(exercise.getId() != 0 && exercise.getName() != null){
+            addFragment(AddSerieTrainingFragment.newInstance(exercise));
+        } else {
+            showBlockError();
+        }
     }
 }

@@ -20,6 +20,10 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
 
     private List<ExerciseModel> exerciseModelList;
 
+    public void setExerciseModelList(List<ExerciseModel> exerciseModelList) {
+        this.exerciseModelList = exerciseModelList;
+    }
+
     private SerieAdapterCallback serieAdapterCallback;
 
     public ExercisesAdapter(List<ExerciseModel> exerciseModelList, SerieAdapterCallback serieAdapterCallback) {
