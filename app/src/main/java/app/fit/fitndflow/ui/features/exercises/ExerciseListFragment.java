@@ -70,12 +70,11 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerCategories.setAdapter(exercisesAdapter);
-        exercisesAdapter.notifyDataSetChanged();
 
         binding.categoryTitle.setText(categoryRecived.getName());
     }
 
-    private void addTextWatcher(){
+    private void addTextWatcher() {
         binding.txtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -87,13 +86,12 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
                 List<ExerciseModel> filteredList = new ArrayList<>();
                 CategoryModel category = categoriesAndExercisesViewModel.getActualCategory().getValue();
                 List<ExerciseModel> exerciseList = category.getExerciseList();
-                for(int j = 0; j < exerciseList.size(); j++){
-                        if(exerciseList.get(j).getName().toUpperCase().contains(charSequence.toString().toUpperCase())){
-                            filteredList.add(exerciseList.get(j));
-                        }
+                for (int j = 0; j < exerciseList.size(); j++) {
+                    if (exerciseList.get(j).getName().toUpperCase().contains(charSequence.toString().toUpperCase())) {
+                        filteredList.add(exerciseList.get(j));
                     }
-                    exercisesAdapter.setExerciseModelList(filteredList);
-                    exercisesAdapter.notifyDataSetChanged();
+                }
+                exercisesAdapter.setExerciseModelList(filteredList);
             }
 
             @Override
@@ -116,7 +114,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
 
     @Override
     public void showSeries(ExerciseModel exercise) {
-        if(exercise.getId() != 0 && exercise.getName() != null){
+        if (exercise.getId() != 0 && exercise.getName() != null) {
             addFragment(AddSerieTrainingFragment.newInstance(exercise));
         } else {
             showBlockError();

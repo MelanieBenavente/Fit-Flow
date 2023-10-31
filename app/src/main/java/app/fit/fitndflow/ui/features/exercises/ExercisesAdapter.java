@@ -19,11 +19,6 @@ import app.fit.fitndflow.ui.features.training.SerieAdapterCallback;
 public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.ViewHolder> {
 
     private List<ExerciseModel> exerciseModelList;
-
-    public void setExerciseModelList(List<ExerciseModel> exerciseModelList) {
-        this.exerciseModelList = exerciseModelList;
-    }
-
     private SerieAdapterCallback serieAdapterCallback;
 
     public ExercisesAdapter(List<ExerciseModel> exerciseModelList, SerieAdapterCallback serieAdapterCallback) {
@@ -31,6 +26,11 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
         this.serieAdapterCallback = serieAdapterCallback;
     }
 
+    public void setExerciseModelList(List<ExerciseModel> exerciseModelList) {
+        this.exerciseModelList = exerciseModelList;
+        notifyDataSetChanged();
+
+    }
     @NonNull
     @Override
     public ExercisesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,7 +52,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
 
     @Override
     public int getItemCount() {
-        if(exerciseModelList != null){
+        if (exerciseModelList != null) {
             return exerciseModelList.size();
         }
         return 0;
@@ -61,6 +61,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textList;
         ConstraintLayout container;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 

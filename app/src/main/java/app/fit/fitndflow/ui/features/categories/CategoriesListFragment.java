@@ -89,15 +89,15 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
-                try{
+                try {
                     if (isLoading) {
                         showLoading();
 
                     } else {
                         hideLoading();
                     }
-                }catch(Exception exception){
-                    Log.e("Error","show loading");
+                } catch (Exception exception) {
+                    Log.e("Error", "show loading");
                 }
             }
         };
@@ -107,10 +107,9 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     private void printCategories(List<CategoryModel> listRecived) {
         categoryList = listRecived;
         categoriesAdapter.setCategoryList(categoryList);
-        categoriesAdapter.notifyDataSetChanged();
     }
 
-    private void addTextWatcher(){
+    private void addTextWatcher() {
         binding.txtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -122,8 +121,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
                 if (charSequence.toString().equals("")) {
                     instantiateCategoriesAdapter();
                     categoriesAdapter.setCategoryList(categoryList);
-                    categoriesAdapter.notifyDataSetChanged();
-                }else{
+                } else {
                     List<ExerciseModel> filteredList = new ArrayList<>();
                     for (int j = 0; j < categoryList.size(); j++) {
                         CategoryModel category = categoryList.get(j);
@@ -137,7 +135,6 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
                     }
                     instantiateExercisesAdapter(filteredList);
                     exercisesAdapter.setExerciseModelList(filteredList);
-                    exercisesAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -151,10 +148,11 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     private void printError() {
         try {
             showBlockError();
-        }catch(Exception exception) {
+        } catch (Exception exception) {
             Log.e("Error", "Error to print errorContainer");
         }
     }
+
     private void instantiateCategoriesAdapter() {
         categoriesAdapter = new CategoriesAdapter(this);
         binding.recyclerCategories.setHasFixedSize(true);
@@ -162,7 +160,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         binding.recyclerCategories.setAdapter(categoriesAdapter);
     }
 
-    private void instantiateExercisesAdapter(List<ExerciseModel> filteredList){
+    private void instantiateExercisesAdapter(List<ExerciseModel> filteredList) {
         exercisesAdapter = new ExercisesAdapter(filteredList, this);
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -181,7 +179,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     @Override
     public void showExercises(CategoryModel category) {
         categoriesAndExercisesViewModel.getActualCategory().setValue(category);
-        if(category.getExerciseList() != null && !category.getExerciseList().isEmpty()){
+        if (category.getExerciseList() != null && !category.getExerciseList().isEmpty()) {
             addFragment(new ExerciseListFragment());
         } else {
             AddCategoryFragment addCategoryFragment = AddCategoryFragment.newInstance(category);
@@ -192,13 +190,13 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
 
     @Override
     public void initAccessibility() {
-        String searchCategory = getContext().getString(R.string.search_category);
-        binding.txtSearch.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(searchCategory + binding.txtSearch.getText().toString()));
+        String searchExercise = getContext().getString(R.string.search_exercise);
+        binding.txtSearch.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(searchExercise + binding.txtSearch.getText().toString()));
     }
 
     @Override
     public void showSeries(ExerciseModel exercise) {
-        if(exercise.getId() != 0 && exercise.getName() != null){
+        if (exercise.getId() != 0 && exercise.getName() != null) {
             addFragment(AddSerieTrainingFragment.newInstance(exercise));
         } else {
             showBlockError();
