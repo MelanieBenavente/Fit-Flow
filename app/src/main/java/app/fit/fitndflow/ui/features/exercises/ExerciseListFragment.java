@@ -2,6 +2,8 @@ package app.fit.fitndflow.ui.features.exercises;
 
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fit.fitndflow.databinding.FragmentExercisesListBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
@@ -29,6 +34,8 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
 
     private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
 
+    private ExercisesAdapter exercisesAdapter;
+
     @Override
     protected Class getViewModelClass() {
         return CategoriesAndExercisesViewModel.class;
@@ -40,6 +47,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
         setViewModelObservers();
+        addTextWatcher();
         setOnClickListeners();
         return view;
     }
@@ -58,18 +66,39 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
     }
 
     private void printCategoryDetail(CategoryModel categoryRecived) {
-        ExercisesAdapter exercisesAdapter = new ExercisesAdapter(categoryRecived.getExerciseList(), this);
+        exercisesAdapter = new ExercisesAdapter(categoryRecived.getExerciseList(), this);
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerCategories.setAdapter(exercisesAdapter);
-        exercisesAdapter.notifyDataSetChanged();
 
         binding.categoryTitle.setText(categoryRecived.getName());
     }
 
-    private void printError() {
+    private void addTextWatcher() {
+        binding.txtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        Toast.makeText(this.getContext(), "ERROR", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                List<ExerciseModel> filteredList = new ArrayList<>();
+                CategoryModel category = categoriesAndExercisesViewModel.getActualCategory().getValue();
+                List<ExerciseModel> exerciseList = category.getExerciseList();
+                for (int j = 0; j < exerciseList.size(); j++) {
+                    if (exerciseList.get(j).getName().toUpperCase().contains(charSequence.toString().toUpperCase())) {
+                        filteredList.add(exerciseList.get(j));
+                    }
+                }
+                exercisesAdapter.setExerciseModelList(filteredList);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void setOnClickListeners() {
@@ -85,7 +114,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
 
     @Override
     public void showSeries(ExerciseModel exercise) {
-        if(exercise.getId() != 0 && exercise.getName() != null){
+        if (exercise.getId() != 0 && exercise.getName() != null) {
             addFragment(AddSerieTrainingFragment.newInstance(exercise));
         } else {
             showBlockError();
