@@ -84,7 +84,7 @@
         android:background="@color/dark_purpure"
         app:layout_constraintTop_toBottomOf="@id/calendBar" />
 
-    <include layout="@layout/item_training_category_home" />
+    <include layout="@layout/home_category_container" />
 
     <Button
         android:id="@+id/buttonPanel"

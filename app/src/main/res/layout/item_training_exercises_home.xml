@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_exercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:padding="3dp"
+        android:text="Exercise"
+        style="@style/text_m_black"
+        app:layout_constraintStart_toStartOf="@id/cat_name"
+        app:layout_constraintTop_toBottomOf="@id/cat_name" />
+
+    <View
+        android:id="@+id/simpleLine3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/home_high_purple" />
+
+    <LinearLayout
+        android:id="@+id/series_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:weightSum="15"
+        app:layout_constraintStart_toStartOf="@id/txt_exercise"
+        app:layout_constraintTop_toBottomOf="@id/simpleLine3">
+
+        <include layout="@layout/item_training_series_layout" />
+
+    </LinearLayout>
+</LinearLayout>

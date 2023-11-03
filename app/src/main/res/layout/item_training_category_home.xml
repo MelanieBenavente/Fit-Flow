@@ -1,38 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rectangle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="35dp"
-    android:layout_marginTop="45dp"
-    android:layout_marginRight="35dp"
-    android:background="@drawable/border_serie_home"
     android:paddingLeft="30dp"
     android:paddingTop="30dp"
-    android:paddingRight="30dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/simpleLine2">
+    android:paddingRight="30dp">
 
     <TextView
         android:id="@+id/cat_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/category_serie_title"
         android:ellipsize="end"
-        android:fontFamily="@font/roboto"
         android:gravity="center"
         android:maxWidth="150dp"
         android:maxLines="1"
         android:paddingStart="20dp"
-        android:paddingTop="10dp"
+        android:paddingTop="7dp"
         android:paddingEnd="20dp"
-        android:paddingBottom="10dp"
+        android:paddingBottom="7dp"
         android:text="pierna"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
-        android:textSize="11sp"
+        style="@style/text_m_black_bg_purple"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,77 +54,18 @@
             android:layout_marginStart="4dp"
             android:background="@drawable/favorite_item"
             android:orientation="horizontal" />
-
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/txt_exercise"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/roboto"
-        android:padding="3dp"
-        android:text="Exercise"
-        android:textColor="@color/black"
-        android:textSize="11sp"
-        app:layout_constraintStart_toStartOf="@id/cat_name"
-        app:layout_constraintTop_toBottomOf="@id/cat_name" />
-
-    <View
-        android:id="@+id/simpleLine3"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="#A159FF"
-        app:layout_constraintEnd_toEndOf="@id/heart_likes"
-        app:layout_constraintStart_toStartOf="@id/txt_exercise"
-        app:layout_constraintTop_toBottomOf="@id/txt_exercise" />
-
     <LinearLayout
+        android:id="@+id/exercises_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="@id/txt_exercise"
-        app:layout_constraintTop_toBottomOf="@id/simpleLine3">
+        app:layout_constraintStart_toStartOf="@id/cat_name"
+        app:layout_constraintTop_toBottomOf="@id/cat_name">
 
-        <LinearLayout
-            android:id="@+id/recycable_serie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="10"
-            app:layout_constraintStart_toStartOf="@id/txt_exercise"
-            app:layout_constraintTop_toBottomOf="@id/simpleLine3">
+        <include layout="@layout/item_training_exercises_home"/>
 
-            <TextView
-                android:id="@+id/recyclable_x"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:text="x12"
-                android:textSize="9sp" />
-
-            <TextView
-                android:id="@+id/number_kg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:inputType="number"
-                android:text="40kg"
-                android:textAlignment="textEnd"
-                android:textSize="9sp" />
-
-        </LinearLayout>
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/news_serie_component"
-        app:layout_constraintEnd_toEndOf="@id/simpleLine3"
-        app:layout_constraintTop_toBottomOf="@id/simpleLine3" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
