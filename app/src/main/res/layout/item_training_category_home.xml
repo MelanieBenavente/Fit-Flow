@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rectangle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="35dp"
+    android:layout_marginTop="45dp"
+    android:layout_marginRight="35dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:paddingTop="30dp"
+    android:background="@drawable/border_serie_home"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/simpleLine2">
+
+    <TextView
+        android:id="@+id/cat_name"
+        android:layout_width="88dp"
+        android:layout_height="25dp"
+        android:background="@drawable/category_serie_title"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:text="pierna"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+<LinearLayout
+    android:id="@+id/heart_likes"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="@id/cat_name"
+    app:layout_constraintBottom_toBottomOf="@id/cat_name">
+
+    <ImageButton
+        android:id="@+id/favorite1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/favorite_item"
+        android:orientation="horizontal"/>
+
+    <ImageButton
+        android:id="@+id/favorite2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/favorite_item"
+        android:orientation="horizontal"
+        android:layout_marginStart="4dp"/>
+
+    <ImageButton
+        android:id="@+id/favorite3"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/favorite_item"
+        android:orientation="horizontal"
+        android:layout_marginStart="4dp"/>
+
+</LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_exercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/cat_name"
+        app:layout_constraintTop_toBottomOf="@id/cat_name"
+        android:layout_marginTop="10dp"
+        android:padding="3dp"
+        android:text="Exercise"
+        android:textColor="@color/black"
+        android:textSize="11sp"
+        android:fontFamily="@font/roboto"
+        />
+
+    <View
+        android:id="@+id/simpleLine3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#A159FF"
+        app:layout_constraintEnd_toEndOf="@id/heart_likes"
+        app:layout_constraintStart_toStartOf="@id/txt_exercise"
+        app:layout_constraintTop_toBottomOf="@id/txt_exercise" />
+</androidx.constraintlayout.widget.ConstraintLayout>

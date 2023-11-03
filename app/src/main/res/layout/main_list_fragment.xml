@@ -1,98 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/fragmentContainer"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragmentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/dark_purpure"
-        app:menu="@menu/itemsmain"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/itemsmain" />
 
     <View
         android:id="@+id/simpleLine"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/pink_letters"/>
+        android:background="@color/pink_letters"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <FrameLayout
         android:id="@+id/calendBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/simpleLine"
-        android:background="@color/pink_letters">
+        android:background="@color/pink_letters"
+        app:layout_constraintTop_toBottomOf="@id/simpleLine">
 
         <ImageButton
             android:id="@+id/btn_left"
-            android:padding="15dp"
-            android:layout_gravity="left"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_action_left"
+            android:layout_gravity="left"
             android:background="@color/pink_letters"
-            android:contentDescription="@string/talkback_day_before_btn"/>
+            android:contentDescription="@string/talkback_day_before_btn"
+            android:padding="15dp"
+            android:src="@drawable/ic_action_left" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical">
-        <TextView
-            android:id="@+id/dayOfWeek"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="lun"
-            style="@style/CalendarHeader"/>
-        <TextView
-            android:id="@+id/dateName"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="23, abr"
-            android:textSize="17dp"
-            android:fontFamily="casual"
-            android:textStyle="bold"
-            android:textColor="@color/dark_purpure"/>
-    </LinearLayout>
+
+            <TextView
+                android:id="@+id/dayOfWeek"
+                style="@style/CalendarHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="lun"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/dateName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="casual"
+                android:text="23, abr"
+                android:textAlignment="center"
+                android:textColor="@color/dark_purpure"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/btn_right"
-            android:padding="15dp"
-            android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_action_right"
+            android:layout_gravity="right"
             android:background="@color/pink_letters"
-            android:contentDescription="@string/talkback_day_after_btn"/>
+            android:contentDescription="@string/talkback_day_after_btn"
+            android:padding="15dp"
+            android:src="@drawable/ic_action_right" />
 
     </FrameLayout>
 
     <View
         android:id="@+id/simpleLine2"
-        app:layout_constraintTop_toBottomOf="@id/calendBar"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/dark_purpure"/>
+        android:background="@color/dark_purpure"
+        app:layout_constraintTop_toBottomOf="@id/calendBar" />
+
+    <include layout="@layout/item_training_category_home" />
 
     <Button
         android:id="@+id/buttonPanel"
+        style="@style/GenericButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="50dp"
         android:text="@string/add_training"
-        style="@style/GenericButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginVertical="50dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
