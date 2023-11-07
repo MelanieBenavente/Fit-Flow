@@ -26,13 +26,9 @@
         android:id="@+id/series_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="5dp"
-        android:weightSum="15"
-        app:layout_constraintStart_toStartOf="@id/txt_exercise"
-        app:layout_constraintTop_toBottomOf="@id/simpleLine3">
-
-        <include layout="@layout/item_training_series_layout" />
+        >
 
     </LinearLayout>
 </LinearLayout>

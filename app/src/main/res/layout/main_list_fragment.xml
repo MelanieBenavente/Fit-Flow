@@ -84,7 +84,24 @@
         android:background="@color/dark_purpure"
         app:layout_constraintTop_toBottomOf="@id/calendBar" />
 
-    <include layout="@layout/home_category_container" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/buttonPanel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/simpleLine2">
+
+        <LinearLayout
+            android:id="@+id/parent_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/simpleLine2">
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/buttonPanel"

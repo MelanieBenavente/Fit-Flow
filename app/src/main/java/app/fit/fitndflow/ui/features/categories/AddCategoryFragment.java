@@ -168,7 +168,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
         }
         if (categoryModel.getExerciseList() == null) {
             categoryModel.setExerciseList(new ArrayList<>());
-            ExerciseModel exercise = new ExerciseModel(null, lastEditable.getEditText().getText().toString());
+            ExerciseModel exercise = new ExerciseModel(null, lastEditable.getEditText().getText().toString(), null);
             categoryModel.getExerciseList().add(exercise);
             Log.i("Add", "added exercise");
         }

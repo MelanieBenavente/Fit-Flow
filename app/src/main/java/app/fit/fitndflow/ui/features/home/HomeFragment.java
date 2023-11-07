@@ -15,10 +15,15 @@ import androidx.lifecycle.ViewModelProviders;
 import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.Utils;
+import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExerciseModel;
+import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
 import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
 
@@ -59,7 +64,14 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         }
         setViewModelObservers();
         setClickListeners();
+        printExercises(mockData());
+    }
 
+    private void  printExercises(List<CategoryModel> categoryModelList){
+        for (CategoryModel category : categoryModelList) {
+            CategoryCustomView  categoryView = new CategoryCustomView(getContext(), category);
+            binding.parentContainer.addView(categoryView);
+        }
     }
 
     private void setClickListeners() {
@@ -78,6 +90,31 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
                 addFragment(new CategoriesListFragment());
             }
         });
+    }
+
+    private List<CategoryModel> mockData(){
+        List<CategoryModel> categoryTrainingModelList = new ArrayList<>();
+        List<SerieModel> serieModelList = new ArrayList<>();
+        SerieModel serie1 = new SerieModel(12,10.5);
+        SerieModel serie2 = new SerieModel(8,5.5);
+        SerieModel serie3 = new SerieModel(14,2.5);
+        serieModelList.add(serie1);
+        serieModelList.add(serie2);
+        serieModelList.add(serie3);
+
+        List<ExerciseModel> exerciseList = new ArrayList<>();
+        ExerciseModel exercise1 = new ExerciseModel(221, "Mancuernas", serieModelList);
+        exerciseList.add(exercise1);
+
+        CategoryModel category1 = new CategoryModel(123, "toto", exerciseList);
+        CategoryModel category2 = new CategoryModel(124, "Pecho", exerciseList);
+        CategoryModel category3 = new CategoryModel(125, "Triceps", exerciseList);
+
+        categoryTrainingModelList.add(category1);
+        categoryTrainingModelList.add(category2);
+        categoryTrainingModelList.add(category3);
+
+        return categoryTrainingModelList;
     }
 
     private void setViewModelObservers() {

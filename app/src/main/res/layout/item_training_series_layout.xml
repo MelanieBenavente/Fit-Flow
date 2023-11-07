@@ -1,35 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    >
 
     <TextView
-        android:id="@+id/recyclable_x"
-        android:layout_width="wrap_content"
+        android:id="@+id/number_reps"
+        style="@style/text_s_gray"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
         android:text="x12"
-        style="@style/text_s_gray"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAlignment="textStart"
+        app:layout_constraintWidth_percent="0.2"
+        />
 
     <TextView
         android:id="@+id/number_kg"
-        android:layout_width="wrap_content"
+        style="@style/text_s_gray"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="15"
         android:text="40kg"
-        android:textAlignment="center"
-        style="@style/text_s_gray" />
+        app:layout_constraintStart_toEndOf="@id/number_reps"
+        app:layout_constraintWidth_percent="0.4"
+        android:textAlignment="textEnd"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="@drawable/news_serie_component"
-        app:layout_constraintEnd_toEndOf="@id/simpleLine3"
-        app:layout_constraintTop_toBottomOf="@id/simpleLine3" />
+        <ImageView
+            android:id="@+id/news"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/news_serie_component"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

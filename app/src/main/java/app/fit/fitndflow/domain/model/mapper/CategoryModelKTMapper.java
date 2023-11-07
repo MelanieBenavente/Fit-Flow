@@ -16,7 +16,7 @@ public class CategoryModelKTMapper {
         for (CategoryDto categoryDto : categoryDtoList) {
             CategoryModel CategoryModel = new CategoryModel(categoryDto.getId(), categoryDto.getName().getSpanish(), new ArrayList<>());
             for (ExerciseDto exerciseDto : categoryDto.getExerciseDtoList()) {
-                ExerciseModel exerciseModel = new ExerciseModel(exerciseDto.getId(), exerciseDto.getExerciseName().getSpanish());
+                ExerciseModel exerciseModel = new ExerciseModel(exerciseDto.getId(), exerciseDto.getExerciseName().getSpanish(), null);
                 CategoryModel.getExerciseList().add(exerciseModel);
             }
             categoryModelList.add(CategoryModel);

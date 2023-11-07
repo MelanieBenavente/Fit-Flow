@@ -40,7 +40,7 @@ public class EditableBtnAddExercise extends LinearLayout implements Accessibilit
             public void onClick(View view) {
                 String name = editText.getText().toString();
                 if(name != null && !name.equals("")){
-                    ExerciseModel exercise = new ExerciseModel(null, name);
+                    ExerciseModel exercise = new ExerciseModel(null, name, null);
                     categoryEditableListener.onClickAdd(exercise);
                 }
 
