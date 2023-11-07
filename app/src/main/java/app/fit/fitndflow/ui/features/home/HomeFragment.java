@@ -64,10 +64,11 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         }
         setViewModelObservers();
         setClickListeners();
-        printExercises(mockData());
+
     }
 
     private void  printExercises(List<CategoryModel> categoryModelList){
+        binding.parentContainer.removeAllViews();
         for (CategoryModel category : categoryModelList) {
             CategoryCustomView  categoryView = new CategoryCustomView(getContext(), category);
             binding.parentContainer.addView(categoryView);
@@ -92,33 +93,17 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         });
     }
 
-    private List<CategoryModel> mockData(){
-        List<CategoryModel> categoryTrainingModelList = new ArrayList<>();
-        List<SerieModel> serieModelList = new ArrayList<>();
-        SerieModel serie1 = new SerieModel(12,10.5);
-        SerieModel serie2 = new SerieModel(8,5.5);
-        SerieModel serie3 = new SerieModel(14,2.5);
-        serieModelList.add(serie1);
-        serieModelList.add(serie2);
-        serieModelList.add(serie3);
-
-        List<ExerciseModel> exerciseList = new ArrayList<>();
-        ExerciseModel exercise1 = new ExerciseModel(221, "Mancuernas", serieModelList);
-        exerciseList.add(exercise1);
-
-        CategoryModel category1 = new CategoryModel(123, "toto", exerciseList);
-        CategoryModel category2 = new CategoryModel(124, "Pecho", exerciseList);
-        CategoryModel category3 = new CategoryModel(125, "Triceps", exerciseList);
-
-        categoryTrainingModelList.add(category1);
-        categoryTrainingModelList.add(category2);
-        categoryTrainingModelList.add(category3);
-
-        return categoryTrainingModelList;
-    }
-
     private void setViewModelObservers() {
         homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
+
+        final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
+            @Override
+            public void onChanged(List<CategoryModel> categories) {
+                printExercises(categories);
+            }
+        };
+        homeViewModel.getMutableCategory().observe(getActivity(), observer);
+
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
@@ -140,6 +125,8 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         final Observer<Date> actualDateObserver = new Observer<Date>() {
             @Override
             public void onChanged(Date date) {
+                homeViewModel.requestTrainingFromModel(requireContext());
+
                 if (Utils.isYesterday(date)) {
                     binding.dateName.setText(R.string.yesterday_date_selector);
                     binding.dayOfWeek.setVisibility(View.GONE);
@@ -157,7 +144,6 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
             }
         };
         viewModel.getActualDate().observe(getActivity(), actualDateObserver);
-
         //observing error
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
             @Override
