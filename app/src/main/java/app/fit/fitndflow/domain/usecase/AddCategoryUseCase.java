@@ -42,11 +42,9 @@ public class AddCategoryUseCase extends FitUseCase<CategoryModel, Boolean> {
                         exerciseDtoList.add(exerciseDto);
                     }
                 }
-                CategoryDto categoryDto = new CategoryDto(null, null, null);
+                CategoryDto categoryDto = new CategoryDto(null, new StringInLanguagesDto(inputParams.getName(), null), exerciseDtoList);
                 categoryDto.setId(inputParams.getId());
-                categoryDto.setName(new StringInLanguagesDto(null, null));
-                categoryDto.getName().setSpanish(inputParams.getName());
-                categoryDto.setExerciseDtoList(exerciseDtoList);
+
 
                 Boolean response = fitnFlowRepository.saveCategoryAndExercises(categoryDto, apiKey);
                 emitter.onSuccess(response);

@@ -148,7 +148,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             @Override
             public void onClick(View view) {
                 if (!categoriesAndExercisesViewModel.getIsLoading().getValue()) {
-                    if (categoryModel == null || categoryModel.getId() == 0) {
+                    if (categoryModel == null || categoryModel.getId() == null || categoryModel.getId() == 0) {
                         requireActivity().onBackPressed();
                     } else {
                         ConfirmationDialogFragment.newInstance(AddCategoryFragment.this, DELETE_CATEGORY, -1).show(getChildFragmentManager(), "ConfirmationDialog");
@@ -161,7 +161,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
     private void updateScreenData() {
         if (categoryModel == null) {
             String categoryName = binding.newCategoryTxt.getText().toString();
-            categoryModel = new CategoryModel(null, categoryName, null);
+            categoryModel = new CategoryModel(0, categoryName, null);
         } else {
             String categoryName = binding.newCategoryTxt.getText().toString();
             categoryModel.setName(categoryName);
