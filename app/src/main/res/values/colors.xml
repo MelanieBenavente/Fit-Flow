@@ -13,6 +13,11 @@
     <color name="text_color_normal">#222023</color>
     <color name="red">#F44336</color>
     <color name="background_loading">#FFFFFFFF</color>
+    <color name="home_high_purple">#A159FF</color>
+    <color name="dark_gray">#434145</color>
+    <color name="home_light_purple">#CFABFF</color>
+    <color name="border_home_purple">#FFCFABFF</color>
+
 
 
 </resources>

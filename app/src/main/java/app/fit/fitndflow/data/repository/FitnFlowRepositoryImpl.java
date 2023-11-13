@@ -1,5 +1,6 @@
 package app.fit.fitndflow.data.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.data.common.RetrofitUtils;
@@ -7,6 +8,8 @@ import app.fit.fitndflow.data.common.model.ExcepcionApi;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExerciseModel;
+import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.model.mapper.CategoryModelMapperKt;
 import app.fit.fitndflow.domain.model.mapper.UserModelMapperKt;
@@ -89,5 +92,35 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
     private void deleteCache(){
         categoryListCachedResponse = null;
+    }
+
+    public List<CategoryModel> getTrainingList(String apiKey) throws  Exception{
+        try{
+        List<CategoryModel> categoryTrainingModelList = new ArrayList<>();
+        List<SerieModel> serieModelList = new ArrayList<>();
+        SerieModel serie1 = new SerieModel(12,10.5);
+        SerieModel serie2 = new SerieModel(8,5.5);
+        SerieModel serie3 = new SerieModel(14,2.5);
+        serieModelList.add(serie1);
+        serieModelList.add(serie2);
+        serieModelList.add(serie3);
+
+        List<ExerciseModel> exerciseList = new ArrayList<>();
+        ExerciseModel exercise1 = new ExerciseModel(221, "Mancuernas", serieModelList);
+        exerciseList.add(exercise1);
+
+        CategoryModel category1 = new CategoryModel(123, "toto", exerciseList);
+        CategoryModel category2 = new CategoryModel(124, "Pecho", exerciseList);
+        CategoryModel category3 = new CategoryModel(125, "Triceps", exerciseList);
+
+        categoryTrainingModelList.add(category1);
+        categoryTrainingModelList.add(category2);
+        categoryTrainingModelList.add(category3);
+
+        return categoryTrainingModelList;
+
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
     }
 }

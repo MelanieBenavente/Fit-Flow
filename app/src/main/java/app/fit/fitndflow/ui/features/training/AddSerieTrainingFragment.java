@@ -78,7 +78,6 @@ public class AddSerieTrainingFragment extends CommonFragment implements SerieEdi
 
     @Override
     public void onClickAdd(SerieModel serie) {
-        serie.setExercise(exercise);
         serieModelList.add(serie);
         printSerieDetail();
     }

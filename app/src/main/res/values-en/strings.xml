@@ -28,6 +28,11 @@
     <string name="talkback_block_error">Something was wrong. Screen are blocked, please check your internet connection.</string>
     <string name="talkback_error">There is an error</string>
     <string name="loading">loading</string>
+    <string name="num_reps">num reps</string>
+    <string name="reps_txt">Reps</string>
+    <string name="num_kg">num kg</string>
+    <string name="kg_txt">Kg</string>
+    <string name="exercise_name">exercise name</string>
     <string name="notification_body">Its a good day to train!</string>
     <string name="notification_title">Psssss!</string>
 

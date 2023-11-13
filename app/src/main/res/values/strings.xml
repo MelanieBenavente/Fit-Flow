@@ -29,6 +29,11 @@
     <string name="talkback_block_error">Algo no ha ido bien, pantalla bloqueada. Revisa tu conexión a internet.</string>
     <string name="talkback_error">Ha ocurrido un error.</string>
     <string name="loading">Cargando</string>
+    <string name="num_reps">num reps</string>
+    <string name="reps_txt">Reps</string>
+    <string name="num_kg">num kg</string>
+    <string name="kg_txt">Kg</string>
+    <string name="exercise_name">nombre ejercicio</string>
     <string name="notification_body">Hoy es un buen día para entrenar!</string>
     <string name="notification_title">Psssss!</string>
 

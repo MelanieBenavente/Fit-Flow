@@ -19,7 +19,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="num reps"
+                android:hint="@string/num_reps"
                 android:inputType="number"
                 android:padding="8dp"
                 />
@@ -27,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reps"
+                android:text="@string/reps_txt"
                 android:padding="8dp" />
 
             <EditText
@@ -35,14 +35,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="num kg"
+                android:hint="@string/num_kg"
                 android:inputType="number"
                 android:padding="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kg"
+                android:text="@string/kg_txt"
                 android:padding="8dp" />
         </TableRow>
     </TableLayout>

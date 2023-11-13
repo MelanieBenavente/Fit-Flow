@@ -16,9 +16,11 @@ import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
 import java.util.Date;
+import java.util.List;
 
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.Utils;
+import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
 import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
 
@@ -62,6 +64,14 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
 
     }
 
+    private void  printExercises(List<CategoryModel> categoryModelList){
+        binding.parentContainer.removeAllViews();
+        for (CategoryModel category : categoryModelList) {
+            CategoryCustomView  categoryView = new CategoryCustomView(getContext(), category);
+            binding.parentContainer.addView(categoryView);
+        }
+    }
+
     private void setClickListeners() {
         binding.btnLeft.setOnClickListener(view ->{
             if(!homeViewModel.getIsLoading().getValue()){
@@ -82,6 +92,15 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
 
     private void setViewModelObservers() {
         homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
+
+        final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
+            @Override
+            public void onChanged(List<CategoryModel> categories) {
+                printExercises(categories);
+            }
+        };
+        homeViewModel.getDailyTrainingMutableList().observe(getActivity(), observer);
+
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
@@ -103,6 +122,8 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         final Observer<Date> actualDateObserver = new Observer<Date>() {
             @Override
             public void onChanged(Date date) {
+                homeViewModel.requestTrainingFromModel(requireContext());
+
                 if (Utils.isYesterday(date)) {
                     binding.dateName.setText(R.string.yesterday_date_selector);
                     binding.dayOfWeek.setVisibility(View.GONE);
@@ -120,7 +141,6 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
             }
         };
         viewModel.getActualDate().observe(getActivity(), actualDateObserver);
-
         //observing error
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
             @Override

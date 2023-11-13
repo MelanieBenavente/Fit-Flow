@@ -31,5 +31,26 @@
         <item name="android:textColor">@color/dark_purpure</item>
     </style>
 
+    <style name="text_m" parent="ParentText">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="text_m_black" parent="text_m">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="text_m_black_bg_purple" parent="text_m_black">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:background">@drawable/category_serie_title</item>
+    </style>
+
+    <style name="text_s" parent="ParentText">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="text_s_gray" parent="text_s">
+        <item name="android:textColor">@color/dark_gray</item>
+    </style>
 
 </resources>
