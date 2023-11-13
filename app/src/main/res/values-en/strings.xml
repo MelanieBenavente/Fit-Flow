@@ -33,6 +33,8 @@
     <string name="num_kg">num kg</string>
     <string name="kg_txt">Kg</string>
     <string name="exercise_name">exercise name</string>
+    <string name="notification_body">Its a good day to train!</string>
+    <string name="notification_title">Psssss!</string>
 
 
 </resources>

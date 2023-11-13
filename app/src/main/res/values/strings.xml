@@ -34,6 +34,8 @@
     <string name="num_kg">num kg</string>
     <string name="kg_txt">Kg</string>
     <string name="exercise_name">nombre ejercicio</string>
+    <string name="notification_body">Hoy es un buen día para entrenar!</string>
+    <string name="notification_title">Psssss!</string>
 
 
 </resources>
