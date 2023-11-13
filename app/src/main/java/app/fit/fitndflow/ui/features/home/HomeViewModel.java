@@ -24,7 +24,7 @@ public class HomeViewModel extends ViewModel {
     private MutableLiveData<Date> actualDate = new MutableLiveData<>(new Date());
 
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
-    private MutableLiveData<List<CategoryModel>> mutableCategory = new MutableLiveData<>();
+    private MutableLiveData<List<CategoryModel>> dailyTrainingMutableList = new MutableLiveData<>();
 
     /*
     getters
@@ -39,8 +39,8 @@ public class HomeViewModel extends ViewModel {
     public MutableLiveData<Boolean> getIsLoading() {
         return isLoading;
     }
-    public MutableLiveData<List<CategoryModel>> getMutableCategory() {
-        return mutableCategory;
+    public MutableLiveData<List<CategoryModel>> getDailyTrainingMutableList() {
+        return dailyTrainingMutableList;
     }
 
     //end getters
@@ -94,7 +94,7 @@ public class HomeViewModel extends ViewModel {
         getTrainingUseCase.execute(new FitObserver<List<CategoryModel>>() {
             @Override
             public void onSuccess(List<CategoryModel> categoryModelList) {
-                mutableCategory.setValue(categoryModelList);
+                dailyTrainingMutableList.setValue(categoryModelList);
                 isLoading.setValue(false);
                 mutableError.setValue(false);
             }

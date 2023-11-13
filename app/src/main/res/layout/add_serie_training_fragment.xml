@@ -24,7 +24,7 @@
             android:textStyle="bold"
             android:textAllCaps="true"
             android:gravity="center"
-            android:text="exercise name"/>
+            android:text="@string/exercise_name"/>
     </FrameLayout>
 
     <ScrollView

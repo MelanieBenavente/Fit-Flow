@@ -15,15 +15,12 @@ import androidx.lifecycle.ViewModelProviders;
 import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.CategoryModel;
-import app.fit.fitndflow.domain.model.ExerciseModel;
-import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
 import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
 
@@ -102,7 +99,7 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
                 printExercises(categories);
             }
         };
-        homeViewModel.getMutableCategory().observe(getActivity(), observer);
+        homeViewModel.getDailyTrainingMutableList().observe(getActivity(), observer);
 
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
