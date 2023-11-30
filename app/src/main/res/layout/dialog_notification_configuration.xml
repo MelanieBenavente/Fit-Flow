@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+       >
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/close_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="right"
+            android:layout_margin="20dp"
+            android:background="@drawable/ic_close_24px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto"
+            android:paddingLeft="30dp"
+            android:paddingTop="21dp"
+            android:paddingRight="30dp"
+            android:text="¡Activa las notificaciones y entrena al máximo!"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/bodyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="26dp"
+            android:fontFamily="@font/roboto"
+            android:paddingLeft="29dp"
+            android:paddingRight="29dp"
+            android:text="Para asegurarnos de que no te pierdas ninguno de tus entrenamientos diarios de fitness, necesitamos tu permiso para enviar notificaciones. Las notificaciones te recordarán tus sesiones de entrenamiento, ayudándote a mantenerte motivado y en forma. ¡Activa las notificaciones para una experiencia de entrenamiento óptima!"
+            android:textAlignment="center"
+            android:textColor="#BF212121"
+            android:textSize="15sp" />
+
+        <app.fit.fitndflow.ui.features.common.component.FitndFlowCheckbox
+            android:id="@+id/checkbox_no_mostrar_mas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="20dp"
+            android:button="@drawable/component_checkbox_draw"
+            android:checked="false"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="No volver a mostrar" />
+
+        <Button
+            android:id="@+id/buttonPanel"
+            style="@style/GenericButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="50dp"
+            android:text="Estoy deacuerdo"
+            />
+
+    </LinearLayout>
+</ScrollView>

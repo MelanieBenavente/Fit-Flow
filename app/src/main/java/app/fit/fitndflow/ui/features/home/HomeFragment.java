@@ -23,6 +23,7 @@ import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
 import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
+import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager;
 
 public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
     private MainListFragmentBinding binding;
@@ -44,12 +45,20 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
 
     private HomeViewModel homeViewModel;
 
+    private boolean isShownNotificationConfiguration = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = MainListFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
+        if(!isShownNotificationConfiguration){
+            MyNotificationManager.askForPermissions(this);
+            isShownNotificationConfiguration = true;
+        }
+        new MyNotificationManager().scheduleNotification(requireActivity(), 6000, MyNotificationManager.TRAINING_TYPE);
+
         return view;
     }
 
