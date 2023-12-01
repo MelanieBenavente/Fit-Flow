@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,26 +28,19 @@
             android:paddingLeft="30dp"
             android:paddingTop="21dp"
             android:paddingRight="30dp"
-            android:text="¡Activa las notificaciones y entrena al máximo!"
+            android:text="@string/layout_notification_title"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-
-        <TextView
-            android:id="@+id/bodyTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/notification_config_img"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_gravity="center"
-            android:layout_marginTop="26dp"
-            android:fontFamily="@font/roboto"
-            android:paddingLeft="29dp"
-            android:paddingRight="29dp"
-            android:text="Para asegurarnos de que no te pierdas ninguno de tus entrenamientos diarios de fitness, necesitamos tu permiso para enviar notificaciones. Las notificaciones te recordarán tus sesiones de entrenamiento, ayudándote a mantenerte motivado y en forma. ¡Activa las notificaciones para una experiencia de entrenamiento óptima!"
-            android:textAlignment="center"
-            android:textColor="#BF212121"
-            android:textSize="15sp" />
+            app:srcCompat="@drawable/img_notification_configuration" />
 
         <app.fit.fitndflow.ui.features.common.component.FitndFlowCheckbox
             android:id="@+id/checkbox_no_mostrar_mas"
@@ -60,15 +54,15 @@
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="No volver a mostrar" />
+            android:text="@string/dont_show_again_chekbox_txt" />
 
         <Button
             android:id="@+id/buttonPanel"
             style="@style/GenericButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="50dp"
-            android:text="Estoy deacuerdo"
+            android:layout_marginVertical="20dp"
+            android:text="@string/im_agree"
             />
 
     </LinearLayout>
