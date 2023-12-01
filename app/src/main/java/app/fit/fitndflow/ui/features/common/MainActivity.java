@@ -24,8 +24,6 @@ public class MainActivity extends CommonActivity {
         super.onCreate(savedInstanceState);
         getSupportFragmentManager().beginTransaction().add(R.id.MainActContainer, new HomeFragment()).commit();
 
-        MyNotificationManager myNotificationManager = new MyNotificationManager();
-        myNotificationManager.scheduleNotification(this, 6000);
     }
 
     @Override
@@ -33,21 +31,8 @@ public class MainActivity extends CommonActivity {
         return R.layout.activity_main;
     }
 
-    public Boolean checkNotificationPermission() {
 
-        if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            Toast.makeText(this, "DONT HAVE A PERMISSION", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-    }
 
-    public void requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, REQUEST_CODE);
-        }
-    }
 }
 
 
