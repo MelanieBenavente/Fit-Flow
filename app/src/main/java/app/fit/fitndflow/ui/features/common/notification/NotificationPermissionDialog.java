@@ -8,12 +8,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.viewbinding.ViewBinding;
 
 import com.fit.fitndflow.R;
+import com.fit.fitndflow.databinding.DialogNotificationConfigurationBinding;
 import com.fit.fitndflow.databinding.DialogNotificationPermissionBinding;
 import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
-public class NotificationPermissionDialog extends DialogFragment implements View.OnClickListener {
+import app.fit.fitndflow.ui.features.common.CommonDialogFragment;
+
+public class NotificationPermissionDialog extends CommonDialogFragment implements View.OnClickListener {
     private DialogNotificationPermissionBinding binding;
     public static String TAG = "NotificationDialog";
 
@@ -21,12 +25,17 @@ public class NotificationPermissionDialog extends DialogFragment implements View
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DialogNotificationPermissionBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        super.onCreateView(inflater, container, savedInstanceState);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         initListeners();
         return view;
     }
+
+    @Override
+    public ViewBinding getBinding() {
+        binding = DialogNotificationPermissionBinding.inflate(getLayoutInflater());
+        return binding;
+    }
+
 
     private void initListeners(){
         binding.buttonPanel.setOnClickListener(this);

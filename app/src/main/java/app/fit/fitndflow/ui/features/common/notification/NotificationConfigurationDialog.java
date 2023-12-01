@@ -9,14 +9,16 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.viewbinding.ViewBinding;
 
 import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.DialogNotificationConfigurationBinding;
 import com.fit.fitndflow.databinding.DialogNotificationPermissionBinding;
 
 import app.fit.fitndflow.data.common.SharedPrefs;
+import app.fit.fitndflow.ui.features.common.CommonDialogFragment;
 
-public class NotificationConfigurationDialog extends DialogFragment implements View.OnClickListener {
+public class NotificationConfigurationDialog extends CommonDialogFragment implements View.OnClickListener {
 
     private DialogNotificationConfigurationBinding binding;
 
@@ -25,11 +27,15 @@ public class NotificationConfigurationDialog extends DialogFragment implements V
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DialogNotificationConfigurationBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        super.onCreateView(inflater, container, savedInstanceState);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         initListeners();
         return view;
+    }
+
+    @Override
+    public ViewBinding getBinding() {
+        binding = DialogNotificationConfigurationBinding.inflate(getLayoutInflater());
+        return binding;
     }
 
     private void initListeners() {

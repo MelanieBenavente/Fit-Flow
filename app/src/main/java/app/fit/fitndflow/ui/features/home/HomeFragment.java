@@ -1,5 +1,7 @@
 package app.fit.fitndflow.ui.features.home;
 
+import static app.fit.fitndflow.ui.features.common.notification.MyNotificationManager.scheduleNotification;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,7 +59,7 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
             MyNotificationManager.askForPermissions(this);
             isShownNotificationConfiguration = true;
         }
-        new MyNotificationManager().scheduleNotification(requireActivity(), 6000, MyNotificationManager.TRAINING_TYPE);
+        scheduleNotification(requireActivity(), 6000, MyNotificationManager.TRAINING_TYPE);
 
         return view;
     }

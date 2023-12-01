@@ -43,7 +43,7 @@ public class MyNotificationManager extends BroadcastReceiver {
         printNotification(context, intent);
     }
 
-    public void printNotification(Context context, Intent intent) {
+    private static void printNotification(Context context, Intent intent) {
         int type = intent.getIntExtra("type", -1);
         Class activityClass = getNotificationType(type);
 
@@ -81,7 +81,7 @@ public class MyNotificationManager extends BroadcastReceiver {
         }
     }
 
-    private Class getNotificationType(int type) {
+    private static Class getNotificationType(int type) {
         switch (type) {
             case TRAINING_TYPE:
                 return MainActivity.class;
@@ -89,7 +89,7 @@ public class MyNotificationManager extends BroadcastReceiver {
                 return MainActivity.class;
         }
     }
-    private String getNotificationTitle(int type, Context context){
+    public static String getNotificationTitle(int type, Context context){
         switch(type) {
             case TRAINING_TYPE:
                 return context.getString(R.string.notification_title);
@@ -98,7 +98,7 @@ public class MyNotificationManager extends BroadcastReceiver {
         }
     }
 
-    private String getNotificationBody(int type, Context context){
+    public static String getNotificationBody(int type, Context context){
         switch(type) {
             case TRAINING_TYPE:
                 return context.getString(R.string.notification_body);
@@ -109,7 +109,7 @@ public class MyNotificationManager extends BroadcastReceiver {
 
 
 
-    public void scheduleNotification(Activity activity, long delayMillis, int type) {
+    public static void scheduleNotification(Activity activity, long delayMillis, int type) {
         if (checkNotificationPermission(activity)) {
 
             Intent intent = new Intent(activity, MyNotificationManager.class);
@@ -125,7 +125,7 @@ public class MyNotificationManager extends BroadcastReceiver {
         }
     }
 
-    public  static void requestPermission(Activity activity) {
+    public static void requestPermission(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ActivityCompat.requestPermissions(activity, new String[]{POST_NOTIFICATIONS}, REQUEST_CODE_PERMISSION);
         }
