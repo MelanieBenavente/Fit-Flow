@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <corners android:radius="40dp" /> <!-- Ajusta el radio para redondear las esquinas -->
+    <corners android:radius="8dp" /> <!-- Ajusta el radio para redondear las esquinas -->
     <solid android:color="@color/home_high_purple" />
     <!-- Color de fondo del botón -->
 </shape>
