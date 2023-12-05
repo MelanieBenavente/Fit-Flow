@@ -40,6 +40,8 @@
     <string name="layout_notification_body">Para asegurarnos de que no te pierdas ninguno de tus entrenamientos, necesitamos tu permiso. Las notificaciones te recordarán tus sesiones de entrenamiento, ayudándote a mantenerte motivado y en forma. ¡Activa las notificaciones para una experiencia de entrenamiento óptima!</string>
     <string name="im_agree">Estoy deacuerdo</string>
     <string name="dont_show_again_chekbox_txt">No volver a mostrar</string>
+    <string name="error_fulscreen_back_btn">Volver atrás</string>
+    <string name="error_fulscreen_title">¡Guau, algo ha salido mal!</string>
 
 
 </resources>

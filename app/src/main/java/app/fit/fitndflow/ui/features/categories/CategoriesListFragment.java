@@ -81,6 +81,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             public void onChanged(Boolean isError) {
                 if (isError) {
                     printError();
+                    categoriesAndExercisesViewModel.getMutableFullScreenError().setValue(false);
                 }
             }
         };
@@ -200,6 +201,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             addFragment(AddSerieTrainingFragment.newInstance(exercise));
         } else {
             showBlockError();
+
         }
     }
 }

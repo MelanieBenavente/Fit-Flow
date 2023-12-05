@@ -110,6 +110,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             public void onChanged(Boolean isError) {
                 if(isError){
                     showSlideError();
+                    categoriesAndExercisesViewModel.getMutableSlideError().setValue(false);
                 }
             }
         };

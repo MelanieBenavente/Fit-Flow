@@ -28,6 +28,8 @@ public class BlockErrorFragment extends CommonFragment {
         binding = BlockErrorFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
+        binding.backErrorScreenBtn.setOnClickListener(view1 -> requireActivity().onBackPressed());
+
         return view;
     }
 }

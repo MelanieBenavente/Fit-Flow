@@ -158,6 +158,7 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
             public void onChanged(Boolean isError) {
                 if (isError) {
                     showBlockError();
+                    viewModel.getMutableError().setValue(false);
                 }
             }
         };
