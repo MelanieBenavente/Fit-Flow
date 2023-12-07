@@ -12,7 +12,7 @@
     android:orientation="vertical"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/simpleLine2">
+    app:layout_constraintTop_toBottomOf="@id/calendBar">
 
     <LinearLayout
         android:id="@+id/categories_container"

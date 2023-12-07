@@ -94,33 +94,39 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         categoryListCachedResponse = null;
     }
 
+    private List<CategoryModel> mockList(){
+
+            List<CategoryModel> categoryTrainingModelList = new ArrayList<>();
+            List<SerieModel> serieModelList = new ArrayList<>();
+            SerieModel serie1 = new SerieModel(12,10.5);
+            SerieModel serie2 = new SerieModel(8,5.5);
+            SerieModel serie3 = new SerieModel(14,2.5);
+            serieModelList.add(serie1);
+            serieModelList.add(serie2);
+            serieModelList.add(serie3);
+
+            List<ExerciseModel> exerciseList = new ArrayList<>();
+            ExerciseModel exercise1 = new ExerciseModel(221, "Mancuernas", serieModelList);
+            exerciseList.add(exercise1);
+
+            CategoryModel category1 = new CategoryModel(123, "toto", exerciseList);
+            CategoryModel category2 = new CategoryModel(124, "Pecho", exerciseList);
+            CategoryModel category3 = new CategoryModel(125, "Triceps", exerciseList);
+
+            categoryTrainingModelList.add(category1);
+            categoryTrainingModelList.add(category2);
+            categoryTrainingModelList.add(category3);
+
+            return categoryTrainingModelList;
+
+    }
+
+    private List<CategoryModel> mockEmptyList(){
+        return new ArrayList<CategoryModel>();
+    }
+
     public List<CategoryModel> getTrainingList(String apiKey) throws  Exception{
-        try{
-        List<CategoryModel> categoryTrainingModelList = new ArrayList<>();
-        List<SerieModel> serieModelList = new ArrayList<>();
-        SerieModel serie1 = new SerieModel(12,10.5);
-        SerieModel serie2 = new SerieModel(8,5.5);
-        SerieModel serie3 = new SerieModel(14,2.5);
-        serieModelList.add(serie1);
-        serieModelList.add(serie2);
-        serieModelList.add(serie3);
-
-        List<ExerciseModel> exerciseList = new ArrayList<>();
-        ExerciseModel exercise1 = new ExerciseModel(221, "Mancuernas", serieModelList);
-        exerciseList.add(exercise1);
-
-        CategoryModel category1 = new CategoryModel(123, "toto", exerciseList);
-        CategoryModel category2 = new CategoryModel(124, "Pecho", exerciseList);
-        CategoryModel category3 = new CategoryModel(125, "Triceps", exerciseList);
-
-        categoryTrainingModelList.add(category1);
-        categoryTrainingModelList.add(category2);
-        categoryTrainingModelList.add(category3);
-
-        return categoryTrainingModelList;
-
-        } catch (Exception e) {
-            throw new Exception(e);
-        }
+        return mockEmptyList();
+       //todo if i want a mocked list: return mockList();
     }
 }
