@@ -2,7 +2,7 @@
 <resources>
 
     <style name="ParentText">
-        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
     <style name="NormalText" parent="ParentText">
@@ -25,10 +25,9 @@
     </style>
 
     <style name="CalendarHeader">
-        <item name="android:fontFamily">casual</item>
-        <item name="android:textSize">17dp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/dark_purpure</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="text_m" parent="ParentText">
@@ -43,6 +42,8 @@
     <style name="text_m_black_bg_purple" parent="text_m_black">
         <item name="android:textAllCaps">true</item>
         <item name="android:background">@drawable/category_serie_title</item>
+        <item name="android:textSize">10sp</item>
+
     </style>
 
     <style name="text_s" parent="ParentText">

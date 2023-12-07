@@ -1,6 +1,9 @@
 package app.fit.fitndflow.ui.features.home;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static app.fit.fitndflow.ui.features.common.notification.MyNotificationManager.scheduleNotification;
+import android.view.Window;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -24,21 +27,13 @@ import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
+import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager;
 
-public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
+public class HomeFragment extends CommonFragment<HomeViewModel> {
     private MainListFragmentBinding binding;
 
-    @Override
-    protected Toolbar getToolbar() {
-        return binding.toolbar;
-    }
-
-    @Override
-    protected int rMenu() {
-        return R.menu.itemsmain;
-    }
 
     @Override
     protected Class getViewModelClass() {
@@ -76,12 +71,16 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
     }
 
     private void  printExercises(List<CategoryModel> categoryModelList){
+        binding.emptyTxt.setVisibility(GONE);
         binding.parentContainer.removeAllViews();
         for (CategoryModel category : categoryModelList) {
             CategoryCustomView  categoryView = new CategoryCustomView(getContext(), category);
             binding.parentContainer.addView(categoryView);
         }
     }
+
+    private void printEmptyView(){
+        binding.emptyTxt.setVisibility(VISIBLE);}
 
     private void setClickListeners() {
         binding.btnLeft.setOnClickListener(view ->{
@@ -107,7 +106,12 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
         final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
             @Override
             public void onChanged(List<CategoryModel> categories) {
-                printExercises(categories);
+                //todo!!!!!!!!!!!!!!!!!!!!!!!!!
+                if(categories == null || categories.isEmpty()){
+                    printEmptyView();
+                } else {
+                    printExercises(categories);
+                }
             }
         };
         homeViewModel.getDailyTrainingMutableList().observe(getActivity(), observer);
@@ -137,17 +141,17 @@ public class HomeFragment extends CommonToolbarFragment<HomeViewModel> {
 
                 if (Utils.isYesterday(date)) {
                     binding.dateName.setText(R.string.yesterday_date_selector);
-                    binding.dayOfWeek.setVisibility(View.GONE);
+                    binding.dayOfWeek.setVisibility(GONE);
                 } else if (Utils.isToday(date)) {
                     binding.dateName.setText(R.string.today_date_selector);
-                    binding.dayOfWeek.setVisibility(View.GONE);
+                    binding.dayOfWeek.setVisibility(GONE);
                 } else if (Utils.isTomorrow(date)) {
                     binding.dateName.setText(R.string.tomorrow_date_selector);
-                    binding.dayOfWeek.setVisibility(View.GONE);
+                    binding.dayOfWeek.setVisibility(GONE);
                 } else {
                     binding.dateName.setText(Utils.getCalendarFormatDate(date));
                     binding.dayOfWeek.setText(Utils.dayOfWeek(date));
-                    binding.dayOfWeek.setVisibility(View.VISIBLE);
+                    binding.dayOfWeek.setVisibility(VISIBLE);
                 }
             }
         };

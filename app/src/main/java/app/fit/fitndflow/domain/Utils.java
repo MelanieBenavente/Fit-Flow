@@ -13,7 +13,7 @@ public class Utils {
     }
 
     public static String getCalendarFormatDate(Date date){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd, MMM");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(" dd, MMM");
         return dateFormat.format(date);
     }
 

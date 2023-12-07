@@ -15,6 +15,7 @@ import com.fit.fitndflow.R;
 
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager;
 import app.fit.fitndflow.ui.features.home.HomeFragment;
+import android.view.Window;
 
 public class MainActivity extends CommonActivity {
     private static final int REQUEST_CODE = 345;
