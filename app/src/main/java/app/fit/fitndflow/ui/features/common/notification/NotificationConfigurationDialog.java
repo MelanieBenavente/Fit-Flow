@@ -8,12 +8,10 @@ import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.viewbinding.ViewBinding;
 
 import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.DialogNotificationConfigurationBinding;
-import com.fit.fitndflow.databinding.DialogNotificationPermissionBinding;
 
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.ui.features.common.CommonDialogFragment;
@@ -23,6 +21,11 @@ public class NotificationConfigurationDialog extends CommonDialogFragment implem
     private DialogNotificationConfigurationBinding binding;
 
     public static String TAG = "NotificationConfigurationDialog";
+
+    @Override
+    protected int getBorderType() {
+        return NAKED;
+    }
 
     @Nullable
     @Override

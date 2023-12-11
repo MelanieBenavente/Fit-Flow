@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/confirmation_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/montserrat"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:text="¿Estás seguro que deseas borrar este ejercicio?"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+    <TextView
+        android:id="@+id/confirmation_dialog_cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:textSize="12sp"
+        android:textColor="@color/home_high_purple"
+        android:textAllCaps="true"
+        android:padding="10dp"
+        android:text="cancelar"
+        android:layout_gravity="start"
+        android:layout_marginEnd="40dp"
+        />
+    <TextView
+        android:id="@+id/confirmation_dialog_accept_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:textSize="12sp"
+        android:textColor="@color/home_high_purple"
+        android:textAllCaps="true"
+        android:padding="10dp"
+        android:text="Sí, borrar"
+        android:layout_gravity="end"
+        android:layout_marginStart="40dp"
+        />
+</LinearLayout>
+</LinearLayout>
