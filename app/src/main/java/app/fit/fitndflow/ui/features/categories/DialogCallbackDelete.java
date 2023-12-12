@@ -1,6 +1,8 @@
 package app.fit.fitndflow.ui.features.categories;
 
-public interface DialogCallbackDelete {
+import java.io.Serializable;
+
+public interface DialogCallbackDelete extends Serializable {
 
     void onClickAcceptDeleteCategory();
 
