@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fit.fitndflow.R;
+import com.fit.fitndflow.databinding.DialogCreationInputBinding;
 import com.fit.fitndflow.databinding.FragmentCategoriesListBinding;
 
 import java.util.ArrayList;
@@ -37,7 +38,6 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     private FragmentCategoriesListBinding binding;
     private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
     private CategoriesAdapter categoriesAdapter;
-
     private ExercisesAdapter exercisesAdapter;
 
     @Override
@@ -172,7 +172,9 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         binding.floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addFragment(new AddCategoryFragment());
+                //todo!!!!!!!! que se muestre el dialogo!!!!!!!!!
+                CreationInputDialog.newInstance().show(getChildFragmentManager(), "creationDialog");
+                //addFragment(new AddCategoryFragment());
             }
         });
     }

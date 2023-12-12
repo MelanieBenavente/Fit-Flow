@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingTop="30dp"
+    android:paddingStart="30dp"
+    android:paddingEnd="30dp"
+    android:paddingBottom="30dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/creation_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/montserrat"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:text="¡Elige un nombre para tu categoría!"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+
+        >
+
+    <EditText
+        android:id="@+id/newCategoryTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:hint="@string/name_category" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/creation_dialog_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:textSize="12sp"
+            android:textColor="@color/home_high_purple"
+            android:textAllCaps="true"
+            android:padding="10dp"
+            android:text="cancelar"
+            android:layout_gravity="start"
+            android:layout_marginEnd="40dp"
+            />
+        <TextView
+            android:id="@+id/creation_dialog_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:textSize="12sp"
+            android:textColor="@color/home_high_purple"
+            android:textAllCaps="true"
+            android:padding="10dp"
+            android:text="añadir"
+            android:layout_gravity="end"
+            android:layout_marginStart="10dp"
+            />
+    </LinearLayout>
+</LinearLayout>
