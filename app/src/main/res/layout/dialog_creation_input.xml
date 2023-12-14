@@ -17,9 +17,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_gravity="center_horizontal"
-        android:fontFamily="@font/montserrat"
-        android:textSize="12sp"
-        android:textColor="@color/black"
+        style="@style/text_m_black"
         android:text="¡Elige un nombre para tu categoría!"/>
 
     <LinearLayout
@@ -35,8 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:textSize="12sp"
-        android:textColor="@color/black"
+        style="@style/text_m_hint"
         android:padding="10dp"
         android:hint="@string/name_category" />
     </LinearLayout>
@@ -52,27 +49,21 @@
             android:id="@+id/creation_dialog_cancel_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_medium"
-            android:textSize="12sp"
-            android:textColor="@color/home_high_purple"
-            android:textAllCaps="true"
             android:padding="10dp"
             android:text="cancelar"
             android:layout_gravity="start"
             android:layout_marginEnd="40dp"
+            style="@style/text_s_purple_btn"
             />
         <TextView
             android:id="@+id/creation_dialog_add_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_medium"
-            android:textSize="12sp"
-            android:textColor="@color/home_high_purple"
-            android:textAllCaps="true"
             android:padding="10dp"
             android:text="añadir"
             android:layout_gravity="end"
             android:layout_marginStart="10dp"
+            style="@style/text_s_purple_btn"
             />
     </LinearLayout>
 </LinearLayout>

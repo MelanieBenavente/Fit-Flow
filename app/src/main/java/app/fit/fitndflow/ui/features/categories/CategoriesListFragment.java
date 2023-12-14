@@ -1,5 +1,7 @@
 package app.fit.fitndflow.ui.features.categories;
 
+import static app.fit.fitndflow.ui.features.categories.CreationInputDialog.CREATE_CATEGORY;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -173,8 +175,8 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             @Override
             public void onClick(View view) {
                 //todo!!!!!!!! que se muestre el dialogo!!!!!!!!!
-                CreationInputDialog.newInstance().show(getChildFragmentManager(), "creationDialog");
-                //addFragment(new AddCategoryFragment());
+                CreationInputDialog.newInstance(CREATE_CATEGORY).show(getChildFragmentManager(), "creationDialog");
+               // addFragment(new AddCategoryFragment());
             }
         });
     }
