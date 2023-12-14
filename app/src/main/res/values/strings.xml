@@ -11,6 +11,7 @@
     <string name="name_category">nombre categoría</string>
     <string name="new_exercise">nombre del ejercicio</string>
     <string name="add_training">Añadir entrenamiento</string>
+    <string name="add_exercise">Añadir ejercicio</string>
     <string name="dialog_category_delete">¿Estás seguro de que deseas borrar esta categoría?</string>
     <string name="dialog_btn_delete">Si, borrar</string>
     <string name="dialog_exercise_delete">¿Estás seguro de que deseas borrar este ejercicio?</string>

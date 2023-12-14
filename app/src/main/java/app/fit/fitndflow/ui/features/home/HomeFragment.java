@@ -106,7 +106,6 @@ public class HomeFragment extends CommonFragment<HomeViewModel> {
         final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
             @Override
             public void onChanged(List<CategoryModel> categories) {
-                //todo!!!!!!!!!!!!!!!!!!!!!!!!!
                 if(categories == null || categories.isEmpty()){
                     binding.buttonPanel.setText("Añadir entrenamiento");
                     printEmptyView();
