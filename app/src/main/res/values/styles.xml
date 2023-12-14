@@ -38,6 +38,9 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="text_m_hint" parent="text_m">
+        <item name="android:textColor">@drawable/edittext_hint_color</item>
+    </style>
 
     <style name="text_m_black_bg_purple" parent="text_m_black">
         <item name="android:textAllCaps">true</item>
@@ -54,4 +57,10 @@
         <item name="android:textColor">@color/dark_gray</item>
     </style>
 
+    <style name="text_s_purple_btn" parent="text_s">
+        <item name="android:fontFamily">@font/montserrat_medium</item>
+        <item name="android:textColor">@color/home_high_purple</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
