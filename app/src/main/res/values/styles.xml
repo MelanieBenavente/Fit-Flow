@@ -63,4 +63,26 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="ParentTitle">
+        <item name="fontFamily">@font/montserrat_medium</item>
+    </style>
+
+    <style name="text_xl" parent="ParentTitle">
+        <item name="android:textSize">23sp</item>
+    </style>
+
+    <style name="text_xl_home_title" parent="text_xl">
+        <item name="android:textColor">@color/title_gray_home</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text_l" parent="ParentTitle">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="text_l_home_btn" parent="ParentTitle">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

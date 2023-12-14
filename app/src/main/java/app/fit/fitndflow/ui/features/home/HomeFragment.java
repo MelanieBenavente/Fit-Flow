@@ -108,8 +108,10 @@ public class HomeFragment extends CommonFragment<HomeViewModel> {
             public void onChanged(List<CategoryModel> categories) {
                 //todo!!!!!!!!!!!!!!!!!!!!!!!!!
                 if(categories == null || categories.isEmpty()){
+                    binding.buttonPanel.setText("Añadir entrenamiento");
                     printEmptyView();
                 } else {
+                    binding.buttonPanel.setText("Añadir ejercicio");
                     printExercises(categories);
                 }
             }
