@@ -48,6 +48,7 @@
         </string>
     <string name="new_category">New category</string>
     <string name="category_list_fragment_title">Which area do you want to work on today?</string>
+    <string name="exerciselist_title">Which exercise do you want to train?</string>
 
 
 </resources>

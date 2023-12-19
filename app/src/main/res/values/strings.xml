@@ -49,6 +49,7 @@
         </string>
     <string name="new_category">Nueva categoría</string>
     <string name="category_list_fragment_title">¿Qué zona quieres trabajar hoy?</string>
+    <string name="exerciselist_title">¿Qué ejercicio vas a entrenar?</string>
 
 
 </resources>

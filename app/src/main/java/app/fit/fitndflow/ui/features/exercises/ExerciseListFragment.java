@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.FragmentExercisesListBinding;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
     private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
 
     private ExercisesAdapter exercisesAdapter;
+    private boolean isEditMode;
 
     @Override
     protected Class getViewModelClass() {
@@ -102,12 +104,16 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
     }
 
     private void setOnClickListeners() {
-        binding.pencilFloatingBtn.setOnClickListener(new View.OnClickListener() {
+        binding.floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CategoryModel category = categoriesAndExercisesViewModel.getActualCategory().getValue();
-                AddCategoryFragment addCategoryFragment = AddCategoryFragment.newInstance(category);
-                addFragment(addCategoryFragment);
+                isEditMode = !isEditMode;
+                if(isEditMode){
+                    binding.floatingBtn.setImageResource(R.drawable.svg_check);
+                } else {
+                    binding.floatingBtn.setImageResource(R.drawable.svg_pencil);
+                }
+                exercisesAdapter.setEditMode(isEditMode);
             }
         });
     }
