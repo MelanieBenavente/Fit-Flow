@@ -6,7 +6,7 @@
     <string name="save_btn">Save</string>
     <string name="delete_btn">Delete</string>
     <string name="search_category">search category</string>
-    <string name="search_exercise">search exercise</string>
+    <string name="search_exercise">Search exercise</string>
     <string name="name_category">category name</string>
     <string name="new_exercise">exercise name</string>
     <string name="add_training">Add training</string>
@@ -36,16 +36,18 @@
     <string name="exercise_name">exercise name</string>
     <string name="notification_body">Its a good day to train!</string>
     <string name="notification_title">Psssss!</string>
-    <string name="layout_notification_title">¡Activa las notificaciones y entrena al máximo!</string>
-    <string name="layout_notification_body">Para asegurarnos de que no te pierdas ninguno de tus entrenamientos, necesitamos tu permiso. Las notificaciones te recordarán tus sesiones de entrenamiento, ayudándote a mantenerte motivado y en forma. ¡Activa las notificaciones para una experiencia de entrenamiento óptima!</string>
-    <string name="im_agree">Estoy deacuerdo</string>
-    <string name="dont_show_again_chekbox_txt">No volver a mostrar</string>
-    <string name="error_fulscreen_back_btn">Volver atrás</string>
-    <string name="error_fulscreen_title">¡Guau, algo ha salido mal!</string>
+    <string name="layout_notification_title">Enable notifications and train at your best!</string>
+    <string name="layout_notification_body">To ensure you dont miss any of your workouts, we need your permission. Notifications will remind you of your training sessions, helping you stay motivated and fit. Enable notifications for an optimal training experience!</string>
+    <string name="im_agree">I Agree</string>
+    <string name="dont_show_again_chekbox_txt">Do not show again</string>
+    <string name="error_fulscreen_back_btn">Go Back</string>
+    <string name="error_fulscreen_title">Wow, something went wrong!</string>
     <string name="empty_txt_home">
             Ready to move?\n
             Create your workouts\n with your custom\n exercises!
         </string>
+    <string name="new_category">New category</string>
+    <string name="category_list_fragment_title">Which area do you want to work on today?</string>
 
 
 </resources>

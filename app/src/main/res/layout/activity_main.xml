@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="@color/background_lightPink"
+    android:background="@color/white"
     tools:context="app.fit.fitndflow.ui.features.common.MainActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 

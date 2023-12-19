@@ -199,12 +199,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
     }
 
     @Override
-    public void onClickAcceptDeleteCategory() {
-        categoriesAndExercisesViewModel.deleteCategory(categoryModel, requireContext());
-    }
-
-    @Override
-    public void onClickAcceptedExercise(int position) {
+    public void onClickAcceptDelete(int position) {
         categoryModel.getExerciseList().remove(position);
         printCategoryDetail(categoryModel);
     }

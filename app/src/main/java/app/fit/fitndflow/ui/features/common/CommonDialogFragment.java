@@ -25,7 +25,7 @@ public abstract class CommonDialogFragment extends DialogFragment {
             if(getBorderType() == NAKED){
                 getDialog().getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_white_rounded_corners));
             } else if(getBorderType() == BORDERLINE){
-                getDialog().getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.borderline_dialog));
+                getDialog().getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_purple_rounded_corners));
             }else{
                 getDialog().getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_white_rounded_corners));
             }

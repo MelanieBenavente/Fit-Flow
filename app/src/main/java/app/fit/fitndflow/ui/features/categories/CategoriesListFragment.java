@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,13 +35,14 @@ import app.fit.fitndflow.ui.features.exercises.ExercisesAdapter;
 import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback;
 
-public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback, AccessibilityInterface, SerieAdapterCallback {
+public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback, AccessibilityInterface, SerieAdapterCallback, DialogCallbackDelete {
 
     private List<CategoryModel> categoryList = new ArrayList<>();
     private FragmentCategoriesListBinding binding;
     private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
     private CategoriesAdapter categoriesAdapter;
     private ExercisesAdapter exercisesAdapter;
+    private boolean isEditMode;
 
     @Override
     protected Class getViewModelClass() {
@@ -174,12 +176,18 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         binding.floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo!!!!!!!! que se muestre el dialogo!!!!!!!!!
-                CreationInputDialog.newInstance(CREATE_CATEGORY).show(getChildFragmentManager(), "creationDialog");
-               // addFragment(new AddCategoryFragment());
+               isEditMode = !isEditMode;
+               if(isEditMode){
+                   binding.floatingBtn.setImageResource(R.drawable.svg_check);
+               } else {
+                   binding.floatingBtn.setImageResource(R.drawable.svg_pencil);
+               }
+                categoriesAdapter.setEditMode(isEditMode);
             }
         });
     }
+
+
 
     @Override
     public void showExercises(CategoryModel category) {
@@ -194,6 +202,17 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     }
 
     @Override
+    public void showCreationDialog() {
+        CreationInputDialog.newInstance(CREATE_CATEGORY).show(getChildFragmentManager(), "creationDialog");
+
+    }
+
+    @Override
+    public void showDeleteDialog(int id) {
+        ConfirmationDialogFragment.newInstance(CategoriesListFragment.this, ConfirmationDialogFragment.DELETE_CATEGORY, id).show(getChildFragmentManager(), "ConfirmationDialog");
+    }
+
+    @Override
     public void initAccessibility() {
         String searchExercise = getContext().getString(R.string.search_exercise);
         binding.txtSearch.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(searchExercise + binding.txtSearch.getText().toString()));
@@ -205,7 +224,11 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             addFragment(AddSerieTrainingFragment.newInstance(exercise));
         } else {
             showBlockError();
-
         }
+    }
+
+    @Override
+    public void onClickAcceptDelete(int id) {
+        Toast.makeText(requireContext(), "delete", Toast.LENGTH_SHORT).show();
     }
 }

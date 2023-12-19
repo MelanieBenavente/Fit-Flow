@@ -11,6 +11,7 @@ import com.fit.fitndflow.R;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.ui.features.common.AccessibilityInterface;
 import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
+@Deprecated
 
 public class EditableBtnDeleteExercise extends LinearLayout implements AccessibilityInterface {
 
