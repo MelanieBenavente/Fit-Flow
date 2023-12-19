@@ -57,7 +57,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
                    holder.cancelBtn.setOnClickListener(new View.OnClickListener() {
                        @Override
                        public void onClick(View view) {
-                           categoryAdapterCallback.showDeleteDialog(-1);
+                           categoryAdapterCallback.showDeleteDialog(category.getId());
                        }
                    });
            } else {

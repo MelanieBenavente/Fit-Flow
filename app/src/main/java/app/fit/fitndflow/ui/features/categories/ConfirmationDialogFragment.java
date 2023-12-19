@@ -68,6 +68,7 @@ public class ConfirmationDialogFragment extends CommonDialogFragment {
                 @Override
                 public void onClick(View view) {
                     dialogCallbackDelete.onClickAcceptDelete(id);
+                    dismissAllowingStateLoss();
                 }
             });
         } else {
