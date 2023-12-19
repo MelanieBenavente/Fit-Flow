@@ -4,33 +4,49 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/icnSearch"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@android:drawable/ic_menu_search"/>
-    <EditText
-        android:id="@+id/txtSearch"
-        android:layout_width="0dp"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:textSize="18sp"
-        android:textColor="@color/black"
+        android:id="@+id/recyclerTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/icnSearch"
+        app:layout_constraintStart_toEndOf="parent"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toTopOf="@id/txtSearch"
+        style="@style/text_l_black"
+        android:text="@string/category_list_fragment_title"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        />
+
+    <EditText
+        android:id="@+id/txtSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        style="@style/text_l_white"
+        android:textColorHint="@color/white"
+        android:padding="10dp"
+        android:drawableStart="@drawable/svg_search"
+        android:drawablePadding="20dp"
+        android:paddingStart="10dp"
+        android:background="@drawable/shape_search_bar_purple_rounded_corners"
+        app:layout_constraintEnd_toEndOf="@id/recyclerTitle"
+        app:layout_constraintTop_toTopOf="@id/recyclerTitle"
+        app:layout_constraintStart_toEndOf="@id/recyclerTitle"
+        app:layout_constraintBottom_toTopOf="@id/recyclerCategories"
         android:hint="@string/search_exercise" />
 
     <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@id/icnSearch"
+        app:layout_constraintTop_toBottomOf="@id/txtSearch"
         android:id="@+id/recyclerCategories"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingTop="35dp"
+        android:paddingBottom="90dp"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -41,9 +57,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:outlineSpotShadowColor="@color/dark_purpure"
-        android:backgroundTint="@color/pink_letters"
-        android:src="@drawable/baseline_add_24"
-        android:layout_margin="40dp"
+        android:backgroundTint="@color/home_high_purple"
+        app:borderWidth="0dp"
+        app:tint="@color/white"
+        android:src="@drawable/svg_pencil"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
         android:contentDescription="@string/talkback_add_category_btn"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

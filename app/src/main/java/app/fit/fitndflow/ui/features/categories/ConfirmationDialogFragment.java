@@ -1,7 +1,5 @@
 package app.fit.fitndflow.ui.features.categories;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.viewbinding.ViewBinding;
 
 import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.DialogConfirmationFragmentBinding;
-
-import java.io.Serializable;
 
 import app.fit.fitndflow.ui.features.common.CommonDialogFragment;
 
@@ -25,11 +20,11 @@ public class ConfirmationDialogFragment extends CommonDialogFragment {
     public static final int DELETE_EXERCISE = 2;
     private static final String KEY_CALLBACK = "dialogCallback";
     private static final String KEY_TYPE = "deleteType";
-    private static final String KEY_POSITION = "position";
+    private static final String KEY_ID = "id";
     private DialogConfirmationFragmentBinding binding;
     private DialogCallbackDelete dialogCallbackDelete;
     private int deleteType;
-    private int position;
+    private int id;
     public static String TAG = "ConfirmationDialog";
 
     @Override
@@ -43,12 +38,12 @@ public class ConfirmationDialogFragment extends CommonDialogFragment {
         return binding;
     }
 
-    public static ConfirmationDialogFragment newInstance(DialogCallbackDelete dialogCallbackDelete, int deleteType, int position){
+    public static ConfirmationDialogFragment newInstance(DialogCallbackDelete dialogCallbackDelete, int deleteType, int id){
         ConfirmationDialogFragment confirmationDialogFragment = new ConfirmationDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(KEY_CALLBACK, dialogCallbackDelete);
         bundle.putInt(KEY_TYPE, deleteType);
-        bundle.putInt(KEY_POSITION, position);
+        bundle.putInt(KEY_ID, id);
         confirmationDialogFragment.setArguments(bundle);
 
         return  confirmationDialogFragment;
@@ -60,7 +55,7 @@ public class ConfirmationDialogFragment extends CommonDialogFragment {
         if (bundle != null) {
             dialogCallbackDelete = (DialogCallbackDelete) bundle.getSerializable(KEY_CALLBACK);
             deleteType = bundle.getInt(KEY_TYPE);
-            position = bundle.getInt(KEY_POSITION);
+            id = bundle.getInt(KEY_ID);
         }
         initListeners();
         return view;
@@ -72,7 +67,7 @@ public class ConfirmationDialogFragment extends CommonDialogFragment {
             binding.confirmationDialogAcceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dialogCallbackDelete.onClickAcceptDeleteCategory();
+                    dialogCallbackDelete.onClickAcceptDelete(id);
                 }
             });
         } else {
@@ -80,7 +75,7 @@ public class ConfirmationDialogFragment extends CommonDialogFragment {
             binding.confirmationDialogAcceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dialogCallbackDelete.onClickAcceptedExercise(position);
+                    dialogCallbackDelete.onClickAcceptDelete(id);
                     dismissAllowingStateLoss();
                 }
             });

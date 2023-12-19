@@ -4,7 +4,5 @@ import java.io.Serializable;
 
 public interface DialogCallbackDelete extends Serializable {
 
-    void onClickAcceptDeleteCategory();
-
-    void onClickAcceptedExercise(int position);
+    void onClickAcceptDelete(int id);
 }
