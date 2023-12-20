@@ -187,8 +187,6 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         });
     }
 
-
-
     @Override
     public void showExercises(CategoryModel category) {
         categoriesAndExercisesViewModel.getActualCategory().setValue(category);
@@ -230,5 +228,6 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     @Override
     public void onClickAcceptDelete(int id) {
         Toast.makeText(requireContext(), "delete", Toast.LENGTH_SHORT).show();
+        //todo borrar categoria de la lista de categorias
     }
 }

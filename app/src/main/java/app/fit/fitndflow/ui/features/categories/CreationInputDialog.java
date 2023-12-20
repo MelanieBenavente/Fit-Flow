@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 
+import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.DialogConfirmationFragmentBinding;
 import com.fit.fitndflow.databinding.DialogCreationInputBinding;
 
@@ -50,22 +51,25 @@ public class CreationInputDialog extends CommonDialogFragment {
 
     private void initListeners(){
         if(createType == CREATE_CATEGORY){
-            binding.creationDialogTitle.setText("Elige un nombre para tu categoría!");
+            binding.creationDialogTitle.setText(R.string.choose_category_name);
             binding.newCategoryTxt.setHint("Espalda");
             binding.creationDialogAddBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(requireContext(), "añade categoria", Toast.LENGTH_SHORT).show();
+                    dismissAllowingStateLoss();
+                    //todo!!! deberá Añadir una categoría al listado
                 }
             });
         } else {
-            binding.creationDialogTitle.setText("¡Elige un nombre para tu ejercicio!");
+            binding.creationDialogTitle.setText(R.string.choose_exercise_name);
             binding.newCategoryTxt.setHint("Mancuernas");
             binding.creationDialogAddBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(requireContext(), "añade ejercicio", Toast.LENGTH_SHORT).show();
                     dismissAllowingStateLoss();
+                    //todo!!! deberá añadir un ejercicio al listado
                 }
             });
         }

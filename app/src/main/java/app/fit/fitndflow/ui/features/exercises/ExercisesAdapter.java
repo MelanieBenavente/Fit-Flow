@@ -61,7 +61,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
                 holder.cancelBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //todo que se muestre el dialogo "estas seguro que deseas borrar este ejercicio....?"
+                        serieAdapterCallback.showDeleteDialog(exercise.getId());
                     }
                 });
             } else {
@@ -74,10 +74,11 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
                 }
             });
         } else {
+            holder.textList.setText(R.string.exercise_new);
             holder.textList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //todo mostrar dialogo de creacion de un nuevo ejercicio...???? aclarar cual es la siguiente pantalla!!
+                    serieAdapterCallback.showCreationDialog();
                 }
             });
         }
