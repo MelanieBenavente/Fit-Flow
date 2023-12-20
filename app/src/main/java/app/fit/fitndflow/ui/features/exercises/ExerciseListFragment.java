@@ -1,6 +1,8 @@
 package app.fit.fitndflow.ui.features.exercises;
 
 
+import static app.fit.fitndflow.ui.features.categories.CreationInputDialog.CREATE_EXERCISE;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +17,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.FragmentExercisesListBinding;
 
 import java.util.ArrayList;
@@ -24,17 +27,21 @@ import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.ui.features.categories.AddCategoryFragment;
 import app.fit.fitndflow.ui.features.categories.CategoriesAndExercisesViewModel;
+import app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment;
+import app.fit.fitndflow.ui.features.categories.CreationInputDialog;
+import app.fit.fitndflow.ui.features.categories.DialogCallbackDelete;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback;
 
-public class ExerciseListFragment extends CommonFragment implements SerieAdapterCallback {
+public class ExerciseListFragment extends CommonFragment implements SerieAdapterCallback, DialogCallbackDelete {
 
     private FragmentExercisesListBinding binding;
 
     private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
 
     private ExercisesAdapter exercisesAdapter;
+    private boolean isEditMode;
 
     @Override
     protected Class getViewModelClass() {
@@ -61,7 +68,6 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
                 printCategoryDetail(category);
             }
         };
-        //Observamos al listado del ViewModel y ejecutamos las acciones indicadas antes en el observer
         categoriesAndExercisesViewModel.getActualCategory().observe(getActivity(), observer);
     }
 
@@ -102,12 +108,16 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
     }
 
     private void setOnClickListeners() {
-        binding.pencilFloatingBtn.setOnClickListener(new View.OnClickListener() {
+        binding.floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CategoryModel category = categoriesAndExercisesViewModel.getActualCategory().getValue();
-                AddCategoryFragment addCategoryFragment = AddCategoryFragment.newInstance(category);
-                addFragment(addCategoryFragment);
+                isEditMode = !isEditMode;
+                if(isEditMode){
+                    binding.floatingBtn.setImageResource(R.drawable.svg_check);
+                } else {
+                    binding.floatingBtn.setImageResource(R.drawable.svg_pencil);
+                }
+                exercisesAdapter.setEditMode(isEditMode);
             }
         });
     }
@@ -119,5 +129,21 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
         } else {
             showBlockError();
         }
+    }
+
+    @Override
+    public void showCreationDialog() {
+        CreationInputDialog.newInstance(CREATE_EXERCISE).show(getChildFragmentManager(), "creationDialog");
+    }
+
+    @Override
+    public void showDeleteDialog(int id) {
+        ConfirmationDialogFragment.newInstance(ExerciseListFragment.this, ConfirmationDialogFragment.DELETE_EXERCISE, id).show(getChildFragmentManager(), "ConfirmationDialog");
+    }
+
+    @Override
+    public void onClickAcceptDelete(int id) {
+        Toast.makeText(requireContext(), "delete", Toast.LENGTH_SHORT).show();
+        //todo borrar el ejercicio de la lista de ejercicios
     }
 }
