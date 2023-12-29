@@ -57,6 +57,11 @@
 
     </style>
 
+    <style name="text_xs" parent="ParentText">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="text_s" parent="ParentText">
         <item name="android:textSize">12sp</item>
     </style>

@@ -64,7 +64,7 @@ public class AddSerieTrainingFragment extends CommonFragment implements SerieEdi
 
     private void printEmptySerieDetail(){
         binding.addSerieLayout.removeAllViews();
-        binding.addSerieLayout.addView(new EditableBtnAddSerie(getContext(), this));
+//        binding.addSerieLayout.addView(new EditableBtnAddSerie(getContext(), this));
     }
 
     private void printSerieDetail(){

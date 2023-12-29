@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="10dp"
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <ImageButton
+            android:id="@+id/buttonAddSerie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/news_serie_component"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="30dp"
+            android:padding="9dp"
+            android:contentDescription="@string/talkback_add_component_btn"/>
+
+            <TextView
+                android:id="@+id/repsEdTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0"
+                style="@style/text_l_black"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Repeticiones"
+                style="@style/text_xs"
+                android:layout_weight="2"
+                 />
+
+            <TextView
+                android:id="@+id/kgEdTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                style="@style/text_l_black"
+                android:textStyle="bold"
+                android:layout_weight="1"
+               />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/kg_txt"
+                android:layout_weight="1"
+                style="@style/text_xs"
+                />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
