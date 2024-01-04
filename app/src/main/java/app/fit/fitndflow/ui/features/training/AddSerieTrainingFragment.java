@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fit.fitndflow.databinding.AddSerieTrainingFragmentBinding;
 
@@ -16,9 +17,10 @@ import java.util.List;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesAndExercisesViewModel;
+import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 
-public class AddSerieTrainingFragment extends CommonFragment implements SerieEditableListener {
+public class AddSerieTrainingFragment extends CommonFragment implements TrainingCallback {
 
     public static final String KEY_EXCERCISE = "actualExercise";
     private AddSerieTrainingFragmentBinding binding;
@@ -27,6 +29,10 @@ public class AddSerieTrainingFragment extends CommonFragment implements SerieEdi
 
     private ExerciseModel exercise;
     private List<SerieModel> serieModelList = new ArrayList<>();
+    private SeriesAdapter seriesAdapter;
+    private boolean isEditMode;
+
+
 
 
     @Nullable
@@ -43,9 +49,11 @@ public class AddSerieTrainingFragment extends CommonFragment implements SerieEdi
         if (serieModelList.isEmpty()){
             printEmptySerieDetail();
         } else {
-            printSerieDetail();
+            //printSerieDetail();
         }
 
+        initListeners();
+        instantiateSeriesAdapter();
         return view;
     }
 
@@ -62,29 +70,42 @@ public class AddSerieTrainingFragment extends CommonFragment implements SerieEdi
         return addSerieTrainingFragment;
     }
 
+    private void initListeners(){
+        //todo onclickadd()
+    }
+
+    private void instantiateSeriesAdapter(){
+        //todo delete
+         serieModelList.add(new SerieModel(14, 12.0));
+        serieModelList.add(new SerieModel(5, 10.0));
+        serieModelList.add(new SerieModel(20, 8.0));
+         //todo end todo
+
+
+        seriesAdapter = new SeriesAdapter(serieModelList, this);
+        binding.addSerieLayout.setHasFixedSize(true);
+        binding.addSerieLayout.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        binding.addSerieLayout.setAdapter(seriesAdapter);
+    }
+
     private void printEmptySerieDetail(){
         binding.addSerieLayout.removeAllViews();
-//        binding.addSerieLayout.addView(new EditableBtnAddSerie(getContext(), this));
+        //binding.addSerieLayout.addView(new EditableBtnAddSerie(getContext(), this));
     }
 
-    private void printSerieDetail(){
-        binding.addSerieLayout.removeAllViews();
-        for(int i = 0; i < serieModelList.size(); i++){
-            SerieModel serie = serieModelList.get(i);
-            binding.addSerieLayout.addView(new EditableBtnDeleteSerie(getContext(), this, serie, i ));
+    @Override
+    public void clickListenerInterfaceAdapter(SerieModel input) {
+        if(input != null){
+            binding.tvCounterReps.setText(Integer.toString(input.getReps()));
+            binding.tvCounter.setText(Double.toString(input.getKg()));
+            binding.saveAndUpdateBtn.setText("Actualizar");
+            binding.deleteAndCleanBtn.setText("Eliminar");
+        } else {
+            binding.tvCounterReps.setText("");
+            binding.tvCounter.setText("");
+            binding.saveAndUpdateBtn.setText("Añadir");
+            binding.deleteAndCleanBtn.setText("Limpiar");
         }
-        binding.addSerieLayout.addView(new EditableBtnAddSerie(getContext(), this));
-    }
 
-    @Override
-    public void onClickAdd(SerieModel serie) {
-        serieModelList.add(serie);
-        printSerieDetail();
-    }
-
-    @Override
-    public void onClickDelete(int position) {
-        serieModelList.remove(position);
-        printSerieDetail();
     }
 }

@@ -16,7 +16,7 @@ import com.fit.fitndflow.R;
 import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.ui.features.common.AccessibilityInterface;
 import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
-
+@Deprecated
 public class EditableBtnAddSerie extends LinearLayout implements AccessibilityInterface {
 
     private EditText editTxtReps;

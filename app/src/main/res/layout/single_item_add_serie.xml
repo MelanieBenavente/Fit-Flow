@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/linearContainer"
     android:gravity="center"
     android:padding="10dp"
     android:orientation="horizontal"
@@ -35,6 +36,7 @@
                 />
 
             <TextView
+                android:id="@+id/tvReps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Repeticiones"
@@ -53,6 +55,7 @@
                />
 
             <TextView
+                android:id="@+id/tvKg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/kg_txt"

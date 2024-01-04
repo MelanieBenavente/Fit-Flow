@@ -58,7 +58,7 @@
         android:inputType="numberDecimal"
         android:textAlignment="center"
         android:textSize="24sp"
-        android:maxLength="3"
+        android:maxLength="6"
         app:layout_constraintWidth_percent="0.2"
         app:layout_constraintTop_toBottomOf="@id/kg"
         app:layout_constraintStart_toEndOf="@id/btnDecrement"
@@ -134,12 +134,12 @@
         android:background="@drawable/shape_counter_plus_rounded_corner_light_purple"
         />
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/saveAndAddBtn"
+        android:id="@+id/saveAndUpdateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnDecrement2"
-        app:layout_constraintEnd_toStartOf="@id/saveAndExitBtn"
+        app:layout_constraintEnd_toStartOf="@+id/deleteAndCleanBtn"
         android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
         android:text="Añadir"
@@ -149,11 +149,11 @@
         android:contentDescription="@string/save_and_add_serie_btn"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/saveAndExitBtn"
+        android:id="@+id/deleteAndCleanBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/saveAndAddBtn"
-        app:layout_constraintStart_toEndOf="@id/saveAndAddBtn"
+        app:layout_constraintTop_toTopOf="@id/saveAndUpdateBtn"
+        app:layout_constraintStart_toEndOf="@id/saveAndUpdateBtn"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="20dp"
         style="@style/text_l_white"
@@ -174,12 +174,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/addNote"
-            app:layout_constraintTop_toBottomOf="@id/saveAndAddBtn"
+            app:layout_constraintTop_toBottomOf="@id/saveAndUpdateBtn"
             app:layout_constraintHeight_percent="0.2"
             tools:listitem="@layout/single_item_add_serie"
-            android:clipToPadding="false"
-            >
-        </androidx.recyclerview.widget.RecyclerView>
+            />
 
     <LinearLayout
         android:id="@+id/linear_add_notes"
