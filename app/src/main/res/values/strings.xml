@@ -53,5 +53,9 @@
     <string name="exercise_new">Nuevo ejercicio</string>
     <string name="choose_exercise_name">¡Elige un nombre para tu ejercicio!</string>
     <string name="choose_category_name">Elige un nombre para tu categoría!</string>
+    <string name="dialog_serie_delete">¿Estás seguro de que deseas borrar esta serie?</string>
+    <string name="update">Actualizar</string>
+    <string name="add">Añadir</string>
+    <string name="clean">Limpiar</string>
 
 </resources>

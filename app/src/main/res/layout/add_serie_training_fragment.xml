@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
 
     <FrameLayout
         android:id="@+id/calendBar"
@@ -54,7 +58,7 @@
         android:id="@+id/tvCounter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text=""
         android:inputType="numberDecimal"
         android:textAlignment="center"
         android:textSize="24sp"
@@ -109,7 +113,7 @@
         android:id="@+id/tvCounterReps"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text=""
         android:inputType="number"
         android:textAlignment="center"
         android:textSize="24sp"
@@ -166,11 +170,11 @@
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/addSerieLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/addNote"
@@ -184,7 +188,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/addSerieLayout"
         app:layout_constraintBottom_toTopOf="@id/addNote">
         <ImageView
@@ -210,7 +214,7 @@
         app:layout_constraintTop_toBottomOf="@id/linear_add_notes"
         android:background="@drawable/shape_et_add_note_rounded_corners_light_purple"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -222,3 +226,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

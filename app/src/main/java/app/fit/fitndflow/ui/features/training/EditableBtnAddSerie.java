@@ -47,7 +47,7 @@ public class EditableBtnAddSerie extends LinearLayout implements AccessibilityIn
                 int reps = repsString.equals("")? 0 : Integer.parseInt(repsString);
                 String kgString = editTxtKg.getText().toString();
                 double kg = kgString.equals("")? 0 : Double.parseDouble(kgString);
-                SerieModel serie = new SerieModel(reps, kg);
+                SerieModel serie = new SerieModel(null, reps, kg);
                 serieEditableListener.onClickAdd(serie);
             }
         });
