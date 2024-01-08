@@ -98,9 +98,9 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
             List<CategoryModel> categoryTrainingModelList = new ArrayList<>();
             List<SerieModel> serieModelList = new ArrayList<>();
-            SerieModel serie1 = new SerieModel(12,10.5);
-            SerieModel serie2 = new SerieModel(8,5.5);
-            SerieModel serie3 = new SerieModel(14,2.5);
+            SerieModel serie1 = new SerieModel(1, 12,10.5);
+            SerieModel serie2 = new SerieModel(2, 8,5.5);
+            SerieModel serie3 = new SerieModel(3, 14,2.5);
             serieModelList.add(serie1);
             serieModelList.add(serie2);
             serieModelList.add(serie3);

@@ -18,6 +18,7 @@ import app.fit.fitndflow.ui.features.common.CommonDialogFragment;
 public class ConfirmationDialogFragment extends CommonDialogFragment {
     public static final int DELETE_CATEGORY = 1;
     public static final int DELETE_EXERCISE = 2;
+    public static final int DELETE_SERIE = 3;
     private static final String KEY_CALLBACK = "dialogCallback";
     private static final String KEY_TYPE = "deleteType";
     private static final String KEY_ID = "id";
@@ -71,8 +72,17 @@ public class ConfirmationDialogFragment extends CommonDialogFragment {
                     dismissAllowingStateLoss();
                 }
             });
-        } else {
+        } else if(deleteType == DELETE_EXERCISE){
             binding.confirmationDialogTitle.setText(R.string.dialog_exercise_delete);
+            binding.confirmationDialogAcceptBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogCallbackDelete.onClickAcceptDelete(id);
+                    dismissAllowingStateLoss();
+                }
+            });
+        } else {
+            binding.confirmationDialogTitle.setText(R.string.dialog_serie_delete);
             binding.confirmationDialogAcceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
