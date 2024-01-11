@@ -3,6 +3,8 @@ package app.fit.fitndflow.ui.features.home;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static app.fit.fitndflow.ui.features.common.notification.MyNotificationManager.scheduleNotification;
+
+import android.content.Context;
 import android.view.Window;
 
 import android.os.Bundle;
