@@ -18,13 +18,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.fit.fitndflow.R;
-import com.fit.fitndflow.databinding.DialogCreationInputBinding;
 import com.fit.fitndflow.databinding.FragmentCategoriesListBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.ui.features.common.AccessibilityInterface;
@@ -64,11 +62,13 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         return view;
     }
 
+
     private void setViewModelObservers() {
         categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
         categoriesAndExercisesViewModel.getMutableSlideError().setValue(false);
         categoriesAndExercisesViewModel.getIsLoading().setValue(false);
 
+        //todo observar al slideError y a issavesuccess
         //observing RazaList
         final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
             @Override
@@ -77,7 +77,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             }
         };
         //Observamos al listado del ViewModel y ejecutamos las acciones indicadas antes en el observer
-        categoriesAndExercisesViewModel.getMutableCategory().observe(getActivity(), observer);
+        categoriesAndExercisesViewModel.getMutableCategoryList().observe(getActivity(), observer);
 
         //observing error
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
@@ -90,6 +90,25 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             }
         };
         categoriesAndExercisesViewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
+        final Observer<Boolean> observerError = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isError) {
+                if(isError){
+                    showSlideError();
+                    categoriesAndExercisesViewModel.getMutableSlideError().setValue(false);
+                }
+            }
+        };
+        categoriesAndExercisesViewModel.getMutableSlideError().observe(getActivity(), observerError);
+        final Observer<Boolean> observerIsSaveSuccess = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSaveSuccess) {
+                if (isSaveSuccess) {
+                    showSlideSaved();
+                }
+            }
+        };
+        categoriesAndExercisesViewModel.getIsSaveSuccess().observe(getActivity(), observerIsSaveSuccess);
 
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
@@ -176,12 +195,12 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         binding.floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               isEditMode = !isEditMode;
-               if(isEditMode){
-                   binding.floatingBtn.setImageResource(R.drawable.svg_check);
-               } else {
-                   binding.floatingBtn.setImageResource(R.drawable.svg_pencil);
-               }
+                isEditMode = !isEditMode;
+                if (isEditMode) {
+                    binding.floatingBtn.setImageResource(R.drawable.svg_check);
+                } else {
+                    binding.floatingBtn.setImageResource(R.drawable.svg_pencil);
+                }
                 categoriesAdapter.setEditMode(isEditMode);
             }
         });
@@ -190,13 +209,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     @Override
     public void showExercises(CategoryModel category) {
         categoriesAndExercisesViewModel.getActualCategory().setValue(category);
-        if (category.getExerciseList() != null && !category.getExerciseList().isEmpty()) {
-            addFragment(new ExerciseListFragment());
-        } else {
-            AddCategoryFragment addCategoryFragment = AddCategoryFragment.newInstance(category);
-            addFragment(addCategoryFragment);
-        }
-
+        addFragment(new ExerciseListFragment());
     }
 
     @Override

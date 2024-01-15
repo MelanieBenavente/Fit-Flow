@@ -16,7 +16,8 @@ import com.fit.fitndflow.R;
 
 
 public abstract class CommonActivity extends AppCompatActivity {
-    private RelativeLayout container;
+    private RelativeLayout savedContainer;
+    private RelativeLayout errorContainer;
     private FrameLayout loadingLottie;
 
     @Override
@@ -27,8 +28,8 @@ public abstract class CommonActivity extends AppCompatActivity {
     }
 
     private void bindViews() {
-
-        container = findViewById(R.id.errorContainer);
+        savedContainer = findViewById(R.id.savedContainer);
+        errorContainer = findViewById(R.id.errorContainer);
         loadingLottie = findViewById(R.id.lottieContainer);
     }
 
@@ -36,6 +37,35 @@ public abstract class CommonActivity extends AppCompatActivity {
 
     public void showBlockError(){
         addFragment(new BlockErrorFragment());
+    }
+    public void showSavedSlideContainer(){
+        final Animation slideDown = new TranslateAnimation(0, 0, -1000, 0);
+        slideDown.setDuration(1000); // Duración de la animación en milisegundos
+        slideDown.setFillAfter(true);
+
+        final Animation slideUp = new TranslateAnimation(0, 0, 0, -1000);
+        slideUp.setDuration(1000); // Duración de la animación en milisegundos
+        slideUp.setFillAfter(true);
+
+        final Handler handler = new Handler();
+
+        // Mostrar el contenedor después de 1 segundo
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                savedContainer.setVisibility(View.VISIBLE);
+                savedContainer.startAnimation(slideDown);
+
+                // Ocultar el contenedor después de 3 segundos
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        savedContainer.startAnimation(slideUp);
+                        savedContainer.setVisibility(View.INVISIBLE);
+                    }
+                }, 2000);
+            }
+        }, 1000); // Esperar 1 segundo antes de mostrar el contenedor
     }
 
     public void showErrorSlideContainer() {
@@ -53,15 +83,15 @@ public abstract class CommonActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                container.setVisibility(View.VISIBLE);
-                container.startAnimation(slideDown);
+                errorContainer.setVisibility(View.VISIBLE);
+                errorContainer.startAnimation(slideDown);
 
                 // Ocultar el contenedor después de 3 segundos
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        container.startAnimation(slideUp);
-                        container.setVisibility(View.INVISIBLE);
+                        errorContainer.startAnimation(slideUp);
+                        errorContainer.setVisibility(View.INVISIBLE);
                     }
                 }, 2000);
             }

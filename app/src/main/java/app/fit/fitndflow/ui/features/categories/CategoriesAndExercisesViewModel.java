@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
@@ -19,7 +18,7 @@ import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 public class CategoriesAndExercisesViewModel extends ViewModel {
     private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
     private MutableLiveData<CategoryModel> actualCategory = new MutableLiveData<>();
-    private MutableLiveData<List<CategoryModel>> mutableCategory = new MutableLiveData<>();
+    private MutableLiveData<List<CategoryModel>> mutableCategoryList = new MutableLiveData<>();
 
     private MutableLiveData<Boolean> mutableSlideError = new MutableLiveData<>(false);
 
@@ -30,6 +29,8 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
     private MutableLiveData<Boolean> isSaveSuccess = new MutableLiveData<>(false);
 
     private MutableLiveData<Boolean> isDeleteSuccess = new MutableLiveData<>(false);
+
+    private String lastName;
 
     /*Getters*
      *
@@ -48,8 +49,8 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getIsSaveSuccess() {return isSaveSuccess; }
 
-    public MutableLiveData<List<CategoryModel>> getMutableCategory() {
-        return mutableCategory;
+    public MutableLiveData<List<CategoryModel>> getMutableCategoryList() {
+        return mutableCategoryList;
     }
 
     public MutableLiveData<Boolean> getMutableSlideError() {
@@ -58,6 +59,11 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getMutableFullScreenError() {
         return mutableFullScreenError;
+    }
+
+
+    public String getLastName() {
+        return lastName;
     }
 
     /*End Getters*
@@ -75,7 +81,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
 
             @Override
             public void onSuccess(List<CategoryModel> categoryModels) {
-                mutableCategory.setValue(categoryModels);
+                mutableCategoryList.setValue(categoryModels);
                 mutableFullScreenError.setValue(false);
                 isLoading.setValue(false);
             }
@@ -88,8 +94,8 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
         });
     }
 
-    public void saveCategory(Context context, CategoryModel categoryModel){
-        new AddCategoryUseCase(context, categoryModel, fitnFlowRepository). execute(new FitObserver<Boolean>() {
+    public void addNewCategory(Context context, String language, String nameCategory){ //todo este metodo se ejecutará en el onclick del boton de añadir del dialogo de categorias
+        new AddCategoryUseCase(context, language, nameCategory, fitnFlowRepository). execute(new FitObserver<List<CategoryModel>>() {
 
             @Override
             protected void onStart() {
@@ -97,19 +103,21 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
                 isLoading.setValue(true);
                 mutableSlideError.setValue(false);
             }
-
             @Override
-            public void onSuccess(Boolean aBoolean) {
+            public void onSuccess(List<CategoryModel> categoryModelList) {
+                mutableCategoryList.setValue(categoryModelList);
                 isLoading.setValue(false);
                 isSaveSuccess.setValue(true);
                 mutableSlideError.setValue(false);
+                lastName = null;
 
             }
-
             @Override
             public void onError(Throwable e) {
                 mutableSlideError.setValue(true);
                 isLoading.setValue(false);
+                isSaveSuccess.setValue(false);
+                lastName = nameCategory;
             }
         });
     }
@@ -138,4 +146,6 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
             }
         });
     }
+
+
 }

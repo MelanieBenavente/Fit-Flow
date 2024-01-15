@@ -27,7 +27,7 @@ import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.common.component.CategoryEditableListener;
 import app.fit.fitndflow.ui.features.common.component.EditableBtnAddExercise;
 import app.fit.fitndflow.ui.features.common.component.EditableBtnDeleteExercise;
-
+@Deprecated
 public class AddCategoryFragment extends CommonFragment implements CategoryEditableListener, DialogCallbackDelete, AccessibilityInterface {
 
     public static final String KEY_CATEGORY = "actualCategory";
@@ -140,7 +140,7 @@ public class AddCategoryFragment extends CommonFragment implements CategoryEdita
             public void onClick(View view) {
                 updateScreenData();
                 if (!categoriesAndExercisesViewModel.getIsLoading().getValue() && !categoryModel.getName().equals("")) {
-                    categoriesAndExercisesViewModel.saveCategory(requireContext(), categoryModel);
+//                    categoriesAndExercisesViewModel.addNewCategory(requireContext(), categoryModel);
                 }
             }
         });
