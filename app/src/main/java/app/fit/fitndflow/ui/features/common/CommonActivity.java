@@ -35,10 +35,11 @@ public abstract class CommonActivity extends AppCompatActivity {
 
     public abstract @LayoutRes int getResLayout();
 
-    public void showBlockError(){
+    public void showBlockError() {
         addFragment(new BlockErrorFragment());
     }
-    public void showSavedSlideContainer(){
+
+    public void showSavedSlideContainer() {
         final Animation slideDown = new TranslateAnimation(0, 0, -1000, 0);
         slideDown.setDuration(1000); // Duración de la animación en milisegundos
         slideDown.setFillAfter(true);
@@ -50,22 +51,19 @@ public abstract class CommonActivity extends AppCompatActivity {
         final Handler handler = new Handler();
 
         // Mostrar el contenedor después de 1 segundo
+
+
+        savedContainer.setVisibility(View.VISIBLE);
+        savedContainer.startAnimation(slideDown);
+
+        // Ocultar el contenedor después de 3 segundos
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                savedContainer.setVisibility(View.VISIBLE);
-                savedContainer.startAnimation(slideDown);
-
-                // Ocultar el contenedor después de 3 segundos
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        savedContainer.startAnimation(slideUp);
-                        savedContainer.setVisibility(View.INVISIBLE);
-                    }
-                }, 2000);
+                savedContainer.startAnimation(slideUp);
+                savedContainer.setVisibility(View.INVISIBLE);
             }
-        }, 1000); // Esperar 1 segundo antes de mostrar el contenedor
+        }, 2000);
     }
 
     public void showErrorSlideContainer() {
@@ -79,24 +77,19 @@ public abstract class CommonActivity extends AppCompatActivity {
 
         final Handler handler = new Handler();
 
-        // Mostrar el contenedor después de 1 segundo
+        errorContainer.setVisibility(View.VISIBLE);
+        errorContainer.startAnimation(slideDown);
+
+        // Ocultar el contenedor después de 3 segundos
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                errorContainer.setVisibility(View.VISIBLE);
-                errorContainer.startAnimation(slideDown);
-
-                // Ocultar el contenedor después de 3 segundos
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        errorContainer.startAnimation(slideUp);
-                        errorContainer.setVisibility(View.INVISIBLE);
-                    }
-                }, 2000);
+                errorContainer.startAnimation(slideUp);
+                errorContainer.setVisibility(View.INVISIBLE);
             }
-        }, 1000); // Esperar 1 segundo antes de mostrar el contenedor
+        }, 2000);
     }
+        
 
     public void showLoadingFromActivity() {
         loadingLottie.setVisibility(View.VISIBLE);
