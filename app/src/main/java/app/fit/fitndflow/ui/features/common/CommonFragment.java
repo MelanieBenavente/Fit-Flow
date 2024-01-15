@@ -41,6 +41,12 @@ public abstract class CommonFragment<V extends ViewModel> extends Fragment {
             commonActivity.showBlockError();
         }
     }
+    public void showSlideSaved(){
+        CommonActivity commonActivity = (CommonActivity)getActivity();
+        if (commonActivity != null) {
+            commonActivity.showSavedSlideContainer();
+        }
+    }
 
     public void showSlideError(){
         CommonActivity commonActivity = (CommonActivity)getActivity();

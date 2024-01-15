@@ -1,4 +1,5 @@
 <resources>
+    <string name="language">es</string>
     <string name="app_name" translatable="false">Fit&amp;Flow</string>
     <string name="tomorrow_date_selector">Mañana</string>
     <string name="today_date_selector">Hoy</string>

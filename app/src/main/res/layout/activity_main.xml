@@ -26,6 +26,24 @@
             android:contentDescription="@string/talkback_error"/>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/savedContainer"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:background="#8BC34A"
+        android:visibility="gone"
+        android:elevation="100dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Añadido correctamente"
+            android:gravity="center"
+            android:paddingTop="30dp"
+            android:textColor="@color/white"
+            android:contentDescription="Añadido correctamente"/>
+    </RelativeLayout>
+
     <FrameLayout
         android:id="@+id/lottieContainer"
         android:layout_width="match_parent"

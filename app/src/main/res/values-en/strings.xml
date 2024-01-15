@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="language">en</string>
     <string name="tomorrow_date_selector">Tomorrow</string>
     <string name="today_date_selector">Today</string>
     <string name="yesterday_date_selector">Yesterday</string>

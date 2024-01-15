@@ -8,12 +8,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewbinding.ViewBinding;
 
 import com.fit.fitndflow.R;
 import com.fit.fitndflow.databinding.DialogConfirmationFragmentBinding;
 import com.fit.fitndflow.databinding.DialogCreationInputBinding;
 
+import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
 import app.fit.fitndflow.ui.features.common.CommonDialogFragment;
 
 public class CreationInputDialog extends CommonDialogFragment {
@@ -21,6 +24,8 @@ public class CreationInputDialog extends CommonDialogFragment {
     public static final int CREATE_EXERCISE = 2;
     private static final String KEY_TYPE = "createType";
     private DialogCreationInputBinding binding;
+    private CategoriesAndExercisesViewModel categoriesAndExercisesViewModel;
+
     public static String TAG = "CreationtionDialog";
     private int createType;
     @Override
@@ -36,6 +41,7 @@ public class CreationInputDialog extends CommonDialogFragment {
         if(bundle != null){
             createType = bundle.getInt(KEY_TYPE);
         }
+        categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
         initListeners();
         return view;
     }
@@ -50,29 +56,38 @@ public class CreationInputDialog extends CommonDialogFragment {
     }
 
     private void initListeners(){
-        if(createType == CREATE_CATEGORY){
-            binding.creationDialogTitle.setText(R.string.choose_category_name);
-            binding.newCategoryTxt.setHint("Espalda");
-            binding.creationDialogAddBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(requireContext(), "añade categoria", Toast.LENGTH_SHORT).show();
-                    dismissAllowingStateLoss();
-                    //todo!!! deberá Añadir una categoría al listado
-                }
-            });
-        } else {
-            binding.creationDialogTitle.setText(R.string.choose_exercise_name);
-            binding.newCategoryTxt.setHint("Mancuernas");
-            binding.creationDialogAddBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(requireContext(), "añade ejercicio", Toast.LENGTH_SHORT).show();
-                    dismissAllowingStateLoss();
-                    //todo!!! deberá añadir un ejercicio al listado
-                }
-            });
+        if(categoriesAndExercisesViewModel.getLastName() != null) {
+            binding.newCategoryTxt.setText(categoriesAndExercisesViewModel.getLastName());
         }
+            if (createType == CREATE_CATEGORY) {
+                binding.creationDialogTitle.setText(R.string.choose_category_name);
+                binding.newCategoryTxt.setHint("Espalda");
+                binding.creationDialogAddBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                            String categoryName = binding.newCategoryTxt.getText().toString();
+                            String language = getContext().getString(R.string.language);
+                            binding.newCategoryTxt.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(language + binding.newCategoryTxt.getText().toString()));
+                        if(!binding.newCategoryTxt.getText().toString().equals("")){
+                            categoriesAndExercisesViewModel.addNewCategory(requireContext(), language, categoryName);
+                        }
+                            dismissAllowingStateLoss();
+                    }
+                });
+            } else {
+                binding.creationDialogTitle.setText(R.string.choose_exercise_name);
+                binding.newCategoryTxt.setHint("Mancuernas");
+                binding.creationDialogAddBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(requireContext(), "añade ejercicio", Toast.LENGTH_SHORT).show();
+                        dismissAllowingStateLoss();
+                        //todo!!! deberá añadir un ejercicio al listado
+
+                    }
+                });
+            }
+
         binding.creationDialogCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

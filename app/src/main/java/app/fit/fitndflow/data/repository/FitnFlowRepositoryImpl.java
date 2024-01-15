@@ -5,7 +5,9 @@ import java.util.List;
 
 import app.fit.fitndflow.data.common.RetrofitUtils;
 import app.fit.fitndflow.data.common.model.ExcepcionApi;
+import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 import app.fit.fitndflow.data.dto.UserDto;
+import app.fit.fitndflow.data.dto.categories.AddCategoryDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
@@ -17,8 +19,8 @@ import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import retrofit2.Response;
 
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
-
     private List<CategoryModel> categoryListCachedResponse;
+
 
 
     @Override
@@ -75,6 +77,8 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         }
     }
 
+
+
     @Override
     public Boolean deleteCategoryAndExercises(Integer categoryId, String apikey) throws Exception {
         try {
@@ -93,6 +97,8 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     private void deleteCache(){
         categoryListCachedResponse = null;
     }
+
+
 
     private List<CategoryModel> mockList(){
 
@@ -128,5 +134,26 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     public List<CategoryModel> getTrainingList(String apiKey) throws  Exception{
         return mockEmptyList();
        //todo if i want a mocked list: return mockList();
+    }
+
+    @Override
+    public List<CategoryModel> addNewCategory(StringInLanguagesDto categoryName, String apiKey) throws Exception {
+        try {
+
+            AddCategoryDto addCategoryDto = new AddCategoryDto(categoryName);
+            Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().addNewCategory(addCategoryDto, apiKey).execute();
+
+            if (response != null && !response.isSuccessful()) {
+                throw new ExcepcionApi(response.code());
+            }
+            if (response != null && response.body() != null) {
+                categoryListCachedResponse = CategoryModelMapperKt.toModel(response.body());
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+        return categoryListCachedResponse;
     }
 }

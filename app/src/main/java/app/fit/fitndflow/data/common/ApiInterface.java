@@ -4,6 +4,7 @@ package app.fit.fitndflow.data.common;
 import java.util.List;
 
 import app.fit.fitndflow.data.dto.UserDto;
+import app.fit.fitndflow.data.dto.categories.AddCategoryDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -26,6 +27,9 @@ public interface ApiInterface {
     Call <CategoryDto> saveCategory(@Body CategoryDto categoryDto, @Header(KEY) String apiKey);
 
     @HTTP(method = "DELETE", path = "category/", hasBody = true)
-    Call <CategoryDto> deleteCategory(@Body Integer categoryId, @Header(KEY) String apiKey);
+    Call<CategoryDto> deleteCategory(@Body Integer categoryId, @Header(KEY) String apiKey);
+
+    @POST("category/add")
+    Call<List<CategoryDto>> addNewCategory(@Body AddCategoryDto addCategoryDto, @Header(KEY) String apiKey);
 
 }
