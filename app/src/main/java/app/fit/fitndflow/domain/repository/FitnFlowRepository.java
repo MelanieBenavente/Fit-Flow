@@ -5,8 +5,10 @@ import java.util.List;
 import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
+import app.fit.fitndflow.data.dto.categories.ModifyCategoryDto;
 import app.fit.fitndflow.domain.common.repository.CommonRepository;
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.CategoryModelInLanguages;
 import app.fit.fitndflow.domain.model.UserModel;
 
 public interface FitnFlowRepository extends CommonRepository {
@@ -18,5 +20,6 @@ public interface FitnFlowRepository extends CommonRepository {
     List<CategoryModel> getTrainingList(String apiKey) throws Exception;
 
     List<CategoryModel> addNewCategory(StringInLanguagesDto categoryName, String apiKey) throws Exception;
+    List<CategoryModel> modifyCategory(CategoryModelInLanguages category, String apiKey) throws Exception;
 }
 

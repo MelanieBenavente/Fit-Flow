@@ -1,8 +1,12 @@
 package app.fit.fitndflow.domain;
 
+import static app.fit.fitndflow.domain.usecase.AddCategoryUseCase.SPANISH;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 
 public class Utils {
 
@@ -11,7 +15,15 @@ public class Utils {
         SimpleDateFormat dateFormat = new SimpleDateFormat(SPANISH_FORMAT);
         return dateFormat.format(date);
     }
-
+    public static StringInLanguagesDto convertToStringInLanguages(String language, String nameCategory){
+        StringInLanguagesDto stringInLanguagesDto;
+        if(language.equals(SPANISH)){
+            stringInLanguagesDto = new StringInLanguagesDto(nameCategory, "");
+        } else {
+            stringInLanguagesDto = new StringInLanguagesDto("", nameCategory);
+        }
+        return stringInLanguagesDto;
+    }
     public static String getCalendarFormatDate(Date date){
         SimpleDateFormat dateFormat = new SimpleDateFormat(" dd, MMM");
         return dateFormat.format(date);

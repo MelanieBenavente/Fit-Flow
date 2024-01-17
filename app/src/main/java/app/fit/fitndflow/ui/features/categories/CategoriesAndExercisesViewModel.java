@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
+import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
 import app.fit.fitndflow.domain.common.arq.FitObserver;
 import app.fit.fitndflow.domain.model.CategoryModel;
@@ -14,6 +15,7 @@ import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import app.fit.fitndflow.domain.usecase.AddCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
+import app.fit.fitndflow.domain.usecase.ModifyCategoryUseCase;
 
 public class CategoriesAndExercisesViewModel extends ViewModel {
     private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
@@ -94,13 +96,39 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
         });
     }
 
-    public void addNewCategory(Context context, String language, String nameCategory){ //todo este metodo se ejecutará en el onclick del boton de añadir del dialogo de categorias
+    public void modifyCategory(Context context, String language, String categoryName, int id){
+        new ModifyCategoryUseCase(context, language, categoryName, id, fitnFlowRepository).execute(new FitObserver<List<CategoryModel>>() {
+            @Override
+            protected void onStart() {
+                super.onStart();
+                isLoading.setValue(true);
+                mutableSlideError.setValue(false);
+                isSaveSuccess.setValue(false);
+            }
+            @Override
+            public void onSuccess(List<CategoryModel> categoryModelList) {
+                mutableCategoryList.setValue(categoryModelList);
+                isLoading.setValue(false);
+                isSaveSuccess.setValue(true);
+                mutableSlideError.setValue(false);
+            }
+            @Override
+            public void onError(Throwable e) {
+                mutableSlideError.setValue(true);
+                isLoading.setValue(false);
+                isSaveSuccess.setValue(false);
+            }
+        });
+    }
+
+    public void addNewCategory(Context context, String language, String nameCategory){
         new AddCategoryUseCase(context, language, nameCategory, fitnFlowRepository). execute(new FitObserver<List<CategoryModel>>() {
 
             @Override
             protected void onStart() {
                 super.onStart();
                 isLoading.setValue(true);
+                isSaveSuccess.setValue(false);
                 mutableSlideError.setValue(false);
             }
             @Override

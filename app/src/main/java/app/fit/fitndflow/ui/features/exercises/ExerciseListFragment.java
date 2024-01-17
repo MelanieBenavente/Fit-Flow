@@ -1,7 +1,7 @@
 package app.fit.fitndflow.ui.features.exercises;
 
 
-import static app.fit.fitndflow.ui.features.categories.CreationInputDialog.CREATE_EXERCISE;
+import static app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog.TYPE_EXERCISE;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,10 +25,9 @@ import java.util.List;
 
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
-import app.fit.fitndflow.ui.features.categories.AddCategoryFragment;
 import app.fit.fitndflow.ui.features.categories.CategoriesAndExercisesViewModel;
 import app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment;
-import app.fit.fitndflow.ui.features.categories.CreationInputDialog;
+import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog;
 import app.fit.fitndflow.ui.features.categories.DialogCallbackDelete;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
@@ -133,7 +132,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
 
     @Override
     public void showCreationDialog() {
-        CreationInputDialog.newInstance(CREATE_EXERCISE).show(getChildFragmentManager(), "creationDialog");
+        CreationOrModifyInputDialog.newInstance(TYPE_EXERCISE).show(getChildFragmentManager(), "creationDialog");
     }
 
     @Override
