@@ -8,6 +8,8 @@ public interface CategoryAdapterCallback {
 
     void showCreationDialog ();
 
-    //todo crear metodo para mostrar dialogo de borrar y pasarle un int id por parametro
+    void showModifyDialog(int id, String name);
+    //todo nuevo metodo para mostrar mostrar el dialogo de edicion
+
     void showDeleteDialog(int id);
 }

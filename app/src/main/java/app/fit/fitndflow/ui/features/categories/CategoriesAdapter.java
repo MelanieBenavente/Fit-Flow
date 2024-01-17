@@ -39,7 +39,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
     @Override
     public CategoriesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        if(viewType == SINGLE_TYPE){
+        if (viewType == SINGLE_TYPE) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_item_view, parent, false);
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_item_last_view, parent, false);
@@ -49,51 +49,57 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesAdapter.ViewHolder holder, int position) {
-       if(position < categoryModelList.size()) {
-           CategoryModel category = categoryModelList.get(position);
-           holder.textList.setText(category.getName());
-           if(mIsEditMode){
-               holder.cancelBtn.setVisibility(VISIBLE);
-                   holder.cancelBtn.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View view) {
-                           categoryAdapterCallback.showDeleteDialog(category.getId());
-                       }
-                   });
-           } else {
-               holder.cancelBtn.setVisibility(INVISIBLE);
-           }
-           holder.textList.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   categoryAdapterCallback.showExercises(categoryModelList.get(position));
-               }
-           });
-       } else {
-           holder.textList.setOnClickListener(new View.OnClickListener() {
-               @Override
-               public void onClick(View view) {
-                   categoryAdapterCallback.showCreationDialog();
-               }
-           });
-       }
+        if (position < categoryModelList.size()) {
+            CategoryModel category = categoryModelList.get(position);
+            holder.textList.setText(category.getName());
+            if (mIsEditMode) {
+                holder.cancelBtn.setVisibility(VISIBLE);
+                holder.cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        categoryAdapterCallback.showDeleteDialog(category.getId());
+                    }
+                });
+
+            } else {
+                holder.cancelBtn.setVisibility(INVISIBLE);
+            }
+            holder.textList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mIsEditMode) {
+                        categoryAdapterCallback.showModifyDialog(category.getId(), category.getName());
+                    } else {
+                        categoryAdapterCallback.showExercises(categoryModelList.get(position));
+                    }
+                }
+            });
+        } else {
+            holder.textList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    categoryAdapterCallback.showCreationDialog();
+                }
+            });
+        }
     }
-    public void setEditMode(boolean isEditMode){
-       mIsEditMode = isEditMode;
-       notifyDataSetChanged();
+
+    public void setEditMode(boolean isEditMode) {
+        mIsEditMode = isEditMode;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if(categoryModelList != null){
-            return categoryModelList.size()+1;
+        if (categoryModelList != null) {
+            return categoryModelList.size() + 1;
         }
         return 0;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position < categoryModelList.size()){
+        if (position < categoryModelList.size()) {
             return SINGLE_TYPE;
         } else {
             return SINGLE_LAST_TYPE;
@@ -104,6 +110,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
         TextView textList;
         ConstraintLayout container;
         ImageButton cancelBtn;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cancelBtn = itemView.findViewById(R.id.cancel_single_item_btn);

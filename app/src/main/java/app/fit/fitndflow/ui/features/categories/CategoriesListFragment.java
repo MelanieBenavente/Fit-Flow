@@ -1,6 +1,6 @@
 package app.fit.fitndflow.ui.features.categories;
 
-import static app.fit.fitndflow.ui.features.categories.CreationInputDialog.CREATE_CATEGORY;
+import static app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog.TYPE_CATEGORY;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -68,15 +68,12 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         categoriesAndExercisesViewModel.getMutableSlideError().setValue(false);
         categoriesAndExercisesViewModel.getIsLoading().setValue(false);
 
-        //todo observar al slideError y a issavesuccess
-        //observing RazaList
         final Observer<List<CategoryModel>> observer = new Observer<List<CategoryModel>>() {
             @Override
             public void onChanged(List<CategoryModel> categories) {
                 printCategories(categories);
             }
         };
-        //Observamos al listado del ViewModel y ejecutamos las acciones indicadas antes en el observer
         categoriesAndExercisesViewModel.getMutableCategoryList().observe(getActivity(), observer);
 
         //observing error
@@ -105,6 +102,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             public void onChanged(Boolean isSaveSuccess) {
                 if (isSaveSuccess) {
                     showSlideSaved();
+                    categoriesAndExercisesViewModel.getIsSaveSuccess().setValue(false);
                 }
             }
         };
@@ -214,7 +212,12 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
 
     @Override
     public void showCreationDialog() {
-        CreationInputDialog.newInstance(CREATE_CATEGORY).show(getChildFragmentManager(), "creationDialog");
+        CreationOrModifyInputDialog.newInstance(TYPE_CATEGORY).show(getChildFragmentManager(), "creationDialog");
+    }
+
+    @Override
+    public void showModifyDialog(int id, String name) {
+        CreationOrModifyInputDialog.newInstance(TYPE_CATEGORY, id, name).show(getChildFragmentManager(), "creationDialog");
 
     }
 

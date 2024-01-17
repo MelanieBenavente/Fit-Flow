@@ -6,6 +6,7 @@ import java.util.List;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.dto.categories.AddCategoryDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
+import app.fit.fitndflow.data.dto.categories.ModifyCategoryDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -31,5 +32,8 @@ public interface ApiInterface {
 
     @POST("category/add")
     Call<List<CategoryDto>> addNewCategory(@Body AddCategoryDto addCategoryDto, @Header(KEY) String apiKey);
+
+    @POST("category/update")
+    Call<List<CategoryDto>> modifyCategory(@Body ModifyCategoryDto modifyCategoryDto, @Header(KEY) String apiKey);
 
 }
