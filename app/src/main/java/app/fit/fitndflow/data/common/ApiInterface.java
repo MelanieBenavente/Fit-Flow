@@ -9,10 +9,12 @@ import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import app.fit.fitndflow.data.dto.categories.ModifyCategoryDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ApiInterface {
     String URL_BASE = "http://192.168.1.16:5000/";
@@ -27,8 +29,8 @@ public interface ApiInterface {
     @POST("category/")
     Call <CategoryDto> saveCategory(@Body CategoryDto categoryDto, @Header(KEY) String apiKey);
 
-    @HTTP(method = "DELETE", path = "category/", hasBody = true)
-    Call<CategoryDto> deleteCategory(@Body Integer categoryId, @Header(KEY) String apiKey);
+    @DELETE("category/{id}")
+    Call <List<CategoryDto>> deleteCategory(@Path("id") int id, @Header(KEY) String apiKey);
 
     @POST("category/add")
     Call<List<CategoryDto>> addNewCategory(@Body AddCategoryDto addCategoryDto, @Header(KEY) String apiKey);

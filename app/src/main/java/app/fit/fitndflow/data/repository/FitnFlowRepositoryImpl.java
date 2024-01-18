@@ -78,22 +78,6 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         }
     }
 
-
-    @Override
-    public Boolean deleteCategoryAndExercises(Integer categoryId, String apikey) throws Exception {
-        try {
-            Response<CategoryDto> response = RetrofitUtils.getRetrofitUtils().deleteCategory(categoryId, apikey).execute();
-            if (response.isSuccessful()) {
-                deleteCache();
-                return true;
-            } else {
-                throw new Exception(new Exception("Error from Server"));
-            }
-        } catch (Exception e) {
-            throw new Exception(e);
-        }
-    }
-
     private void deleteCache() {
         categoryListCachedResponse = null;
     }
@@ -162,6 +146,23 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             ModifyCategoryDto modifyCategoryDto = new ModifyCategoryDto(category.getId(), category.getName(), category.getImageUrl());
             Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().modifyCategory(modifyCategoryDto, apiKey).execute();
 
+            if (response != null && !response.isSuccessful()) {
+                throw new ExcepcionApi(response.code());
+            }
+            if (response != null && response.body() != null) {
+                categoryListCachedResponse = CategoryModelMapperKt.toModel(response.body());
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+        return categoryListCachedResponse;
+    }
+    @Override
+    public List<CategoryModel> deleteCategory(Integer categoryId, String apikey) throws Exception {
+        try {
+            Response <List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().deleteCategory(categoryId, apikey).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
