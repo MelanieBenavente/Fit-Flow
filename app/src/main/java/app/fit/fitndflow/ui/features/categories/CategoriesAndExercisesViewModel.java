@@ -150,8 +150,8 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
         });
     }
 
-    public void deleteCategory(CategoryModel categoryModel, Context context){
-        new DeleteCategoryUseCase(categoryModel, context, fitnFlowRepository).execute(new FitObserver<Boolean>() {
+    public void deleteCategory(int id, Context context){
+        new DeleteCategoryUseCase(id, context, fitnFlowRepository).execute(new FitObserver<List<CategoryModel>>() {
 
             @Override
             protected void onStart(){
@@ -159,10 +159,12 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
                 isLoading.setValue(true);
                 mutableSlideError.setValue(false);
             }
+
             @Override
-            public void onSuccess(Boolean aBoolean) {
+            public void onSuccess(List<CategoryModel> categoryModelList) {
                 isLoading.setValue(false);
                 isDeleteSuccess.setValue(true);
+                mutableCategoryList.setValue(categoryModelList);
                 mutableSlideError.setValue(false);
             }
 
@@ -170,10 +172,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
             public void onError(Throwable e) {
                 mutableSlideError.setValue(true);
                 isLoading.setValue(false);
-
             }
         });
     }
-
-
 }

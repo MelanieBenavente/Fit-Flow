@@ -15,7 +15,7 @@ public interface FitnFlowRepository extends CommonRepository {
     UserModel registerUser(UserDto userDto) throws Exception;
     List<CategoryModel> getCategoryList(String apiKey) throws Exception;
     Boolean saveCategoryAndExercises(CategoryDto categoryDto, String apikey) throws Exception;
-    Boolean deleteCategoryAndExercises(Integer integer, String apikey) throws Exception;
+    List<CategoryModel> deleteCategoryAndExercises(Integer integer, String apikey) throws Exception;
 
     List<CategoryModel> getTrainingList(String apiKey) throws Exception;
 
