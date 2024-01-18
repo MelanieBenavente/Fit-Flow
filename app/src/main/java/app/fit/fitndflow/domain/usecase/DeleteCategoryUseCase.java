@@ -26,7 +26,7 @@ public class DeleteCategoryUseCase extends FitUseCase<Integer, List<CategoryMode
         return Single.create(emitter -> {
             try{
                 String apiKey = SharedPrefs.getApikeyFromSharedPRefs(context);
-                List<CategoryModel> response = fitnFlowRepository.deleteCategoryAndExercises(inputParams, apiKey);
+                List<CategoryModel> response = fitnFlowRepository.deleteCategory(inputParams, apiKey);
                 emitter.onSuccess(response);
             } catch(Exception exception) {
                 emitter.onError(exception);
