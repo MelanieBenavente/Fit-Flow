@@ -1,4 +1,4 @@
-package app.fit.fitndflow.data.dto.categories
+package app.fit.fitndflow.data.dto.exercises
 
 import app.fit.fitndflow.data.dto.StringInLanguagesDto
 import com.google.gson.annotations.SerializedName

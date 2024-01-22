@@ -6,6 +6,7 @@ import static app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDial
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,8 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
 
     private void setViewModelObservers() {
         categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
+        categoriesAndExercisesViewModel.getMutableSlideError().setValue(false);
+        categoriesAndExercisesViewModel.getIsLoading().setValue(false);
 
         final Observer<CategoryModel> observer = new Observer<CategoryModel>() {
             @Override
@@ -68,6 +71,63 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
             }
         };
         categoriesAndExercisesViewModel.getActualCategory().observe(getActivity(), observer);
+        final Observer<List<ExerciseModel>> exerciseListObserver = new Observer<List<ExerciseModel>>() {
+            @Override
+            public void onChanged(List<ExerciseModel> exercises) {
+                printExercises(exercises);
+            }
+        };
+        categoriesAndExercisesViewModel.getMutableExerciseList().observe(getActivity(), exerciseListObserver);
+        final Observer<Boolean> observerError = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isError) {
+                if (isError) {
+                    showSlideError();
+                    categoriesAndExercisesViewModel.getMutableSlideError().setValue(false);
+                }
+            }
+        };
+        categoriesAndExercisesViewModel.getMutableSlideError().observe(getActivity(), observerError);
+        final Observer<Boolean> errorObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isError) {
+                if (isError) {
+                    printError();
+                    categoriesAndExercisesViewModel.getMutableFullScreenError().setValue(false);
+                }
+            }
+        };
+        categoriesAndExercisesViewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
+        final Observer<Boolean> observerIsSaveSuccess = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSaveSuccess) {
+                if (isSaveSuccess) {
+                    showSlideSaved();
+                    categoriesAndExercisesViewModel.getIsSaveSuccess().setValue(false);
+                }
+            }
+        };
+        categoriesAndExercisesViewModel.getIsSaveSuccess().observe(getActivity(), observerIsSaveSuccess);
+        final Observer<Boolean> observerLoading = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoading) {
+                try {
+                    if (isLoading) {
+                        showLoading();
+
+                    } else {
+                        hideLoading();
+                    }
+                } catch (Exception exception) {
+                    Log.e("Error", "show loading");
+                }
+            }
+        };
+        categoriesAndExercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
+    }
+
+    private void printExercises(List<ExerciseModel> listRecived) {
+        exercisesAdapter.setExerciseModelList(listRecived);
     }
 
     private void printCategoryDetail(CategoryModel categoryRecived) {
@@ -83,9 +143,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
         binding.txtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 List<ExerciseModel> filteredList = new ArrayList<>();
@@ -98,20 +156,18 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
                 }
                 exercisesAdapter.setExerciseModelList(filteredList);
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
 
             }
         });
     }
-
     private void setOnClickListeners() {
         binding.floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 isEditMode = !isEditMode;
-                if(isEditMode){
+                if (isEditMode) {
                     binding.floatingBtn.setImageResource(R.drawable.svg_check);
                 } else {
                     binding.floatingBtn.setImageResource(R.drawable.svg_pencil);
@@ -129,7 +185,13 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
             showBlockError();
         }
     }
-
+    private void printError() {
+        try {
+            showBlockError();
+        } catch (Exception exception) {
+            Log.e("Error", "Error to print errorContainer");
+        }
+    }
     @Override
     public void showCreationDialog() {
         CreationOrModifyInputDialog.newInstance(TYPE_EXERCISE).show(getChildFragmentManager(), "creationDialog");

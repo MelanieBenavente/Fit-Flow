@@ -1,6 +1,7 @@
 package app.fit.fitndflow.data.dto.categories
 
 import app.fit.fitndflow.data.dto.StringInLanguagesDto
+import app.fit.fitndflow.data.dto.exercises.ExerciseDto
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

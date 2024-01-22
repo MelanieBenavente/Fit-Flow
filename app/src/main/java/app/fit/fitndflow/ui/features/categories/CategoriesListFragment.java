@@ -243,7 +243,6 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
 
     @Override
     public void onClickAcceptDelete(int id) {
-
         categoriesAndExercisesViewModel.deleteCategory(id, requireContext());
     }
 }

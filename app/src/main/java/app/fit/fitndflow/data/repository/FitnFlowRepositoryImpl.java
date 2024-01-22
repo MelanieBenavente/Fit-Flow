@@ -10,19 +10,22 @@ import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.dto.categories.AddCategoryDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import app.fit.fitndflow.data.dto.categories.ModifyCategoryDto;
+import app.fit.fitndflow.data.dto.exercises.AddExerciseDto;
+import app.fit.fitndflow.data.dto.exercises.ExerciseDto;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.CategoryModelInLanguages;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.model.mapper.CategoryModelMapperKt;
+import app.fit.fitndflow.domain.model.mapper.ExerciseModelMapperKt;
 import app.fit.fitndflow.domain.model.mapper.UserModelMapperKt;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import retrofit2.Response;
 
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     private List<CategoryModel> categoryListCachedResponse;
-
+    private List<ExerciseModel> exerciseListCachedResponse;
 
     @Override
     public UserModel registerUser(UserDto userDto) throws Exception {
@@ -175,5 +178,25 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             throw new Exception(e);
         }
         return categoryListCachedResponse;
+    }
+   @Override
+    public List<ExerciseModel> addNewExercise(StringInLanguagesDto exerciseName, int categoryId, String apiKey) throws Exception {
+        try {
+
+            AddExerciseDto addExerciseDto = new AddExerciseDto(exerciseName, categoryId);
+            Response<List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().addNewExercise(addExerciseDto, apiKey).execute();
+
+            if (response != null && !response.isSuccessful()) {
+                throw new ExcepcionApi(response.code());
+            }
+            if (response != null && response.body() != null) {
+                exerciseListCachedResponse = ExerciseModelMapperKt.toModel(response.body());
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+        return exerciseListCachedResponse;
     }
 }
