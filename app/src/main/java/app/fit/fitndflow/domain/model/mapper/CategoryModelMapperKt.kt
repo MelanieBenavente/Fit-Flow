@@ -1,7 +1,7 @@
 package app.fit.fitndflow.domain.model.mapper
 
 import app.fit.fitndflow.data.dto.categories.CategoryDto
-import app.fit.fitndflow.data.dto.categories.ExerciseDto
+import app.fit.fitndflow.data.dto.exercises.ExerciseDto
 import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.model.ExerciseModel
 

@@ -103,10 +103,17 @@ public class CreationOrModifyInputDialog extends CommonDialogFragment {
             binding.creationDialogAddBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(requireContext(), "añade ejercicio", Toast.LENGTH_SHORT).show();
+                    String exerciseName = binding.newCategoryTxt.getText().toString();
+                    String language = "es";
+                    binding.newCategoryTxt.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(language + binding.newCategoryTxt.getText().toString()));
+                    if (!binding.newCategoryTxt.getText().toString().equals("")) {
+                        /*if (id != 0) {
+                            categoriesAndExercisesViewModel.modifyCategory(requireContext(), language, exerciseName, id);
+                        } else {*/
+                            categoriesAndExercisesViewModel.addNewExercise(requireContext(), language, exerciseName);
+                       // }
+                    }
                     dismissAllowingStateLoss();
-                    //todo!!! deberá añadir un ejercicio al listado
-
                 }
             });
         }
