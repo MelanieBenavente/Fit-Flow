@@ -12,9 +12,11 @@ import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import app.fit.fitndflow.data.dto.categories.ModifyCategoryDto;
 import app.fit.fitndflow.data.dto.exercises.AddExerciseDto;
 import app.fit.fitndflow.data.dto.exercises.ExerciseDto;
+import app.fit.fitndflow.data.dto.exercises.ModifyExerciseDto;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.CategoryModelInLanguages;
 import app.fit.fitndflow.domain.model.ExerciseModel;
+import app.fit.fitndflow.domain.model.ExerciseModelInLanguages;
 import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.model.mapper.CategoryModelMapperKt;
@@ -186,6 +188,24 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             AddExerciseDto addExerciseDto = new AddExerciseDto(exerciseName, categoryId);
             Response<List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().addNewExercise(addExerciseDto, apiKey).execute();
 
+            if (response != null && !response.isSuccessful()) {
+                throw new ExcepcionApi(response.code());
+            }
+            if (response != null && response.body() != null) {
+                exerciseListCachedResponse = ExerciseModelMapperKt.toModel(response.body());
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+        return exerciseListCachedResponse;
+    }
+    @Override
+    public List<ExerciseModel> modifyExercise(ExerciseModelInLanguages exercise, String apiKey) throws Exception {
+        try {
+            ModifyExerciseDto modifyExerciseDto = new ModifyExerciseDto(exercise.getId(), exercise.getName(), exercise.getCategoryId());
+            Response <List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().modifyExercise(modifyExerciseDto, apiKey).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }

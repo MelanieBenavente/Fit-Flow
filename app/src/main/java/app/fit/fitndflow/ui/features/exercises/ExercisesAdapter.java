@@ -67,10 +67,14 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
             } else {
                 holder.cancelBtn.setVisibility(INVISIBLE);
             }
-            holder.container.setOnClickListener(new View.OnClickListener() {
+            holder.textList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    serieAdapterCallback.showSeries(exerciseModelList.get(position));
+                    if(mIsEditMode){
+                        serieAdapterCallback.showModifyDialog(exercise.getId(), exercise.getName());
+                    } else {
+                        serieAdapterCallback.showSeries(exerciseModelList.get(position));
+                    }
                 }
             });
         } else {

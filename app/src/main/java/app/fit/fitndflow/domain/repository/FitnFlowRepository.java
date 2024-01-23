@@ -9,6 +9,7 @@ import app.fit.fitndflow.domain.common.repository.CommonRepository;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.CategoryModelInLanguages;
 import app.fit.fitndflow.domain.model.ExerciseModel;
+import app.fit.fitndflow.domain.model.ExerciseModelInLanguages;
 import app.fit.fitndflow.domain.model.UserModel;
 
 public interface FitnFlowRepository extends CommonRepository {
@@ -22,5 +23,6 @@ public interface FitnFlowRepository extends CommonRepository {
     List<CategoryModel> addNewCategory(StringInLanguagesDto categoryName, String apiKey) throws Exception;
     List<CategoryModel> modifyCategory(CategoryModelInLanguages category, String apiKey) throws Exception;
     List<ExerciseModel> addNewExercise(StringInLanguagesDto exerciseName, int categoryId, String apiKey) throws Exception;
+    List<ExerciseModel> modifyExercise(ExerciseModelInLanguages exercise, String apiKey) throws Exception;
 }
 

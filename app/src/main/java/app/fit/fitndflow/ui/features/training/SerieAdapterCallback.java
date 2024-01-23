@@ -9,4 +9,6 @@ public interface SerieAdapterCallback {
     void showCreationDialog ();
 
     void showDeleteDialog(int id);
+
+    void showModifyDialog(int exerciseId, String exerciseName);
 }

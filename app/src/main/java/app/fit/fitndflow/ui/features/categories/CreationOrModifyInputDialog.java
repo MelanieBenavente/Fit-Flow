@@ -107,11 +107,11 @@ public class CreationOrModifyInputDialog extends CommonDialogFragment {
                     String language = "es";
                     binding.newCategoryTxt.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(language + binding.newCategoryTxt.getText().toString()));
                     if (!binding.newCategoryTxt.getText().toString().equals("")) {
-                        /*if (id != 0) {
-                            categoriesAndExercisesViewModel.modifyCategory(requireContext(), language, exerciseName, id);
-                        } else {*/
+                        if (id != 0) {
+                            categoriesAndExercisesViewModel.modifyExercise(requireContext(), id, language, exerciseName);
+                        } else {
                             categoriesAndExercisesViewModel.addNewExercise(requireContext(), language, exerciseName);
-                       // }
+                        }
                     }
                     dismissAllowingStateLoss();
                 }
