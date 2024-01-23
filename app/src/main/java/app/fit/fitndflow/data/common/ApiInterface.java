@@ -9,6 +9,7 @@ import app.fit.fitndflow.data.dto.categories.CategoryDto;
 import app.fit.fitndflow.data.dto.exercises.AddExerciseDto;
 import app.fit.fitndflow.data.dto.exercises.ExerciseDto;
 import app.fit.fitndflow.data.dto.categories.ModifyCategoryDto;
+import app.fit.fitndflow.data.dto.exercises.ModifyExerciseDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -42,9 +43,9 @@ public interface ApiInterface {
     Call<List<CategoryDto>> modifyCategory(@Body ModifyCategoryDto modifyCategoryDto, @Header(KEY) String apiKey);
 
     //LLAMADA EJERCICIOS
-    //todo hacer una llamada tipo POST ("exercise/add").
-    // Devuelve un Listado de objetos ExerciseDto (<List<ExerciseDto>>.
-    // El objeto será de tipo AddExerciseDto y también habrá una cabecera con una key y apikey.
     @POST("exercise/add")
     Call<List<ExerciseDto>> addNewExercise(@Body AddExerciseDto addExerciseDto, @Header(KEY) String apiKey);
+
+    @POST("exercise/update")
+    Call<List<ExerciseDto>> modifyExercise(@Body ModifyExerciseDto modifyExerciseDto, @Header(KEY) String apiKey);
 }

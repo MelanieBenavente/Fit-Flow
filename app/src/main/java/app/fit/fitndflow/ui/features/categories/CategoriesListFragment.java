@@ -218,7 +218,6 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     @Override
     public void showModifyDialog(int id, String name) {
         CreationOrModifyInputDialog.newInstance(TYPE_CATEGORY, id, name).show(getChildFragmentManager(), "creationDialog");
-
     }
 
     @Override

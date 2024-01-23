@@ -71,13 +71,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
             }
         };
         categoriesAndExercisesViewModel.getActualCategory().observe(getActivity(), observer);
-        final Observer<List<ExerciseModel>> exerciseListObserver = new Observer<List<ExerciseModel>>() {
-            @Override
-            public void onChanged(List<ExerciseModel> exercises) {
-                printExercises(exercises);
-            }
-        };
-        categoriesAndExercisesViewModel.getMutableExerciseList().observe(getActivity(), exerciseListObserver);
+
         final Observer<Boolean> observerError = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isError) {
@@ -200,6 +194,11 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
     @Override
     public void showDeleteDialog(int id) {
         ConfirmationDialogFragment.newInstance(ExerciseListFragment.this, ConfirmationDialogFragment.DELETE_EXERCISE, id).show(getChildFragmentManager(), "ConfirmationDialog");
+    }
+
+    @Override
+    public void showModifyDialog(int exerciseId, String exerciseName) {
+        CreationOrModifyInputDialog.newInstance(TYPE_EXERCISE, exerciseId, exerciseName).show(getChildFragmentManager(), "creationDialog");
     }
 
     @Override

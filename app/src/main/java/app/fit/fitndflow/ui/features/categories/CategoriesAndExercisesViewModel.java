@@ -18,13 +18,12 @@ import app.fit.fitndflow.domain.usecase.AddExerciseUseCase;
 import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 import app.fit.fitndflow.domain.usecase.ModifyCategoryUseCase;
+import app.fit.fitndflow.domain.usecase.ModifyExerciseUseCase;
 
 public class CategoriesAndExercisesViewModel extends ViewModel {
     private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
     private MutableLiveData<CategoryModel> actualCategory = new MutableLiveData<>();
     private MutableLiveData<List<CategoryModel>> mutableCategoryList = new MutableLiveData<>();
-    private MutableLiveData<List<ExerciseModel>> mutableExerciseList = new MutableLiveData<>();
-
     private MutableLiveData<Boolean> mutableSlideError = new MutableLiveData<>(false);
 
     private MutableLiveData<Boolean> mutableFullScreenError = new MutableLiveData<>(false);
@@ -56,9 +55,6 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
 
     public MutableLiveData<List<CategoryModel>> getMutableCategoryList() {
         return mutableCategoryList;
-    }
-    public MutableLiveData<List<ExerciseModel>> getMutableExerciseList(){
-        return mutableExerciseList;
     }
 
     public MutableLiveData<Boolean> getMutableSlideError() {
@@ -126,6 +122,33 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
             }
         });
     }
+    public void modifyExercise(Context context, int exerciseId, String language, String exerciseName){
+        new ModifyExerciseUseCase(context, exerciseId, language, exerciseName, actualCategory.getValue().getId(), fitnFlowRepository).execute(new FitObserver<List<ExerciseModel>>() {
+            @Override
+            protected void onStart() {
+                super.onStart();
+                isLoading.setValue(true);
+                mutableSlideError.setValue(false);
+                isSaveSuccess.setValue(false);
+            }
+            @Override
+            public void onSuccess(List<ExerciseModel> exerciseModelList) {
+                CategoryModel category = actualCategory.getValue();
+                category.setExerciseList(exerciseModelList);
+                actualCategory.setValue(category);
+                isLoading.setValue(false);
+                isSaveSuccess.setValue(true);
+                mutableSlideError.setValue(false);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mutableSlideError.setValue(true);
+                isLoading.setValue(false);
+                isSaveSuccess.setValue(false);
+            }
+        });
+    }
 
     public void addNewCategory(Context context, String language, String nameCategory){
         new AddCategoryUseCase(context, language, nameCategory, fitnFlowRepository). execute(new FitObserver<List<CategoryModel>>() {
@@ -166,7 +189,9 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
             }
             @Override
             public void onSuccess(List<ExerciseModel> exerciseModels) {
-                mutableExerciseList.setValue(exerciseModels);
+                CategoryModel category = actualCategory.getValue();
+                category.setExerciseList(exerciseModels);
+                actualCategory.setValue(category);
                 isLoading.setValue(false);
                 isSaveSuccess.setValue(true);
                 mutableSlideError.setValue(false);
