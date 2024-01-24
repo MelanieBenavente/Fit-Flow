@@ -48,4 +48,7 @@ public interface ApiInterface {
 
     @POST("exercise/update")
     Call<List<ExerciseDto>> modifyExercise(@Body ModifyExerciseDto modifyExerciseDto, @Header(KEY) String apiKey);
+
+    @DELETE("exercise/{id}")
+    Call<List<ExerciseDto>> deleteExercise(@Path("id") int exerciseId, @Header(KEY) String apikey);
 }

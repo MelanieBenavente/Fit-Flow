@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,21 +52,23 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
         binding = FragmentExercisesListBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
+        categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
+        printCategoryDetailAndinstantiateAdaper(categoriesAndExercisesViewModel.getActualCategory().getValue());
         setViewModelObservers();
-        addTextWatcher();
         setOnClickListeners();
+        addTextWatcher();
         return view;
     }
 
     private void setViewModelObservers() {
-        categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
         categoriesAndExercisesViewModel.getMutableSlideError().setValue(false);
         categoriesAndExercisesViewModel.getIsLoading().setValue(false);
 
         final Observer<CategoryModel> observer = new Observer<CategoryModel>() {
             @Override
             public void onChanged(CategoryModel category) {
-                printCategoryDetail(category);
+                //setear listado al adapter
+                exercisesAdapter.setExerciseModelList(category.getExerciseList());
             }
         };
         categoriesAndExercisesViewModel.getActualCategory().observe(getActivity(), observer);
@@ -120,11 +121,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
         categoriesAndExercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
     }
 
-    private void printExercises(List<ExerciseModel> listRecived) {
-        exercisesAdapter.setExerciseModelList(listRecived);
-    }
-
-    private void printCategoryDetail(CategoryModel categoryRecived) {
+    private void printCategoryDetailAndinstantiateAdaper(CategoryModel categoryRecived) {
         exercisesAdapter = new ExercisesAdapter(categoryRecived.getExerciseList(), this);
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -202,8 +199,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
     }
 
     @Override
-    public void onClickAcceptDelete(int id) {
-        Toast.makeText(requireContext(), "delete", Toast.LENGTH_SHORT).show();
-        //todo borrar el ejercicio de la lista de ejercicios
+    public void onClickAcceptDelete(int exerciseId) {
+        categoriesAndExercisesViewModel.deleteExercise(exerciseId,requireContext());
     }
 }

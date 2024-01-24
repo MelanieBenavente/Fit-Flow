@@ -52,7 +52,7 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ExercisesAdapter.ViewHolder holder, int position) {
         if(position < exerciseModelList.size()) {
             ExerciseModel exercise = exerciseModelList.get(position);
             holder.textList.setText(exercise.getName());
@@ -116,11 +116,9 @@ public class ExercisesAdapter extends RecyclerView.Adapter<ExercisesAdapter.View
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            cancelBtn = itemView.findViewById(R.id.cancel_single_item_btn);
             textList = itemView.findViewById(R.id.textList);
             container = itemView.findViewById(R.id.container);
-            cancelBtn = itemView.findViewById(R.id.cancel_single_item_btn);
-
         }
     }
 }
