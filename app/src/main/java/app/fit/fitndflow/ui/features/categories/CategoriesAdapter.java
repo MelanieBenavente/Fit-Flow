@@ -60,7 +60,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
                         categoryAdapterCallback.showDeleteDialog(category.getId());
                     }
                 });
-
             } else {
                 holder.cancelBtn.setVisibility(INVISIBLE);
             }

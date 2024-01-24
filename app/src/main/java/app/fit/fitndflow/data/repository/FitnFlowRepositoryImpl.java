@@ -219,4 +219,21 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         }
         return exerciseListCachedResponse;
     }
+    @Override
+    public List<ExerciseModel> deleteExercise(Integer exerciseId, String apikey) throws Exception {
+        try {
+            Response <List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().deleteExercise(exerciseId, apikey).execute();
+            if (response != null && !response.isSuccessful()) {
+                throw new ExcepcionApi(response.code());
+            }
+            if (response != null && response.body() != null) {
+                exerciseListCachedResponse = ExerciseModelMapperKt.toModel(response.body());
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+        return exerciseListCachedResponse;
+    }
 }

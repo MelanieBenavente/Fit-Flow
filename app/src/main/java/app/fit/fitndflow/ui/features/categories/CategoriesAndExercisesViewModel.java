@@ -16,6 +16,7 @@ import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import app.fit.fitndflow.domain.usecase.AddCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.AddExerciseUseCase;
 import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase;
+import app.fit.fitndflow.domain.usecase.DeleteExerciseUseCase;
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 import app.fit.fitndflow.domain.usecase.ModifyCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.ModifyExerciseUseCase;
@@ -223,6 +224,31 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
                 isLoading.setValue(false);
                 isDeleteSuccess.setValue(true);
                 mutableCategoryList.setValue(categoryModelList);
+                mutableSlideError.setValue(false);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mutableSlideError.setValue(true);
+                isLoading.setValue(false);
+            }
+        });
+    }
+    public void deleteExercise(int exerciseId, Context context){
+        new DeleteExerciseUseCase(exerciseId, context, fitnFlowRepository).execute(new FitObserver<List<ExerciseModel>>() {
+            @Override
+            protected void onStart(){
+                super.onStart();
+                isLoading.setValue(true);
+                mutableSlideError.setValue(false);
+            }
+            @Override
+            public void onSuccess(List<ExerciseModel> exerciseModels) {
+                CategoryModel category = actualCategory.getValue();
+                category.setExerciseList(exerciseModels);
+                actualCategory.setValue(category);
+                isLoading.setValue(false);
+                isDeleteSuccess.setValue(true);
                 mutableSlideError.setValue(false);
             }
 
