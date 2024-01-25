@@ -163,16 +163,6 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
     }
 
     private void instantiateSeriesAdapter(){
-        //todo delete
-        serieModelList.add(new SerieModel(1,14, 12.0));
-        serieModelList.add(new SerieModel(2, 5, 10.0));
-        serieModelList.add(new SerieModel(3, 20, 8.0));
-        serieModelList.add(new SerieModel(1,14, 12.0));
-        serieModelList.add(new SerieModel(2, 5, 10.0));
-        serieModelList.add(new SerieModel(3, 20, 8.0));
-         //todo end todo
-
-
         seriesAdapter = new SeriesAdapter(serieModelList, this);
         binding.addSerieLayout.setHasFixedSize(true);
         binding.addSerieLayout.setLayoutManager(new LinearLayoutManager(this.getContext()));

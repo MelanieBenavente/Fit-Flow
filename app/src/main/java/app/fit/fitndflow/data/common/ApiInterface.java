@@ -10,6 +10,8 @@ import app.fit.fitndflow.data.dto.exercises.AddExerciseDto;
 import app.fit.fitndflow.data.dto.exercises.ExerciseDto;
 import app.fit.fitndflow.data.dto.categories.ModifyCategoryDto;
 import app.fit.fitndflow.data.dto.exercises.ModifyExerciseDto;
+import app.fit.fitndflow.data.dto.trainings.AddSerieRequestDto;
+import app.fit.fitndflow.data.dto.trainings.AddSerieResponseDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -42,7 +44,7 @@ public interface ApiInterface {
     @POST("category/update")
     Call<List<CategoryDto>> modifyCategory(@Body ModifyCategoryDto modifyCategoryDto, @Header(KEY) String apiKey);
 
-    //LLAMADA EJERCICIOS
+    //LLAMADAS EJERCICIOS
     @POST("exercise/add")
     Call<List<ExerciseDto>> addNewExercise(@Body AddExerciseDto addExerciseDto, @Header(KEY) String apiKey);
 
@@ -51,4 +53,8 @@ public interface ApiInterface {
 
     @DELETE("exercise/{id}")
     Call<List<ExerciseDto>> deleteExercise(@Path("id") int exerciseId, @Header(KEY) String apikey);
+
+    //LLAMADAS TRAINING SERIES
+    @POST("training/addSerie")
+    Call<AddSerieResponseDto> addNewSerie(@Body AddSerieRequestDto addSerieDto, @Header(KEY) String apiKey);
 }
