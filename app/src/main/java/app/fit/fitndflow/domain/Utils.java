@@ -10,9 +10,14 @@ import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 
 public class Utils {
 
+    private static final String ENGLISH_FORMAT = "yyyy/MM/dd";
     private static final String SPANISH_FORMAT = "dd/MM/yyyy";
     public static String getSpanishFormatDate(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(SPANISH_FORMAT);
+        return dateFormat.format(date);
+    }
+    public static String getEnglishFormatDate(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat(ENGLISH_FORMAT);
         return dateFormat.format(date);
     }
     public static StringInLanguagesDto convertToStringInLanguages(String language, String nameCategory){

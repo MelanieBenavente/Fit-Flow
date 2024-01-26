@@ -30,6 +30,12 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         this.serieModelList = serieModelList;
         this.trainingCallback = trainingCallback;
     }
+
+    public void setSerieModelList(List<SerieModel> serieModelList) {
+        this.serieModelList = serieModelList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public SeriesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -71,9 +77,11 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
+        if(serieModelList == null){
+            return 0;
+        }
         return serieModelList.size();
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView numReps;
         TextView numKg;
