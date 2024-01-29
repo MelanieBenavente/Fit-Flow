@@ -5,11 +5,13 @@ import java.util.List;
 import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
+import app.fit.fitndflow.data.dto.trainings.AddSerieRequestDto;
 import app.fit.fitndflow.domain.common.repository.CommonRepository;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.CategoryModelInLanguages;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.model.ExerciseModelInLanguages;
+import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.model.UserModel;
 
 public interface FitnFlowRepository extends CommonRepository {
@@ -25,5 +27,6 @@ public interface FitnFlowRepository extends CommonRepository {
     List<ExerciseModel> addNewExercise(StringInLanguagesDto exerciseName, int categoryId, String apiKey) throws Exception;
     List<ExerciseModel> modifyExercise(ExerciseModelInLanguages exercise, String apiKey) throws Exception;
     List<ExerciseModel> deleteExercise(Integer integer, String apiKey) throws Exception;
+    List<SerieModel> addNewSerie(AddSerieRequestDto addSerieRequestDto, String apiKey) throws Exception;
 }
 

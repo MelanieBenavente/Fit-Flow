@@ -22,14 +22,21 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
 
     private ViewHolder lastItemClicked;
 
-    public SeriesAdapter(TrainingCallback trainingCallback){
+    public SeriesAdapter(TrainingCallback trainingCallback) {
         //todo pasarle y setearle solo un callback
         this.trainingCallback = trainingCallback;
     }
-    public SeriesAdapter(List<SerieModel> serieModelList, TrainingCallback trainingCallback){ //todo pasarle un callback tambien y setearlo
+
+    public SeriesAdapter(List<SerieModel> serieModelList, TrainingCallback trainingCallback) { //todo pasarle un callback tambien y setearlo
         this.serieModelList = serieModelList;
         this.trainingCallback = trainingCallback;
     }
+
+    public void setSerieModelList(List<SerieModel> serieModelList) {
+        this.serieModelList = serieModelList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public SeriesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,14 +50,18 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         // (si por ejemplo le clico a numreps, en el fragment (dentro de repeticiones),
         // me deberia de salir el mismo numero. esto se hace mediante el callback
 
-        if(position < serieModelList.size()) {
+        if (position < serieModelList.size()) {
             SerieModel serieModel = serieModelList.get(position);
-            holder.numReps.setText(Integer.toString(serieModel.getReps()));
-            holder.numKg.setText(Double.toString(serieModel.getKg()));
+            if (serieModel.getReps() != null) {
+                holder.numReps.setText(Integer.toString(serieModel.getReps()));
+            }
+            if (serieModel.getKg() != null) {
+                holder.numKg.setText(Double.toString(serieModel.getKg()));
+            }
             holder.linearContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(lastItemClicked != null && lastItemClicked != holder){
+                    if (lastItemClicked != null && lastItemClicked != holder) {
                         lastItemClicked.isEditMode = false;
                         lastItemClicked.linearContainer.setBackgroundResource(R.drawable.shape_white_rounded_corners);
                     }
@@ -71,20 +82,23 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
+        if (serieModelList == null) {
+            return 0;
+        }
         return serieModelList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView numReps;
         TextView numKg;
         LinearLayout linearContainer;
         boolean isEditMode;
 
-        public ViewHolder(@NonNull View itemView){
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             linearContainer = itemView.findViewById(R.id.linearContainer);
-            numKg= itemView.findViewById(R.id.kgEdTxt);
-            numReps= itemView.findViewById(R.id.repsEdTxt);
+            numKg = itemView.findViewById(R.id.kgEdTxt);
+            numReps = itemView.findViewById(R.id.repsEdTxt);
         }
     }
 }

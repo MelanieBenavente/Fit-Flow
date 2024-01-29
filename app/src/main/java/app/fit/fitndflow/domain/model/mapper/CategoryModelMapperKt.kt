@@ -6,6 +6,8 @@ import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.model.ExerciseModel
 
 class CategoryModelMapperKt {
+
+    //transforma de DTO A MODEL
     companion object {
         @JvmStatic
         fun toModel(categoryDtoList : List<CategoryDto>) : List<CategoryModel> {

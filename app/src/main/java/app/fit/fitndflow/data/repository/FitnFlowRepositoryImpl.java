@@ -13,6 +13,8 @@ import app.fit.fitndflow.data.dto.categories.ModifyCategoryDto;
 import app.fit.fitndflow.data.dto.exercises.AddExerciseDto;
 import app.fit.fitndflow.data.dto.exercises.ExerciseDto;
 import app.fit.fitndflow.data.dto.exercises.ModifyExerciseDto;
+import app.fit.fitndflow.data.dto.trainings.AddSerieRequestDto;
+import app.fit.fitndflow.data.dto.trainings.AddSerieResponseDto;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.CategoryModelInLanguages;
 import app.fit.fitndflow.domain.model.ExerciseModel;
@@ -21,6 +23,7 @@ import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.model.mapper.CategoryModelMapperKt;
 import app.fit.fitndflow.domain.model.mapper.ExerciseModelMapperKt;
+import app.fit.fitndflow.domain.model.mapper.SerieModelMapperKt;
 import app.fit.fitndflow.domain.model.mapper.UserModelMapperKt;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import retrofit2.Response;
@@ -28,6 +31,7 @@ import retrofit2.Response;
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     private List<CategoryModel> categoryListCachedResponse;
     private List<ExerciseModel> exerciseListCachedResponse;
+    private List<SerieModel> serieListCachedResponse;
 
     @Override
     public UserModel registerUser(UserDto userDto) throws Exception {
@@ -235,5 +239,23 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             throw new Exception(e);
         }
         return exerciseListCachedResponse;
+    }
+
+    public List<SerieModel> addNewSerie(AddSerieRequestDto addSerieRequestDto, String apiKey) throws Exception {
+        try{
+            Response <AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().addNewSerie(addSerieRequestDto, apiKey).execute();
+            if (response != null && !response.isSuccessful()) {
+                throw new ExcepcionApi(response.code());
+            }
+            if (response != null && response.body() != null) {
+                serieListCachedResponse = SerieModelMapperKt.toModel(response.body());
+            } else {
+                return null;
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e);
+        }
+        return serieListCachedResponse;
     }
 }
