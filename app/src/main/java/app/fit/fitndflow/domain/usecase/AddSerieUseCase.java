@@ -18,7 +18,7 @@ public class AddSerieUseCase extends FitUseCase<AddSerieRequestDto, List<SerieMo
     private Context context;
 
     public AddSerieUseCase(Context context, String date, int reps, double kg, int idExercise, FitnFlowRepository fitnFlowRepository){
-        super(new AddSerieRequestDto(date, new SerieForAddSerieRequestDto(reps, kg, new ExerciseDto(idExercise, null))));
+        super(convertToAddNewSerieDto(date, reps, kg, idExercise));
         this.context = context;
         this.fitnFlowRepository = fitnFlowRepository;
     }
@@ -33,5 +33,10 @@ public class AddSerieUseCase extends FitUseCase<AddSerieRequestDto, List<SerieMo
                 emitter.onError(exception);
             }
         });
+    }
+    private static AddSerieRequestDto convertToAddNewSerieDto(String date, int reps, double kg, int idExercise){
+        AddSerieRequestDto addSerieRequestDto;
+        addSerieRequestDto = new AddSerieRequestDto(date, new SerieForAddSerieRequestDto(reps > 0? reps : null, kg > 0? kg: null, new ExerciseDto(idExercise, null)));
+        return  addSerieRequestDto;
     }
 }

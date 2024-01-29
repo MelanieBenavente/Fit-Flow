@@ -57,7 +57,6 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
     public MutableLiveData<List<CategoryModel>> getMutableCategoryList() {
         return mutableCategoryList;
     }
-
     public MutableLiveData<Boolean> getMutableSlideError() {
         return mutableSlideError;
     }

@@ -14,7 +14,7 @@ class SerieModelMapperKt {
         fun toModel(addSerieResponseDto : AddSerieResponseDto) : List<SerieModel> {
             val serieModelList : MutableList<SerieModel> = mutableListOf()
             for (serieActualDto : SerieDto in addSerieResponseDto.serieListDto) {
-                val serieActualModel = SerieModel(serieActualDto.serieId!!, serieActualDto.reps!!,serieActualDto.weight!!)
+                val serieActualModel = SerieModel(serieActualDto.serieId!!, serieActualDto.reps,serieActualDto.weight)
                 serieModelList!!.add(serieActualModel)
             }
             return serieModelList

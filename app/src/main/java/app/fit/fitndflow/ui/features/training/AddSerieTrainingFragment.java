@@ -1,6 +1,7 @@
 package app.fit.fitndflow.ui.features.training;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,7 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
         addSerieTrainingFragment.setArguments(bundle);
         return addSerieTrainingFragment;
     }
-    private void setViewModelObservers(){
+    private void setViewModelObservers(){ //todo!!!!! observer de errors, loading y slideerror...
         final Observer<HashMap<Integer, List<SerieModel>>> observer = new Observer<HashMap<Integer, List<SerieModel>>>() {
             @Override
             public void onChanged(HashMap<Integer, List<SerieModel>> actualHashMap) {
@@ -80,6 +81,56 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
             }
         };
         homeViewModel.getSerieMutableList().observe(getActivity(), observer);
+
+        final Observer<Boolean> observerIsSaveSuccess = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isSaveSuccess) {
+                if (isSaveSuccess) {
+                    showSlideSaved();
+                    homeViewModel.getIsSaveSuccess().setValue(false);
+                }
+            }
+        };
+        homeViewModel.getIsSaveSuccess().observe(getActivity(), observerIsSaveSuccess);
+
+        final Observer<Boolean> observerError = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isError) {
+                if(isError){
+                    showSlideError();
+                    homeViewModel.getMutableSlideError().setValue(false);
+                }
+            }
+        };
+        homeViewModel.getMutableSlideError().observe(getActivity(), observerError);
+
+        final Observer<Boolean> errorObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isError) {
+                if (isError) {
+                    printError();
+                    homeViewModel.getMutableFullScreenError().setValue(false);
+                }
+            }
+        };
+        homeViewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
+
+        final Observer<Boolean> observerLoading = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoading) {
+                try {
+                    if (isLoading) {
+                        showLoading();
+
+                    } else {
+                        hideLoading();
+                    }
+                } catch (Exception exception) {
+                    Log.e("Error", "show loading");
+                }
+            }
+        };
+        homeViewModel.getIsLoading().observe(getActivity(), observerLoading);
     }
 
     private void initListeners(){
@@ -89,8 +140,9 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
                 if(serieModel != null){
                    //todo llamar al server para editar serie
                 } else {
-                    int reps = Integer.parseInt(binding.etCounterReps.getText().toString());
-                    double kg = Double.parseDouble(binding.etCounterKg.getText().toString());
+                    //utilizamos el operador ternario como un if: texto es igual(equals) a vacío ("")? (entonces pinta) 0 : (sino) pinta texto
+                    int reps = binding.etCounterReps.getText().toString().equals("")? 0 : Integer.parseInt(binding.etCounterReps.getText().toString());
+                    double kg = binding.etCounterKg.getText().toString().equals("")? 0 : Double.parseDouble(binding.etCounterKg.getText().toString());
                     homeViewModel.addNewSerie(requireContext(), reps, kg, exercise.getId());
                 }
             }
@@ -190,6 +242,13 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
             binding.deleteAndCleanBtn.setText(R.string.clean);
         }
 
+    }
+    private void printError() {
+        try {
+            showBlockError();
+        } catch (Exception exception) {
+            Log.e("Error", "Error to print errorContainer");
+        }
     }
     private void showDeleteDialog(int id) {
         ConfirmationDialogFragment.newInstance(AddSerieTrainingFragment.this, ConfirmationDialogFragment.DELETE_SERIE, id).show(getChildFragmentManager(), "ConfirmationDialog");

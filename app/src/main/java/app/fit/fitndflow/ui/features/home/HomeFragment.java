@@ -165,10 +165,10 @@ public class HomeFragment extends CommonFragment<HomeViewModel> {
             public void onChanged(Boolean isError) {
                 if (isError) {
                     showBlockError();
-                    viewModel.getMutableError().setValue(false);
+                    viewModel.getMutableFullScreenError().setValue(false);
                 }
             }
         };
-        viewModel.getMutableError().observe(getActivity(), errorObserver);
+        viewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
     }
 }
