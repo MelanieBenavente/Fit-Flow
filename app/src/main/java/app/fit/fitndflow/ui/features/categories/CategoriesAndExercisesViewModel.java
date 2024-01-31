@@ -22,7 +22,7 @@ import app.fit.fitndflow.domain.usecase.ModifyCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.ModifyExerciseUseCase;
 
 public class CategoriesAndExercisesViewModel extends ViewModel {
-    private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
+    private FitnFlowRepository fitnFlowRepository = FitnFlowRepositoryImpl.getInstance();
     private MutableLiveData<CategoryModel> actualCategory = new MutableLiveData<>();
     private MutableLiveData<List<CategoryModel>> mutableCategoryList = new MutableLiveData<>();
     private MutableLiveData<Boolean> mutableSlideError = new MutableLiveData<>(false);

@@ -1,6 +1,7 @@
 package app.fit.fitndflow.data.common;
 
 
+
 import java.util.List;
 
 import app.fit.fitndflow.data.dto.UserDto;
@@ -19,10 +20,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
     String URL_BASE = "http://192.168.1.16:5000/";
     String KEY = "auth-token";
+    String KEY_PARAM_GET_DATE_TRAINING = "date";
 
     //LLAMADA USUARIO
     @POST("register/")
@@ -57,4 +60,6 @@ public interface ApiInterface {
     //LLAMADAS TRAINING SERIES
     @POST("training/addSerie")
     Call<AddSerieResponseDto> addNewSerie(@Body AddSerieRequestDto addSerieDto, @Header(KEY) String apiKey);
+    @GET("summary/trainings")
+    Call<List<CategoryDto>> getCategoriesAndTrainings(@Query(KEY_PARAM_GET_DATE_TRAINING) String date, @Header(KEY) String apiKey);
 }
