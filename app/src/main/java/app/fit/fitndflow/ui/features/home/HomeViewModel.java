@@ -23,7 +23,7 @@ import app.fit.fitndflow.domain.usecase.RegisterUserUseCase;
 
 public class HomeViewModel extends ViewModel {
 
-    private FitnFlowRepository fitnFlowRepository = new FitnFlowRepositoryImpl();
+    private FitnFlowRepository fitnFlowRepository = FitnFlowRepositoryImpl.getInstance();
     private MutableLiveData<Date> actualDate = new MutableLiveData<>(new Date());
     private MutableLiveData<Boolean> mutableSlideError = new MutableLiveData<>(false);
 
@@ -107,7 +107,8 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void requestTrainingFromModel(Context context){
-        GetTrainingUseCase getTrainingUseCase = new GetTrainingUseCase(context, fitnFlowRepository);
+        String date = Utils.getEnglishFormatDate(actualDate.getValue());
+        GetTrainingUseCase getTrainingUseCase = new GetTrainingUseCase(context, date, fitnFlowRepository);
 
         getTrainingUseCase.execute(new FitObserver<List<CategoryModel>>() {
             @Override
@@ -126,8 +127,8 @@ public class HomeViewModel extends ViewModel {
             @Override
             public void onError(Throwable e) {
                 isLoading.setValue(false);
-                mutableFullScreenError.setValue(false);
-                mutableSlideError.setValue(true);
+                mutableFullScreenError.setValue(true);
+
             }
         });
     }

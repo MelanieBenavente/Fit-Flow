@@ -231,8 +231,8 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
     public void clickListenerInterfaceAdapter(SerieModel input) {
         serieModel = input;
         if(input != null){
-            binding.etCounterReps.setText(Integer.toString(input.getReps()));
-            binding.etCounterKg.setText(Double.toString(input.getKg()));
+            binding.etCounterReps.setText(input.getReps() != null? Integer.toString(input.getReps()) : "0");
+            binding.etCounterKg.setText(input.getKg() != null? Double.toString(input.getKg()) : "0");
             binding.saveAndUpdateBtn.setText(R.string.update);
             binding.deleteAndCleanBtn.setText(R.string.delete_btn);
         } else {

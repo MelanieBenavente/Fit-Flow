@@ -69,7 +69,6 @@ public class HomeFragment extends CommonFragment<HomeViewModel> {
         }
         setViewModelObservers();
         setClickListeners();
-
     }
 
     private void  printExercises(List<CategoryModel> categoryModelList){
@@ -82,7 +81,9 @@ public class HomeFragment extends CommonFragment<HomeViewModel> {
     }
 
     private void printEmptyView(){
-        binding.emptyTxt.setVisibility(VISIBLE);}
+        binding.emptyTxt.setVisibility(VISIBLE);
+        binding.parentContainer.removeAllViews();
+    }
 
     private void setClickListeners() {
         binding.btnLeft.setOnClickListener(view ->{

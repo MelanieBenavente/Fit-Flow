@@ -21,9 +21,9 @@ public class SerieCustomView extends LinearLayout {
         super(context);
         inflate(getContext(), R.layout.item_training_series_layout, this);
         bindView();
-        String repsToString = Integer.toString(serie.getReps());
+        String repsToString = serie.getReps() != null? Integer.toString(serie.getReps()) : "0";
         textReps.setText("x "+repsToString);
-        String kgToString = Double.toString(serie.getKg());
+        String kgToString = serie.getKg() != null? Double.toString(serie.getKg()) : "0";
         textKg.setText(kgToString+" kg");
         if(isFirst){
             iconNews.setVisibility(VISIBLE);

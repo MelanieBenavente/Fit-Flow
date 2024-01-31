@@ -17,10 +17,9 @@ import app.fit.fitndflow.domain.model.UserModel;
 public interface FitnFlowRepository extends CommonRepository {
     UserModel registerUser(UserDto userDto) throws Exception;
     List<CategoryModel> getCategoryList(String apiKey) throws Exception;
-    Boolean saveCategoryAndExercises(CategoryDto categoryDto, String apikey) throws Exception;
     List<CategoryModel> deleteCategory(Integer integer, String apikey) throws Exception;
 
-    List<CategoryModel> getTrainingList(String apiKey) throws Exception;
+    List<CategoryModel> getTrainingList(String date, String apiKey) throws Exception;//todo pasarle por parametro String date
 
     List<CategoryModel> addNewCategory(StringInLanguagesDto categoryName, String apiKey) throws Exception;
     List<CategoryModel> modifyCategory(CategoryModelInLanguages category, String apiKey) throws Exception;
