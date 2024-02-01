@@ -4,9 +4,6 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static app.fit.fitndflow.ui.features.common.notification.MyNotificationManager.scheduleNotification;
 
-import android.content.Context;
-import android.view.Window;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,7 +12,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -30,7 +26,6 @@ import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
-import app.fit.fitndflow.ui.features.common.CommonToolbarFragment;
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager;
 
 public class HomeFragment extends CommonFragment<HomeViewModel> {
@@ -159,7 +154,7 @@ public class HomeFragment extends CommonFragment<HomeViewModel> {
                 }
             }
         };
-        viewModel.getActualDate().observe(getActivity(), actualDateObserver);
+        viewModel.getMutableActualDate().observe(getActivity(), actualDateObserver);
         //observing error
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
             @Override

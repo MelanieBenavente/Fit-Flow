@@ -13,6 +13,7 @@ import app.fit.fitndflow.data.dto.categories.ModifyCategoryDto;
 import app.fit.fitndflow.data.dto.exercises.ModifyExerciseDto;
 import app.fit.fitndflow.data.dto.trainings.AddSerieRequestDto;
 import app.fit.fitndflow.data.dto.trainings.AddSerieResponseDto;
+import app.fit.fitndflow.data.dto.trainings.SerieDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -62,4 +63,7 @@ public interface ApiInterface {
     Call<AddSerieResponseDto> addNewSerie(@Body AddSerieRequestDto addSerieDto, @Header(KEY) String apiKey);
     @GET("summary/trainings")
     Call<List<CategoryDto>> getCategoriesAndTrainings(@Query(KEY_PARAM_GET_DATE_TRAINING) String date, @Header(KEY) String apiKey);
+    @POST("training/updateSerie")
+    Call<AddSerieResponseDto> modifySerie(@Body SerieDto serieDto, @Header(KEY) String apiKey);
+
 }

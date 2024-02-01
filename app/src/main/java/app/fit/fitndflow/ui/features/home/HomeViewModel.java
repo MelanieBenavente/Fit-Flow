@@ -19,12 +19,13 @@ import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import app.fit.fitndflow.domain.usecase.AddSerieUseCase;
 import app.fit.fitndflow.domain.usecase.GetTrainingUseCase;
+import app.fit.fitndflow.domain.usecase.ModifyTrainingUseCase;
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCase;
 
 public class HomeViewModel extends ViewModel {
 
     private FitnFlowRepository fitnFlowRepository = FitnFlowRepositoryImpl.getInstance();
-    private MutableLiveData<Date> actualDate = new MutableLiveData<>(new Date());
+    private MutableLiveData<Date> mutableActualDate = new MutableLiveData<>(new Date());
     private MutableLiveData<Boolean> mutableSlideError = new MutableLiveData<>(false);
 
     private MutableLiveData<Boolean> mutableFullScreenError = new MutableLiveData<>(false);
@@ -33,13 +34,13 @@ public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<Boolean> isSaveSuccess = new MutableLiveData<>(false);
     private MutableLiveData<List<CategoryModel>> dailyTrainingMutableList = new MutableLiveData<>();
-    private MutableLiveData<HashMap<Integer, List<SerieModel>>> serieMutableList = new MutableLiveData<>(new HashMap<>());
+    private MutableLiveData<HashMap<Integer, List<SerieModel>>> hashmapMutableSerieListByExerciseId = new MutableLiveData<>(new HashMap<>());
 
     /*
     getters
      */
-    public MutableLiveData<Date> getActualDate() {
-        return actualDate;
+    public MutableLiveData<Date> getMutableActualDate() {
+        return mutableActualDate;
     }
 
     public MutableLiveData<Boolean> getIsLoading() {
@@ -58,29 +59,29 @@ public class HomeViewModel extends ViewModel {
     }
 
 
-    public MutableLiveData<HashMap<Integer, List<SerieModel>>> getSerieMutableList() {
-        return serieMutableList;
+    public MutableLiveData<HashMap<Integer, List<SerieModel>>> getHashmapMutableSerieListByExerciseId() {
+        return hashmapMutableSerieListByExerciseId;
     }
     //end getters
 
     public void dayBefore(){
-        Date date = actualDate.getValue();
+        Date date = mutableActualDate.getValue();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_YEAR, -1);
 
         // Obtener la nueva fecha
         date = calendar.getTime();
-        actualDate.setValue(date);
+        mutableActualDate.setValue(date);
     }
     public void dayAfter(){
-        Date date = actualDate.getValue();
+        Date date = mutableActualDate.getValue();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_YEAR, +1);
 
         date = calendar.getTime();
-        actualDate.setValue(date);
+        mutableActualDate.setValue(date);
     }
 
     public void requestRegisterEmptyUser(Context context) {
@@ -107,7 +108,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void requestTrainingFromModel(Context context){
-        String date = Utils.getEnglishFormatDate(actualDate.getValue());
+        String date = Utils.getEnglishFormatDate(mutableActualDate.getValue());
         GetTrainingUseCase getTrainingUseCase = new GetTrainingUseCase(context, date, fitnFlowRepository);
 
         getTrainingUseCase.execute(new FitObserver<List<CategoryModel>>() {
@@ -134,7 +135,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void addNewSerie(Context context, int reps, double kg, int idExercise){
-        new AddSerieUseCase(context, Utils.getEnglishFormatDate(actualDate.getValue()), reps, kg, idExercise, fitnFlowRepository).execute(new FitObserver<List<SerieModel>>() {
+        new AddSerieUseCase(context, Utils.getEnglishFormatDate(mutableActualDate.getValue()), reps, kg, idExercise, fitnFlowRepository).execute(new FitObserver<List<SerieModel>>() {
             @Override
             protected void onStart() {
                 super.onStart();
@@ -144,13 +145,40 @@ public class HomeViewModel extends ViewModel {
             }
             @Override
             public void onSuccess(List<SerieModel> serieModelList) {
-                HashMap<Integer, List<SerieModel>> actualHashMap= serieMutableList.getValue();
+                HashMap<Integer, List<SerieModel>> actualHashMap= hashmapMutableSerieListByExerciseId.getValue();
                 actualHashMap.put(idExercise, serieModelList);
-                serieMutableList.setValue(actualHashMap);
+                hashmapMutableSerieListByExerciseId.setValue(actualHashMap);
                 isSaveSuccess.setValue(true);
                 isLoading.setValue(false);
                 mutableFullScreenError.setValue(false);
             }
+            @Override
+            public void onError(Throwable e) {
+                isLoading.setValue(false);
+                isSaveSuccess.setValue(false);
+                mutableSlideError.setValue(true);
+            }
+        });
+    }
+    public void modifySerie(Context context,int serieId, int reps, double weight, int exerciseId){
+        new ModifyTrainingUseCase(context, serieId, reps, weight, fitnFlowRepository).execute(new FitObserver<List<SerieModel>>() {
+            @Override
+            protected void onStart() {
+                super.onStart();
+                isLoading.setValue(true);
+                isSaveSuccess.setValue(false);
+                mutableSlideError.setValue(false);
+            }
+            @Override
+            public void onSuccess(List<SerieModel> serieModels) {
+                HashMap<Integer, List<SerieModel>> actualHashMap= hashmapMutableSerieListByExerciseId.getValue();
+                actualHashMap.put(exerciseId, serieModels);
+                hashmapMutableSerieListByExerciseId.setValue(actualHashMap);
+                isSaveSuccess.setValue(true);
+                isLoading.setValue(false);
+                mutableFullScreenError.setValue(false);
+            }
+
             @Override
             public void onError(Throwable e) {
                 isLoading.setValue(false);

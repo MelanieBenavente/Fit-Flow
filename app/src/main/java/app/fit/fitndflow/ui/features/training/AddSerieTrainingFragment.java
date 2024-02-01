@@ -73,14 +73,14 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
         addSerieTrainingFragment.setArguments(bundle);
         return addSerieTrainingFragment;
     }
-    private void setViewModelObservers(){ //todo!!!!! observer de errors, loading y slideerror...
+    private void setViewModelObservers(){
         final Observer<HashMap<Integer, List<SerieModel>>> observer = new Observer<HashMap<Integer, List<SerieModel>>>() {
             @Override
             public void onChanged(HashMap<Integer, List<SerieModel>> actualHashMap) {
                 seriesAdapter.setSerieModelList(actualHashMap.get(exercise.getId()));
             }
         };
-        homeViewModel.getSerieMutableList().observe(getActivity(), observer);
+        homeViewModel.getHashmapMutableSerieListByExerciseId().observe(getActivity(), observer);
 
         final Observer<Boolean> observerIsSaveSuccess = new Observer<Boolean>() {
             @Override
@@ -137,12 +137,13 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
         binding.saveAndUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int reps = binding.etCounterReps.getText().toString().equals("")? 0 : Integer.parseInt(binding.etCounterReps.getText().toString());
+                double kg = binding.etCounterKg.getText().toString().equals("")? 0 : Double.parseDouble(binding.etCounterKg.getText().toString());
                 if(serieModel != null){
-                   //todo llamar al server para editar serie
+                   homeViewModel.modifySerie(requireContext(),serieModel.getId(), reps, kg, exercise.getId());
                 } else {
                     //utilizamos el operador ternario como un if: texto es igual(equals) a vacío ("")? (entonces pinta) 0 : (sino) pinta texto
-                    int reps = binding.etCounterReps.getText().toString().equals("")? 0 : Integer.parseInt(binding.etCounterReps.getText().toString());
-                    double kg = binding.etCounterKg.getText().toString().equals("")? 0 : Double.parseDouble(binding.etCounterKg.getText().toString());
+
                     homeViewModel.addNewSerie(requireContext(), reps, kg, exercise.getId());
                 }
             }
