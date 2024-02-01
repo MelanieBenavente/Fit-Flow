@@ -16,6 +16,7 @@ import app.fit.fitndflow.data.dto.exercises.ExerciseDto;
 import app.fit.fitndflow.data.dto.exercises.ModifyExerciseDto;
 import app.fit.fitndflow.data.dto.trainings.AddSerieRequestDto;
 import app.fit.fitndflow.data.dto.trainings.AddSerieResponseDto;
+import app.fit.fitndflow.data.dto.trainings.SerieDto;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.CategoryModelInLanguages;
 import app.fit.fitndflow.domain.model.ExerciseModel;
@@ -246,5 +247,24 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             }
         }
         return trainingResponseByCategories.get(date);
+    }
+    public List<SerieModel> modifySerie(SerieDto serieDto, String apiKey) throws Exception{
+        List<SerieModel> serieListResponse;
+        try{
+            Response<AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().modifySerie(serieDto, apiKey).execute();
+            if (response != null && !response.isSuccessful()) {
+                throw new ExcepcionApi(response.code());
+            }
+            if (response != null && response.body() != null) {
+                serieListResponse = SerieModelMapperKt.toModel(response.body());
+                removeAllDataFromHashMapCache();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e);
+        }
+        return serieListResponse;
     }
 }
