@@ -18,6 +18,7 @@ import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import app.fit.fitndflow.domain.usecase.AddSerieUseCase;
+import app.fit.fitndflow.domain.usecase.GetSerieAddedUseCase;
 import app.fit.fitndflow.domain.usecase.GetTrainingUseCase;
 import app.fit.fitndflow.domain.usecase.ModifyTrainingUseCase;
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCase;
@@ -185,6 +186,22 @@ public class HomeViewModel extends ViewModel {
                 isSaveSuccess.setValue(false);
                 mutableSlideError.setValue(true);
             }
+        });
+    }
+    public void getSerieListOfExerciseAdded(int exerciseId){
+        new GetSerieAddedUseCase(exerciseId, Utils.getEnglishFormatDate(mutableActualDate.getValue()), fitnFlowRepository).execute(new FitObserver<List<SerieModel>>() {
+            @Override
+            public void onSuccess(List<SerieModel> serieModels) {
+                HashMap<Integer, List<SerieModel>> actualHashMap= hashmapMutableSerieListByExerciseId.getValue();
+                actualHashMap.put(exerciseId, serieModels);
+                hashmapMutableSerieListByExerciseId.setValue(actualHashMap);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                //nothing to do
+            }
+
         });
     }
 }
