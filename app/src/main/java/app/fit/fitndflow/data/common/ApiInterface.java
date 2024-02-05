@@ -24,7 +24,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
-    String URL_BASE = "http://192.168.1.16:5000/";
+    String URL_BASE = "http://192.168.1.23:5000/";
     String KEY = "auth-token";
     String KEY_PARAM_GET_DATE_TRAINING = "date";
 
@@ -35,26 +35,18 @@ public interface ApiInterface {
     //LLAMADAS CATEGORIA
     @GET("summary/categories/")
     Call<List<CategoryDto>> getCategoryDtoList(@Header(KEY) String apiKey);
-
-    @POST("category/")
-    Call <CategoryDto> saveCategory(@Body CategoryDto categoryDto, @Header(KEY) String apiKey);
-
     @DELETE("category/{id}")
     Call <List<CategoryDto>> deleteCategory(@Path("id") int id, @Header(KEY) String apiKey);
-
     @POST("category/add")
     Call<List<CategoryDto>> addNewCategory(@Body AddCategoryDto addCategoryDto, @Header(KEY) String apiKey);
-
     @POST("category/update")
     Call<List<CategoryDto>> modifyCategory(@Body ModifyCategoryDto modifyCategoryDto, @Header(KEY) String apiKey);
 
     //LLAMADAS EJERCICIOS
     @POST("exercise/add")
     Call<List<ExerciseDto>> addNewExercise(@Body AddExerciseDto addExerciseDto, @Header(KEY) String apiKey);
-
     @POST("exercise/update")
     Call<List<ExerciseDto>> modifyExercise(@Body ModifyExerciseDto modifyExerciseDto, @Header(KEY) String apiKey);
-
     @DELETE("exercise/{id}")
     Call<List<ExerciseDto>> deleteExercise(@Path("id") int exerciseId, @Header(KEY) String apikey);
 

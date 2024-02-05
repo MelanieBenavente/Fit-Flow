@@ -57,6 +57,7 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
         homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
         instantiateSeriesAdapter();
         setViewModelObservers();
+        homeViewModel.getSerieListOfExerciseAdded(exercise.getId());
         initListeners();
         return view;
     }

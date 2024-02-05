@@ -267,4 +267,24 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         }
         return serieListResponse;
     }
+    public List<SerieModel> getSerieListOfExerciseAdded(String date, int exerciseId) throws Exception{
+        try{
+            List<CategoryModel> categoryList = trainingResponseByCategories.get(date);
+            for(int i = 0; i < categoryList.size(); i++){
+                CategoryModel category = categoryList.get(i);
+                List<ExerciseModel> exerciseList = category.getExerciseList();
+                for(int j = 0; j < exerciseList.size(); j++){
+                    ExerciseModel exercise = exerciseList.get(j);
+                    if(exercise.getId() == exerciseId){
+                        return exercise.getSerieList();
+                    }
+                }
+            }
+            return new ArrayList<>();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e);
+        }
+
+    }
 }
