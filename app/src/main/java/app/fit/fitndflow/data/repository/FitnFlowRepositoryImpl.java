@@ -249,14 +249,14 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return trainingResponseByCategories.get(date);
     }
     public List<SerieModel> modifySerie(SerieDto serieDto, String apiKey) throws Exception{
-        List<SerieModel> serieListResponse;
+        List<SerieModel> serieModelListResponse;
         try{
             Response<AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().modifySerie(serieDto, apiKey).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
             if (response != null && response.body() != null) {
-                serieListResponse = SerieModelMapperKt.toModel(response.body());
+                serieModelListResponse = SerieModelMapperKt.toModel(response.body());
                 removeAllDataFromHashMapCache();
             } else {
                 return null;
@@ -265,7 +265,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
-        return serieListResponse;
+        return serieModelListResponse;
     }
     public List<SerieModel> getSerieListOfExerciseAdded(String date, int exerciseId) throws Exception{
         try{
@@ -285,6 +285,25 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
-
     }
-}
+    public List<SerieModel> deleteSerie(int serieId, String apiKey) throws Exception{
+        List<SerieModel> serieModelListResponse;
+        try{
+           Response<AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().deleteSerie(serieId, apiKey).execute();
+            if (response != null && !response.isSuccessful()) {
+                throw new ExcepcionApi(response.code());
+            }
+            if (response != null && response.body() != null) {
+                serieModelListResponse = SerieModelMapperKt.toModel(response.body());
+                removeAllDataFromHashMapCache();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e);
+        }
+        return serieModelListResponse;
+        }
+    }
+

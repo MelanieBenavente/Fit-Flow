@@ -27,6 +27,7 @@ public interface ApiInterface {
     String URL_BASE = "http://192.168.1.23:5000/";
     String KEY = "auth-token";
     String KEY_PARAM_GET_DATE_TRAINING = "date";
+    String KEY_PARAM_GET_ID = "id";
 
     //LLAMADA USUARIO
     @POST("register/")
@@ -57,5 +58,6 @@ public interface ApiInterface {
     Call<List<CategoryDto>> getCategoriesAndTrainings(@Query(KEY_PARAM_GET_DATE_TRAINING) String date, @Header(KEY) String apiKey);
     @POST("training/updateSerie")
     Call<AddSerieResponseDto> modifySerie(@Body SerieDto serieDto, @Header(KEY) String apiKey);
-
+    @DELETE("training/deleteSerie")
+    Call<AddSerieResponseDto> deleteSerie(@Query(KEY_PARAM_GET_ID) int serieId, @Header(KEY) String apiKey);
 }

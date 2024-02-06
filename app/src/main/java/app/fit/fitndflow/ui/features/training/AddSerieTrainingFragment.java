@@ -257,8 +257,7 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
     }
 
     @Override
-    public void onClickAcceptDelete(int id) {
-        Toast.makeText(requireContext(), "delete serie", Toast.LENGTH_SHORT).show();
-        //todo borrar serie del listado de series
+    public void onClickAcceptDelete(int serieId) {
+        homeViewModel.deleteSerie(serieId, exercise.getId(), requireContext());
     }
 }
