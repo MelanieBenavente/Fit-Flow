@@ -18,6 +18,7 @@ import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import app.fit.fitndflow.domain.usecase.AddSerieUseCase;
+import app.fit.fitndflow.domain.usecase.DeleteSerieUseCase;
 import app.fit.fitndflow.domain.usecase.GetSerieAddedUseCase;
 import app.fit.fitndflow.domain.usecase.GetTrainingUseCase;
 import app.fit.fitndflow.domain.usecase.ModifyTrainingUseCase;
@@ -53,6 +54,7 @@ public class HomeViewModel extends ViewModel {
     public MutableLiveData<Boolean> getMutableSlideError() {
         return mutableSlideError;
     }
+
     public MutableLiveData<Boolean> getIsSaveSuccess() {return isSaveSuccess; }
 
     public MutableLiveData<Boolean> getMutableFullScreenError() {
@@ -202,6 +204,30 @@ public class HomeViewModel extends ViewModel {
                 //nothing to do
             }
 
+        });
+    }
+    public void deleteSerie(int serieId, int exerciseId, Context context){
+        new DeleteSerieUseCase(serieId, context, fitnFlowRepository).execute(new FitObserver<List<SerieModel>>() {
+            @Override
+            protected void onStart(){
+                super.onStart();
+                isLoading.setValue(true);
+                mutableSlideError.setValue(false);
+            }
+            @Override
+            public void onSuccess(List<SerieModel> serieModels) {
+                HashMap<Integer, List<SerieModel>> actualHashMap= hashmapMutableSerieListByExerciseId.getValue();
+                actualHashMap.put(exerciseId, serieModels);
+                hashmapMutableSerieListByExerciseId.setValue(actualHashMap);
+                isLoading.setValue(false);
+                mutableSlideError.setValue(false);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mutableSlideError.setValue(true);
+                isLoading.setValue(false);
+            }
         });
     }
 }
