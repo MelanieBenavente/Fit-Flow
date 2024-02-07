@@ -14,8 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewbinding.ViewBinding;
 
 import com.fit.fitndflow.R;
+import com.fit.fitndflow.databinding.AddSerieTrainingFragmentBinding;
+import com.fit.fitndflow.databinding.DialogCreationInputBinding;
 import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
 import java.util.Date;
@@ -24,13 +27,14 @@ import java.util.List;
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.CategoryModel;
+import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager;
+import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
 
-public class HomeFragment extends CommonFragment<HomeViewModel> {
+public class HomeFragment extends CommonFragment<HomeViewModel> implements ExerciseClickCallback {
     private MainListFragmentBinding binding;
-
 
     @Override
     protected Class getViewModelClass() {
@@ -70,7 +74,7 @@ public class HomeFragment extends CommonFragment<HomeViewModel> {
         binding.emptyTxt.setVisibility(GONE);
         binding.parentContainer.removeAllViews();
         for (CategoryModel category : categoryModelList) {
-            CategoryCustomView  categoryView = new CategoryCustomView(getContext(), category);
+            CategoryCustomView  categoryView = new CategoryCustomView(getContext(), category, this);
             binding.parentContainer.addView(categoryView);
         }
     }
@@ -166,5 +170,10 @@ public class HomeFragment extends CommonFragment<HomeViewModel> {
             }
         };
         viewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
+    }
+
+    @Override
+    public void showExerciseTrainingDetail(ExerciseModel exercise) {
+        addFragment(AddSerieTrainingFragment.newInstance(exercise));
     }
 }
