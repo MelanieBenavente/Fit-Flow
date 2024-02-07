@@ -23,13 +23,13 @@ public class CategoryCustomView extends LinearLayout {
 
     private LinearLayout container;
 
-    public CategoryCustomView(Context context, CategoryModel category) {
+    public CategoryCustomView(Context context, CategoryModel category, ExerciseClickCallback exerciseClickCallback) {
         super(context);
         inflate(getContext(), R.layout.item_training_category_home, this);
         bindView();
         textView.setText(category.getName());
         for (ExerciseModel exercise : category.getExerciseList()){
-            ExerciseCustomView exerciseView = new ExerciseCustomView(getContext(), exercise);
+            ExerciseCustomView exerciseView = new ExerciseCustomView(getContext(), exercise, exerciseClickCallback);
             container.addView(exerciseView);
         }
     }

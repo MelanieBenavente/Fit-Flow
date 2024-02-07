@@ -38,7 +38,6 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
     private HomeViewModel homeViewModel;
     private ExerciseModel exercise;
     private SeriesAdapter seriesAdapter;
-
     private SerieModel serieModel;
 
 
