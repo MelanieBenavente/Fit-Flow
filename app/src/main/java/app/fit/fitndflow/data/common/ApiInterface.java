@@ -24,7 +24,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
-    String URL_BASE = "http://192.168.1.23:5000/";
+    String URL_BASE = "http://fitnflowapi-env.eba-8aaimaij.eu-west-3.elasticbeanstalk.com/";
     String KEY = "auth-token";
     String KEY_PARAM_GET_DATE_TRAINING = "date";
     String KEY_PARAM_GET_ID = "id";
