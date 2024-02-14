@@ -19,3 +19,19 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class app.fit.fitndflow.data.dto.** { *; }
+
+# OkHttp
+-keepattributes Signature
+-keepattributes Annotation
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+# Gson
+-keep class com.google.gson.stream.** { *; }
+
+# Mantener todas las clases del paquete específico (incluyendo Retrofit Interfaces)
+-keep class app.fit.fitndflow.data.common.** { *; }
+
+# Mantener las interfaces Retrofit
+-keep,allowobfuscation interface retrofit2.*
