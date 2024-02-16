@@ -41,6 +41,9 @@
                 android:paddingEnd="20dp"
                 android:paddingBottom="7dp"
                 android:text="pierna"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:fontFamily="@font/bebas_neue"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

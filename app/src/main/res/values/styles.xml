@@ -29,6 +29,11 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/white</item>
     </style>
+    <style name="ExercisesHeader">
+        <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
     <style name="text_l_black" parent="ParentText">
         <item name="android:textSize">15sp</item>
@@ -85,9 +90,12 @@
         <item name="android:textSize">23sp</item>
     </style>
 
-    <style name="text_xl_home_title" parent="text_xl">
-        <item name="android:textColor">@color/title_gray_home</item>
+    <style name="text_xl_home_title">
+        <item name="android:textSize">37sp</item>
+        <item name="android:textColor">@color/blue</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/bebas_neue</item>
+
     </style>
 
     <style name="text_l" parent="ParentTitle">
@@ -96,6 +104,12 @@
 
     <style name="text_l_home_btn" parent="ParentTitle">
         <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="titles">
+        <item name="android:fontFamily">@font/bebas_neue</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:backgroundTint">@color/pink_letters</item>
     </style>
 
 </resources>
