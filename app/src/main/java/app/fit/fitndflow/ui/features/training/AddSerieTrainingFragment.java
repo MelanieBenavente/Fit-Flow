@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +37,7 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
     private HomeViewModel homeViewModel;
     private ExerciseModel exercise;
     private SeriesAdapter seriesAdapter;
-    private SerieModel serieModel;
+    private SerieModel currentSelectedSerieModel;
 
 
     @Nullable
@@ -54,7 +53,6 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
         }
         binding.exerciseNameTitle.setText(exercise.getName());
         homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
-        instantiateSeriesAdapter();
         setViewModelObservers();
         homeViewModel.getSerieListOfExerciseAdded(exercise.getId());
         initListeners();
@@ -77,7 +75,8 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
         final Observer<HashMap<Integer, List<SerieModel>>> observer = new Observer<HashMap<Integer, List<SerieModel>>>() {
             @Override
             public void onChanged(HashMap<Integer, List<SerieModel>> actualHashMap) {
-                seriesAdapter.setSerieModelList(actualHashMap.get(exercise.getId()));
+                instantiateSeriesAdapter(actualHashMap.get(exercise.getId()));
+                printEditMode(false);
             }
         };
         homeViewModel.getHashmapMutableSerieListByExerciseId().observe(getActivity(), observer);
@@ -139,8 +138,8 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
             public void onClick(View view) {
                 int reps = binding.etCounterReps.getText().toString().equals("")? 0 : Integer.parseInt(binding.etCounterReps.getText().toString());
                 double kg = binding.etCounterKg.getText().toString().equals("")? 0 : Double.parseDouble(binding.etCounterKg.getText().toString());
-                if(serieModel != null){
-                   homeViewModel.modifySerie(requireContext(),serieModel.getId(), reps, kg, exercise.getId());
+                if(currentSelectedSerieModel != null){
+                   homeViewModel.modifySerie(requireContext(), currentSelectedSerieModel.getId(), reps, kg, exercise.getId());
                 } else {
                     //utilizamos el operador ternario como un if: texto es igual(equals) a vacío ("")? (entonces pinta) 0 : (sino) pinta texto
 
@@ -152,8 +151,8 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
         binding.deleteAndCleanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(serieModel != null){
-                    showDeleteDialog(serieModel.getId());
+                if(currentSelectedSerieModel != null){
+                    showDeleteDialog(currentSelectedSerieModel.getId());
                 } else {
                     binding.etCounterReps.setText("");
                     binding.etCounterKg.setText("");
@@ -221,8 +220,8 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
         });
     }
 
-    private void instantiateSeriesAdapter(){
-        seriesAdapter = new SeriesAdapter(new ArrayList<>(), this);
+    private void instantiateSeriesAdapter(List<SerieModel> serieModelList){
+        seriesAdapter = new SeriesAdapter(serieModelList, this);
         binding.addSerieLayout.setHasFixedSize(true);
         binding.addSerieLayout.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.addSerieLayout.setAdapter(seriesAdapter);
@@ -230,19 +229,27 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
 
     @Override
     public void clickListenerInterfaceAdapter(SerieModel input) {
-        serieModel = input;
-        if(input != null){
-            binding.etCounterReps.setText(input.getReps() != null? Integer.toString(input.getReps()) : "0");
-            binding.etCounterKg.setText(input.getKg() != null? Double.toString(input.getKg()) : "0");
+        currentSelectedSerieModel = input;
+        boolean isEditMode = input != null;
+        printEditMode(isEditMode);
+    }
+    private void printEditMode(boolean isEditMode){
+        if(isEditMode){
+            binding.etCounterReps.setText(currentSelectedSerieModel.getReps() != null? Integer.toString(currentSelectedSerieModel.getReps()) : "0");
+            binding.etCounterKg.setText(currentSelectedSerieModel.getKg() != null? Double.toString(currentSelectedSerieModel.getKg()) : "0");
             binding.saveAndUpdateBtn.setText(R.string.update);
+            binding.saveAndUpdateBtn.setBackgroundResource(R.drawable.shape_serie_add_btn);
             binding.deleteAndCleanBtn.setText(R.string.delete_btn);
+            binding.deleteAndCleanBtn.setBackgroundResource(R.drawable.shape_serie_delete_btn);
         } else {
+            currentSelectedSerieModel = null;
             binding.etCounterReps.setText("");
             binding.etCounterKg.setText("");
             binding.saveAndUpdateBtn.setText(R.string.add);
+            binding.saveAndUpdateBtn.setBackgroundResource(R.drawable.shape_serie_add_and_clean_btns);
             binding.deleteAndCleanBtn.setText(R.string.clean);
+            binding.deleteAndCleanBtn.setBackgroundResource(R.drawable.shape_serie_add_and_clean_btns);
         }
-
     }
     private void printError() {
         try {

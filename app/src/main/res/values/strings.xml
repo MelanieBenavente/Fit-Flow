@@ -49,8 +49,8 @@
             ¡Crea tus entrenamientos\n con tus ejercicios\n personalizados!
         </string>
     <string name="new_category">Nueva categoría</string>
-    <string name="category_list_fragment_title">¿Qué zona quieres trabajar hoy?</string>
-    <string name="exerciselist_title">¿Qué ejercicio vas a entrenar?</string>
+    <string name="category_list_fragment_title">¡ Focaliza aquí !</string>
+    <string name="exerciselist_title">Encuentra tu ejercicio</string>
     <string name="exercise_new">Nuevo ejercicio</string>
     <string name="choose_exercise_name">¡Elige un nombre para tu ejercicio!</string>
     <string name="choose_category_name">Elige un nombre para tu categoría!</string>

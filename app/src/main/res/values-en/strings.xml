@@ -48,8 +48,8 @@
             Create your workouts\n with your custom\n exercises!
         </string>
     <string name="new_category">New category</string>
-    <string name="category_list_fragment_title">Which area do you want to work on today?</string>
-    <string name="exerciselist_title">Which exercise do you want to train?</string>
+    <string name="category_list_fragment_title">Find your best workout</string>
+    <string name="exerciselist_title">Find your exercise</string>
     <string name="exercise_new">New exercise</string>
     <string name="choose_exercise_name">Choose a name for your exercise!</string>
     <string name="choose_category_name">Choose a name for your category!</string>

@@ -88,6 +88,7 @@
         app:layout_constraintEnd_toEndOf="@id/calendBar"
         android:lineSpacingExtra="7dp"
         android:textAlignment="center"
+        android:textColor="@color/blue"
         android:text="@string/empty_txt_home"
         style="@style/text_xl_home_title"
         />

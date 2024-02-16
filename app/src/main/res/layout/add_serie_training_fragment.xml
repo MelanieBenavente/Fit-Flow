@@ -22,7 +22,7 @@
             android:id="@+id/exerciseNameTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/CalendarHeader"
+            style="@style/ExercisesHeader"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:gravity="center"
@@ -149,8 +149,9 @@
         android:layout_marginStart="20dp"
         android:text="Añadir"
         style="@style/text_l_white"
+        android:textStyle="bold"
         android:textAllCaps="false"
-        android:background="@drawable/shape_btn_add_serie_rounded_corners"
+        android:background="@drawable/shape_serie_add_and_clean_btns"
         android:contentDescription="@string/save_and_add_serie_btn"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -162,8 +163,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="20dp"
         style="@style/text_l_white"
+        android:textStyle="bold"
         android:textAllCaps="false"
-        android:background="@drawable/shape_btn_add_serie_rounded_corners"
+        android:background="@drawable/shape_serie_add_and_clean_btns"
         android:text="Limpiar"
         android:contentDescription="@string/save_and_exit_btn"/>
 
