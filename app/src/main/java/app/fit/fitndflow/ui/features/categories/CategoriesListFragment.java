@@ -53,15 +53,20 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
         instantiateCategoriesAdapter();
-        setViewModelObservers();
         setOnClickListeners();
         initAccessibility();
         binding.txtSearch.addTextChangedListener(AccessibilityUtils.createTextWatcher(this));
-        categoriesAndExercisesViewModel.requestCategoriesFromModel(requireContext());
         addTextWatcher();
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setViewModelObservers();
+        categoriesAndExercisesViewModel.requestCategoriesFromModel(requireContext());
+
+    }
 
     private void setViewModelObservers() {
         categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
@@ -74,7 +79,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
                 printCategories(categories);
             }
         };
-        categoriesAndExercisesViewModel.getMutableCategoryList().observe(getActivity(), observer);
+        categoriesAndExercisesViewModel.getMutableCategoryList().observe(getViewLifecycleOwner(), observer);
 
         //observing error
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
@@ -86,7 +91,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
                 }
             }
         };
-        categoriesAndExercisesViewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
+        categoriesAndExercisesViewModel.getMutableFullScreenError().observe(getViewLifecycleOwner(), errorObserver);
         final Observer<Boolean> observerError = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isError) {
@@ -96,7 +101,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
                 }
             }
         };
-        categoriesAndExercisesViewModel.getMutableSlideError().observe(getActivity(), observerError);
+        categoriesAndExercisesViewModel.getMutableSlideError().observe(getViewLifecycleOwner(), observerError);
         final Observer<Boolean> observerIsSaveSuccess = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSaveSuccess) {
@@ -106,7 +111,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
                 }
             }
         };
-        categoriesAndExercisesViewModel.getIsSaveSuccess().observe(getActivity(), observerIsSaveSuccess);
+        categoriesAndExercisesViewModel.getIsSaveSuccess().observe(getViewLifecycleOwner(), observerIsSaveSuccess);
 
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
@@ -123,7 +128,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
                 }
             }
         };
-        categoriesAndExercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
+        categoriesAndExercisesViewModel.getIsLoading().observe(getViewLifecycleOwner(), observerLoading);
     }
 
     private void printCategories(List<CategoryModel> listRecived) {
@@ -135,9 +140,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
         binding.txtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().equals("")) {
@@ -159,14 +162,12 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
                     exercisesAdapter.setExerciseModelList(filteredList);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
 
             }
         });
     }
-
     private void printError() {
         try {
             showBlockError();
@@ -174,21 +175,18 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             Log.e("Error", "Error to print errorContainer");
         }
     }
-
     private void instantiateCategoriesAdapter() {
         categoriesAdapter = new CategoriesAdapter(this);
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerCategories.setAdapter(categoriesAdapter);
     }
-
     private void instantiateExercisesAdapter(List<ExerciseModel> filteredList) {
         exercisesAdapter = new ExercisesAdapter(filteredList, this);
         binding.recyclerCategories.setHasFixedSize(true);
         binding.recyclerCategories.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerCategories.setAdapter(exercisesAdapter);
     }
-
     private void setOnClickListeners() {
         binding.floatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,34 +201,28 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             }
         });
     }
-
     @Override
     public void showExercises(CategoryModel category) {
         categoriesAndExercisesViewModel.getActualCategory().setValue(category);
         addFragment(new ExerciseListFragment());
     }
-
     @Override
     public void showCreationDialog() {
         CreationOrModifyInputDialog.newInstance(TYPE_CATEGORY).show(getChildFragmentManager(), "creationDialog");
     }
-
     @Override
     public void showModifyDialog(int id, String name) {
         CreationOrModifyInputDialog.newInstance(TYPE_CATEGORY, id, name).show(getChildFragmentManager(), "creationDialog");
     }
-
     @Override
     public void showDeleteDialog(int id) {
         ConfirmationDialogFragment.newInstance(CategoriesListFragment.this, ConfirmationDialogFragment.DELETE_CATEGORY, id).show(getChildFragmentManager(), "ConfirmationDialog");
     }
-
     @Override
     public void initAccessibility() {
         String searchExercise = getContext().getString(R.string.search_exercise);
         binding.txtSearch.setAccessibilityDelegate(AccessibilityUtils.createAccesibilityDelegate(searchExercise + binding.txtSearch.getText().toString()));
     }
-
     @Override
     public void showSeries(ExerciseModel exercise) {
         if (exercise.getId() != 0 && exercise.getName() != null) {
@@ -239,7 +231,6 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
             showBlockError();
         }
     }
-
     @Override
     public void onClickAcceptDelete(int id) {
         categoriesAndExercisesViewModel.deleteCategory(id, requireContext());
