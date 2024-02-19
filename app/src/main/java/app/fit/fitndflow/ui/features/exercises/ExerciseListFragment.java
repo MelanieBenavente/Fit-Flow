@@ -52,12 +52,17 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
         binding = FragmentExercisesListBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
-        categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
-        printCategoryDetailAndinstantiateAdaper(categoriesAndExercisesViewModel.getActualCategory().getValue());
-        setViewModelObservers();
         setOnClickListeners();
         addTextWatcher();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        categoriesAndExercisesViewModel = ViewModelProviders.of(getActivity()).get(CategoriesAndExercisesViewModel.class);
+        printCategoryDetailAndinstantiateAdaper(categoriesAndExercisesViewModel.getActualCategory().getValue());
+        setViewModelObservers();
     }
 
     private void setViewModelObservers() {
@@ -71,7 +76,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
                 exercisesAdapter.setExerciseModelList(category.getExerciseList());
             }
         };
-        categoriesAndExercisesViewModel.getActualCategory().observe(getActivity(), observer);
+        categoriesAndExercisesViewModel.getActualCategory().observe(getViewLifecycleOwner(), observer);
 
         final Observer<Boolean> observerError = new Observer<Boolean>() {
             @Override
@@ -82,7 +87,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
                 }
             }
         };
-        categoriesAndExercisesViewModel.getMutableSlideError().observe(getActivity(), observerError);
+        categoriesAndExercisesViewModel.getMutableSlideError().observe(getViewLifecycleOwner(), observerError);
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isError) {
@@ -92,7 +97,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
                 }
             }
         };
-        categoriesAndExercisesViewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
+        categoriesAndExercisesViewModel.getMutableFullScreenError().observe(getViewLifecycleOwner(), errorObserver);
         final Observer<Boolean> observerIsSaveSuccess = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isSaveSuccess) {
@@ -102,7 +107,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
                 }
             }
         };
-        categoriesAndExercisesViewModel.getIsSaveSuccess().observe(getActivity(), observerIsSaveSuccess);
+        categoriesAndExercisesViewModel.getIsSaveSuccess().observe(getViewLifecycleOwner(), observerIsSaveSuccess);
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
@@ -118,7 +123,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
                 }
             }
         };
-        categoriesAndExercisesViewModel.getIsLoading().observe(getActivity(), observerLoading);
+        categoriesAndExercisesViewModel.getIsLoading().observe(getViewLifecycleOwner(), observerLoading);
     }
 
     private void printCategoryDetailAndinstantiateAdaper(CategoryModel categoryRecived) {

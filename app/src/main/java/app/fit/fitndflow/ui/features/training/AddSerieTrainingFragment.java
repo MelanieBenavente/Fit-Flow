@@ -46,17 +46,21 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
         binding = AddSerieTrainingFragmentBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         super.onCreateView(inflater, container, savedInstanceState);
-
         Bundle bundle = getArguments();
         if(bundle != null){
             exercise = (ExerciseModel) bundle.getSerializable(KEY_EXCERCISE);
         }
         binding.exerciseNameTitle.setText(exercise.getName());
-        homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
-        setViewModelObservers();
-        homeViewModel.getSerieListOfExerciseAdded(exercise.getId());
         initListeners();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
+        homeViewModel.getSerieListOfExerciseAdded(exercise.getId());
+        setViewModelObservers();
     }
 
     @Override
@@ -79,7 +83,7 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
                 printEditMode(false);
             }
         };
-        homeViewModel.getHashmapMutableSerieListByExerciseId().observe(getActivity(), observer);
+        homeViewModel.getHashmapMutableSerieListByExerciseId().observe(getViewLifecycleOwner(), observer);
 
         final Observer<Boolean> observerIsSaveSuccess = new Observer<Boolean>() {
             @Override
@@ -90,7 +94,7 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
                 }
             }
         };
-        homeViewModel.getIsSaveSuccess().observe(getActivity(), observerIsSaveSuccess);
+        homeViewModel.getIsSaveSuccess().observe(getViewLifecycleOwner(), observerIsSaveSuccess);
 
         final Observer<Boolean> observerError = new Observer<Boolean>() {
             @Override
@@ -101,7 +105,7 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
                 }
             }
         };
-        homeViewModel.getMutableSlideError().observe(getActivity(), observerError);
+        homeViewModel.getMutableSlideError().observe(getViewLifecycleOwner(), observerError);
 
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
             @Override
@@ -112,7 +116,7 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
                 }
             }
         };
-        homeViewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
+        homeViewModel.getMutableFullScreenError().observe(getViewLifecycleOwner(), errorObserver);
 
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
@@ -129,7 +133,7 @@ public class AddSerieTrainingFragment extends CommonFragment implements Training
                 }
             }
         };
-        homeViewModel.getIsLoading().observe(getActivity(), observerLoading);
+        homeViewModel.getIsLoading().observe(getViewLifecycleOwner(), observerLoading);
     }
 
     private void initListeners(){

@@ -117,7 +117,7 @@ public class HomeFragment extends CommonFragment<HomeViewModel> implements Exerc
                 }
             }
         };
-        homeViewModel.getDailyTrainingMutableList().observe(getActivity(), observer);
+        homeViewModel.getDailyTrainingMutableList().observe(getViewLifecycleOwner(), observer);
 
         final Observer<Boolean> observerLoading = new Observer<Boolean>() {
             @Override
@@ -134,7 +134,7 @@ public class HomeFragment extends CommonFragment<HomeViewModel> implements Exerc
                 }
             }
         };
-        homeViewModel.getIsLoading().observe(getActivity(), observerLoading);
+        homeViewModel.getIsLoading().observe(getViewLifecycleOwner(), observerLoading);
 
 
         final Observer<Date> actualDateObserver = new Observer<Date>() {
@@ -158,7 +158,7 @@ public class HomeFragment extends CommonFragment<HomeViewModel> implements Exerc
                 }
             }
         };
-        viewModel.getMutableActualDate().observe(getActivity(), actualDateObserver);
+        viewModel.getMutableActualDate().observe(getViewLifecycleOwner(), actualDateObserver);
         //observing error
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
             @Override
@@ -169,7 +169,7 @@ public class HomeFragment extends CommonFragment<HomeViewModel> implements Exerc
                 }
             }
         };
-        viewModel.getMutableFullScreenError().observe(getActivity(), errorObserver);
+        viewModel.getMutableFullScreenError().observe(getViewLifecycleOwner(), errorObserver);
     }
 
     @Override
