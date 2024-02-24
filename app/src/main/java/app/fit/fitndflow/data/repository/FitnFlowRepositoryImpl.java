@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     private static FitnFlowRepositoryImpl instance;
     private List<CategoryModel> availableCategoryListCachedResponse;
-    private HashMap<String, List<CategoryModel>> trainingResponseByCategories = new HashMap<>();
+    private HashMap<String, List<CategoryModel>> trainingResponseCacheByDate = new HashMap<>();
 
     //Creo una función estática mediante el patrón Singleton para que solamente se pueda instanciar UN repositorio.
     // Desde los viewModels instanciamos el repositorio llamando a esta función y así nos aseguramos que se refieran mismo repo en ambos casos:
@@ -45,7 +45,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     private  void removeAllDataFromHashMapCache(){
-        trainingResponseByCategories.clear();
+        trainingResponseCacheByDate.clear();
     }
 
     @Override
@@ -222,7 +222,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             }
             if (response != null && response.body() != null) {
                 serieListResponse = SerieModelMapperKt.toModel(response.body());
-                trainingResponseByCategories.remove(addSerieRequestDto.getDate());
+                trainingResponseCacheByDate.remove(addSerieRequestDto.getDate());
             } else {
                 return null;
             }
@@ -235,18 +235,18 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
     @Override
     public List<CategoryModel> getTrainingList(String date, String apiKey) throws Exception {
-        if(trainingResponseByCategories.get(date) == null){
+        if(trainingResponseCacheByDate.get(date) == null){
             try {
                 Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().getCategoriesAndTrainings(date, apiKey).execute();
                 if(response != null){
-                    trainingResponseByCategories.put(date, CategoryModelMapperKt.toModel(response.body()));}
+                    trainingResponseCacheByDate.put(date, CategoryModelMapperKt.toModel(response.body()));}
 
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new Exception(e);
             }
         }
-        return trainingResponseByCategories.get(date);
+        return trainingResponseCacheByDate.get(date);
     }
     public List<SerieModel> modifySerie(SerieDto serieDto, String apiKey) throws Exception{
         List<SerieModel> serieModelListResponse;
@@ -269,7 +269,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
     public List<SerieModel> getSerieListOfExerciseAdded(String date, int exerciseId) throws Exception{
         try{
-            List<CategoryModel> categoryList = trainingResponseByCategories.get(date);
+            List<CategoryModel> categoryList = trainingResponseCacheByDate.get(date);
             for(int i = 0; i < categoryList.size(); i++){
                 CategoryModel category = categoryList.get(i);
                 List<ExerciseModel> exerciseList = category.getExerciseList();
