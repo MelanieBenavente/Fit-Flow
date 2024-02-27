@@ -21,6 +21,7 @@ import com.fit.fitndflow.databinding.AddSerieTrainingFragmentBinding;
 import com.fit.fitndflow.databinding.DialogCreationInputBinding;
 import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +56,12 @@ public class HomeFragment extends CommonFragment<HomeViewModel> implements Exerc
             MyNotificationManager.askForPermissions(this);
             isShownNotificationConfiguration = true;
         }
-        scheduleNotification(requireActivity(), 6000, MyNotificationManager.TRAINING_TYPE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        calendar.add(Calendar.HOUR_OF_DAY, -1);
+
+        long tomorrowInMillis = calendar.getTimeInMillis();
+        scheduleNotification(requireActivity(), tomorrowInMillis, MyNotificationManager.TRAINING_TYPE);
 
         return view;
     }
