@@ -28,6 +28,8 @@ import androidx.fragment.app.Fragment;
 
 import com.fit.fitndflow.R;
 
+import java.util.Calendar;
+
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment;
 import app.fit.fitndflow.ui.features.common.MainActivity;
@@ -109,19 +111,17 @@ public class MyNotificationManager extends BroadcastReceiver {
 
 
 
-    public static void scheduleNotification(Activity activity, long delayMillis, int type) {
+    public static void scheduleNotification(Activity activity, long timeAlarm, int type) {
         if (checkNotificationPermission(activity)) {
-
             Intent intent = new Intent(activity, MyNotificationManager.class);
             intent.putExtra("title", getNotificationTitle(type, activity));
             intent.putExtra("text", getNotificationBody(type, activity));
             intent.putExtra("type", type);
-            int unicId = (int) System.currentTimeMillis();
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, unicId, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
-
+            int uniqueId = (int) System.currentTimeMillis();
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, uniqueId, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
             AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + delayMillis, pendingIntent);
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeAlarm, pendingIntent);
         }
     }
 
