@@ -50,11 +50,15 @@
 
         <Button
             android:id="@+id/buttonPanel"
-            style="@style/GenericButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="50dp"
             android:text="@string/im_agree"
+            style="@style/text_l_white"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:background="@drawable/shape_serie_add_and_clean_btns"
              />
 
     </LinearLayout>

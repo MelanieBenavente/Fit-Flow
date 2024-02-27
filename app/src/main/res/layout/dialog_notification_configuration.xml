@@ -58,10 +58,14 @@
 
         <Button
             android:id="@+id/buttonPanel"
-            style="@style/GenericButton"
+            style="@style/text_l_white"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:background="@drawable/shape_serie_add_and_clean_btns"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
+            android:padding="10dp"
             android:text="@string/im_agree"
             />
 
