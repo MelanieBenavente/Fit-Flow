@@ -18,10 +18,7 @@ public class BlockErrorFragment extends CommonFragment {
     private BlockErrorFragmentBinding binding;
 
 
-    @Override
-    protected Class getViewModelClass() {
-        return null;
-    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

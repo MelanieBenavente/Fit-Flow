@@ -9,7 +9,6 @@ import com.fit.fitndflow.R;
 
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.model.SerieModel;
-import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
 
 public class ExerciseCustomView extends LinearLayout {
     private TextView textView;

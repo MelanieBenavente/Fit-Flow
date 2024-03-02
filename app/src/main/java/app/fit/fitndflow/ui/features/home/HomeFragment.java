@@ -14,11 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.viewbinding.ViewBinding;
 
 import com.fit.fitndflow.R;
-import com.fit.fitndflow.databinding.AddSerieTrainingFragmentBinding;
-import com.fit.fitndflow.databinding.DialogCreationInputBinding;
 import com.fit.fitndflow.databinding.MainListFragmentBinding;
 
 import java.util.Calendar;
@@ -32,15 +29,10 @@ import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager;
-import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
+import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragmentJava;
 
-public class HomeFragment extends CommonFragment<HomeViewModel> implements ExerciseClickCallback {
+public class HomeFragment extends CommonFragment implements ExerciseClickCallback {
     private MainListFragmentBinding binding;
-
-    @Override
-    protected Class getViewModelClass() {
-        return HomeViewModel.class;
-    }
 
     private HomeViewModel homeViewModel;
 
@@ -69,8 +61,9 @@ public class HomeFragment extends CommonFragment<HomeViewModel> implements Exerc
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
         if (SharedPrefs.getApikeyFromSharedPRefs(requireContext()) == null) {
-            viewModel.requestRegisterEmptyUser(requireContext());
+            homeViewModel.requestRegisterEmptyUser(requireContext());
         }
         setViewModelObservers();
         setClickListeners();
@@ -93,12 +86,12 @@ public class HomeFragment extends CommonFragment<HomeViewModel> implements Exerc
     private void setClickListeners() {
         binding.btnLeft.setOnClickListener(view ->{
             if(!homeViewModel.getIsLoading().getValue()){
-                viewModel.dayBefore();
+                homeViewModel.dayBefore();
             }
         });
         binding.btnRight.setOnClickListener(view ->{
             if(!homeViewModel.getIsLoading().getValue()) {
-                viewModel.dayAfter();
+                homeViewModel.dayAfter();
             }
         });
         binding.buttonPanel.setOnClickListener(view ->{
@@ -164,22 +157,22 @@ public class HomeFragment extends CommonFragment<HomeViewModel> implements Exerc
                 }
             }
         };
-        viewModel.getMutableActualDate().observe(getViewLifecycleOwner(), actualDateObserver);
+        homeViewModel.getMutableActualDate().observe(getViewLifecycleOwner(), actualDateObserver);
         //observing error
         final Observer<Boolean> errorObserver = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isError) {
                 if (isError) {
                     showBlockError();
-                    viewModel.getMutableFullScreenError().setValue(false);
+                    homeViewModel.getMutableFullScreenError().setValue(false);
                 }
             }
         };
-        viewModel.getMutableFullScreenError().observe(getViewLifecycleOwner(), errorObserver);
+        homeViewModel.getMutableFullScreenError().observe(getViewLifecycleOwner(), errorObserver);
     }
 
     @Override
     public void showExerciseTrainingDetail(ExerciseModel exercise) {
-        addFragment(AddSerieTrainingFragment.newInstance(exercise));
+        addFragment(AddSerieTrainingFragmentJava.newInstance(exercise));
     }
 }

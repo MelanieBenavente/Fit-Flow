@@ -9,10 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-public abstract class CommonFragment<V extends ViewModel> extends Fragment {
-    protected V viewModel;
-    protected abstract Class<V> getViewModelClass();
-
+public abstract class CommonFragment extends Fragment {
     public void addFragment(Fragment fragment) {
         ((CommonActivity) getActivity()).addFragment(fragment);
     }
@@ -60,13 +57,4 @@ public abstract class CommonFragment<V extends ViewModel> extends Fragment {
         fragmentManager.popBackStack(fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-2).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
-    @Override
-    @CallSuper
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getViewModelClass() != null) {
-            viewModel = new ViewModelProvider(getActivity()).get(getViewModelClass());
-        }
-    }
-
-}
+   }

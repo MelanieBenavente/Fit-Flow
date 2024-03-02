@@ -21,7 +21,7 @@ import com.fit.fitndflow.R;
 
 
 
-public abstract class CommonToolbarFragment<V extends ViewModel> extends CommonFragment<V> {
+public abstract class CommonToolbarFragment extends CommonFragment {
 
     protected abstract Toolbar getToolbar();
 

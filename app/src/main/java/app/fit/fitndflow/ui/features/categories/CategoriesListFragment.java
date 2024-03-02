@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +29,7 @@ import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.exercises.ExerciseListFragment;
 import app.fit.fitndflow.ui.features.exercises.ExercisesAdapter;
-import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
+import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragmentJava;
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback;
 
 public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback, AccessibilityInterface, SerieAdapterCallback, DialogCallbackDelete {
@@ -41,11 +40,6 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     private CategoriesAdapter categoriesAdapter;
     private ExercisesAdapter exercisesAdapter;
     private boolean isEditMode;
-
-    @Override
-    protected Class getViewModelClass() {
-        return CategoriesAndExercisesViewModel.class;
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -226,7 +220,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     @Override
     public void showSeries(ExerciseModel exercise) {
         if (exercise.getId() != 0 && exercise.getName() != null) {
-            addFragment(AddSerieTrainingFragment.newInstance(exercise));
+            addFragment(AddSerieTrainingFragmentJava.newInstance(exercise));
         } else {
             showBlockError();
         }

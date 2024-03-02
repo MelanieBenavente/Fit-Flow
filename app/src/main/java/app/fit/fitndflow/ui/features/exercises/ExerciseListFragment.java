@@ -30,7 +30,7 @@ import app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment;
 import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog;
 import app.fit.fitndflow.ui.features.categories.DialogCallbackDelete;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
-import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
+import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragmentJava;
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback;
 
 public class ExerciseListFragment extends CommonFragment implements SerieAdapterCallback, DialogCallbackDelete {
@@ -41,11 +41,6 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
 
     private ExercisesAdapter exercisesAdapter;
     private boolean isEditMode;
-
-    @Override
-    protected Class getViewModelClass() {
-        return CategoriesAndExercisesViewModel.class;
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -176,7 +171,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
     @Override
     public void showSeries(ExerciseModel exercise) {
         if (exercise.getId() != 0 && exercise.getName() != null) {
-            addFragment(AddSerieTrainingFragment.newInstance(exercise));
+            addFragment(AddSerieTrainingFragmentJava.newInstance(exercise));
         } else {
             showBlockError();
         }
