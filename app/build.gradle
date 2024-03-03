@@ -5,7 +5,6 @@ plugins {
     id 'com.google.firebase.crashlytics'
     // Add the Google services Gradle plugin
     id 'com.google.gms.google-services'
-
 }
 
 android {
@@ -44,6 +43,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.cardview:cardview:1.0.0'
+
+    //lifecycle viewmodel
+    implementation 'androidx.fragment:fragment-ktx:1.5.2'
+
 
     //Server calls
     implementation('com.squareup.retrofit2:retrofit:2.3.0')

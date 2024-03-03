@@ -29,7 +29,7 @@ import app.fit.fitndflow.ui.features.common.AccessibilityUtils;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.exercises.ExerciseListFragment;
 import app.fit.fitndflow.ui.features.exercises.ExercisesAdapter;
-import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragmentJava;
+import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback;
 
 public class CategoriesListFragment extends CommonFragment implements CategoryAdapterCallback, AccessibilityInterface, SerieAdapterCallback, DialogCallbackDelete {
@@ -220,7 +220,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     @Override
     public void showSeries(ExerciseModel exercise) {
         if (exercise.getId() != 0 && exercise.getName() != null) {
-            addFragment(AddSerieTrainingFragmentJava.newInstance(exercise));
+            addFragment(AddSerieTrainingFragment.newInstance(exercise));
         } else {
             showBlockError();
         }

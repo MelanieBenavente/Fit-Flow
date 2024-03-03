@@ -29,7 +29,7 @@ import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment;
 import app.fit.fitndflow.ui.features.common.CommonFragment;
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager;
-import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragmentJava;
+import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment;
 
 public class HomeFragment extends CommonFragment implements ExerciseClickCallback {
     private MainListFragmentBinding binding;
@@ -173,6 +173,6 @@ public class HomeFragment extends CommonFragment implements ExerciseClickCallbac
 
     @Override
     public void showExerciseTrainingDetail(ExerciseModel exercise) {
-        addFragment(AddSerieTrainingFragmentJava.newInstance(exercise));
+        addFragment(AddSerieTrainingFragment.newInstance(exercise));
     }
 }
