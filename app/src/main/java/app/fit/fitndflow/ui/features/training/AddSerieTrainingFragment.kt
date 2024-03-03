@@ -124,7 +124,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
 
             deleteAndCleanBtn.setOnClickListener {
                 if (currentSelectedSerieModel != null) {
-                    showDeleteDialog(it.id)
+                    showDeleteDialog(currentSelectedSerieModel!!.id!!)
                 } else {
                     etCounterReps.setText("")
                     etCounterKg.setText("")
