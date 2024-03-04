@@ -213,7 +213,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
     }
 
     private fun showDeleteDialog(id: Int){
-        ConfirmationDialogFragment.newInstance(this, ConfirmationDialogFragment.DELETE_SERIE, id).show(childFragmentManager, "ConfirmationDialog")
+        ConfirmationDialogFragment.newInstance(this, ConfirmationDialogFragment.DELETE_SERIE, id).show(childFragmentManager, ConfirmationDialogFragment.TAG)
     }
 
     override fun onClickAcceptDelete(serieId: Int) {

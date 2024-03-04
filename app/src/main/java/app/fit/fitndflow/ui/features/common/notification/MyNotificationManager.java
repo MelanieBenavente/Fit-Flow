@@ -12,26 +12,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.app.NotificationManager;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.fit.fitndflow.R;
 
-import java.util.Calendar;
-
 import app.fit.fitndflow.data.common.SharedPrefs;
-import app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment;
 import app.fit.fitndflow.ui.features.common.MainActivity;
 
 public class MyNotificationManager extends BroadcastReceiver {

@@ -190,7 +190,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
 
     @Override
     public void showDeleteDialog(int id) {
-        ConfirmationDialogFragment.newInstance(ExerciseListFragment.this, ConfirmationDialogFragment.DELETE_EXERCISE, id).show(getChildFragmentManager(), "ConfirmationDialog");
+        ConfirmationDialogFragment.newInstance(ExerciseListFragment.this, ConfirmationDialogFragment.DELETE_EXERCISE, id).show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
     }
 
     @Override

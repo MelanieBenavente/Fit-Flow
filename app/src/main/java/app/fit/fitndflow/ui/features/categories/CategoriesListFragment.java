@@ -210,7 +210,7 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     }
     @Override
     public void showDeleteDialog(int id) {
-        ConfirmationDialogFragment.newInstance(CategoriesListFragment.this, ConfirmationDialogFragment.DELETE_CATEGORY, id).show(getChildFragmentManager(), "ConfirmationDialog");
+        ConfirmationDialogFragment.newInstance(CategoriesListFragment.this, ConfirmationDialogFragment.DELETE_CATEGORY, id).show(getChildFragmentManager(), ConfirmationDialogFragment.TAG);
     }
     @Override
     public void initAccessibility() {
