@@ -9,7 +9,7 @@ import app.fit.fitndflow.ui.features.common.CommonDialogFragment
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.DialogConfirmationFragmentBinding
 
-class ConfirmationDialogFragment : CommonDialogFragment() {
+class ConfirmationDialogFragment: CommonDialogFragment() {
 
     companion object {
         @JvmField
@@ -26,10 +26,7 @@ class ConfirmationDialogFragment : CommonDialogFragment() {
 
         @JvmStatic
         fun newInstance(
-            dialogCallbackDelete: DialogCallbackDelete,
-            deleteType: Int,
-            id: Int
-        ): ConfirmationDialogFragment {
+            dialogCallbackDelete: DialogCallbackDelete, deleteType: Int, id: Int): ConfirmationDialogFragment {
             val confirmationDialogFragment = ConfirmationDialogFragment()
             val bundle = Bundle()
             bundle.putSerializable(KEY_CALLBACK, dialogCallbackDelete)
@@ -46,14 +43,6 @@ class ConfirmationDialogFragment : CommonDialogFragment() {
     }
     private val deleteType: Int by lazy { requireArguments().getSerializable(KEY_TYPE) as Int }
     private val itemId: Int by lazy { requireArguments().getSerializable(KEY_ID) as Int }
-    override fun getBorderType(): Int {
-        return BORDERLINE
-    }
-
-    override fun getBinding(): ViewBinding {
-        binding = DialogConfirmationFragmentBinding.inflate(layoutInflater)
-        return binding
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,5 +85,13 @@ class ConfirmationDialogFragment : CommonDialogFragment() {
                 dismissAllowingStateLoss()
             }
         }
+    }
+    override fun getBorderType(): Int {
+        return BORDERLINE
+    }
+
+    override fun getBinding(): ViewBinding {
+        binding = DialogConfirmationFragmentBinding.inflate(layoutInflater)
+        return binding
     }
 }

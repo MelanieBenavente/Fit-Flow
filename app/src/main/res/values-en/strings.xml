@@ -57,5 +57,7 @@
     <string name="update">Update</string>
     <string name="add">Add</string>
     <string name="clean">Clean</string>
+    <string name="mancuernas">Mancuernas</string>
+    <string name="espalda">Espalda</string>
 
 </resources>

@@ -202,11 +202,11 @@ public class CategoriesListFragment extends CommonFragment implements CategoryAd
     }
     @Override
     public void showCreationDialog() {
-        CreationOrModifyInputDialog.newInstance(TYPE_CATEGORY).show(getChildFragmentManager(), "creationDialog");
+        CreationOrModifyInputDialog.newInstance(TYPE_CATEGORY).show(getChildFragmentManager(), CreationOrModifyInputDialog.TAG);
     }
     @Override
     public void showModifyDialog(int id, String name) {
-        CreationOrModifyInputDialog.newInstance(TYPE_CATEGORY, id, name).show(getChildFragmentManager(), "creationDialog");
+        CreationOrModifyInputDialog.newInstance(TYPE_CATEGORY, id, name).show(getChildFragmentManager(), CreationOrModifyInputDialog.TAG);
     }
     @Override
     public void showDeleteDialog(int id) {

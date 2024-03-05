@@ -185,7 +185,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
     }
     @Override
     public void showCreationDialog() {
-        CreationOrModifyInputDialog.newInstance(TYPE_EXERCISE).show(getChildFragmentManager(), "creationDialog");
+        CreationOrModifyInputDialog.newInstance(TYPE_EXERCISE).show(getChildFragmentManager(), CreationOrModifyInputDialog.TAG);
     }
 
     @Override
@@ -195,7 +195,7 @@ public class ExerciseListFragment extends CommonFragment implements SerieAdapter
 
     @Override
     public void showModifyDialog(int exerciseId, String exerciseName) {
-        CreationOrModifyInputDialog.newInstance(TYPE_EXERCISE, exerciseId, exerciseName).show(getChildFragmentManager(), "creationDialog");
+        CreationOrModifyInputDialog.newInstance(TYPE_EXERCISE, exerciseId, exerciseName).show(getChildFragmentManager(), CreationOrModifyInputDialog.TAG);
     }
 
     @Override
