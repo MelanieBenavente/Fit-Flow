@@ -43,7 +43,7 @@
             app:srcCompat="@drawable/img_notification_configuration" />
 
         <app.fit.fitndflow.ui.features.common.component.FitndFlowCheckbox
-            android:id="@+id/checkbox_no_mostrar_mas"
+            android:id="@+id/checkbox_dont_show_again"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
