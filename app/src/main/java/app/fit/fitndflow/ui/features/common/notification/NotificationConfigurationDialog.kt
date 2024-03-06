@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import app.fit.fitndflow.data.common.SharedPrefs
+import app.fit.fitndflow.ui.features.common.BorderType
 import app.fit.fitndflow.ui.features.common.CommonDialogFragment
 import com.fit.fitndflow.databinding.DialogNotificationConfigurationBinding
 
@@ -44,7 +45,7 @@ class NotificationConfigurationDialog : CommonDialogFragment() {
         binding = DialogNotificationConfigurationBinding.inflate(layoutInflater)
         return binding
     }
-    override fun getBorderType(): Int {
-        return NAKED
+    override fun getBorderType(): BorderType {
+        return BorderType.NAKED
     }
 }

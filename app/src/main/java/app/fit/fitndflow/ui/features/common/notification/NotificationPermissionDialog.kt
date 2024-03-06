@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
+import app.fit.fitndflow.ui.features.common.BorderType
 import app.fit.fitndflow.ui.features.common.CommonDialogFragment
 import com.fit.fitndflow.databinding.DialogNotificationPermissionBinding
 
@@ -34,8 +35,8 @@ class NotificationPermissionDialog : CommonDialogFragment() {
         }
     }
 
-    override fun getBorderType(): Int {
-        return NAKED
+    override fun getBorderType(): BorderType {
+        return BorderType.NAKED
     }
 
     override fun getBinding(): ViewBinding {

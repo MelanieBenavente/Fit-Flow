@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.viewbinding.ViewBinding
 import app.fit.fitndflow.ui.features.common.AccessibilityUtils
+import app.fit.fitndflow.ui.features.common.BorderType
 import app.fit.fitndflow.ui.features.common.CommonDialogFragment
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.DialogCreationInputBinding
@@ -124,8 +125,8 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
     }
 
 
-    override fun getBorderType(): Int {
-        return BORDERLINE
+    override fun getBorderType(): BorderType {
+        return BorderType.BORDERLINE
     }
 
     override fun getBinding(): ViewBinding {

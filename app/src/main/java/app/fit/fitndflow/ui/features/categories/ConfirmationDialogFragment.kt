@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
+import app.fit.fitndflow.ui.features.common.BorderType
 import app.fit.fitndflow.ui.features.common.CommonDialogFragment
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.DialogConfirmationFragmentBinding
@@ -16,7 +17,6 @@ class ConfirmationDialogFragment: CommonDialogFragment() {
         val DELETE_CATEGORY = 1
         @JvmField
         val DELETE_EXERCISE = 2
-        @JvmField
         val DELETE_SERIE = 3
         @JvmField
         val TAG = "ConfirmationDialog"
@@ -86,8 +86,8 @@ class ConfirmationDialogFragment: CommonDialogFragment() {
             }
         }
     }
-    override fun getBorderType(): Int {
-        return BORDERLINE
+    override fun getBorderType(): BorderType {
+        return BorderType.BORDERLINE
     }
 
     override fun getBinding(): ViewBinding {
