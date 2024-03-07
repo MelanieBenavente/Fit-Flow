@@ -1,15 +1,14 @@
 package app.fit.fitndflow.data.common;
 
 
-
 import java.util.List;
 
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.data.dto.categories.AddCategoryDto;
 import app.fit.fitndflow.data.dto.categories.CategoryDto;
+import app.fit.fitndflow.data.dto.categories.ModifyCategoryDto;
 import app.fit.fitndflow.data.dto.exercises.AddExerciseDto;
 import app.fit.fitndflow.data.dto.exercises.ExerciseDto;
-import app.fit.fitndflow.data.dto.categories.ModifyCategoryDto;
 import app.fit.fitndflow.data.dto.exercises.ModifyExerciseDto;
 import app.fit.fitndflow.data.dto.trainings.AddSerieRequestDto;
 import app.fit.fitndflow.data.dto.trainings.AddSerieResponseDto;

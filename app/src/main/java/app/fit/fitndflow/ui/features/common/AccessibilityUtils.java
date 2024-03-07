@@ -1,6 +1,5 @@
 package app.fit.fitndflow.ui.features.common;
 
-import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;

@@ -1,12 +1,7 @@
 package app.fit.fitndflow.ui.features.training;
 
-import static android.provider.Settings.System.getString;
-
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;

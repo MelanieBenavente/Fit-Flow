@@ -6,7 +6,6 @@ import java.util.List;
 
 import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.domain.common.usecase.FitUseCase;
-import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import io.reactivex.Single;

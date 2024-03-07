@@ -3,12 +3,10 @@ package app.fit.fitndflow.ui.features.home;
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import com.fit.fitndflow.R;
 
-import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.SerieModel;
 
 public class SerieCustomView extends LinearLayout {

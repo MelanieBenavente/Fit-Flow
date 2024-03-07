@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
 import app.fit.fitndflow.domain.common.arq.FitObserver;
 import app.fit.fitndflow.domain.model.CategoryModel;

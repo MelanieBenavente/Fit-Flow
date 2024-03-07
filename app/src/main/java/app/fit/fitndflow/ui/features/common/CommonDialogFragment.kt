@@ -25,11 +25,9 @@ abstract class CommonDialogFragment : DialogFragment() {
             }
             dialog!!.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         }
-
         super.onCreateView(inflater, container, savedInstanceState)
         return getBinding().root
     }
-
     abstract fun getBinding(): ViewBinding
 }
 

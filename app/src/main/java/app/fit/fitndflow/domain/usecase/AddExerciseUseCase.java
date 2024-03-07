@@ -7,7 +7,6 @@ import android.content.Context;
 import java.util.List;
 
 import app.fit.fitndflow.data.common.SharedPrefs;
-import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 import app.fit.fitndflow.domain.common.usecase.FitUseCase;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.model.ExerciseModelInLanguages;
