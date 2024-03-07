@@ -22,19 +22,9 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
 
     private ViewHolder lastItemClicked;
 
-    public SeriesAdapter(TrainingCallback trainingCallback) {
-        //todo pasarle y setearle solo un callback
-        this.trainingCallback = trainingCallback;
-    }
-
     public SeriesAdapter(List<SerieModel> serieModelList, TrainingCallback trainingCallback) { //todo pasarle un callback tambien y setearlo
         this.serieModelList = serieModelList;
         this.trainingCallback = trainingCallback;
-    }
-
-    public void setSerieModelList(List<SerieModel> serieModelList) {
-        this.serieModelList = serieModelList;
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -50,7 +40,6 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         // (si por ejemplo le clico a numreps, en el fragment (dentro de repeticiones),
         // me deberia de salir el mismo numero. esto se hace mediante el callback
 
-        if (position < serieModelList.size()) {
             SerieModel serieModel = serieModelList.get(position);
             if (serieModel.getReps() != null) {
                 holder.numReps.setText(Integer.toString(serieModel.getReps()));
@@ -77,7 +66,6 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
                     lastItemClicked = holder;
                 }
             });
-        }
     }
 
     @Override
