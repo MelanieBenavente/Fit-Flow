@@ -61,7 +61,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
     }
 
     private fun setViewModelObservers() {
-        val observer = Observer<HashMap<Int, List<SerieModel>>> { hashMap ->
+        val observer = Observer<HashMap<Int, List<SerieModel>>?> { hashMap ->
             hashMap.get(exercise.id)?.let {
                 instantiateSeriesAdapter(it)
             }
