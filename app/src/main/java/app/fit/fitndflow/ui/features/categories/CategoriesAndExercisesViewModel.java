@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl;
-import app.fit.fitndflow.domain.common.arq.FitObserver;
+import app.fit.fitndflow.domain.common.arq.FitRxObserver;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
@@ -74,7 +74,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
      * */
     public void requestCategoriesFromModel(Context context) {
             GetCategoriesUseCase getCategoriesUseCase = new GetCategoriesUseCase(context, fitnFlowRepository);
-        getCategoriesUseCase.execute(new FitObserver<List<CategoryModel>>() {
+        getCategoriesUseCase.execute(new FitRxObserver<List<CategoryModel>>() {
             @Override
             protected void onStart() {
                 super.onStart();
@@ -98,7 +98,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
     }
 
     public void modifyCategory(Context context, String language, String categoryName, int id){
-        new ModifyCategoryUseCase(context, language, categoryName, id, fitnFlowRepository).execute(new FitObserver<List<CategoryModel>>() {
+        new ModifyCategoryUseCase(context, language, categoryName, id, fitnFlowRepository).execute(new FitRxObserver<List<CategoryModel>>() {
             @Override
             protected void onStart() {
                 super.onStart();
@@ -122,7 +122,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
         });
     }
     public void modifyExercise(Context context, int exerciseId, String language, String exerciseName){
-        new ModifyExerciseUseCase(context, exerciseId, language, exerciseName, actualCategory.getValue().getId(), fitnFlowRepository).execute(new FitObserver<List<ExerciseModel>>() {
+        new ModifyExerciseUseCase(context, exerciseId, language, exerciseName, actualCategory.getValue().getId(), fitnFlowRepository).execute(new FitRxObserver<List<ExerciseModel>>() {
             @Override
             protected void onStart() {
                 super.onStart();
@@ -150,7 +150,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
     }
 
     public void addNewCategory(Context context, String language, String nameCategory){
-        new AddCategoryUseCase(context, language, nameCategory, fitnFlowRepository). execute(new FitObserver<List<CategoryModel>>() {
+        new AddCategoryUseCase(context, language, nameCategory, fitnFlowRepository). execute(new FitRxObserver<List<CategoryModel>>() {
 
             @Override
             protected void onStart() {
@@ -178,7 +178,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
         });
     }
     public void addNewExercise(Context context, String language, String nameExercise){
-        new AddExerciseUseCase(context, language, nameExercise, actualCategory.getValue().getId(), fitnFlowRepository).execute(new FitObserver<List<ExerciseModel>>() {
+        new AddExerciseUseCase(context, language, nameExercise, actualCategory.getValue().getId(), fitnFlowRepository).execute(new FitRxObserver<List<ExerciseModel>>() {
             @Override
             protected void onStart() {
                 super.onStart();
@@ -208,7 +208,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
     }
 
     public void deleteCategory(int id, Context context){
-        new DeleteCategoryUseCase(id, context, fitnFlowRepository).execute(new FitObserver<List<CategoryModel>>() {
+        new DeleteCategoryUseCase(id, context, fitnFlowRepository).execute(new FitRxObserver<List<CategoryModel>>() {
 
             @Override
             protected void onStart(){
@@ -233,7 +233,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
         });
     }
     public void deleteExercise(int exerciseId, Context context){
-        new DeleteExerciseUseCase(exerciseId, context, fitnFlowRepository).execute(new FitObserver<List<ExerciseModel>>() {
+        new DeleteExerciseUseCase(exerciseId, context, fitnFlowRepository).execute(new FitRxObserver<List<ExerciseModel>>() {
             @Override
             protected void onStart(){
                 super.onStart();
