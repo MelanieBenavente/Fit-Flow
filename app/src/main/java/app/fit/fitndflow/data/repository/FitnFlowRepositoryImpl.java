@@ -17,6 +17,7 @@ import app.fit.fitndflow.data.dto.exercises.ModifyExerciseDto;
 import app.fit.fitndflow.data.dto.trainings.AddSerieRequestDto;
 import app.fit.fitndflow.data.dto.trainings.AddSerieResponseDto;
 import app.fit.fitndflow.data.dto.trainings.SerieDto;
+import app.fit.fitndflow.data.dto.trainings.SerieForAddSerieRequestDto;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.CategoryModelInLanguages;
 import app.fit.fitndflow.domain.model.ExerciseModel;
@@ -28,12 +29,14 @@ import app.fit.fitndflow.domain.model.mapper.ExerciseModelMapperKt;
 import app.fit.fitndflow.domain.model.mapper.SerieModelMapperKt;
 import app.fit.fitndflow.domain.model.mapper.UserModelMapperKt;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
+import app.fit.fitndflow.domain.usecase.AddSerieUseCaseParams;
 import retrofit2.Response;
 
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     private static FitnFlowRepositoryImpl instance;
     private List<CategoryModel> availableCategoryListCachedResponse;
     private HashMap<String, List<CategoryModel>> trainingResponseCacheByDate = new HashMap<>();
+    private String currentDate;
 
     //Creo una función estática mediante el patrón Singleton para que solamente se pueda instanciar UN repositorio.
     // Desde los viewModels instanciamos el repositorio llamando a esta función y así nos aseguramos que se refieran mismo repo en ambos casos:
@@ -213,7 +216,9 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return availableExerciseListResponse;
     }
 
-    public List<SerieModel> addNewSerie(AddSerieRequestDto addSerieRequestDto, String apiKey) throws Exception {
+    public List<SerieModel> addNewSerie(int reps, double weight, int exerciseId, String apiKey) throws Exception {
+        SerieForAddSerieRequestDto serieForAddSerieRequestDto = new SerieForAddSerieRequestDto(reps, weight, new ExerciseDto(exerciseId, null, null));
+        AddSerieRequestDto addSerieRequestDto = new AddSerieRequestDto(currentDate, serieForAddSerieRequestDto);
         List<SerieModel> serieListResponse;
         try{
             Response <AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().addNewSerie(addSerieRequestDto, apiKey).execute();
@@ -235,6 +240,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
     @Override
     public List<CategoryModel> getTrainingList(String date, String apiKey) throws Exception {
+        currentDate = date;
         if(trainingResponseCacheByDate.get(date) == null){
             try {
                 Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().getCategoriesAndTrainings(date, apiKey).execute();
@@ -267,9 +273,10 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         }
         return serieModelListResponse;
     }
-    public List<SerieModel> getSerieListOfExerciseAdded(String date, int exerciseId) throws Exception{
+
+    public List<SerieModel> getSerieListOfExerciseAdded(int exerciseId) throws Exception{
         try{
-            List<CategoryModel> categoryList = trainingResponseCacheByDate.get(date);
+            List<CategoryModel> categoryList = trainingResponseCacheByDate.get(currentDate);
             for(int i = 0; i < categoryList.size(); i++){
                 CategoryModel category = categoryList.get(i);
                 List<ExerciseModel> exerciseList = category.getExerciseList();

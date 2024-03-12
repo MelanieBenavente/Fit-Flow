@@ -11,6 +11,7 @@ import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import io.reactivex.Single;
 
+//todo!!!!!!!!!!! migrar a kotlin
 public class ModifyTrainingUseCase extends FitUseCase<SerieDto, List<SerieModel>> {
     private FitnFlowRepository fitnFlowRepository;
     private Context context;

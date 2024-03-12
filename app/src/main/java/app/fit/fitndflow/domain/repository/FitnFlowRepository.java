@@ -26,9 +26,9 @@ public interface FitnFlowRepository extends CommonRepository {
     List<ExerciseModel> addNewExercise(StringInLanguagesDto exerciseName, int categoryId, String apiKey) throws Exception;
     List<ExerciseModel> modifyExercise(ExerciseModelInLanguages exercise, String apiKey) throws Exception;
     List<ExerciseModel> deleteExercise(Integer integer, String apiKey) throws Exception;
-    List<SerieModel> addNewSerie(AddSerieRequestDto addSerieRequestDto, String apiKey) throws Exception;
+    List<SerieModel> addNewSerie(int reps, double weight, int exerciseId, String apiKey) throws Exception;
     List<SerieModel> modifySerie(SerieDto serieDto, String apiKey) throws Exception;
-    List<SerieModel> getSerieListOfExerciseAdded(String date, int exerciseid) throws Exception;
+    List<SerieModel> getSerieListOfExerciseAdded(int exerciseid) throws Exception;
     List<SerieModel> deleteSerie(int serieId, String apiKey) throws Exception;
 }
 

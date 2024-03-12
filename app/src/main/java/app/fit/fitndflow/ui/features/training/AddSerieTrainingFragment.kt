@@ -1,21 +1,21 @@
 package app.fit.fitndflow.ui.features.training
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.fit.fitndflow.domain.model.ExerciseModel
 import app.fit.fitndflow.domain.model.SerieModel
 import app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment
 import app.fit.fitndflow.ui.features.categories.DialogCallbackDelete
 import app.fit.fitndflow.ui.features.common.CommonFragment
-import app.fit.fitndflow.ui.features.home.HomeViewModel
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.AddSerieTrainingFragmentBinding
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallbackDelete {
 
@@ -36,7 +36,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
     }
 
     private lateinit var binding: AddSerieTrainingFragmentBinding
-    private val homeViewModel: HomeViewModel by activityViewModels()
+    private val addSerieTrainingViewModel: AddSerieTrainingViewModel by viewModels()
     private val exercise: ExerciseModel by lazy { requireArguments().getSerializable(KEY_EXERCISE) as ExerciseModel }
     private lateinit var seriesAdapter: SeriesAdapter
     private var currentSelectedSerieModel: SerieModel? = null
@@ -56,58 +56,41 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.getSerieListOfExerciseAdded(exercise.id!!)
-        setViewModelObservers()
+        addSerieTrainingViewModel.getSerieListOfExerciseAdded(exercise.id!!)
+        attachObservers()
     }
 
-    private fun setViewModelObservers() {
-        val observer = Observer<HashMap<Int, List<SerieModel>>?> { hashMap ->
-            hashMap.get(exercise.id)?.let {
-                instantiateSeriesAdapter(it)
-            }
-            printEditMode(false)
-        }
-        homeViewModel.hashmapMutableSerieListByExerciseId.observe(viewLifecycleOwner, observer)
+    private fun attachObservers(){
+        addSerieTrainingViewModel.state.onEach(::handleState).launchIn(viewLifecycleOwner.lifecycleScope)
+    }
 
-        val observerIsSaveSuccess = Observer<Boolean> { isSaveSuccess ->
-            if (isSaveSuccess) {
-                showSlideSaved()
-                homeViewModel.isSaveSuccess.value = false
-            }
-        }
-        homeViewModel.isSaveSuccess.observe(viewLifecycleOwner, observerIsSaveSuccess)
-
-        val observerSlideError = Observer<Boolean> { isError ->
-            if (isError) {
-                showSlideError()
-                homeViewModel.mutableSlideError.value = false
-            }
-        }
-        homeViewModel.mutableSlideError.observe(viewLifecycleOwner, observerSlideError)
-
-        val observerFullScreenError = Observer<Boolean> { isError ->
-            if (isError) {
-                printError()
-                homeViewModel.mutableFullScreenError.value = false
-            }
-        }
-        homeViewModel.mutableFullScreenError.observe(viewLifecycleOwner, observerFullScreenError)
-
-        val observerLoading = Observer<Boolean> { isLoading ->
-            try {
-                if (isLoading) {
-                    showLoading()
-                } else {
-                    hideLoading()
+    private fun handleState(state: State){
+        when(state){
+            is State.SeriesChangedInExerciseDetail -> {
+                instantiateSeriesAdapter(state.serieList)
+                if(state.showSlideSuccess){
+                    showSlideSaved()
                 }
-            } catch (exception: Exception) {
-                Log.e("Error", "show loading")
+                hideLoading()
+                printEditMode(false)
             }
+
+            State.FullScreenError -> {
+                hideLoading()
+                showBlockError()
+            }
+
+            State.SlideError -> {
+                hideLoading()
+                showSlideError()
+            }
+            State.Loading -> {
+                showLoading()
+            }
+
         }
-        homeViewModel.isLoading.observe(viewLifecycleOwner, observerLoading)
     }
 
-    //todo check in execution time
     private fun initListeners() {
         binding.apply {
             saveAndUpdateBtn.setOnClickListener {
@@ -118,8 +101,8 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
                         .isEmpty()
                 ) 0.0 else etCounterKg.text.toString().toDouble()
                 currentSelectedSerieModel?.let {
-                    homeViewModel.modifySerie(requireContext(), it.id!!, reps, kg, exercise.id!!)
-                } ?: homeViewModel.addNewSerie(requireContext(), reps, kg, exercise.id!!)
+                    addSerieTrainingViewModel.modifySerie(requireContext(), it.id!!, reps, kg, exercise.id!!)
+                } ?: addSerieTrainingViewModel.addNewSerie(requireContext(), reps, kg, exercise.id!!)
             }
 
             deleteAndCleanBtn.setOnClickListener {
@@ -203,21 +186,12 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
         }
     }
 
-
-    private  fun printError(){
-        try {
-            showBlockError()
-        } catch (exception: Exception) {
-            Log.e("Error", "Error to print errorContainer")
-        }
-    }
-
     private fun showDeleteDialog(id: Int){
         ConfirmationDialogFragment.newInstance(this, ConfirmationDialogFragment.DELETE_SERIE, id).show(childFragmentManager, ConfirmationDialogFragment.TAG)
     }
 
     override fun onClickAcceptDelete(serieId: Int) {
-        homeViewModel.deleteSerie(serieId, exercise.id!!, requireContext())
+        addSerieTrainingViewModel.deleteSerie(serieId, exercise.id!!, requireContext())
     }
 
     override fun clickListenerInterfaceAdapter(input: SerieModel?) {
