@@ -56,17 +56,17 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addSerieTrainingViewModel.getSerieListOfExerciseAdded(exercise.id!!)
         attachObservers()
+        addSerieTrainingViewModel.getSerieListOfExerciseAdded(exercise.id!!)
     }
 
     private fun attachObservers(){
         addSerieTrainingViewModel.state.onEach(::handleState).launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun handleState(state: State){
+    private fun handleState(state: AddSerieTrainingViewModel.State){
         when(state){
-            is State.SeriesChangedInExerciseDetail -> {
+            is AddSerieTrainingViewModel.State.SeriesChangedInExerciseDetail -> {
                 instantiateSeriesAdapter(state.serieList)
                 if(state.showSlideSuccess){
                     showSlideSaved()
@@ -75,16 +75,16 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
                 printEditMode(false)
             }
 
-            State.FullScreenError -> {
+            AddSerieTrainingViewModel.State.FullScreenError -> {
                 hideLoading()
                 showBlockError()
             }
 
-            State.SlideError -> {
+            AddSerieTrainingViewModel.State.SlideError -> {
                 hideLoading()
                 showSlideError()
             }
-            State.Loading -> {
+            AddSerieTrainingViewModel.State.Loading -> {
                 showLoading()
             }
 
@@ -191,7 +191,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
     }
 
     override fun onClickAcceptDelete(serieId: Int) {
-        addSerieTrainingViewModel.deleteSerie(serieId, exercise.id!!, requireContext())
+        addSerieTrainingViewModel.deleteSerie(requireContext(), serieId)
     }
 
     override fun clickListenerInterfaceAdapter(input: SerieModel?) {

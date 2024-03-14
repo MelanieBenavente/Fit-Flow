@@ -161,7 +161,6 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
                     printExercises(categories)
                 }
             }
-            else -> {}
         }
     }
 

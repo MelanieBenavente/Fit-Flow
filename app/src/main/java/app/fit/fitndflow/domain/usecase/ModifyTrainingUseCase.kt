@@ -8,14 +8,12 @@ import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-
-class AddSerieUseCase(val fitnFlowRepository: FitnFlowRepository, val context: Context) : UseCase<AddSerieUseCaseParams, List<SerieModel>>(){
-    override fun run(params: AddSerieUseCaseParams): Flow<List<SerieModel>> = flow {
+class ModifyTrainingUseCase(val fitnFlowRepository: FitnFlowRepository, val context: Context) : UseCase<ModifySerieUseCaseParams, List<SerieModel>>() {
+    override fun run(params: ModifySerieUseCaseParams): Flow<List<SerieModel>> = flow {
         val apiKey = SharedPrefs.getApikeyFromSharedPRefs(context)
-        val series = fitnFlowRepository.addNewSerie(params.reps, params.weight, params.exerciseId, apiKey)
+        val series = fitnFlowRepository.modifySerie(params.serieId, params.reps, params.weight, apiKey)
         fitnFlowRepository.updateCurrentTrainingListCache(apiKey)
         emit(series)
     }
 }
-
-data class AddSerieUseCaseParams(val reps: Int, val weight: Double, val exerciseId: Int)
+data class ModifySerieUseCaseParams(val serieId: Int, val reps: Int, val weight: Double)

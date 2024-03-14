@@ -4,8 +4,6 @@ import java.util.List;
 
 import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 import app.fit.fitndflow.data.dto.UserDto;
-import app.fit.fitndflow.data.dto.trainings.AddSerieRequestDto;
-import app.fit.fitndflow.data.dto.trainings.SerieDto;
 import app.fit.fitndflow.domain.common.repository.CommonRepository;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.CategoryModelInLanguages;
@@ -19,15 +17,15 @@ public interface FitnFlowRepository extends CommonRepository {
     List<CategoryModel> getCategoryList(String apiKey) throws Exception;
     List<CategoryModel> deleteCategory(Integer integer, String apikey) throws Exception;
 
-    List<CategoryModel> getTrainingList(String date, String apiKey) throws Exception;//todo pasarle por parametro String date
-
+    List<CategoryModel> getTrainingList(String date, String apiKey) throws Exception;
+    List<CategoryModel> updateCurrentTrainingListCache(String apiKey) throws Exception;
     List<CategoryModel> addNewCategory(StringInLanguagesDto categoryName, String apiKey) throws Exception;
     List<CategoryModel> modifyCategory(CategoryModelInLanguages category, String apiKey) throws Exception;
     List<ExerciseModel> addNewExercise(StringInLanguagesDto exerciseName, int categoryId, String apiKey) throws Exception;
     List<ExerciseModel> modifyExercise(ExerciseModelInLanguages exercise, String apiKey) throws Exception;
     List<ExerciseModel> deleteExercise(Integer integer, String apiKey) throws Exception;
     List<SerieModel> addNewSerie(int reps, double weight, int exerciseId, String apiKey) throws Exception;
-    List<SerieModel> modifySerie(SerieDto serieDto, String apiKey) throws Exception;
+    List<SerieModel> modifySerie(int serieId, int reps, double weight, String apiKey) throws Exception;
     List<SerieModel> getSerieListOfExerciseAdded(int exerciseid) throws Exception;
     List<SerieModel> deleteSerie(int serieId, String apiKey) throws Exception;
 }

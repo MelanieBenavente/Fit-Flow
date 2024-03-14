@@ -8,14 +8,13 @@ import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-
-class AddSerieUseCase(val fitnFlowRepository: FitnFlowRepository, val context: Context) : UseCase<AddSerieUseCaseParams, List<SerieModel>>(){
-    override fun run(params: AddSerieUseCaseParams): Flow<List<SerieModel>> = flow {
+class DeleteSerieUseCase(val fitnFlowRepository: FitnFlowRepository, val context: Context): UseCase<GetSerieToDeleteParams, List<SerieModel>>(){
+    override fun run(params: GetSerieToDeleteParams): Flow<List<SerieModel>> = flow {
         val apiKey = SharedPrefs.getApikeyFromSharedPRefs(context)
-        val series = fitnFlowRepository.addNewSerie(params.reps, params.weight, params.exerciseId, apiKey)
+        val serieDeleted = fitnFlowRepository.deleteSerie(params.serieId, apiKey)
         fitnFlowRepository.updateCurrentTrainingListCache(apiKey)
-        emit(series)
+        emit(serieDeleted)
     }
 }
 
-data class AddSerieUseCaseParams(val reps: Int, val weight: Double, val exerciseId: Int)
+data class GetSerieToDeleteParams(val serieId: Int)

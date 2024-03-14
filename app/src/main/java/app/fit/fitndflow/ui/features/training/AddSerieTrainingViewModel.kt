@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl
-import app.fit.fitndflow.domain.common.arq.FitRxObserver
 import app.fit.fitndflow.domain.model.SerieModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import app.fit.fitndflow.domain.usecase.AddSerieUseCase
@@ -12,6 +11,8 @@ import app.fit.fitndflow.domain.usecase.AddSerieUseCaseParams
 import app.fit.fitndflow.domain.usecase.DeleteSerieUseCase
 import app.fit.fitndflow.domain.usecase.GetSerieAddedParam
 import app.fit.fitndflow.domain.usecase.GetSerieAddedUseCase
+import app.fit.fitndflow.domain.usecase.GetSerieToDeleteParams
+import app.fit.fitndflow.domain.usecase.ModifySerieUseCaseParams
 import app.fit.fitndflow.domain.usecase.ModifyTrainingUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -36,28 +37,14 @@ class AddSerieTrainingViewModel : ViewModel() {
     }
 
     fun modifySerie(context: Context, serieId: Int, reps: Int, weight: Double, exerciseId: Int) {
-        ModifyTrainingUseCase(context, serieId, reps, weight, fitnFlowRepository).execute(object :
-            FitRxObserver<List<SerieModel>>() {
-
-            override fun onStart() {
-                super.onStart()
-                viewModelScope.launch {
-                    _state.emit(State.Loading)
-                }
-            }
-
-            override fun onSuccess(serieModelList: List<SerieModel>) {
-                viewModelScope.launch {
-                    _state.emit(State.SeriesChangedInExerciseDetail(serieModelList, true))
-                }
-            }
-
-            override fun onError(e: Throwable) {
-                viewModelScope.launch {
-                    _state.emit(State.SlideError)
-                }
-            }
-        })
+        val modifyTrainingUseCase = ModifyTrainingUseCase(fitnFlowRepository, context)
+        val params = ModifySerieUseCaseParams(serieId, reps, weight)
+        viewModelScope.launch {
+            modifyTrainingUseCase(params)
+                .onStart { _state.emit(State.Loading) }
+                .catch { _state.emit(State.SlideError) }
+                .collect { _state.emit(State.SeriesChangedInExerciseDetail(it, true)) }
+        }
     }
 
     fun getSerieListOfExerciseAdded(exerciseId: Int) {
@@ -71,29 +58,14 @@ class AddSerieTrainingViewModel : ViewModel() {
         }
     }
 
-        fun deleteSerie(serieId: Int, exerciseId: Int, context: Context) {
-            DeleteSerieUseCase(serieId, context, fitnFlowRepository).execute(object :
-                FitRxObserver<List<SerieModel>>() {
-
-                override fun onStart() {
-                    super.onStart()
-                    viewModelScope.launch {
-                        _state.emit(State.Loading)
-                    }
-                }
-
-                override fun onSuccess(serieModelList: List<SerieModel>) {
-                    viewModelScope.launch {
-                        _state.emit(State.SeriesChangedInExerciseDetail(serieModelList, true))
-                    }
-                }
-
-                override fun onError(e: Throwable) {
-                    viewModelScope.launch {
-                        _state.emit(State.SlideError)
-                    }
-                }
-            })
+    fun deleteSerie(context: Context, serieId: Int) {
+        val deleteSerieUseCase = DeleteSerieUseCase(fitnFlowRepository, context)
+        val params = GetSerieToDeleteParams(serieId)
+        viewModelScope.launch {
+            deleteSerieUseCase(params)
+                .onStart { _state.emit(State.Loading) }
+                .catch { _state.emit(State.SlideError) }
+                .collect { _state.emit(State.SeriesChangedInExerciseDetail(it, true)) }
         }
     }
 
@@ -106,5 +78,6 @@ class AddSerieTrainingViewModel : ViewModel() {
             val showSlideSuccess: Boolean
         ) : State()
     }
+}
 
 

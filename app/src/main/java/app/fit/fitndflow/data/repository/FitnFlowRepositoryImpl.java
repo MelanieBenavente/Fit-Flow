@@ -254,7 +254,15 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         }
         return trainingResponseCacheByDate.get(date);
     }
-    public List<SerieModel> modifySerie(SerieDto serieDto, String apiKey) throws Exception{
+
+    @Override
+    public List<CategoryModel> updateCurrentTrainingListCache(String apiKey) throws Exception {
+        return getTrainingList(currentDate, apiKey);
+    }
+
+    @Override
+    public List<SerieModel> modifySerie(int serieId, int reps, double weight, String apiKey) throws Exception{
+        SerieDto serieDto = new SerieDto(serieId, reps, weight);
         List<SerieModel> serieModelListResponse;
         try{
             Response<AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().modifySerie(serieDto, apiKey).execute();
