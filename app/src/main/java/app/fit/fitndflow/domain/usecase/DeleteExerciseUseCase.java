@@ -27,6 +27,7 @@ public class DeleteExerciseUseCase extends FitUseCase<Integer, List<ExerciseMode
             try{
                 String apiKey = SharedPrefs.getApikeyFromSharedPRefs(context);
                 List<ExerciseModel> response = fitnFlowRepository.deleteExercise(inputParams, apiKey);
+                fitnFlowRepository.updateCurrentTrainingListCache(apiKey);
                 emitter.onSuccess(response);
             } catch(Exception exception) {
                 emitter.onError(exception);

@@ -227,7 +227,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             }
             if (response != null && response.body() != null) {
                 serieListResponse = SerieModelMapperKt.toModel(response.body());
-                trainingResponseCacheByDate.remove(addSerieRequestDto.getDate());
+                removeAllDataFromHashMapCache();
             } else {
                 return null;
             }
