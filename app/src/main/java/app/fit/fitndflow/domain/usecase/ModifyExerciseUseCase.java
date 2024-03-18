@@ -29,6 +29,7 @@ public class ModifyExerciseUseCase extends FitUseCase<ExerciseModelInLanguages, 
             try{
                 String apiKey = SharedPrefs.getApikeyFromSharedPRefs(context);
                 List<ExerciseModel> response = fitnFlowRepository.modifyExercise(inputParams, apiKey);
+                fitnFlowRepository.updateCurrentTrainingListCache(apiKey);
                 emitter.onSuccess(response);
             } catch (Exception exception) {
                 emitter.onError(exception);
