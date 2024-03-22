@@ -129,32 +129,6 @@ public class CategoriesAndExercisesViewModelJava extends ViewModel {
             }
         });
     }
-
-    public void deleteCategory(int id, Context context){
-        new DeleteCategoryUseCase(id, context, fitnFlowRepository).execute(new FitRxObserver<List<CategoryModel>>() {
-
-            @Override
-            protected void onStart(){
-                super.onStart();
-                isLoading.setValue(true);
-                mutableSlideError.setValue(false);
-            }
-
-            @Override
-            public void onSuccess(List<CategoryModel> categoryModelList) {
-                isLoading.setValue(false);
-                isDeleteSuccess.setValue(true);
-                mutableCategoryList.setValue(categoryModelList);
-                mutableSlideError.setValue(false);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                mutableSlideError.setValue(true);
-                isLoading.setValue(false);
-            }
-        });
-    }
     public void deleteExercise(int exerciseId, Context context){
         new DeleteExerciseUseCase(exerciseId, context, fitnFlowRepository).execute(new FitRxObserver<List<ExerciseModel>>() {
             @Override

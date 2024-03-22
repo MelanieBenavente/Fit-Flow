@@ -4,15 +4,14 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.fit.fitndflow.data.repository.FitnFlowRepositoryImpl
-import app.fit.fitndflow.domain.common.arq.FitRxObserver
 import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import app.fit.fitndflow.domain.usecase.AddCategoryUseCase
 import app.fit.fitndflow.domain.usecase.AddCategoryUseCaseParams
-import app.fit.fitndflow.domain.usecase.AddSerieUseCaseParams
 import app.fit.fitndflow.domain.usecase.CategoryModelInLanguages
 import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase
+import app.fit.fitndflow.domain.usecase.GetCategoryToDeleteParams
 import app.fit.fitndflow.domain.usecase.ModifyCategoryUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -65,29 +64,14 @@ class CategoriesViewModel : ViewModel() {
         }
 
     fun deleteCategory(categoryId: Int, context: Context) {
-        val deleteCategoryUseCase = DeleteCategoryUseCase(categoryId, context, fitnFlowRepository)
-        deleteCategoryUseCase.execute(object: FitRxObserver<List<CategoryModel>>() {
-
-            override fun onStart() {
-                super.onStart()
-                viewModelScope.launch {
-                    _state.emit(State.Loading)
-                }
-            }
-
-            override fun onSuccess(categoryList: List<CategoryModel>) {
-                viewModelScope.launch {
-                    _state.emit(State.CategoryListRecived(categoryList, false))
-                }
-            }
-
-            override fun onError(e: Throwable) {
-                viewModelScope.launch {
-                    _state.emit(State.SlideError)
-                }
-            }
-
-        })
+        val deleteCategoryUseCase = DeleteCategoryUseCase(fitnFlowRepository, context)
+        val params = GetCategoryToDeleteParams(categoryId)
+        viewModelScope.launch {
+            deleteCategoryUseCase(params)
+                .onStart { _state.emit(State.Loading) }
+                .catch { _state.emit(State.SlideError) }
+                .collect{ _state.emit(State.CategoryListRecived(it, true)) }
+        }
     }
 
 

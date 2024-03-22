@@ -139,6 +139,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
     @Override
     public List<CategoryModel> deleteCategory(Integer categoryId, String apikey) throws Exception {
+
         try {
             Response <List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().deleteCategory(categoryId, apikey).execute();
             if (response != null && !response.isSuccessful()) {
