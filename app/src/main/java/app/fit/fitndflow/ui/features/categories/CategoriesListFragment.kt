@@ -7,8 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.model.ExerciseModel
@@ -22,13 +21,15 @@ import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.FragmentCategoriesListBinding
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class CategoriesListFragment : CommonFragment(), CategoryAdapterCallback, AccessibilityInterface,
     SerieAdapterCallback, DialogCallbackDelete {
 
     private lateinit var binding: FragmentCategoriesListBinding
-    private var categoryList = mutableListOf<CategoryModel>()
-    private val categoriesAndExercisesViewModel: CategoriesAndExercisesViewModel by activityViewModels()
+    private var categoryList = listOf<CategoryModel>()
+    private val categoriesViewModel: CategoriesViewModel by activityViewModels()
     private lateinit var categoriesAdapter: CategoriesAdapter
     private lateinit var exercisesAdapter: ExercisesAdapter
     private var isEditMode: Boolean = false
@@ -51,57 +52,37 @@ class CategoriesListFragment : CommonFragment(), CategoryAdapterCallback, Access
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setViewModelObservers() //todo este será substituido por attachObservers()
-        categoriesAndExercisesViewModel.requestCategoriesFromModel(requireContext())
+        attachObservers() //todo este será substituido por attachObservers()
+        categoriesViewModel.requestCategoriesFromModel(requireContext())
     }
 
-    private fun setViewModelObservers() {
-        categoriesAndExercisesViewModel.mutableSlideError.value = false
-        categoriesAndExercisesViewModel.isLoading.value = false
+    private fun attachObservers(){
+        categoriesViewModel.state.onEach(::handleState).launchIn(viewLifecycleOwner.lifecycleScope)
+    }
 
-        val categoryListObserver = Observer<MutableList<CategoryModel>> { categories ->
-            printCategories(categories)
-        }
-        categoriesAndExercisesViewModel.mutableCategoryList.observe(
-            viewLifecycleOwner,
-            categoryListObserver
-        )
-
-        val fullScreenErrorObserver = Observer<Boolean> { isError ->
-            if (isError) {
-                showBlockError()
-                categoriesAndExercisesViewModel.mutableFullScreenError.value = false
-            }
-        }
-        categoriesAndExercisesViewModel.mutableFullScreenError.observe(viewLifecycleOwner, fullScreenErrorObserver)
-
-        val slideErrorObserver = Observer<Boolean> { isError ->
-            if (isError) {
-                showSlideError()
-                categoriesAndExercisesViewModel.mutableSlideError.value = false
-            }
-        }
-        categoriesAndExercisesViewModel.mutableSlideError.observe(viewLifecycleOwner, slideErrorObserver)
-
-        val isSaveSuccessObserver = Observer<Boolean> { isSaveSucces ->
-            if(isSaveSucces){
-                showSlideSaved()
-                categoriesAndExercisesViewModel.isSaveSuccess.value = false
-            }
-        }
-        categoriesAndExercisesViewModel.isSaveSuccess.observe(viewLifecycleOwner, isSaveSuccessObserver)
-
-        val loadingObserver = Observer<Boolean> { isLoading ->
-            if(isLoading){
-                showLoading()
-            } else {
+    private fun handleState(state: CategoriesViewModel.State){
+        when(state){
+            is CategoriesViewModel.State.CategoryListRecived -> {
+                printCategories(state.categoryList)
+                if(state.showSlideSuccess){
+                    showSlideSaved()
+                }
                 hideLoading()
             }
+            CategoriesViewModel.State.FullScreenError -> {
+                hideLoading()
+                showBlockError()
+            }
+            CategoriesViewModel.State.SlideError -> {
+                hideLoading()
+                showSlideError()
+            }
+            CategoriesViewModel.State.Loading -> {
+                showLoading()
+            }
         }
-        categoriesAndExercisesViewModel.isLoading.observe(viewLifecycleOwner, loadingObserver)
     }
-
-    private fun printCategories(listRecived: MutableList<CategoryModel>){
+    private fun printCategories(listRecived: List<CategoryModel>){
         categoryList = listRecived
         categoriesAdapter.setCategoryList(categoryList)
     }
@@ -163,9 +144,8 @@ class CategoriesListFragment : CommonFragment(), CategoryAdapterCallback, Access
         }
     }
 
-    override fun showExercises(category: CategoryModel?) {
-        categoriesAndExercisesViewModel.actualCategory.value = category
-        addFragment(ExerciseListFragment())
+    override fun showExercises(category: CategoryModel) {
+        addFragment(ExerciseListFragment.newInstance(category))
     }
 
     override fun showSeries(exercise: ExerciseModel) {
@@ -189,7 +169,7 @@ class CategoriesListFragment : CommonFragment(), CategoryAdapterCallback, Access
     }
 
     override fun onClickAcceptDelete(id: Int) {
-        categoriesAndExercisesViewModel.deleteCategory(id, requireContext())
+        categoriesViewModel.deleteCategory(id, requireContext())
     }
 
     override fun initAccessibility() {

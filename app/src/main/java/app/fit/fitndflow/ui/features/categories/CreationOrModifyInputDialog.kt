@@ -48,7 +48,8 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
         }
     }
 
-    private val categoriesAndExercisesViewModel: CategoriesAndExercisesViewModel by activityViewModels()
+    private val categoriesViewModel: CategoriesViewModel by activityViewModels()
+    private val categoriesAndExercisesViewModelJava: CategoriesAndExercisesViewModelJava by activityViewModels()
     private lateinit var binding: DialogCreationInputBinding
     private val createType: Int by lazy { requireArguments().getSerializable(KEY_TYPE) as Int }
     private val itemId: Int? by lazy { requireArguments().getSerializable(KEY_ID) as? Int? }
@@ -66,8 +67,8 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
     private fun printNameIfExists() {
         if (itemId != null) {
             binding.newCategoryTxt.setText(itemName)
-        } else if (categoriesAndExercisesViewModel.lastName != null) {
-            binding.newCategoryTxt.setText(categoriesAndExercisesViewModel.lastName)
+        } else if (categoriesViewModel.lastName != null) {
+            binding.newCategoryTxt.setText(categoriesViewModel.lastName)
         }
     }
     private fun initListeners() {
@@ -84,14 +85,14 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
                             AccessibilityUtils.createAccesibilityDelegate(language + newCategoryTxt.text.toString())
                         if (!newCategoryTxt.text.toString().isEmpty()) {
                             if (itemId != null) {
-                                categoriesAndExercisesViewModel.modifyCategory(
+                                categoriesViewModel.modifyCategory(
                                     requireContext(),
                                     language,
                                     categoryName,
                                     itemId!!
                                 )
                             } else {
-                                categoriesAndExercisesViewModel.addNewCategory(
+                                categoriesViewModel.addNewCategory(
                                     requireContext(),
                                     language,
                                     categoryName
@@ -111,9 +112,9 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
                             AccessibilityUtils.createAccesibilityDelegate(language + newCategoryTxt.text.toString())
                         if(!newCategoryTxt.text.toString().isEmpty()) {
                             if (itemId != null) {
-                                categoriesAndExercisesViewModel.modifyExercise(requireContext(), itemId!!, language, exerciseName)
+                                categoriesAndExercisesViewModelJava.modifyExercise(requireContext(), itemId!!, language, exerciseName)
                             } else {
-                                categoriesAndExercisesViewModel.addNewExercise(requireContext(), language, exerciseName)
+                                categoriesAndExercisesViewModelJava.addNewExercise(requireContext(), language, exerciseName)
                             }
                         }
                         dismissAllowingStateLoss()

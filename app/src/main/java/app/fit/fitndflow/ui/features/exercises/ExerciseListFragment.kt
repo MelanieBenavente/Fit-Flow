@@ -11,7 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.model.ExerciseModel
-import app.fit.fitndflow.ui.features.categories.CategoriesAndExercisesViewModel
+import app.fit.fitndflow.ui.features.categories.CategoriesAndExercisesViewModelJava
+import app.fit.fitndflow.ui.features.categories.CategoriesViewModel
 import app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment
 import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog
 import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog.Companion.TYPE_EXERCISE
@@ -24,9 +25,21 @@ import com.fit.fitndflow.databinding.FragmentExercisesListBinding
 
 class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallbackDelete {
 
+    companion object {
+        val KEY_CATEGORY = "actualCategory"
+    fun newInstance(category: CategoryModel): ExerciseListFragment {
+        val exerciseListFragment = ExerciseListFragment()
+        val bundle = Bundle()
+        bundle.putSerializable(KEY_CATEGORY, category)
+        exerciseListFragment.arguments = bundle
+        return exerciseListFragment
+    }
+}
+
     private lateinit var binding: FragmentExercisesListBinding
     private lateinit var exercisesAdapter: ExercisesAdapter
-    private val categoriesAndExercisesViewModel: CategoriesAndExercisesViewModel by activityViewModels()
+    private val categoriesAndExercisesViewModel: CategoriesAndExercisesViewModelJava by activityViewModels()
+    private val category: CategoryModel by lazy { requireArguments().getSerializable(KEY_CATEGORY) as CategoryModel}
     private var isEditMode: Boolean = false
 
     override fun onCreateView(
@@ -45,9 +58,7 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViewModelObservers()//todo este será substituido por attachObservers()
-        categoriesAndExercisesViewModel.actualCategory.value?.let {
-            printCategoryDetailAndInstantiateAdapter(it)
-        }
+        printCategoryDetailAndInstantiateAdapter(category)
     }
 
     private fun setViewModelObservers() {
@@ -120,9 +131,7 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
             override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 charSequence?.let { searchText ->
                     val filteredList = mutableListOf<ExerciseModel>()
-                    val category: CategoryModel? =
-                        categoriesAndExercisesViewModel.actualCategory.value
-                    val exerciseList: List<ExerciseModel> = category!!.exerciseList!!
+                    val exerciseList: List<ExerciseModel> = category.exerciseList!!
                     exerciseList.forEach { exercise ->
                         if (exercise.name.contains(searchText, ignoreCase = true)) {
                             filteredList.add(exercise)

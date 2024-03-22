@@ -18,8 +18,8 @@ import app.fit.fitndflow.data.dto.trainings.AddSerieRequestDto;
 import app.fit.fitndflow.data.dto.trainings.AddSerieResponseDto;
 import app.fit.fitndflow.data.dto.trainings.SerieDto;
 import app.fit.fitndflow.data.dto.trainings.SerieForAddSerieRequestDto;
+import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.CategoryModel;
-import app.fit.fitndflow.domain.model.CategoryModelInLanguages;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.model.ExerciseModelInLanguages;
 import app.fit.fitndflow.domain.model.SerieModel;
@@ -29,7 +29,6 @@ import app.fit.fitndflow.domain.model.mapper.ExerciseModelMapperKt;
 import app.fit.fitndflow.domain.model.mapper.SerieModelMapperKt;
 import app.fit.fitndflow.domain.model.mapper.UserModelMapperKt;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
-import app.fit.fitndflow.domain.usecase.AddSerieUseCaseParams;
 import retrofit2.Response;
 
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
@@ -92,10 +91,12 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return availableCategoryListCachedResponse;
     }
     @Override
-    public List<CategoryModel> addNewCategory(StringInLanguagesDto categoryName, String apiKey) throws Exception {
+    public List<CategoryModel> addNewCategory(String categoryName, String language, String apiKey) throws Exception {
+        StringInLanguagesDto stringInLanguages = Utils.convertToStringInLanguages(language, categoryName);
+        AddCategoryDto addCategoryDto = new AddCategoryDto(stringInLanguages);
+
         try {
 
-            AddCategoryDto addCategoryDto = new AddCategoryDto(categoryName);
             Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().addNewCategory(addCategoryDto, apiKey).execute();
 
             if (response != null && !response.isSuccessful()) {
@@ -114,9 +115,11 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public List<CategoryModel> modifyCategory(CategoryModelInLanguages category, String apiKey) throws Exception {
+    public List<CategoryModel> modifyCategory(String categoryName, String language, int categoryId, String imageUrl, String apiKey) throws Exception {
+        StringInLanguagesDto stringInLanguages = Utils.convertToStringInLanguages(language, categoryName);
+        ModifyCategoryDto modifyCategoryDto = new ModifyCategoryDto(categoryId, stringInLanguages, "");
+
         try {
-            ModifyCategoryDto modifyCategoryDto = new ModifyCategoryDto(category.getId(), category.getName(), category.getImageUrl());
             Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().modifyCategory(modifyCategoryDto, apiKey).execute();
 
             if (response != null && !response.isSuccessful()) {

@@ -1,6 +1,5 @@
 package app.fit.fitndflow.domain;
 
-import static app.fit.fitndflow.domain.usecase.AddCategoryUseCase.SPANISH;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,7 +8,7 @@ import java.util.Date;
 import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 
 public class Utils {
-
+    public static final String SPANISH = "es";
     private static final String ENGLISH_FORMAT = "yyyy/MM/dd";
     private static final String SPANISH_FORMAT = "dd/MM/yyyy";
     public static String getSpanishFormatDate(Date date) {

@@ -12,15 +12,13 @@ import app.fit.fitndflow.domain.common.arq.FitRxObserver;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
-import app.fit.fitndflow.domain.usecase.AddCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.AddExerciseUseCase;
 import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.DeleteExerciseUseCase;
-import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase;
 import app.fit.fitndflow.domain.usecase.ModifyCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.ModifyExerciseUseCase;
 
-public class CategoriesAndExercisesViewModel extends ViewModel {
+public class CategoriesAndExercisesViewModelJava extends ViewModel {
     private FitnFlowRepository fitnFlowRepository = FitnFlowRepositoryImpl.getInstance();
     private MutableLiveData<CategoryModel> actualCategory = new MutableLiveData<>();
     private MutableLiveData<List<CategoryModel>> mutableCategoryList = new MutableLiveData<>();
@@ -72,55 +70,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
     /*End Getters*
      *
      * */
-    public void requestCategoriesFromModel(Context context) {
-            GetCategoriesUseCase getCategoriesUseCase = new GetCategoriesUseCase(context, fitnFlowRepository);
-        getCategoriesUseCase.execute(new FitRxObserver<List<CategoryModel>>() {
-            @Override
-            protected void onStart() {
-                super.onStart();
-                mutableFullScreenError.setValue(false);
-                isLoading.setValue(true);
-            }
 
-            @Override
-            public void onSuccess(List<CategoryModel> categoryModels) {
-                mutableCategoryList.setValue(categoryModels);
-                mutableFullScreenError.setValue(false);
-                isLoading.setValue(false);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                mutableFullScreenError.setValue(true);
-                isLoading.setValue(false);
-            }
-        });
-    }
-
-    public void modifyCategory(Context context, String language, String categoryName, int id){
-        new ModifyCategoryUseCase(context, language, categoryName, id, fitnFlowRepository).execute(new FitRxObserver<List<CategoryModel>>() {
-            @Override
-            protected void onStart() {
-                super.onStart();
-                isLoading.setValue(true);
-                mutableSlideError.setValue(false);
-                isSaveSuccess.setValue(false);
-            }
-            @Override
-            public void onSuccess(List<CategoryModel> categoryModelList) {
-                mutableCategoryList.setValue(categoryModelList);
-                isLoading.setValue(false);
-                isSaveSuccess.setValue(true);
-                mutableSlideError.setValue(false);
-            }
-            @Override
-            public void onError(Throwable e) {
-                mutableSlideError.setValue(true);
-                isLoading.setValue(false);
-                isSaveSuccess.setValue(false);
-            }
-        });
-    }
     public void modifyExercise(Context context, int exerciseId, String language, String exerciseName){
         new ModifyExerciseUseCase(context, exerciseId, language, exerciseName, actualCategory.getValue().getId(), fitnFlowRepository).execute(new FitRxObserver<List<ExerciseModel>>() {
             @Override
@@ -149,34 +99,7 @@ public class CategoriesAndExercisesViewModel extends ViewModel {
         });
     }
 
-    public void addNewCategory(Context context, String language, String nameCategory){
-        new AddCategoryUseCase(context, language, nameCategory, fitnFlowRepository). execute(new FitRxObserver<List<CategoryModel>>() {
 
-            @Override
-            protected void onStart() {
-                super.onStart();
-                isLoading.setValue(true);
-                isSaveSuccess.setValue(false);
-                mutableSlideError.setValue(false);
-            }
-            @Override
-            public void onSuccess(List<CategoryModel> categoryModelList) {
-                mutableCategoryList.setValue(categoryModelList);
-                isLoading.setValue(false);
-                isSaveSuccess.setValue(true);
-                mutableSlideError.setValue(false);
-                lastName = null;
-
-            }
-            @Override
-            public void onError(Throwable e) {
-                mutableSlideError.setValue(true);
-                isLoading.setValue(false);
-                isSaveSuccess.setValue(false);
-                lastName = nameCategory;
-            }
-        });
-    }
     public void addNewExercise(Context context, String language, String nameExercise){
         new AddExerciseUseCase(context, language, nameExercise, actualCategory.getValue().getId(), fitnFlowRepository).execute(new FitRxObserver<List<ExerciseModel>>() {
             @Override

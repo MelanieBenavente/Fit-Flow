@@ -14,7 +14,7 @@ import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import io.reactivex.Single;
 
 public class AddExerciseUseCase extends FitUseCase<ExerciseModelInLanguages, List<ExerciseModel>> {
-    public static final String SPANISH = "es";
+
     private FitnFlowRepository fitnFlowRepository;
     private Context context;
 
