@@ -1,4 +1,4 @@
-package app.fit.fitndflow.ui.features.categories;
+package app.fit.fitndflow.ui.features.exercises;
 
 import android.content.Context;
 
@@ -13,12 +13,10 @@ import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import app.fit.fitndflow.domain.usecase.AddExerciseUseCase;
-import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.DeleteExerciseUseCase;
-import app.fit.fitndflow.domain.usecase.ModifyCategoryUseCase;
 import app.fit.fitndflow.domain.usecase.ModifyExerciseUseCase;
 
-public class CategoriesAndExercisesViewModelJava extends ViewModel {
+public class ExercisesViewModel extends ViewModel {
     private FitnFlowRepository fitnFlowRepository = FitnFlowRepositoryImpl.getInstance();
     private MutableLiveData<CategoryModel> actualCategory = new MutableLiveData<>();
     private MutableLiveData<List<CategoryModel>> mutableCategoryList = new MutableLiveData<>();

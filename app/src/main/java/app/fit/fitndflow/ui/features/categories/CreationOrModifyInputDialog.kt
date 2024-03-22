@@ -9,6 +9,7 @@ import androidx.viewbinding.ViewBinding
 import app.fit.fitndflow.ui.features.common.AccessibilityUtils
 import app.fit.fitndflow.ui.features.common.BorderType
 import app.fit.fitndflow.ui.features.common.CommonDialogFragment
+import app.fit.fitndflow.ui.features.exercises.ExercisesViewModel
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.DialogCreationInputBinding
 
@@ -49,7 +50,7 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
     }
 
     private val categoriesViewModel: CategoriesViewModel by activityViewModels()
-    private val categoriesAndExercisesViewModelJava: CategoriesAndExercisesViewModelJava by activityViewModels()
+    private val exercisesViewModel: ExercisesViewModel by activityViewModels()
     private lateinit var binding: DialogCreationInputBinding
     private val createType: Int by lazy { requireArguments().getSerializable(KEY_TYPE) as Int }
     private val itemId: Int? by lazy { requireArguments().getSerializable(KEY_ID) as? Int? }
@@ -112,9 +113,9 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
                             AccessibilityUtils.createAccesibilityDelegate(language + newCategoryTxt.text.toString())
                         if(!newCategoryTxt.text.toString().isEmpty()) {
                             if (itemId != null) {
-                                categoriesAndExercisesViewModelJava.modifyExercise(requireContext(), itemId!!, language, exerciseName)
+                                exercisesViewModel.modifyExercise(requireContext(), itemId!!, language, exerciseName)
                             } else {
-                                categoriesAndExercisesViewModelJava.addNewExercise(requireContext(), language, exerciseName)
+                                exercisesViewModel.addNewExercise(requireContext(), language, exerciseName)
                             }
                         }
                         dismissAllowingStateLoss()

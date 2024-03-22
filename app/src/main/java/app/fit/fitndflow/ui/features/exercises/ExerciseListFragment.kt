@@ -11,8 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.model.ExerciseModel
-import app.fit.fitndflow.ui.features.categories.CategoriesAndExercisesViewModelJava
-import app.fit.fitndflow.ui.features.categories.CategoriesViewModel
 import app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment
 import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog
 import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog.Companion.TYPE_EXERCISE
@@ -38,7 +36,7 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
 
     private lateinit var binding: FragmentExercisesListBinding
     private lateinit var exercisesAdapter: ExercisesAdapter
-    private val categoriesAndExercisesViewModel: CategoriesAndExercisesViewModelJava by activityViewModels()
+    private val exercisesViewModel: ExercisesViewModel by activityViewModels()
     private val category: CategoryModel by lazy { requireArguments().getSerializable(KEY_CATEGORY) as CategoryModel}
     private var isEditMode: Boolean = false
 
@@ -62,21 +60,21 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
     }
 
     private fun setViewModelObservers() {
-        categoriesAndExercisesViewModel.mutableSlideError.value = false
-        categoriesAndExercisesViewModel.isLoading.value = false
+        exercisesViewModel.mutableSlideError.value = false
+        exercisesViewModel.isLoading.value = false
 
         val categoryObserver = Observer<CategoryModel> { category ->
             exercisesAdapter.setExerciseModelList(category.exerciseList)
         }
-        categoriesAndExercisesViewModel.actualCategory.observe(viewLifecycleOwner, categoryObserver)
+        exercisesViewModel.actualCategory.observe(viewLifecycleOwner, categoryObserver)
 
         val slideErrorObserver = Observer<Boolean> { isError ->
             if (isError) {
                 showSlideError()
-                categoriesAndExercisesViewModel.mutableSlideError.value = false
+                exercisesViewModel.mutableSlideError.value = false
             }
         }
-        categoriesAndExercisesViewModel.mutableSlideError.observe(
+        exercisesViewModel.mutableSlideError.observe(
             viewLifecycleOwner,
             slideErrorObserver
         )
@@ -84,10 +82,10 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
         val fullScreenErrorObserver = Observer<Boolean> { isError ->
             if (isError) {
                 showBlockError()
-                categoriesAndExercisesViewModel.mutableFullScreenError.value = false
+                exercisesViewModel.mutableFullScreenError.value = false
             }
         }
-        categoriesAndExercisesViewModel.mutableFullScreenError.observe(
+        exercisesViewModel.mutableFullScreenError.observe(
             viewLifecycleOwner,
             fullScreenErrorObserver
         )
@@ -95,10 +93,10 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
         val savedSuccessOberver = Observer<Boolean> { isSaved ->
             if (isSaved) {
                 showSlideSaved()
-                categoriesAndExercisesViewModel.isSaveSuccess.value = false
+                exercisesViewModel.isSaveSuccess.value = false
             }
         }
-        categoriesAndExercisesViewModel.isSaveSuccess.observe(
+        exercisesViewModel.isSaveSuccess.observe(
             viewLifecycleOwner,
             savedSuccessOberver
         )
@@ -110,7 +108,7 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
                 hideLoading()
             }
         }
-        categoriesAndExercisesViewModel.isLoading.observe(viewLifecycleOwner, observerLoading)
+        exercisesViewModel.isLoading.observe(viewLifecycleOwner, observerLoading)
     }
 
     private fun printCategoryDetailAndInstantiateAdapter(categoryRecived: CategoryModel) {
@@ -162,7 +160,7 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
     }
 
     override fun onClickAcceptDelete(exerciseId: Int) {
-        categoriesAndExercisesViewModel.deleteExercise(exerciseId, requireContext())
+        exercisesViewModel.deleteExercise(exerciseId, requireContext())
     }
 
     override fun showSeries(exercise: ExerciseModel) {
