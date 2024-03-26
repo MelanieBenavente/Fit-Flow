@@ -21,7 +21,6 @@ import app.fit.fitndflow.data.dto.trainings.SerieForAddSerieRequestDto;
 import app.fit.fitndflow.domain.Utils;
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
-import app.fit.fitndflow.domain.model.ExerciseModelInLanguages;
 import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.model.UserModel;
 import app.fit.fitndflow.domain.model.mapper.CategoryModelMapperKt;
@@ -158,10 +157,12 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return availableCategoryListCachedResponse;
     }
    @Override
-    public List<ExerciseModel> addNewExercise(StringInLanguagesDto exerciseName, int categoryId, String apiKey) throws Exception {
+    public List<ExerciseModel> addNewExercise(String exerciseName, String language, int categoryId, String apiKey) throws Exception {
+       StringInLanguagesDto stringInLanguages = Utils.convertToStringInLanguages(language, exerciseName);
+       AddExerciseDto addExerciseDto = new AddExerciseDto(stringInLanguages, categoryId);
        List<ExerciseModel> availableExerciseListResponse;
         try {
-            AddExerciseDto addExerciseDto = new AddExerciseDto(exerciseName, categoryId);
+
             Response<List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().addNewExercise(addExerciseDto, apiKey).execute();
 
             if (response != null && !response.isSuccessful()) {
@@ -179,10 +180,11 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return availableExerciseListResponse;
     }
     @Override
-    public List<ExerciseModel> modifyExercise(ExerciseModelInLanguages exercise, String apiKey) throws Exception {
+    public List<ExerciseModel> modifyExercise(int exerciseId, String exerciseName, String language, int categoryId, String apiKey) throws Exception {
+        StringInLanguagesDto stringInLanguages = Utils.convertToStringInLanguages(language, exerciseName);
+        ModifyExerciseDto modifyExerciseDto = new ModifyExerciseDto(exerciseId, stringInLanguages, categoryId);
         List<ExerciseModel> availableExerciseListResponse;
         try {
-            ModifyExerciseDto modifyExerciseDto = new ModifyExerciseDto(exercise.getId(), exercise.getName(), exercise.getCategoryId());
             Response <List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().modifyExercise(modifyExerciseDto, apiKey).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());

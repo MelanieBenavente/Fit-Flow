@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.model.ExerciseModel
@@ -20,24 +20,26 @@ import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.FragmentExercisesListBinding
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallbackDelete {
 
     companion object {
         val KEY_CATEGORY = "actualCategory"
-    fun newInstance(category: CategoryModel): ExerciseListFragment {
-        val exerciseListFragment = ExerciseListFragment()
-        val bundle = Bundle()
-        bundle.putSerializable(KEY_CATEGORY, category)
-        exerciseListFragment.arguments = bundle
-        return exerciseListFragment
+        fun newInstance(category: CategoryModel): ExerciseListFragment {
+            val exerciseListFragment = ExerciseListFragment()
+            val bundle = Bundle()
+            bundle.putSerializable(KEY_CATEGORY, category)
+            exerciseListFragment.arguments = bundle
+            return exerciseListFragment
+        }
     }
-}
 
     private lateinit var binding: FragmentExercisesListBinding
     private lateinit var exercisesAdapter: ExercisesAdapter
     private val exercisesViewModel: ExercisesViewModel by activityViewModels()
-    private val category: CategoryModel by lazy { requireArguments().getSerializable(KEY_CATEGORY) as CategoryModel}
+    private val category: CategoryModel by lazy { requireArguments().getSerializable(KEY_CATEGORY) as CategoryModel }
     private var isEditMode: Boolean = false
 
     override fun onCreateView(
@@ -55,69 +57,94 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setViewModelObservers()//todo este será substituido por attachObservers()
-        printCategoryDetailAndInstantiateAdapter(category)
+        attachObservers()
+        binding.categoryTitle.setText(category.name)
+        category.exerciseList?.let { instantiateExercisesAdapter(it) }
     }
 
-    private fun setViewModelObservers() {
-        exercisesViewModel.mutableSlideError.value = false
-        exercisesViewModel.isLoading.value = false
+    private fun attachObservers() {
+        exercisesViewModel.state.onEach(::handleState).launchIn(viewLifecycleOwner.lifecycleScope)
+    }
 
-        val categoryObserver = Observer<CategoryModel> { category ->
-            exercisesAdapter.setExerciseModelList(category.exerciseList)
-        }
-        exercisesViewModel.actualCategory.observe(viewLifecycleOwner, categoryObserver)
-
-        val slideErrorObserver = Observer<Boolean> { isError ->
-            if (isError) {
-                showSlideError()
-                exercisesViewModel.mutableSlideError.value = false
-            }
-        }
-        exercisesViewModel.mutableSlideError.observe(
-            viewLifecycleOwner,
-            slideErrorObserver
-        )
-
-        val fullScreenErrorObserver = Observer<Boolean> { isError ->
-            if (isError) {
-                showBlockError()
-                exercisesViewModel.mutableFullScreenError.value = false
-            }
-        }
-        exercisesViewModel.mutableFullScreenError.observe(
-            viewLifecycleOwner,
-            fullScreenErrorObserver
-        )
-
-        val savedSuccessOberver = Observer<Boolean> { isSaved ->
-            if (isSaved) {
+    private fun handleState(state: ExercisesViewModel.State) {
+        when (state) {
+            is ExercisesViewModel.State.ExerciseListRecived -> {
+                printExercises(state.exerciseList.toMutableList())
                 showSlideSaved()
-                exercisesViewModel.isSaveSuccess.value = false
-            }
-        }
-        exercisesViewModel.isSaveSuccess.observe(
-            viewLifecycleOwner,
-            savedSuccessOberver
-        )
-
-        val observerLoading = Observer<Boolean> { isLoading ->
-            if (isLoading) {
-                showLoading()
-            } else {
                 hideLoading()
             }
+
+            ExercisesViewModel.State.SlideError -> {
+                hideLoading()
+                showSlideError()
+            }
+
+            ExercisesViewModel.State.Loading -> {
+                showLoading()
+            }
         }
-        exercisesViewModel.isLoading.observe(viewLifecycleOwner, observerLoading)
+
+//        exercisesViewModel.mutableSlideError.value = false
+//        exercisesViewModel.isLoading.value = false
+//
+//        val categoryObserver = Observer<CategoryModel> { category ->
+//            exercisesAdapter.setExerciseModelList(category.exerciseList)
+//        }
+//        exercisesViewModel.actualCategory.observe(viewLifecycleOwner, categoryObserver)
+//
+//        val slideErrorObserver = Observer<Boolean> { isError ->
+//            if (isError) {
+//                showSlideError()
+//                exercisesViewModel.mutableSlideError.value = false
+//            }
+//        }
+//        exercisesViewModel.mutableSlideError.observe(
+//            viewLifecycleOwner,
+//            slideErrorObserver
+//        )
+//
+//        val fullScreenErrorObserver = Observer<Boolean> { isError ->
+//            if (isError) {
+//                showBlockError()
+//                exercisesViewModel.mutableFullScreenError.value = false
+//            }
+//        }
+//        exercisesViewModel.mutableFullScreenError.observe(
+//            viewLifecycleOwner,
+//            fullScreenErrorObserver
+//        )
+//
+//        val savedSuccessOberver = Observer<Boolean> { isSaved ->
+//            if (isSaved) {
+//                showSlideSaved()
+//                exercisesViewModel.isSaveSuccess.value = false
+//            }
+//        }
+//        exercisesViewModel.isSaveSuccess.observe(
+//            viewLifecycleOwner,
+//            savedSuccessOberver
+//        )
+//
+//        val observerLoading = Observer<Boolean> { isLoading ->
+//            if (isLoading) {
+//                showLoading()
+//            } else {
+//                hideLoading()
+//            }
+//        }
+//        exercisesViewModel.isLoading.observe(viewLifecycleOwner, observerLoading)
     }
 
-    private fun printCategoryDetailAndInstantiateAdapter(categoryRecived: CategoryModel) {
-        exercisesAdapter = ExercisesAdapter(categoryRecived.exerciseList, this)
+    private fun printExercises(exerciseListRecived: MutableList<ExerciseModel>){
+       category.exerciseList = exerciseListRecived
+       exercisesAdapter.setExerciseModelList(category.exerciseList)
+    }
+
+    private fun instantiateExercisesAdapter(exerciseListRecived: List<ExerciseModel>) {
+        exercisesAdapter = ExercisesAdapter(exerciseListRecived, this)
         binding.recyclerCategories.setHasFixedSize(true)
         binding.recyclerCategories.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerCategories.adapter = exercisesAdapter
-
-        binding.categoryTitle.setText(categoryRecived.name)
     }
 
     private fun addTextWatcher() {
@@ -147,9 +174,9 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
 
     private fun setOnClickListeners() {
         binding.apply {
-            floatingBtn.setOnClickListener{
+            floatingBtn.setOnClickListener {
                 isEditMode = !isEditMode
-                if(isEditMode){
+                if (isEditMode) {
                     floatingBtn.setImageResource(R.drawable.svg_check)
                 } else {
                     floatingBtn.setImageResource(R.drawable.svg_pencil)
@@ -159,12 +186,12 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
         }
     }
 
-    override fun onClickAcceptDelete(exerciseId: Int) {
-        exercisesViewModel.deleteExercise(exerciseId, requireContext())
+    override fun onClickAcceptDelete(exerciseId: Int) {         //todo!!!!!!!!!!!!!!!!!!!!
+       // exercisesViewModel.deleteExercise(exerciseId, requireContext())
     }
 
     override fun showSeries(exercise: ExerciseModel) {
-        if(exercise.id != 0){
+        if (exercise.id != 0) {
             addFragment(AddSerieTrainingFragment.newInstance(exercise))
         } else {
             showBlockError()
@@ -172,14 +199,17 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
     }
 
     override fun showCreationDialog() {
-        CreationOrModifyInputDialog.newInstance(TYPE_EXERCISE).show(childFragmentManager, CreationOrModifyInputDialog.TAG)
+        CreationOrModifyInputDialog.newInstance(TYPE_EXERCISE, category.id)
+            .show(childFragmentManager, CreationOrModifyInputDialog.TAG)
     }
 
     override fun showDeleteDialog(id: Int) {
-        ConfirmationDialogFragment.newInstance(this, ConfirmationDialogFragment.DELETE_EXERCISE, id).show(childFragmentManager, ConfirmationDialogFragment.TAG)
+        ConfirmationDialogFragment.newInstance(this, ConfirmationDialogFragment.DELETE_EXERCISE, id)
+            .show(childFragmentManager, ConfirmationDialogFragment.TAG)
     }
 
     override fun showModifyDialog(exerciseId: Int, exerciseName: String) {
-        CreationOrModifyInputDialog.newInstance(TYPE_EXERCISE, exerciseId, exerciseName).show(childFragmentManager, CreationOrModifyInputDialog.TAG)
+        CreationOrModifyInputDialog.newInstance(TYPE_EXERCISE, exerciseId, exerciseName, category.id)
+            .show(childFragmentManager, CreationOrModifyInputDialog.TAG)
     }
 }

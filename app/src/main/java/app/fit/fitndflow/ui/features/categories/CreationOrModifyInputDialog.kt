@@ -25,25 +25,28 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
         @JvmField
         val TAG = "CreationDialog"
         private val KEY_TYPE = "createType"
-        private val KEY_ID = "keyId"
-        private val KEY_NAME = "keyName"
+        private val CURRENT_ID = "keyId"
+        private val KEY_NAME = "keyExerciseName"
+        private val PARENT_ID = "idCategoryOfExercise"
 
         @JvmStatic
-        fun newInstance(createType: Int, id: Int, name: String): CreationOrModifyInputDialog {
+        fun newInstance(createType: Int, id: Int, name: String, categoryId: Int? = null): CreationOrModifyInputDialog {
             val modifyInputDialog = CreationOrModifyInputDialog()
             val bundle = Bundle()
             bundle.putInt(KEY_TYPE, createType)
-            bundle.putInt(KEY_ID, id)
+            bundle.putInt(CURRENT_ID, id)
             bundle.putString(KEY_NAME, name)
+            categoryId?.let { bundle.putInt(PARENT_ID, it) }
             modifyInputDialog.arguments = bundle
             return modifyInputDialog
         }
 
         @JvmStatic
-        fun newInstance(createType: Int): CreationOrModifyInputDialog {
+        fun newInstance(createType: Int, categoryId: Int? = null): CreationOrModifyInputDialog {
             val creationOrModifyInputDialog = CreationOrModifyInputDialog()
             val bundle = Bundle()
             bundle.putInt(KEY_TYPE, createType)
+            categoryId?.let { bundle.putInt(PARENT_ID, it) }
             creationOrModifyInputDialog.arguments = bundle
             return creationOrModifyInputDialog
         }
@@ -53,7 +56,8 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
     private val exercisesViewModel: ExercisesViewModel by activityViewModels()
     private lateinit var binding: DialogCreationInputBinding
     private val createType: Int by lazy { requireArguments().getSerializable(KEY_TYPE) as Int }
-    private val itemId: Int? by lazy { requireArguments().getSerializable(KEY_ID) as? Int? }
+    private val currentId: Int? by lazy { requireArguments().getSerializable(CURRENT_ID) as? Int? }
+    private val parentId: Int? by lazy { requireArguments().getSerializable(PARENT_ID) as? Int?}
     private val itemName: String? by lazy { requireArguments().getSerializable(KEY_NAME) as? String? }
 
     override fun onCreateView(
@@ -66,7 +70,7 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
         return view
     }
     private fun printNameIfExists() {
-        if (itemId != null) {
+        if (currentId != null) {
             binding.newCategoryTxt.setText(itemName)
         } else if (categoriesViewModel.lastName != null) {
             binding.newCategoryTxt.setText(categoriesViewModel.lastName)
@@ -85,12 +89,12 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
                         newCategoryTxt.accessibilityDelegate =
                             AccessibilityUtils.createAccesibilityDelegate(language + newCategoryTxt.text.toString())
                         if (!newCategoryTxt.text.toString().isEmpty()) {
-                            if (itemId != null) {
+                            if (currentId != null) {
                                 categoriesViewModel.modifyCategory(
                                     requireContext(),
                                     language,
                                     categoryName,
-                                    itemId!!
+                                    currentId!!
                                 )
                             } else {
                                 categoriesViewModel.addNewCategory(
@@ -112,10 +116,10 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
                         newCategoryTxt.accessibilityDelegate =
                             AccessibilityUtils.createAccesibilityDelegate(language + newCategoryTxt.text.toString())
                         if(!newCategoryTxt.text.toString().isEmpty()) {
-                            if (itemId != null) {
-                                exercisesViewModel.modifyExercise(requireContext(), itemId!!, language, exerciseName)
+                            if (currentId != null) { //todo!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                exercisesViewModel.modifyExercise(requireContext(), exerciseName, language, currentId!!, parentId!!)
                             } else {
-                                exercisesViewModel.addNewExercise(requireContext(), language, exerciseName)
+                                exercisesViewModel.addNewExercise(requireContext(), language, exerciseName, parentId!!)
                             }
                         }
                         dismissAllowingStateLoss()
