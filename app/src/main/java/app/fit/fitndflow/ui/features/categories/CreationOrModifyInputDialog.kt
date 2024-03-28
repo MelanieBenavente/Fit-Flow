@@ -12,9 +12,11 @@ import app.fit.fitndflow.ui.features.common.CommonDialogFragment
 import app.fit.fitndflow.ui.features.exercises.ExercisesViewModel
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.DialogCreationInputBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CreationOrModifyInputDialog : CommonDialogFragment() {
-
+//todo revisar jvm y quitarlos si no se usan desde java
     companion object {
         @JvmField
         val TYPE_CATEGORY = 1
@@ -91,14 +93,12 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
                         if (!newCategoryTxt.text.toString().isEmpty()) {
                             if (currentId != null) {
                                 categoriesViewModel.modifyCategory(
-                                    requireContext(),
                                     language,
                                     categoryName,
                                     currentId!!
                                 )
                             } else {
                                 categoriesViewModel.addNewCategory(
-                                    requireContext(),
                                     language,
                                     categoryName
                                 )
@@ -117,9 +117,9 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
                             AccessibilityUtils.createAccesibilityDelegate(language + newCategoryTxt.text.toString())
                         if(!newCategoryTxt.text.toString().isEmpty()) {
                             if (currentId != null) {
-                                exercisesViewModel.modifyExercise(requireContext(), exerciseName, language, currentId!!, parentId!!)
+                                exercisesViewModel.modifyExercise(exerciseName, language, currentId!!, parentId!!)
                             } else {
-                                exercisesViewModel.addNewExercise(requireContext(), language, exerciseName, parentId!!)
+                                exercisesViewModel.addNewExercise(language, exerciseName, parentId!!)
                             }
                         }
                         dismissAllowingStateLoss()

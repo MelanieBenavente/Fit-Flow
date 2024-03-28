@@ -7,12 +7,12 @@ import app.fit.fitndflow.domain.model.ExerciseModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class AddExerciseUseCase(val fitnFlowRepository: FitnFlowRepository, val context: Context) : UseCase<AddExerciseUseCaseParams, List<ExerciseModel>>() {
+class AddExerciseUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRepository) : UseCase<AddExerciseUseCaseParams, List<ExerciseModel>>() {
     override fun run(params: AddExerciseUseCaseParams): Flow<List<ExerciseModel>>  = flow {
-        val apiKey = SharedPrefs.getApikeyFromSharedPRefs(context)
-        val newExercise = fitnFlowRepository.addNewExercise(params.name, params.language, params.categoryId, apiKey)
-        fitnFlowRepository.updateCurrentTrainingListCache(apiKey)
+        val newExercise = fitnFlowRepository.addNewExercise(params.name, params.language, params.categoryId)
+        fitnFlowRepository.updateCurrentTrainingListCache()
         emit(newExercise)
     }
 }

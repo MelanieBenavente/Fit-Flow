@@ -5,14 +5,15 @@ import app.fit.fitndflow.data.common.SharedPrefs
 import app.fit.fitndflow.domain.common.usecase.UseCase
 import app.fit.fitndflow.domain.model.SerieModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class DeleteSerieUseCase(val fitnFlowRepository: FitnFlowRepository, val context: Context): UseCase<GetSerieToDeleteParams, List<SerieModel>>(){
+class DeleteSerieUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRepository): UseCase<GetSerieToDeleteParams, List<SerieModel>>(){
     override fun run(params: GetSerieToDeleteParams): Flow<List<SerieModel>> = flow {
-        val apiKey = SharedPrefs.getApikeyFromSharedPRefs(context)
-        val serieDeleted = fitnFlowRepository.deleteSerie(params.serieId, apiKey)
-        fitnFlowRepository.updateCurrentTrainingListCache(apiKey)
+        val serieDeleted = fitnFlowRepository.deleteSerie(params.serieId)
+        fitnFlowRepository.updateCurrentTrainingListCache()
         emit(serieDeleted)
     }
 }

@@ -13,6 +13,7 @@ import app.fit.fitndflow.domain.usecase.GetTrainingUseCase
 import app.fit.fitndflow.domain.usecase.GetTrainingUseCaseParams
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCase
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCaseParams
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
@@ -21,12 +22,17 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val registerUserUseCase: RegisterUserUseCase,
+    private val getTrainingUseCase: GetTrainingUseCase
+
+) : ViewModel() {
     private val _state = MutableSharedFlow<State>()
     val state = _state.asSharedFlow()
     private var date: Date = Date()
-    private val fitnFlowRepository: FitnFlowRepository = FitnFlowRepositoryImpl.getInstance()
 
     fun dayBefore() {
         val calendar: Calendar = Calendar.getInstance()
@@ -52,12 +58,10 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch { _state.emit(State.CurrentDateChanged(date)) }
     }
 
-    fun requestRegisterEmptyUser(
-        context: Context) {
-        val emptyUserModel = RegisterUserUseCase(fitnFlowRepository, context)
+    fun requestRegisterEmptyUser() {
         val params = RegisterUserUseCaseParams(null, null, null)
         viewModelScope.launch {
-            emptyUserModel(params)
+            registerUserUseCase(params)
                 .onStart { _state.emit(State.Loading) }
                 .catch { _state.emit(State.FullScreenError) }
                 .collect { _state.emit(State.RegisterCompleted) }
@@ -65,9 +69,8 @@ class HomeViewModel : ViewModel() {
     }
 
 
-    fun requestTrainingFromModel(context: Context) {
+    fun requestTrainingFromModel() {
         val date: String = Utils.getEnglishFormatDate(date)
-        val getTrainingUseCase = GetTrainingUseCase(fitnFlowRepository, context)
         val params = GetTrainingUseCaseParams(date)
         viewModelScope.launch {
             getTrainingUseCase(params)

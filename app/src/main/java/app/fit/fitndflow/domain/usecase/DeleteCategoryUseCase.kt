@@ -7,12 +7,12 @@ import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class DeleteCategoryUseCase(val fitnFlowRepository: FitnFlowRepository, val context: Context) : UseCase<GetCategoryToDeleteParams, List<CategoryModel>>() {
+class DeleteCategoryUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRepository) : UseCase<GetCategoryToDeleteParams, List<CategoryModel>>() {
     override fun run(params: GetCategoryToDeleteParams): Flow<List<CategoryModel>> = flow {
-        val apiKey = SharedPrefs.getApikeyFromSharedPRefs(context)
-        val categoryToDelete = fitnFlowRepository.deleteCategory(params.categoryId, apiKey)
-        fitnFlowRepository.updateCurrentTrainingListCache(apiKey)
+        val categoryToDelete = fitnFlowRepository.deleteCategory(params.categoryId)
+        fitnFlowRepository.updateCurrentTrainingListCache()
         emit(categoryToDelete)
     }
 }

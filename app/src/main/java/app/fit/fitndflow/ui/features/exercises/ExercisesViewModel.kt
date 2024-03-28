@@ -12,20 +12,26 @@ import app.fit.fitndflow.domain.usecase.DeleteExerciseUseCase
 import app.fit.fitndflow.domain.usecase.ExerciseModelInLanguages
 import app.fit.fitndflow.domain.usecase.ExerciseToDeleteParams
 import app.fit.fitndflow.domain.usecase.ModifyExerciseUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ExercisesViewModel : ViewModel() {
+@HiltViewModel
+class ExercisesViewModel @Inject constructor(
+    private val addExerciseUseCase: AddExerciseUseCase,
+    private val modifyExerciseUseCase: ModifyExerciseUseCase,
+    private val deleteExerciseUseCase: DeleteExerciseUseCase
+
+) : ViewModel() {
     private val _state = MutableSharedFlow<State>()
     val state = _state.asSharedFlow()
     var lastName: String? = null
-    private val fitnFlowRepository: FitnFlowRepository = FitnFlowRepositoryImpl.getInstance()
 
-    fun addNewExercise(context: Context, language: String, nameExercise: String, categoryId: Int){
-        val addExerciseUseCase = AddExerciseUseCase(fitnFlowRepository, context)
+    fun addNewExercise(language: String, nameExercise: String, categoryId: Int){
         val params = AddExerciseUseCaseParams(nameExercise, language, categoryId)
         viewModelScope.launch {
             addExerciseUseCase(params)
@@ -40,8 +46,7 @@ class ExercisesViewModel : ViewModel() {
                 }
         }
     }
-    fun modifyExercise(context: Context, nameExercise: String, language: String, exerciseId: Int, categoryId: Int){
-        val modifyExerciseUseCase = ModifyExerciseUseCase(fitnFlowRepository, context)
+    fun modifyExercise(nameExercise: String, language: String, exerciseId: Int, categoryId: Int){
         val params = ExerciseModelInLanguages(exerciseId, nameExercise, language, categoryId)
         viewModelScope.launch {
             modifyExerciseUseCase(params)
@@ -52,8 +57,7 @@ class ExercisesViewModel : ViewModel() {
         }
     }
 
-    fun deleteExercise(context: Context, exerciseId: Int){
-        val deleteExerciseUseCase = DeleteExerciseUseCase(fitnFlowRepository, context)
+    fun deleteExercise(exerciseId: Int){
         val params = ExerciseToDeleteParams(exerciseId)
         viewModelScope.launch {
             deleteExerciseUseCase(params)

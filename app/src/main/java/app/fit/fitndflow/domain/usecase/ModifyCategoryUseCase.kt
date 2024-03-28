@@ -5,14 +5,15 @@ import app.fit.fitndflow.data.common.SharedPrefs
 import app.fit.fitndflow.domain.common.usecase.UseCase
 import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class ModifyCategoryUseCase(val fitnFlowRepository: FitnFlowRepository, val context: Context) : UseCase<CategoryModelInLanguages, List<CategoryModel>>(){
+class ModifyCategoryUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRepository) : UseCase<CategoryModelInLanguages, List<CategoryModel>>(){
     override fun run(params: CategoryModelInLanguages): Flow<List<CategoryModel>> = flow {
-        val apiKey = SharedPrefs.getApikeyFromSharedPRefs(context)
-        val categoryModified = fitnFlowRepository.modifyCategory(params.name, params.language, params.id, params.imageUrl, apiKey)
-        fitnFlowRepository.updateCurrentTrainingListCache(apiKey)
+        val categoryModified = fitnFlowRepository.modifyCategory(params.name, params.language, params.id, params.imageUrl)
+        fitnFlowRepository.updateCurrentTrainingListCache()
         emit(categoryModified)
     }
 }

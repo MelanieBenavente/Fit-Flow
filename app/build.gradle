@@ -5,6 +5,9 @@ plugins {
     id 'com.google.firebase.crashlytics'
     // Add the Google services Gradle plugin
     id 'com.google.gms.google-services'
+    // Dagger-Hilt
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -82,4 +85,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
 
+    // Dagger-Hilt
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+}
+// Allow references to generated code (dagger-hilt)
+kapt {
+    correctErrorTypes true
 }

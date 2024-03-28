@@ -9,7 +9,9 @@ import app.fit.fitndflow.ui.features.common.BorderType
 import app.fit.fitndflow.ui.features.common.CommonDialogFragment
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.DialogConfirmationFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ConfirmationDialogFragment: CommonDialogFragment() {
 
     companion object {

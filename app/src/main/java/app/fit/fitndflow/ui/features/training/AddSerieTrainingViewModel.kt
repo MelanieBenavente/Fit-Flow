@@ -14,19 +14,27 @@ import app.fit.fitndflow.domain.usecase.GetSerieAddedUseCase
 import app.fit.fitndflow.domain.usecase.GetSerieToDeleteParams
 import app.fit.fitndflow.domain.usecase.ModifySerieUseCaseParams
 import app.fit.fitndflow.domain.usecase.ModifyTrainingUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddSerieTrainingViewModel : ViewModel() {
+@HiltViewModel
+class AddSerieTrainingViewModel @Inject constructor(
+    private val addSerieUseCase: AddSerieUseCase,
+    private val modifyTrainingUseCase: ModifyTrainingUseCase,
+    private val getSerieAddedUseCase: GetSerieAddedUseCase,
+    private val deleteSerieUseCase: DeleteSerieUseCase
+
+) : ViewModel() {
     private val _state = MutableSharedFlow<State>()
     val state = _state.asSharedFlow()
-    private val fitnFlowRepository: FitnFlowRepository = FitnFlowRepositoryImpl.getInstance()
 
-    fun addNewSerie(context: Context, reps: Int, kg: Double, idExercise: Int) {
-        val addSerieUseCase = AddSerieUseCase(fitnFlowRepository, context)
+
+    fun addNewSerie(reps: Int, kg: Double, idExercise: Int) {
         val params = AddSerieUseCaseParams(reps, kg, idExercise)
         viewModelScope.launch {
             addSerieUseCase(params)
@@ -36,8 +44,7 @@ class AddSerieTrainingViewModel : ViewModel() {
         }
     }
 
-    fun modifySerie(context: Context, serieId: Int, reps: Int, weight: Double, exerciseId: Int) {
-        val modifyTrainingUseCase = ModifyTrainingUseCase(fitnFlowRepository, context)
+    fun modifySerie(serieId: Int, reps: Int, weight: Double, exerciseId: Int) {
         val params = ModifySerieUseCaseParams(serieId, reps, weight)
         viewModelScope.launch {
             modifyTrainingUseCase(params)
@@ -48,7 +55,6 @@ class AddSerieTrainingViewModel : ViewModel() {
     }
 
     fun getSerieListOfExerciseAdded(exerciseId: Int) {
-        val getSerieAddedUseCase = GetSerieAddedUseCase(fitnFlowRepository)
         val params = GetSerieAddedParam(exerciseId)
         viewModelScope.launch {
             getSerieAddedUseCase(params)
@@ -58,8 +64,7 @@ class AddSerieTrainingViewModel : ViewModel() {
         }
     }
 
-    fun deleteSerie(context: Context, serieId: Int) {
-        val deleteSerieUseCase = DeleteSerieUseCase(fitnFlowRepository, context)
+    fun deleteSerie(serieId: Int) {
         val params = GetSerieToDeleteParams(serieId)
         viewModelScope.launch {
             deleteSerieUseCase(params)

@@ -20,12 +20,13 @@ import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager.s
 import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.MainListFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.util.Calendar
 import java.util.Calendar.DAY_OF_YEAR
 import java.util.Calendar.HOUR_OF_DAY
-
+@AndroidEntryPoint
 class HomeFragment : CommonFragment(), ExerciseClickCallback {
 
     private lateinit var binding: MainListFragmentBinding
@@ -50,11 +51,16 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (SharedPrefs.getApikeyFromSharedPRefs(requireContext()) == null) {
-            homeViewModel.requestRegisterEmptyUser(requireContext())
-        }
         attachObservers()
         setClickListeners()
+    }
+
+    private fun requestRegisterOrRequestTraining(){
+        if (SharedPrefs.getApikeyFromSharedPRefs(requireContext()) == null) {
+            homeViewModel.requestRegisterEmptyUser()
+        } else {
+            homeViewModel.requestTrainingFromModel()
+        }
     }
 
     override fun onResume() {
@@ -114,7 +120,7 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
         when (state) {
             is State.CurrentDateChanged -> {
                 val date = state.date
-                homeViewModel.requestTrainingFromModel(requireContext())
+                requestRegisterOrRequestTraining()
                 binding.apply {
                     if (Utils.isYesterday(date)) {
                         dateName.setText(R.string.yesterday_date_selector)

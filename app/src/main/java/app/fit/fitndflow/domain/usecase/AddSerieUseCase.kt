@@ -1,19 +1,18 @@
 package app.fit.fitndflow.domain.usecase
 
-import android.content.Context
-import app.fit.fitndflow.data.common.SharedPrefs
+
 import app.fit.fitndflow.domain.common.usecase.UseCase
 import app.fit.fitndflow.domain.model.SerieModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 
-class AddSerieUseCase(val fitnFlowRepository: FitnFlowRepository, val context: Context) : UseCase<AddSerieUseCaseParams, List<SerieModel>>(){
+class AddSerieUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRepository) : UseCase<AddSerieUseCaseParams, List<SerieModel>>(){
     override fun run(params: AddSerieUseCaseParams): Flow<List<SerieModel>> = flow {
-        val apiKey = SharedPrefs.getApikeyFromSharedPRefs(context)
-        val series = fitnFlowRepository.addNewSerie(params.reps, params.weight, params.exerciseId, apiKey)
-        fitnFlowRepository.updateCurrentTrainingListCache(apiKey)
+        val series = fitnFlowRepository.addNewSerie(params.reps, params.weight, params.exerciseId)
+        fitnFlowRepository.updateCurrentTrainingListCache()
         emit(series)
     }
 }

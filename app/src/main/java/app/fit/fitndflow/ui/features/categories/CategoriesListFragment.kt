@@ -21,9 +21,10 @@ import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.FragmentCategoriesListBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-
+@AndroidEntryPoint
 class CategoriesListFragment : CommonFragment(), CategoryAdapterCallback, AccessibilityInterface,
     SerieAdapterCallback, DialogCallbackDelete {
 
@@ -53,7 +54,7 @@ class CategoriesListFragment : CommonFragment(), CategoryAdapterCallback, Access
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachObservers() //todo este será substituido por attachObservers()
-        categoriesViewModel.requestCategoriesFromModel(requireContext())
+        categoriesViewModel.requestCategoriesFromModel()
     }
 
     private fun attachObservers(){
@@ -169,7 +170,7 @@ class CategoriesListFragment : CommonFragment(), CategoryAdapterCallback, Access
     }
 
     override fun onClickAcceptDelete(id: Int) {
-        categoriesViewModel.deleteCategory(id, requireContext())
+        categoriesViewModel.deleteCategory(id)
     }
 
     override fun initAccessibility() {

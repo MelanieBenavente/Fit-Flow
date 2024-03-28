@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 
 import com.fit.fitndflow.databinding.BlockErrorFragmentBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class BlockErrorFragment extends CommonFragment {
 
     private BlockErrorFragmentBinding binding;

@@ -20,9 +20,10 @@ import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.FragmentExercisesListBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-
+@AndroidEntryPoint
 class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallbackDelete {
 
     companion object {
@@ -137,7 +138,7 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
     }
 
     override fun onClickAcceptDelete(exerciseId: Int) {
-        exercisesViewModel.deleteExercise(requireContext(), exerciseId)
+        exercisesViewModel.deleteExercise(exerciseId)
     }
 
     override fun showSeries(exercise: ExerciseModel) {

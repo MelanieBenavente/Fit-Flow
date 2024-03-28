@@ -6,7 +6,9 @@ import android.os.Bundle;
 import com.fit.fitndflow.R;
 
 import app.fit.fitndflow.ui.features.home.HomeFragment;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class MainActivity extends CommonActivity {
     private static final int REQUEST_CODE = 345;
 

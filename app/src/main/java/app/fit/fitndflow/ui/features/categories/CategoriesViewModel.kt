@@ -13,21 +13,27 @@ import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase
 import app.fit.fitndflow.domain.usecase.GetCategoryToDeleteParams
 import app.fit.fitndflow.domain.usecase.ModifyCategoryUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@HiltViewModel
+class CategoriesViewModel @Inject constructor(
+    private val getCategoriesUseCase: GetCategoriesUseCase,
+    private val addCategoryUseCase: AddCategoryUseCase,
+    private val modifyCategoryUseCase: ModifyCategoryUseCase,
+    private val deleteCategoryUseCase: DeleteCategoryUseCase
 
-class CategoriesViewModel : ViewModel() {
+) : ViewModel() {
     private val _state = MutableSharedFlow<State>()
     val state = _state.asSharedFlow()
     var lastName: String? = null
-    private val fitnFlowRepository: FitnFlowRepository = FitnFlowRepositoryImpl.getInstance()
 
-    fun requestCategoriesFromModel(context: Context) {
-        val getCategoriesUseCase = GetCategoriesUseCase(context, fitnFlowRepository)
+    fun requestCategoriesFromModel() {
         viewModelScope.launch {
             getCategoriesUseCase()
                 .onStart { _state.emit(State.Loading) }
@@ -37,8 +43,7 @@ class CategoriesViewModel : ViewModel() {
         }
     }
 
-        fun addNewCategory(context: Context, language: String, nameCategory: String) {
-            val addCategoryUseCase = AddCategoryUseCase( fitnFlowRepository, context)
+        fun addNewCategory(language: String, nameCategory: String) {
             val params = AddCategoryUseCaseParams(nameCategory, language)
             viewModelScope.launch {
                 addCategoryUseCase(params)
@@ -54,8 +59,7 @@ class CategoriesViewModel : ViewModel() {
             }
         }
 
-        fun modifyCategory(context: Context, language: String, categoryName: String, categoryId: Int) {
-            val modifyCategoryUseCase = ModifyCategoryUseCase(fitnFlowRepository, context)
+        fun modifyCategory(language: String, categoryName: String, categoryId: Int) {
             val params = CategoryModelInLanguages(categoryId, categoryName, language, "")
             viewModelScope.launch{
                 modifyCategoryUseCase(params)
@@ -65,8 +69,7 @@ class CategoriesViewModel : ViewModel() {
             }
         }
 
-    fun deleteCategory(categoryId: Int, context: Context) {
-        val deleteCategoryUseCase = DeleteCategoryUseCase(fitnFlowRepository, context)
+    fun deleteCategory(categoryId: Int) {
         val params = GetCategoryToDeleteParams(categoryId)
         viewModelScope.launch {
             deleteCategoryUseCase(params)

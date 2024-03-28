@@ -14,9 +14,10 @@ import app.fit.fitndflow.ui.features.categories.DialogCallbackDelete
 import app.fit.fitndflow.ui.features.common.CommonFragment
 import com.fit.fitndflow.R
 import com.fit.fitndflow.databinding.AddSerieTrainingFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-
+@AndroidEntryPoint
 class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallbackDelete {
 
     companion object {
@@ -101,8 +102,8 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
                         .isEmpty()
                 ) 0.0 else etCounterKg.text.toString().toDouble()
                 currentSelectedSerieModel?.let {
-                    addSerieTrainingViewModel.modifySerie(requireContext(), it.id!!, reps, kg, exercise.id!!)
-                } ?: addSerieTrainingViewModel.addNewSerie(requireContext(), reps, kg, exercise.id!!)
+                    addSerieTrainingViewModel.modifySerie(it.id!!, reps, kg, exercise.id!!)
+                } ?: addSerieTrainingViewModel.addNewSerie(reps, kg, exercise.id!!)
             }
 
             deleteAndCleanBtn.setOnClickListener {
@@ -191,7 +192,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
     }
 
     override fun onClickAcceptDelete(serieId: Int) {
-        addSerieTrainingViewModel.deleteSerie(requireContext(), serieId)
+        addSerieTrainingViewModel.deleteSerie(serieId)
     }
 
     override fun clickListenerInterfaceAdapter(input: SerieModel?) {

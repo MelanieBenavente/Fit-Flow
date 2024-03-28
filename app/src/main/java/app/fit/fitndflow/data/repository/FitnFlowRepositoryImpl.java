@@ -37,25 +37,22 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     private static FitnFlowRepositoryImpl instance;
     private List<CategoryModel> availableCategoryListCachedResponse;
     private HashMap<String, List<CategoryModel>> trainingResponseCacheByDate = new HashMap<>();
+    private Context mContext;
     private String currentDate;
-
-    //Creo una función estática mediante el patrón Singleton para que solamente se pueda instanciar UN repositorio.
-    // Desde los viewModels instanciamos el repositorio llamando a esta función y así nos aseguramos que se refieran mismo repo en ambos casos:
-    public static FitnFlowRepositoryImpl getInstance() {
-        if (instance == null) {
-            instance = new FitnFlowRepositoryImpl();
-        }
-        return instance;
+    public FitnFlowRepositoryImpl(Context context){
+        this.mContext = context;
     }
 
     private  void removeAllDataFromHashMapCache(){
         trainingResponseCacheByDate.clear();
     }
 
+    private String getApiKey() {
+        return SharedPrefs.getApikeyFromSharedPRefs(mContext); }
+
     @Override
-    public UserModel registerUser(Context context, String userName, String email, String premium) throws Exception {
-        String apiKey = SharedPrefs.getApikeyFromSharedPRefs(context);
-        UserDto userDto = new UserDto(userName, email, premium, apiKey);
+    public UserModel registerUser(String userName, String email, String premium) throws Exception {
+        UserDto userDto = new UserDto(userName, email, premium, getApiKey());
 
         Response<UserDto> response;
         try {
@@ -65,7 +62,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             }
             if (response != null && response.body() != null) {
                 UserModel userModelMapped = UserModelMapperKt.toModel(response.body());
-                SharedPrefs.saveApikeyToSharedPRefs(context, userModelMapped.getApiKey());
+                SharedPrefs.saveApikeyToSharedPRefs(mContext, userModelMapped.getApiKey());
                 return userModelMapped;
             } else {
                 throw new Exception("Error register");
@@ -77,11 +74,11 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public List<CategoryModel> getCategoryList(String apiKey) throws Exception {
+    public List<CategoryModel> getCategoryList() throws Exception {
         if (availableCategoryListCachedResponse == null) {
             Response<List<CategoryDto>> response;
             try {
-                response = RetrofitUtils.getRetrofitUtils().getCategoryDtoList(apiKey).execute();
+                response = RetrofitUtils.getRetrofitUtils().getCategoryDtoList(getApiKey()).execute();
                 if (response != null && !response.isSuccessful()) {
                     throw new ExcepcionApi(response.code());
                 }
@@ -98,13 +95,13 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return availableCategoryListCachedResponse;
     }
     @Override
-    public List<CategoryModel> addNewCategory(String categoryName, String language, String apiKey) throws Exception {
+    public List<CategoryModel> addNewCategory(String categoryName, String language) throws Exception {
         StringInLanguagesDto stringInLanguages = Utils.convertToStringInLanguages(language, categoryName);
         AddCategoryDto addCategoryDto = new AddCategoryDto(stringInLanguages);
 
         try {
 
-            Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().addNewCategory(addCategoryDto, apiKey).execute();
+            Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().addNewCategory(addCategoryDto, getApiKey()).execute();
 
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
@@ -122,12 +119,12 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public List<CategoryModel> modifyCategory(String categoryName, String language, int categoryId, String imageUrl, String apiKey) throws Exception {
+    public List<CategoryModel> modifyCategory(String categoryName, String language, int categoryId, String imageUrl) throws Exception {
         StringInLanguagesDto stringInLanguages = Utils.convertToStringInLanguages(language, categoryName);
         ModifyCategoryDto modifyCategoryDto = new ModifyCategoryDto(categoryId, stringInLanguages, "");
 
         try {
-            Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().modifyCategory(modifyCategoryDto, apiKey).execute();
+            Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().modifyCategory(modifyCategoryDto, getApiKey()).execute();
 
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
@@ -145,10 +142,10 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return availableCategoryListCachedResponse;
     }
     @Override
-    public List<CategoryModel> deleteCategory(Integer categoryId, String apikey) throws Exception {
+    public List<CategoryModel> deleteCategory(Integer categoryId) throws Exception {
 
         try {
-            Response <List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().deleteCategory(categoryId, apikey).execute();
+            Response <List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().deleteCategory(categoryId, getApiKey()).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
@@ -165,13 +162,13 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return availableCategoryListCachedResponse;
     }
    @Override
-    public List<ExerciseModel> addNewExercise(String exerciseName, String language, int categoryId, String apiKey) throws Exception {
+    public List<ExerciseModel> addNewExercise(String exerciseName, String language, int categoryId) throws Exception {
        StringInLanguagesDto stringInLanguages = Utils.convertToStringInLanguages(language, exerciseName);
        AddExerciseDto addExerciseDto = new AddExerciseDto(stringInLanguages, categoryId);
        List<ExerciseModel> availableExerciseListResponse;
         try {
 
-            Response<List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().addNewExercise(addExerciseDto, apiKey).execute();
+            Response<List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().addNewExercise(addExerciseDto, getApiKey()).execute();
 
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
@@ -188,12 +185,12 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return availableExerciseListResponse;
     }
     @Override
-    public List<ExerciseModel> modifyExercise(int exerciseId, String exerciseName, String language, int categoryId, String apiKey) throws Exception {
+    public List<ExerciseModel> modifyExercise(int exerciseId, String exerciseName, String language, int categoryId) throws Exception {
         StringInLanguagesDto stringInLanguages = Utils.convertToStringInLanguages(language, exerciseName);
         ModifyExerciseDto modifyExerciseDto = new ModifyExerciseDto(exerciseId, stringInLanguages, categoryId);
         List<ExerciseModel> availableExerciseListResponse;
         try {
-            Response <List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().modifyExercise(modifyExerciseDto, apiKey).execute();
+            Response <List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().modifyExercise(modifyExerciseDto, getApiKey()).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
@@ -210,10 +207,10 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return availableExerciseListResponse;
     }
     @Override
-    public List<ExerciseModel> deleteExercise(Integer exerciseId, String apikey) throws Exception {
+    public List<ExerciseModel> deleteExercise(Integer exerciseId) throws Exception {
         List<ExerciseModel> availableExerciseListResponse;
         try {
-            Response <List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().deleteExercise(exerciseId, apikey).execute();
+            Response <List<ExerciseDto>> response = RetrofitUtils.getRetrofitUtils().deleteExercise(exerciseId, getApiKey()).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
@@ -230,12 +227,12 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return availableExerciseListResponse;
     }
 
-    public List<SerieModel> addNewSerie(int reps, double weight, int exerciseId, String apiKey) throws Exception {
+    public List<SerieModel> addNewSerie(int reps, double weight, int exerciseId) throws Exception {
         SerieForAddSerieRequestDto serieForAddSerieRequestDto = new SerieForAddSerieRequestDto(reps, weight, new ExerciseDto(exerciseId, null, null));
         AddSerieRequestDto addSerieRequestDto = new AddSerieRequestDto(currentDate, serieForAddSerieRequestDto);
         List<SerieModel> serieListResponse;
         try{
-            Response <AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().addNewSerie(addSerieRequestDto, apiKey).execute();
+            Response <AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().addNewSerie(addSerieRequestDto, getApiKey()).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
@@ -253,11 +250,11 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public List<CategoryModel> getTrainingList(String date, String apiKey) throws Exception {
+    public List<CategoryModel> getTrainingList(String date) throws Exception {
         currentDate = date;
         if(trainingResponseCacheByDate.get(date) == null){
             try {
-                Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().getCategoriesAndTrainings(date, apiKey).execute();
+                Response<List<CategoryDto>> response = RetrofitUtils.getRetrofitUtils().getCategoriesAndTrainings(date, getApiKey()).execute();
                 if(response != null){
                     trainingResponseCacheByDate.put(date, CategoryModelMapperKt.toModel(response.body()));}
 
@@ -270,16 +267,16 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public List<CategoryModel> updateCurrentTrainingListCache(String apiKey) throws Exception {
-        return getTrainingList(currentDate, apiKey);
+    public List<CategoryModel> updateCurrentTrainingListCache() throws Exception {
+        return getTrainingList(currentDate);
     }
 
     @Override
-    public List<SerieModel> modifySerie(int serieId, int reps, double weight, String apiKey) throws Exception{
+    public List<SerieModel> modifySerie(int serieId, int reps, double weight) throws Exception{
         SerieDto serieDto = new SerieDto(serieId, reps, weight);
         List<SerieModel> serieModelListResponse;
         try{
-            Response<AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().modifySerie(serieDto, apiKey).execute();
+            Response<AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().modifySerie(serieDto, getApiKey()).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
@@ -315,10 +312,10 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             throw new Exception(e);
         }
     }
-    public List<SerieModel> deleteSerie(int serieId, String apiKey) throws Exception{
+    public List<SerieModel> deleteSerie(int serieId) throws Exception{
         List<SerieModel> serieModelListResponse;
         try{
-           Response<AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().deleteSerie(serieId, apiKey).execute();
+           Response<AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().deleteSerie(serieId, getApiKey()).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
