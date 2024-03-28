@@ -12,7 +12,8 @@ class AddCategoryUseCase(val fitnFlowRepository: FitnFlowRepository, val context
     override fun run(params: AddCategoryUseCaseParams): Flow<List<CategoryModel>> = flow {
          val apiKey = SharedPrefs.getApikeyFromSharedPRefs(context)
          val newCategory = fitnFlowRepository.addNewCategory(params.categoryName, params.language, apiKey)
-         emit(newCategory)
+        fitnFlowRepository.updateCurrentTrainingListCache(apiKey)
+        emit(newCategory)
     }
 }
 

@@ -2,7 +2,6 @@ package app.fit.fitndflow.domain.usecase
 
 import android.content.Context
 import app.fit.fitndflow.data.common.SharedPrefs
-import app.fit.fitndflow.data.dto.StringInLanguagesDto
 import app.fit.fitndflow.domain.common.usecase.UseCase
 import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
@@ -13,6 +12,7 @@ class ModifyCategoryUseCase(val fitnFlowRepository: FitnFlowRepository, val cont
     override fun run(params: CategoryModelInLanguages): Flow<List<CategoryModel>> = flow {
         val apiKey = SharedPrefs.getApikeyFromSharedPRefs(context)
         val categoryModified = fitnFlowRepository.modifyCategory(params.name, params.language, params.id, params.imageUrl, apiKey)
+        fitnFlowRepository.updateCurrentTrainingListCache(apiKey)
         emit(categoryModified)
     }
 }

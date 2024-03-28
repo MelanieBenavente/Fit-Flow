@@ -116,7 +116,7 @@ class CreationOrModifyInputDialog : CommonDialogFragment() {
                         newCategoryTxt.accessibilityDelegate =
                             AccessibilityUtils.createAccesibilityDelegate(language + newCategoryTxt.text.toString())
                         if(!newCategoryTxt.text.toString().isEmpty()) {
-                            if (currentId != null) { //todo!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            if (currentId != null) {
                                 exercisesViewModel.modifyExercise(requireContext(), exerciseName, language, currentId!!, parentId!!)
                             } else {
                                 exercisesViewModel.addNewExercise(requireContext(), language, exerciseName, parentId!!)

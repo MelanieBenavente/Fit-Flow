@@ -8,12 +8,13 @@ import app.fit.fitndflow.domain.model.ExerciseModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import app.fit.fitndflow.domain.usecase.AddExerciseUseCase
 import app.fit.fitndflow.domain.usecase.AddExerciseUseCaseParams
+import app.fit.fitndflow.domain.usecase.DeleteExerciseUseCase
 import app.fit.fitndflow.domain.usecase.ExerciseModelInLanguages
+import app.fit.fitndflow.domain.usecase.ExerciseToDeleteParams
 import app.fit.fitndflow.domain.usecase.ModifyExerciseUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
@@ -44,6 +45,18 @@ class ExercisesViewModel : ViewModel() {
         val params = ExerciseModelInLanguages(exerciseId, nameExercise, language, categoryId)
         viewModelScope.launch {
             modifyExerciseUseCase(params)
+                .onStart { _state.emit(State.Loading) }
+                .catch { _state.emit(State.SlideError) }
+                .collect{ _state.emit(State.ExerciseListRecived(it))
+                }
+        }
+    }
+
+    fun deleteExercise(context: Context, exerciseId: Int){
+        val deleteExerciseUseCase = DeleteExerciseUseCase(fitnFlowRepository, context)
+        val params = ExerciseToDeleteParams(exerciseId)
+        viewModelScope.launch {
+            deleteExerciseUseCase(params)
                 .onStart { _state.emit(State.Loading) }
                 .catch { _state.emit(State.SlideError) }
                 .collect{ _state.emit(State.ExerciseListRecived(it))

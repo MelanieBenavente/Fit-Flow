@@ -10,8 +10,14 @@ import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.model.UserModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import app.fit.fitndflow.domain.usecase.GetTrainingUseCase
+import app.fit.fitndflow.domain.usecase.GetTrainingUseCaseParams
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCase
-import kotlinx.coroutines.flow.*
+import app.fit.fitndflow.domain.usecase.RegisterUserUseCaseParams
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
@@ -46,55 +52,29 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch { _state.emit(State.CurrentDateChanged(date)) }
     }
 
-    fun requestRegisterEmptyUser(context: Context) {
-        val emptyUserModel = UserModel(null, null, null, null)
-        RegisterUserUseCase(emptyUserModel, context, fitnFlowRepository).execute(object :
-            FitRxObserver<UserModel>() {
-            override fun onStart() {
-                super.onStart()
-                viewModelScope.launch {
-                    _state.emit(State.Loading)
-                }
-            }
-
-            override fun onSuccess(apiRegisterResponse: UserModel) {
-                viewModelScope.launch {
-                    _state.emit(State.RegisterCompleted)
-                }
-            }
-
-            override fun onError(e: Throwable) {
-                viewModelScope.launch {
-                    _state.emit(State.FullScreenError)
-                }
-            }
-        })
+    fun requestRegisterEmptyUser(
+        context: Context) {
+        val emptyUserModel = RegisterUserUseCase(fitnFlowRepository, context)
+        val params = RegisterUserUseCaseParams(null, null, null)
+        viewModelScope.launch {
+            emptyUserModel(params)
+                .onStart { _state.emit(State.Loading) }
+                .catch { _state.emit(State.FullScreenError) }
+                .collect { _state.emit(State.RegisterCompleted) }
+        }
     }
+
 
     fun requestTrainingFromModel(context: Context) {
         val date: String = Utils.getEnglishFormatDate(date)
-        val getTrainingUseCase = GetTrainingUseCase(context, date, fitnFlowRepository)
-        getTrainingUseCase.execute(object : FitRxObserver<List<CategoryModel>>() {
-
-            override fun onStart() {
-                super.onStart()
-                viewModelScope.launch {
-                    _state.emit(State.Loading)
-                }
-            }
-
-            override fun onSuccess(categoryModelList: List<CategoryModel>) {
-                viewModelScope.launch {
-                    _state.emit(State.TrainingListRecived(categoryModelList))
-                }
-            }
-
-            override fun onError(e: Throwable) {
-                viewModelScope.launch {
-                    _state.emit(State.FullScreenError)
-                }
-            }
-        })
+        val getTrainingUseCase = GetTrainingUseCase(fitnFlowRepository, context)
+        val params = GetTrainingUseCaseParams(date)
+        viewModelScope.launch {
+            getTrainingUseCase(params)
+                .onStart { _state.emit(State.Loading) }
+                .catch { _state.emit(State.FullScreenError) }
+                .collect{_state.emit(State.TrainingListRecived(it))}
+        }
     }
 }
 

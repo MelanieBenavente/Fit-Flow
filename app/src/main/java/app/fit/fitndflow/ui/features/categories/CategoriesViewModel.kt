@@ -13,8 +13,10 @@ import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase
 import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase
 import app.fit.fitndflow.domain.usecase.GetCategoryToDeleteParams
 import app.fit.fitndflow.domain.usecase.ModifyCategoryUseCase
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 

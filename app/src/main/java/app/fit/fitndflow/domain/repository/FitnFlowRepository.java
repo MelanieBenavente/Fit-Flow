@@ -1,8 +1,9 @@
 package app.fit.fitndflow.domain.repository;
 
+import android.content.Context;
+
 import java.util.List;
 
-import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 import app.fit.fitndflow.data.dto.UserDto;
 import app.fit.fitndflow.domain.common.repository.CommonRepository;
 import app.fit.fitndflow.domain.model.CategoryModel;
@@ -11,7 +12,7 @@ import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.model.UserModel;
 
 public interface FitnFlowRepository extends CommonRepository {
-    UserModel registerUser(UserDto userDto) throws Exception;
+    UserModel registerUser(Context context, String userName, String email, String premium) throws Exception;
     List<CategoryModel> getCategoryList(String apiKey) throws Exception;
     List<CategoryModel> deleteCategory(Integer integer, String apikey) throws Exception;
 

@@ -1,10 +1,13 @@
 package app.fit.fitndflow.data.repository;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import app.fit.fitndflow.data.common.RetrofitUtils;
+import app.fit.fitndflow.data.common.SharedPrefs;
 import app.fit.fitndflow.data.common.model.ExcepcionApi;
 import app.fit.fitndflow.data.dto.StringInLanguagesDto;
 import app.fit.fitndflow.data.dto.UserDto;
@@ -50,7 +53,10 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public UserModel registerUser(UserDto userDto) throws Exception {
+    public UserModel registerUser(Context context, String userName, String email, String premium) throws Exception {
+        String apiKey = SharedPrefs.getApikeyFromSharedPRefs(context);
+        UserDto userDto = new UserDto(userName, email, premium, apiKey);
+
         Response<UserDto> response;
         try {
             response = RetrofitUtils.getRetrofitUtils().register(userDto).execute();
@@ -58,7 +64,9 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                 throw new ExcepcionApi(response.code());
             }
             if (response != null && response.body() != null) {
-                return UserModelMapperKt.toModel(response.body());
+                UserModel userModelMapped = UserModelMapperKt.toModel(response.body());
+                SharedPrefs.saveApikeyToSharedPRefs(context, userModelMapped.getApiKey());
+                return userModelMapped;
             } else {
                 throw new Exception("Error register");
             }

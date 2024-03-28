@@ -7,8 +7,7 @@
     android:paddingTop="30dp"
     android:paddingStart="30dp"
     android:paddingEnd="30dp"
-    android:paddingBottom="30dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:paddingBottom="30dp">
 
     <TextView
         android:id="@+id/creation_dialog_title"

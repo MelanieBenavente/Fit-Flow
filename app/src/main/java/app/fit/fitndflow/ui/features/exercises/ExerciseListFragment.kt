@@ -83,56 +83,6 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
                 showLoading()
             }
         }
-
-//        exercisesViewModel.mutableSlideError.value = false
-//        exercisesViewModel.isLoading.value = false
-//
-//        val categoryObserver = Observer<CategoryModel> { category ->
-//            exercisesAdapter.setExerciseModelList(category.exerciseList)
-//        }
-//        exercisesViewModel.actualCategory.observe(viewLifecycleOwner, categoryObserver)
-//
-//        val slideErrorObserver = Observer<Boolean> { isError ->
-//            if (isError) {
-//                showSlideError()
-//                exercisesViewModel.mutableSlideError.value = false
-//            }
-//        }
-//        exercisesViewModel.mutableSlideError.observe(
-//            viewLifecycleOwner,
-//            slideErrorObserver
-//        )
-//
-//        val fullScreenErrorObserver = Observer<Boolean> { isError ->
-//            if (isError) {
-//                showBlockError()
-//                exercisesViewModel.mutableFullScreenError.value = false
-//            }
-//        }
-//        exercisesViewModel.mutableFullScreenError.observe(
-//            viewLifecycleOwner,
-//            fullScreenErrorObserver
-//        )
-//
-//        val savedSuccessOberver = Observer<Boolean> { isSaved ->
-//            if (isSaved) {
-//                showSlideSaved()
-//                exercisesViewModel.isSaveSuccess.value = false
-//            }
-//        }
-//        exercisesViewModel.isSaveSuccess.observe(
-//            viewLifecycleOwner,
-//            savedSuccessOberver
-//        )
-//
-//        val observerLoading = Observer<Boolean> { isLoading ->
-//            if (isLoading) {
-//                showLoading()
-//            } else {
-//                hideLoading()
-//            }
-//        }
-//        exercisesViewModel.isLoading.observe(viewLifecycleOwner, observerLoading)
     }
 
     private fun printExercises(exerciseListRecived: MutableList<ExerciseModel>){
@@ -186,8 +136,8 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
         }
     }
 
-    override fun onClickAcceptDelete(exerciseId: Int) {         //todo!!!!!!!!!!!!!!!!!!!!
-       // exercisesViewModel.deleteExercise(exerciseId, requireContext())
+    override fun onClickAcceptDelete(exerciseId: Int) {
+        exercisesViewModel.deleteExercise(requireContext(), exerciseId)
     }
 
     override fun showSeries(exercise: ExerciseModel) {

@@ -8,12 +8,13 @@ import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class AddExerciseUseCase(val fitnFlowRepository: FitnFlowRepository, val context: Context) : UseCase<AddExerciseUseCaseParams, List<ExerciseModel>>() {
-    override fun run(params: AddExerciseUseCaseParams): Flow<List<ExerciseModel>>  = flow {
+class DeleteExerciseUseCase(val fitnFlowRepository: FitnFlowRepository, val context: Context) : UseCase<ExerciseToDeleteParams, List<ExerciseModel>>() {
+    override fun run(params: ExerciseToDeleteParams): Flow<List<ExerciseModel>> = flow {
         val apiKey = SharedPrefs.getApikeyFromSharedPRefs(context)
-        val newExercise = fitnFlowRepository.addNewExercise(params.name, params.language, params.categoryId, apiKey)
+        val exerciseToDelete = fitnFlowRepository.deleteExercise(params.exerciseId, apiKey)
         fitnFlowRepository.updateCurrentTrainingListCache(apiKey)
-        emit(newExercise)
+        emit(exerciseToDelete)
     }
 }
-data class AddExerciseUseCaseParams(var name : String, val language: String, var categoryId : Int)
+
+data class ExerciseToDeleteParams(val exerciseId: Int)

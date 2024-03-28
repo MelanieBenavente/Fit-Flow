@@ -5,7 +5,6 @@ import app.fit.fitndflow.domain.model.SerieModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 
 class GetSerieAddedUseCase(val fitnFlowRepository: FitnFlowRepository) : UseCase<GetSerieAddedParam, List<SerieModel>>(){
     override fun run(params: GetSerieAddedParam): Flow<List<SerieModel>> = flow {
