@@ -6,13 +6,13 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath 'com.android.tools.build:gradle:8.3.1'
 
         // Make sure that you have the Google services Gradle plugin dependency
         classpath 'com.google.gms:google-services:4.3.15'
 
         // Add the dependency for the Crashlytics Gradle plugin
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
 
         // dagger hilt
 

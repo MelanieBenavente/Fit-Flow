@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "com.fit.fitndflow"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 3
         versionName "1.1-2024-04-05-01"
@@ -30,9 +30,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     viewBinding{
