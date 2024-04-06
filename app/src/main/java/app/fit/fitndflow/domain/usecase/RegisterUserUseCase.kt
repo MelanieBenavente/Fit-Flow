@@ -14,4 +14,4 @@ class RegisterUserUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRe
     }
 }
 
-data class RegisterUserUseCaseParams(val userName: String?, val email: String?, val premium: String?)
+data class RegisterUserUseCaseParams(val userName: String? = null, val email: String? = null, val premium: String? = null)

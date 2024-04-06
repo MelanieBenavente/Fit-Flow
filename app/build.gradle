@@ -73,11 +73,6 @@ dependencies {
     //snakbar
     implementation "com.google.android.material:material:1.1.0-alpha06"
 
-    //testing
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    testImplementation 'junit:junit:4.13.2'
-
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:32.1.0')
 
@@ -89,6 +84,14 @@ dependencies {
     // Dagger-Hilt
     implementation "com.google.dagger:hilt-android:2.44"
     kapt "com.google.dagger:hilt-compiler:2.44"
+
+    //testing
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "io.mockk:mockk:1.13.3"
+
+
 }
 // Allow references to generated code (dagger-hilt)
 kapt {
