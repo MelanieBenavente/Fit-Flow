@@ -65,13 +65,6 @@
     <string name="repetitions">Repeticiones</string>
     <string name="Weight_kg">Peso (Kg)</string>
     <string name="add_note">Añadir Nota</string>
-    <string name="sunday">Domingo</string>
-    <string name="monday">Lunes</string>
-    <string name="tuesday">Martes</string>
-    <string name="wednesday">Miércoles</string>
-    <string name="thursday">Jueves</string>
-    <string name="friday">Viernes</string>
-    <string name="saturday">Sábado</string>
     <string name="escriba_texto">Escriba texto...</string>
     <string name="successfully_added">Añadido correctamente</string>
 
