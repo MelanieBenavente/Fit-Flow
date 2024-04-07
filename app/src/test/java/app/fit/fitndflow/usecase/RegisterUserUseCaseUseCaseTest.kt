@@ -1,4 +1,4 @@
-package app.fit.fitndflow
+package app.fit.fitndflow.usecase
 
 import app.fit.fitndflow.domain.model.UserModel
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
@@ -7,11 +7,13 @@ import app.fit.fitndflow.domain.usecase.RegisterUserUseCaseParams
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
-class RegisterUserUseCaseTest {
+@ExperimentalCoroutinesApi
+class RegisterUserUseCaseUseCaseTest : CommonUseCaseTest() {
 
     private lateinit var registerUserUseCase: RegisterUserUseCase
     private lateinit var fitnFlowRepository: FitnFlowRepository
@@ -29,7 +31,7 @@ class RegisterUserUseCaseTest {
         coEvery { fitnFlowRepository.registerUser(any(), any(), any()) } answers { userModel }
         //WHEN
         var result: UserModel? = null
-        runBlocking {
+        testCoroutineDispatcher.runTest {
             registerUserUseCase(RegisterUserUseCaseParams()).collect { result = it }
         }
         //THEN
