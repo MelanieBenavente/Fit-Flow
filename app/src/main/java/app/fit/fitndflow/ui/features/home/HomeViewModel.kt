@@ -53,7 +53,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun requestRegisterEmptyUser() {
-        val params = RegisterUserUseCaseParams(null, null, null)
+        val params = RegisterUserUseCaseParams()
         viewModelScope.launch {
             registerUserUseCase(params)
                 .onStart { _state.emit(State.Loading) }

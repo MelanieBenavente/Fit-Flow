@@ -58,16 +58,17 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         try {
             response = RetrofitUtils.getRetrofitUtils().register(userDto).execute();
             if (response != null && !response.isSuccessful()) {
-                throw new ExcepcionApi(response.code());
+                throw new ExcepcionApi(response.code()); //si no ha ido bien la llamada: server no devuelve un 200
             }
             if (response != null && response.body() != null) {
                 UserModel userModelMapped = UserModelMapperKt.toModel(response.body());
                 SharedPrefs.saveApikeyToSharedPRefs(mContext, userModelMapped.getApiKey());
                 return userModelMapped;
             } else {
-                throw new Exception("Error register");
+                throw new Exception("Error register"); //si la respuesta es nula
             }
         } catch (Exception e) {
+            //solamente salta cuando hay un error de mapeo (ej. server me devuelve un json diferente al esperado)
             e.printStackTrace();
             throw new Exception(e);
         }

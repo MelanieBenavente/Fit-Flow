@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import app.fit.fitndflow.data.common.SharedPrefs
@@ -14,6 +15,7 @@ import app.fit.fitndflow.domain.Utils
 import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.model.ExerciseModel
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment
+import app.fit.fitndflow.ui.features.common.CommonActivity
 import app.fit.fitndflow.ui.features.common.CommonFragment
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager.scheduleNotification
@@ -26,6 +28,7 @@ import kotlinx.coroutines.flow.onEach
 import java.util.Calendar
 import java.util.Calendar.DAY_OF_YEAR
 import java.util.Calendar.HOUR_OF_DAY
+
 @AndroidEntryPoint
 class HomeFragment : CommonFragment(), ExerciseClickCallback {
 
@@ -53,6 +56,7 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
         super.onViewCreated(view, savedInstanceState)
         attachObservers()
         setClickListeners()
+
     }
 
     private fun requestRegisterOrRequestTraining(){
@@ -133,7 +137,7 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
                         dayOfWeek.visibility = GONE
                     } else {
                         dateName.setText(Utils.getCalendarFormatDate(date))
-                        dayOfWeek.setText(Utils.dayOfWeek(date, context))
+                        dayOfWeek.setText(Utils.dayOfWeek(date))
                         dayOfWeek.visibility = VISIBLE
                     }
                 }

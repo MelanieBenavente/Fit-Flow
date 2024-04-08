@@ -13,7 +13,7 @@
 
 
     <application
-        android:name="app.fit.fitndflow.DaggerHiltApplication"
+        android:name="app.fit.fitndflow.dagger.DaggerHiltApplication"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"

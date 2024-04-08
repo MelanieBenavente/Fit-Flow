@@ -47,7 +47,6 @@ class CategoriesListFragment : CommonFragment(), CategoryAdapterCallback, Access
         instantiateCategoriesAdapter()
         setOnClickListeners()
         initAccessibility()
-        binding.txtSearch.addTextChangedListener(AccessibilityUtils.createTextWatcher(this))
         addTextWatcher()
         return myView
     }
@@ -196,5 +195,6 @@ class CategoriesListFragment : CommonFragment(), CategoryAdapterCallback, Access
         val searchExercise: String = requireContext().getString(R.string.search_exercise)
         binding.txtSearch.accessibilityDelegate =
             AccessibilityUtils.createAccesibilityDelegate(searchExercise + binding.txtSearch.text.toString())
+        binding.txtSearch.addTextChangedListener(AccessibilityUtils.createTextWatcher(this))
     }
 }

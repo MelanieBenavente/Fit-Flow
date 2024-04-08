@@ -3,7 +3,7 @@ package app.fit.fitndflow.data.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-
+// todo!!!!! ordenar las variables y renombrar con prefijo KEY
 public class SharedPrefs {
     //keys
     private static String FILE_NAME = "FitNFlowInfo";

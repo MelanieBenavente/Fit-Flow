@@ -1,4 +1,4 @@
-package app.fit.fitndflow
+package app.fit.fitndflow.dagger
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
