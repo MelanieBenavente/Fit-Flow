@@ -18,8 +18,8 @@ android {
         applicationId "com.fit.fitndflow"
         minSdk 26
         targetSdk 33
-        versionCode 3
-        versionName "1.1-2024-04-05-01"
+        versionCode 4
+        versionName "1.2-2024-04-24-01"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
