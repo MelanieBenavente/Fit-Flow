@@ -15,6 +15,7 @@ import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog.Comp
 import app.fit.fitndflow.ui.features.common.AccessibilityInterface
 import app.fit.fitndflow.ui.features.common.AccessibilityUtils
 import app.fit.fitndflow.ui.features.common.CommonFragment
+import app.fit.fitndflow.ui.features.common.getTranslatedString
 import app.fit.fitndflow.ui.features.exercises.ExerciseListFragment
 import app.fit.fitndflow.ui.features.exercises.ExercisesAdapter
 import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment
@@ -108,7 +109,7 @@ class CategoriesListFragment : CommonFragment(), CategoryAdapterCallback, Access
                     } else {
                         categoryList.forEach { category ->
                             category.exerciseList?.forEach { exercise ->
-                                if (exercise.name.contains(searchText, ignoreCase = true)) {
+                                if (exercise.name.getTranslatedString(requireContext()).contains(searchText, ignoreCase = true)) {
                                     filteredList.add(exercise)
                                 }
                             }

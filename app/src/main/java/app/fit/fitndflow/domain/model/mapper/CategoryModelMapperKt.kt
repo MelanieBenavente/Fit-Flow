@@ -17,7 +17,7 @@ class CategoryModelMapperKt {
             for (categoryDto: CategoryDto in categoryDtoList) {
                 val categoryModel = CategoryModel(
                     id = categoryDto.id!!,
-                    name = categoryDto.name?.spanish!!,
+                    name = categoryDto.name.toModel(),
                     exerciseList = mutableListOf()
                 )
                 categoryModelList!!.add(categoryModel)
@@ -27,7 +27,7 @@ class CategoryModelMapperKt {
                     val record = SerieModel(reps = exerciseDto.record?.reps, kg = exerciseDto.record?.weight)
                     val exerciseModel = ExerciseModel(
                         id = exerciseDto.id,
-                        name = exerciseDto.exerciseName!!.spanish!!,
+                        name = exerciseDto.exerciseName.toModel(),
                         serieList = mutableListOf(),
                         lastFirstSerie,
                         record

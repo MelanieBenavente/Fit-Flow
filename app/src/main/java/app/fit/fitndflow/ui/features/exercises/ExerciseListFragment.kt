@@ -16,6 +16,7 @@ import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog
 import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog.Companion.TYPE_EXERCISE
 import app.fit.fitndflow.ui.features.categories.DialogCallbackDelete
 import app.fit.fitndflow.ui.features.common.CommonFragment
+import app.fit.fitndflow.ui.features.common.getTranslatedString
 import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback
 import com.fit.fitndflow.R
@@ -59,7 +60,7 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachObservers()
-        binding.categoryTitle.setText(category.name)
+        binding.categoryTitle.setText(category.name.getTranslatedString(requireContext()))
         category.exerciseList?.let { instantiateExercisesAdapter(it) }
     }
 
@@ -110,7 +111,7 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
                     val filteredList = mutableListOf<ExerciseModel>()
                     val exerciseList: List<ExerciseModel> = category.exerciseList!!
                     exerciseList.forEach { exercise ->
-                        if (exercise.name.contains(searchText, ignoreCase = true)) {
+                        if (exercise.name.getTranslatedString(requireContext()).contains(searchText, ignoreCase = true)) {
                             filteredList.add(exercise)
                         }
                     }
