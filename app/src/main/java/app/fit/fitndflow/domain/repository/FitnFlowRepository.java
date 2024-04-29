@@ -20,9 +20,9 @@ public interface FitnFlowRepository extends CommonRepository {
     List<ExerciseModel> addNewExercise(String exerciseName, String language, int categoryId) throws Exception;
     List<ExerciseModel> modifyExercise(int exerciseId, String exerciseName, String language, int categoryId) throws Exception;
     List<ExerciseModel> deleteExercise(Integer integer) throws Exception;
-    List<SerieModel> addNewSerie(int reps, double weight, int exerciseId) throws Exception;
-    List<SerieModel> modifySerie(int serieId, int reps, double weight) throws Exception;
+    ExerciseModel addNewSerie(int reps, double weight, int exerciseId) throws Exception;
+    ExerciseModel modifySerie(int serieId, int reps, double weight) throws Exception;
     List<SerieModel> getSerieListOfExerciseAdded(int exerciseid) throws Exception;
-    List<SerieModel> deleteSerie(int serieId) throws Exception;
+    ExerciseModel deleteSerie(int serieId) throws Exception;
 }
 

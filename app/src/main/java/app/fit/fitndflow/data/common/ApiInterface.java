@@ -52,11 +52,11 @@ public interface ApiInterface {
 
     //LLAMADAS TRAINING SERIES
     @POST("training/addSerie")
-    Call<AddSerieResponseDto> addNewSerie(@Body AddSerieRequestDto addSerieDto, @Header(KEY) String apiKey);
+    Call<ExerciseDto> addNewSerie(@Body AddSerieRequestDto addSerieDto, @Header(KEY) String apiKey);
     @GET("summary/trainings")
     Call<List<CategoryDto>> getCategoriesAndTrainings(@Query(KEY_PARAM_GET_DATE_TRAINING) String date, @Header(KEY) String apiKey);
     @POST("training/updateSerie")
-    Call<AddSerieResponseDto> modifySerie(@Body SerieDto serieDto, @Header(KEY) String apiKey);
+    Call<ExerciseDto> modifySerie(@Body SerieDto serieDto, @Header(KEY) String apiKey);
     @DELETE("training/deleteSerie")
-    Call<AddSerieResponseDto> deleteSerie(@Query(KEY_PARAM_GET_ID) int serieId, @Header(KEY) String apiKey);
+    Call<ExerciseDto> deleteSerie(@Query(KEY_PARAM_GET_ID) int serieId, @Header(KEY) String apiKey);
 }

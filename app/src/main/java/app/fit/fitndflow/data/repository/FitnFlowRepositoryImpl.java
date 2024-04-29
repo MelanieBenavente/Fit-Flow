@@ -228,17 +228,17 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return availableExerciseListResponse;
     }
 
-    public List<SerieModel> addNewSerie(int reps, double weight, int exerciseId) throws Exception {
+    public ExerciseModel addNewSerie(int reps, double weight, int exerciseId) throws Exception {
         SerieForAddSerieRequestDto serieForAddSerieRequestDto = new SerieForAddSerieRequestDto(reps, weight, new ExerciseDto(exerciseId, null, null, null, null));
         AddSerieRequestDto addSerieRequestDto = new AddSerieRequestDto(currentDate, serieForAddSerieRequestDto);
-        List<SerieModel> serieListResponse;
+        ExerciseModel exerciseResponse;
         try{
-            Response <AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().addNewSerie(addSerieRequestDto, getApiKey()).execute();
+            Response <ExerciseDto> response = RetrofitUtils.getRetrofitUtils().addNewSerie(addSerieRequestDto, getApiKey()).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
             if (response != null && response.body() != null) {
-                serieListResponse = SerieModelMapperKt.toModel(response.body());
+                exerciseResponse = ExerciseModelMapperKt.toModel(response.body());
                 removeAllDataFromHashMapCache();
             } else {
                 return null;
@@ -247,7 +247,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
-        return serieListResponse;
+        return exerciseResponse;
     }
 
     @Override
@@ -273,16 +273,16 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public List<SerieModel> modifySerie(int serieId, int reps, double weight) throws Exception{
+    public ExerciseModel modifySerie(int serieId, int reps, double weight) throws Exception{
         SerieDto serieDto = new SerieDto(serieId, reps, weight);
-        List<SerieModel> serieModelListResponse;
+        ExerciseModel exerciseResponse;
         try{
-            Response<AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().modifySerie(serieDto, getApiKey()).execute();
+            Response<ExerciseDto> response = RetrofitUtils.getRetrofitUtils().modifySerie(serieDto, getApiKey()).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
             if (response != null && response.body() != null) {
-                serieModelListResponse = SerieModelMapperKt.toModel(response.body());
+                exerciseResponse = ExerciseModelMapperKt.toModel(response.body());
                 removeAllDataFromHashMapCache();
             } else {
                 return null;
@@ -291,7 +291,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
-        return serieModelListResponse;
+        return exerciseResponse;
     }
 
     public List<SerieModel> getSerieListOfExerciseAdded(int exerciseId) throws Exception{
@@ -313,15 +313,15 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             throw new Exception(e);
         }
     }
-    public List<SerieModel> deleteSerie(int serieId) throws Exception{
-        List<SerieModel> serieModelListResponse;
+    public ExerciseModel deleteSerie(int serieId) throws Exception{
+        ExerciseModel exerciseResponse;
         try{
-           Response<AddSerieResponseDto> response = RetrofitUtils.getRetrofitUtils().deleteSerie(serieId, getApiKey()).execute();
+           Response<ExerciseDto> response = RetrofitUtils.getRetrofitUtils().deleteSerie(serieId, getApiKey()).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
             if (response != null && response.body() != null) {
-                serieModelListResponse = SerieModelMapperKt.toModel(response.body());
+                exerciseResponse = ExerciseModelMapperKt.toModel(response.body());
                 removeAllDataFromHashMapCache();
             } else {
                 return null;
@@ -330,7 +330,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
-        return serieModelListResponse;
+        return exerciseResponse;
         }
     }
 
