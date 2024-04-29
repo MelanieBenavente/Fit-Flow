@@ -32,11 +32,12 @@ class RecordSerieDialog : CommonDialogFragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 ImageDialogComponent(
-                    { dismissAllowingStateLoss() },
-                    stringResource(R.string.congrats),
-                    R.drawable.record_image,
-                    stringResource(R.string.new_challenge),
-                    stringResource(R.string.dialog_btn_close)
+                    dismissDialog = { dismissAllowingStateLoss() },
+                    dialogTitle = stringResource(R.string.congrats),
+                    dialogImage = R.drawable.record_image,
+                    dialogText = stringResource(R.string.new_challenge),
+                    dialogCloseBtn = stringResource(R.string.dialog_btn_close),
+                    animationResource = R.raw.party_animation
                 )
             }
         }

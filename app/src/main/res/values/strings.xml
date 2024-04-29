@@ -69,6 +69,6 @@
     <string name="escriba_texto">Escriba texto...</string>
     <string name="successfully_added">Añadido correctamente</string>
     <string name="congrats">¡ ENHORABUENA !</string>
-    <string name="new_challenge">Has alcanzado un nuevo record!"</string>
+    <string name="new_challenge">¡Has alcanzado un nuevo record!</string>
 
 </resources>
