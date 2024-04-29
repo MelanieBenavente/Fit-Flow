@@ -15,6 +15,7 @@
     <string name="dialog_category_delete">You\'re sure that you want to delete this category?</string>
     <string name="dialog_btn_delete">Yes, delete</string>
     <string name="dialog_btn_cancel">Cancel</string>
+    <string name="dialog_btn_close">Close</string>
     <string name="dialog_exercise_delete">You\'re sure that you want to delete this exercise?</string>
     <string name="save_and_add_serie_btn">Save and add</string>
     <string name="save_and_exit_btn">Save and exit</string>
@@ -67,6 +68,8 @@
     <string name="add_note">Add Note</string>
     <string name="escriba_texto">Write a text...</string>
     <string name="successfully_added">Successfully added</string>
+    <string name="congrats">¡ CONGRATULATIONS !</string>
+    <string name="new_challenge">You have achieved a new challenge!"</string>
 
 
 </resources>

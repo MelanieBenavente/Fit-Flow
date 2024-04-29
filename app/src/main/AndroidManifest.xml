@@ -4,17 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
 
     <application
         android:name="app.fit.fitndflow.dagger.DaggerHiltApplication"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,6 +19,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.FitFlow"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name="app.fit.fitndflow.ui.features.common.SplashActivity"
@@ -30,6 +28,7 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -40,6 +39,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.media.action.DISPLAY_NOTIFICATION" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -47,9 +47,7 @@
         <activity
             android:name="app.fit.fitndflow.ui.features.common.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
-            >
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

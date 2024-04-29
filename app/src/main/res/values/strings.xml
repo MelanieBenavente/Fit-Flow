@@ -16,6 +16,7 @@
     <string name="dialog_category_delete">¿Estás seguro de que deseas borrar esta categoría?</string>
     <string name="dialog_btn_delete">Sí, borrar</string>
     <string name="dialog_btn_cancel">Cancelar</string>
+    <string name="dialog_btn_close">Cerrar</string>
 
     <string name="dialog_exercise_delete">¿Estás seguro de que deseas borrar este ejercicio?</string>
     <string name="save_and_add_serie_btn">Guardar y añadir otro</string>
@@ -67,5 +68,7 @@
     <string name="add_note">Añadir Nota</string>
     <string name="escriba_texto">Escriba texto...</string>
     <string name="successfully_added">Añadido correctamente</string>
+    <string name="congrats">¡ ENHORABUENA !</string>
+    <string name="new_challenge">Has alcanzado un nuevo record!"</string>
 
 </resources>
