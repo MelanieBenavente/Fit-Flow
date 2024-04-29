@@ -2,6 +2,7 @@ package app.fit.fitndflow.ui.features.training
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.fit.fitndflow.domain.model.SerieInfoWrapper
 import app.fit.fitndflow.domain.model.SerieModel
 import app.fit.fitndflow.domain.usecase.AddSerieUseCase
 import app.fit.fitndflow.domain.usecase.AddSerieUseCaseParams
@@ -31,8 +32,8 @@ class AddSerieTrainingViewModel @Inject constructor(
     val state = _state.asSharedFlow()
 
 
-    fun addNewSerie(reps: Int, kg: Double, idExercise: Int) {
-        val params = AddSerieUseCaseParams(reps, kg, idExercise)
+    fun addNewSerie(reps: Int, kg: Double, idExercise: Int, record: SerieModel?) {
+        val params = AddSerieUseCaseParams(reps, kg, idExercise, record)
         viewModelScope.launch {
             addSerieUseCase(params)
                 .onStart { _state.emit(State.Loading) }
@@ -43,8 +44,8 @@ class AddSerieTrainingViewModel @Inject constructor(
         }
     }
 
-    fun modifySerie(serieId: Int, reps: Int, weight: Double) {
-        val params = ModifySerieUseCaseParams(serieId, reps, weight)
+    fun modifySerie(serieId: Int, reps: Int, weight: Double, record: SerieModel?) {
+        val params = ModifySerieUseCaseParams(serieId, reps, weight, record)
         viewModelScope.launch {
             modifyTrainingUseCase(params)
                 .onStart { _state.emit(State.Loading) }
@@ -81,7 +82,7 @@ class AddSerieTrainingViewModel @Inject constructor(
             val serieList: List<SerieModel>
         ) : State()
         data class SeriesChangedInExerciseDetail(
-            val serieList: List<SerieModel>,
+            val serieInfoWrapper: SerieInfoWrapper,
             val showLastSerieAdded: Boolean = false
         ) : State()
     }

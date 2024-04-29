@@ -74,7 +74,8 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
     private fun handleState(state: AddSerieTrainingViewModel.State) {
         when (state) {
             is AddSerieTrainingViewModel.State.SeriesChangedInExerciseDetail -> {
-                instantiateSeriesAdapter(state.serieList)
+                exercise.record = state.serieInfoWrapper.newRecord
+                instantiateSeriesAdapter(state.serieInfoWrapper.serieList)
                 setScreenEditMode(false)
                 showSlideSaved()
                 if (state.showLastSerieAdded) {
@@ -83,6 +84,10 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
                         etCounterKg.setText(lastKgWritten.toString())
                     }
                 }
+                if(state.serieInfoWrapper.showRecord){
+                    showRecordDialog()
+                }
+
                 hideLoading()
             }
             is AddSerieTrainingViewModel.State.SerieListRecived -> {
@@ -122,8 +127,8 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
                 lastKgWritten = kg
 
                 currentSelectedSerieModel?.let {
-                    addSerieTrainingViewModel.modifySerie(it.id!!, reps, kg)
-                } ?: addSerieTrainingViewModel.addNewSerie(reps, kg, exercise.id!!)
+                    addSerieTrainingViewModel.modifySerie(it.id!!, reps, kg, exercise.record)
+                } ?: addSerieTrainingViewModel.addNewSerie(reps, kg, exercise.id!!, exercise.record)
                 activity?.hideKeyBoard()
             }
 
@@ -215,6 +220,12 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
                 etCounterReps.setText(lastRepsWritten.toString())
                 etCounterKg.setText(lastKgWritten.toString())
             }
+        }
+    }
+
+    private fun showRecordDialog(){
+        exercise.record?.let {
+            RecordSerieDialog.newInstance().show(childFragmentManager, RecordSerieDialog.TAG)
         }
     }
 
