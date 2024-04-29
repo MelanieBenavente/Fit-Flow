@@ -1,3 +1,5 @@
 package app.fit.fitndflow.domain.model
 
-data class StringInLanguagesModel(val spanish: String, val english: String)
+import java.io.Serializable
+
+data class StringInLanguagesModel(val spanish: String, val english: String): Serializable
