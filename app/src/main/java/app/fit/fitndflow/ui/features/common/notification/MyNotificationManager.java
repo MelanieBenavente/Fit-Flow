@@ -113,7 +113,9 @@ public class MyNotificationManager extends BroadcastReceiver {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, uniqueId, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
 
             AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeAlarm, pendingIntent);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeAlarm, pendingIntent);
+            }
         }
     }
 
