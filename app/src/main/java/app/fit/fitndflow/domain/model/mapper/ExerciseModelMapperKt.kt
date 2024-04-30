@@ -38,11 +38,13 @@ class ExerciseModelMapperKt {
             )
             val record =
                 SerieModel(reps = exerciseDto.record?.reps, kg = exerciseDto.record?.weight)
+
             val exerciseModel = ExerciseModel(
                 exerciseDto.id!!,
                 exerciseDto.exerciseName.toModel(),
                 exerciseDto.serieList?.map { serieDto ->
-                    SerieModel(serieDto.serieId, serieDto.reps, serieDto.weight)
+                    val isRecord = serieDto.reps == record.reps && serieDto.weight == record.kg
+                    SerieModel(serieDto.serieId, serieDto.reps, serieDto.weight, isRecord)
                 }?.toMutableList(),
                 lastFirstSerie,
                 record

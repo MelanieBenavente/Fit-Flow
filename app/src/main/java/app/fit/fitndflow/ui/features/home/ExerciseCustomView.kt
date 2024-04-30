@@ -22,7 +22,7 @@ class ExerciseCustomView(
         for (i in exercise.serieList!!.indices) {
             val serie = exercise.serieList!![i]
             val isFirst = i == 0
-            val serieView = SerieCustomView(getContext(), serie, isFirst)
+            val serieView = SerieCustomView(getContext(), serie)
             container!!.addView(serieView)
         }
     }

@@ -1,8 +1,12 @@
 package app.fit.fitndflow.ui.features.training;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +24,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
     private List<SerieModel> serieModelList;
     private TrainingCallback trainingCallback;
 
+    private Boolean isRecord;
     private ViewHolder lastItemClicked;
 
     public SeriesAdapter(List<SerieModel> serieModelList, TrainingCallback trainingCallback) {
@@ -43,6 +48,13 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
             }
             if (serieModel.getKg() != null) {
                 holder.numKg.setText(Double.toString(serieModel.getKg()));
+            }
+            isRecord = Boolean.TRUE.equals(serieModel.isRecord());
+
+            if(isRecord){
+                holder.championsImg.setImageDrawable(holder.championsImg.getContext().getResources().getDrawable(R.drawable.champion_svg));
+            } else {
+                holder.championsImg.setImageDrawable(holder.championsImg.getContext().getResources().getDrawable(R.drawable.news_serie_component));
             }
             holder.linearContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,6 +88,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView numReps;
         TextView numKg;
+        ImageView championsImg;
         LinearLayout linearContainer;
         boolean isEditMode;
 
@@ -84,6 +97,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
             linearContainer = itemView.findViewById(R.id.linearContainer);
             numKg = itemView.findViewById(R.id.kgEdTxt);
             numReps = itemView.findViewById(R.id.repsEdTxt);
+            championsImg = itemView.findViewById(R.id.championImg);
         }
     }
 }

@@ -26,20 +26,16 @@ class CategoryModelMapperKt {
                     val lastFirstSerie = SerieModel(reps = exerciseDto.lastFirstSerie?.reps, kg = exerciseDto.lastFirstSerie?.weight)
                     val record = SerieModel(reps = exerciseDto.record?.reps, kg = exerciseDto.record?.weight)
                     val exerciseModel = ExerciseModel(
-                        id = exerciseDto.id,
-                        name = exerciseDto.exerciseName.toModel(),
-                        serieList = mutableListOf(),
+                        exerciseDto.id!!,
+                        exerciseDto.exerciseName.toModel(),
+                        exerciseDto.serieList?.map { serieDto ->
+                            val isRecord = serieDto.reps == record.reps && serieDto.weight == record.kg
+                            SerieModel(serieDto.serieId, serieDto.reps, serieDto.weight, isRecord)
+                        }?.toMutableList(),
                         lastFirstSerie,
                         record
                     )
                     categoryModel.exerciseList!!.add(exerciseModel)
-                    if(exerciseDto.serieList != null) {
-                        for (serieDto: SerieDto in exerciseDto.serieList!!) {
-                            val serieModel =
-                                SerieModel(serieDto.serieId, serieDto.reps, serieDto.weight)
-                            exerciseModel.serieList?.add(serieModel)
-                        }
-                    }
                 }
             }
             return categoryModelList

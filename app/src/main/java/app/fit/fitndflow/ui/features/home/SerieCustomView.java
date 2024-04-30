@@ -13,9 +13,9 @@ public class SerieCustomView extends LinearLayout {
     private TextView textReps;
     private TextView textKg;
 
-    private ImageView iconNews;
+    private ImageView iconChampion;
 
-    public SerieCustomView(Context context, SerieModel serie, boolean isFirst) {
+    public SerieCustomView(Context context, SerieModel serie) {
         super(context);
         inflate(getContext(), R.layout.item_training_series_layout, this);
         bindView();
@@ -23,16 +23,18 @@ public class SerieCustomView extends LinearLayout {
         textReps.setText("x "+repsToString);
         String kgToString = serie.getKg() != null? Double.toString(serie.getKg()) : "0";
         textKg.setText(kgToString+" kg");
-        if(isFirst){
-            iconNews.setVisibility(VISIBLE);
+
+        boolean isRecord = Boolean.TRUE.equals(serie.isRecord());
+        if(isRecord){
+            iconChampion.setVisibility(VISIBLE);
         } else {
-            iconNews.setVisibility(INVISIBLE);
+            iconChampion.setVisibility(INVISIBLE);
         }
     }
 
     private void bindView(){
         textReps = findViewById(R.id.number_reps);
         textKg = findViewById(R.id.number_kg);
-        iconNews = findViewById(R.id.news);
+        iconChampion = findViewById(R.id.championsImg);
     }
 }
