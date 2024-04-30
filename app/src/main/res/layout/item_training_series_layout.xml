@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="3dp"
     android:orientation="horizontal"
     >
 
@@ -12,6 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="x12"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textAlignment="textStart"
@@ -24,16 +26,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="40kg"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/number_reps"
         app:layout_constraintWidth_percent="0.4"
         android:textAlignment="textEnd"
         app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
-            android:id="@+id/news"
+            android:id="@+id/championsImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/news_serie_component"
+            android:src="@drawable/champion_svg"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />

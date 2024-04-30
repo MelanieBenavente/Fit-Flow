@@ -68,8 +68,8 @@
     <string name="add_note">Add Note</string>
     <string name="escriba_texto">Write a text...</string>
     <string name="successfully_added">Successfully added</string>
-    <string name="congrats">¡ CONGRATULATIONS !</string>
-    <string name="new_challenge">You have achieved a new challenge!</string>
+    <string name="congrats">¡ WELL DONE !</string>
+    <string name="new_challenge">You\'ve tackled a new challenge!</string>
 
 
 </resources>

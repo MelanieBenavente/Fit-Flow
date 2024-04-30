@@ -13,8 +13,10 @@
         android:padding="3dp"
         android:text="Exercise"
         style="@style/text_m_black"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/cat_name"
-        app:layout_constraintTop_toBottomOf="@id/cat_name" />
+        app:layout_constraintTop_toBottomOf="@id/cat_name"
+        />
 
     <View
         android:id="@+id/simpleLine3"

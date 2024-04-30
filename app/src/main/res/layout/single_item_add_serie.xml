@@ -14,14 +14,16 @@
         android:orientation="horizontal"
         >
 
-        <ImageButton
-            android:id="@+id/buttonAddSerie"
+        <ImageView
+            android:id="@+id/championImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/news_serie_component"
+            android:src="@drawable/champion_svg"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="30dp"
-            android:padding="9dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:paddingBottom="6dp"
             android:contentDescription="@string/talkback_add_component_btn"/>
 
             <TextView
