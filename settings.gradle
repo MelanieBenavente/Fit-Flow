@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Fit&Flow"
 include ':app'
+include ':ui-layer'
+include ':domain-layer'
+include ':data-layer'
