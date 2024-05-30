@@ -9,7 +9,6 @@ import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.model.UserModel;
 
 public interface FitnFlowRepository extends CommonRepository {
-    String getApiKey();
     UserModel registerUser(String userName, String email, String premium) throws Exception;
     List<CategoryModel> getCategoryList() throws Exception;
     List<CategoryModel> deleteCategory(Integer integer) throws Exception;

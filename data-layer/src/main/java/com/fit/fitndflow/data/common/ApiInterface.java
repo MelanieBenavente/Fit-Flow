@@ -24,7 +24,6 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
     String URL_BASE = "http://fitnflowapi-env.eba-8aaimaij.eu-west-3.elasticbeanstalk.com/";
-    String KEY = "auth-token";
     String KEY_PARAM_GET_DATE_TRAINING = "date";
     String KEY_PARAM_GET_ID = "id";
 
@@ -34,29 +33,29 @@ public interface ApiInterface {
 
     //LLAMADAS CATEGORIA
     @GET("summary/categories/")
-    Call<List<CategoryDto>> getCategoryDtoList(@Header(KEY) String apiKey);
+    Call<List<CategoryDto>> getCategoryDtoList();
     @DELETE("category/{id}")
-    Call <List<CategoryDto>> deleteCategory(@Path("id") int id, @Header(KEY) String apiKey);
+    Call <List<CategoryDto>> deleteCategory(@Path("id") int id);
     @POST("category/add")
-    Call<List<CategoryDto>> addNewCategory(@Body AddCategoryDto addCategoryDto, @Header(KEY) String apiKey);
+    Call<List<CategoryDto>> addNewCategory(@Body AddCategoryDto addCategoryDto);
     @POST("category/update")
-    Call<List<CategoryDto>> modifyCategory(@Body ModifyCategoryDto modifyCategoryDto, @Header(KEY) String apiKey);
+    Call<List<CategoryDto>> modifyCategory(@Body ModifyCategoryDto modifyCategoryDto);
 
     //LLAMADAS EJERCICIOS
     @POST("exercise/add")
-    Call<List<ExerciseDto>> addNewExercise(@Body AddExerciseDto addExerciseDto, @Header(KEY) String apiKey);
+    Call<List<ExerciseDto>> addNewExercise(@Body AddExerciseDto addExerciseDto);
     @POST("exercise/update")
-    Call<List<ExerciseDto>> modifyExercise(@Body ModifyExerciseDto modifyExerciseDto, @Header(KEY) String apiKey);
+    Call<List<ExerciseDto>> modifyExercise(@Body ModifyExerciseDto modifyExerciseDto);
     @DELETE("exercise/{id}")
-    Call<List<ExerciseDto>> deleteExercise(@Path("id") int exerciseId, @Header(KEY) String apikey);
+    Call<List<ExerciseDto>> deleteExercise(@Path("id") int exerciseId);
 
     //LLAMADAS TRAINING SERIES
     @POST("training/addSerie")
-    Call<ExerciseDto> addNewSerie(@Body AddSerieRequestDto addSerieDto, @Header(KEY) String apiKey);
+    Call<ExerciseDto> addNewSerie(@Body AddSerieRequestDto addSerieDto);
     @GET("summary/trainings")
-    Call<List<CategoryDto>> getCategoriesAndTrainings(@Query(KEY_PARAM_GET_DATE_TRAINING) String date, @Header(KEY) String apiKey);
+    Call<List<CategoryDto>> getCategoriesAndTrainings(@Query(KEY_PARAM_GET_DATE_TRAINING) String date);
     @POST("training/updateSerie")
-    Call<ExerciseDto> modifySerie(@Body SerieDto serieDto, @Header(KEY) String apiKey);
+    Call<ExerciseDto> modifySerie(@Body SerieDto serieDto);
     @DELETE("training/deleteSerie")
-    Call<ExerciseDto> deleteSerie(@Query(KEY_PARAM_GET_ID) int serieId, @Header(KEY) String apiKey);
+    Call<ExerciseDto> deleteSerie(@Query(KEY_PARAM_GET_ID) int serieId);
 }
