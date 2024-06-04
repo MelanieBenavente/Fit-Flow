@@ -3,6 +3,8 @@ package app.fit.fitndflow.ui.features.training
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -64,6 +66,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
         super.onViewCreated(view, savedInstanceState)
         attachObservers()
         addSerieTrainingViewModel.getSerieListOfExerciseAdded(exercise.id!!)
+
     }
 
     private fun attachObservers() {
@@ -75,6 +78,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
         when (state) {
             is AddSerieTrainingViewModel.State.SeriesChangedInExerciseDetail -> {
                 exercise.record = state.serieInfoWrapper.newRecord
+                printPRContainerIfRecordExists()
                 instantiateSeriesAdapter(state.serieInfoWrapper.serieList)
                 setScreenEditMode(false)
                 showSlideSaved()
@@ -92,6 +96,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
             }
             is AddSerieTrainingViewModel.State.SerieListRecived -> {
                 instantiateSeriesAdapter(state.serieList)
+                printPRContainerIfRecordExists()
                 setScreenEditMode(false)
                 printFirstSerieAdded()
                 hideLoading()
@@ -232,6 +237,18 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
         }
     }
 
+    private fun printPRContainerIfRecordExists() {
+        if(exercise.record != null){
+            binding.personalRecord.visibility = VISIBLE
+            exercise.record!!.reps?.let { binding.repsEdTxt.text = it.toString() }
+            binding.tvReps.setText("Reps")
+            exercise.record!!.kg?.let { binding.kgEdTxt.text = it.toString() }
+            binding.tvKg.text = "Kg"
+        } else {
+            binding.personalRecord.visibility = INVISIBLE
+        }
+    }
+
     private fun showDeleteDialog(id: Int) {
         ConfirmationDialogFragment.newInstance(this, ConfirmationDialogFragment.DELETE_SERIE, id)
             .show(childFragmentManager, ConfirmationDialogFragment.TAG)
@@ -246,4 +263,5 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
         val isEditMode = input != null
         setScreenEditMode(isEditMode)
     }
+
 }
