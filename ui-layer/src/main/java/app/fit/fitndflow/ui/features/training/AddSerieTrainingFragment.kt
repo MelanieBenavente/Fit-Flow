@@ -65,8 +65,8 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachObservers()
+        clearEditTextIfIsFocus()
         addSerieTrainingViewModel.getSerieListOfExerciseAdded(exercise.id!!)
-
     }
 
     private fun attachObservers() {
@@ -141,8 +141,8 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
                 if (currentSelectedSerieModel != null) {
                     showDeleteDialog(currentSelectedSerieModel!!.id!!)
                 } else {
-                    etCounterReps.setText("")
-                    etCounterKg.setText("")
+                    etCounterReps.text.clear()
+                    etCounterKg.text.clear()
                 }
             }
 
@@ -188,6 +188,23 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
         }
     }
 
+    private fun clearEditTextIfIsFocus(){
+        val focusEtCounterReps = View.OnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                binding.etCounterReps.text.clear()
+            } else {
+
+            }
+        }
+        binding.etCounterReps.onFocusChangeListener = focusEtCounterReps
+        val focusEtCounterKg = View.OnFocusChangeListener { v, hasFocus ->
+            if(hasFocus) {
+                binding.etCounterKg.text.clear()
+            }
+        }
+        binding.etCounterKg.onFocusChangeListener = focusEtCounterKg
+    }
+
     private fun instantiateSeriesAdapter(serieModelList: List<SerieModel>) {
         seriesAdapter = SeriesAdapter(
             serieModelList,
@@ -211,8 +228,8 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
                 deleteAndCleanBtn.setBackgroundResource(R.drawable.shape_serie_delete_btn)
             } else {
                 currentSelectedSerieModel = null
-                etCounterReps.setText("")
-                etCounterKg.setText("")
+                etCounterReps.text.clear()
+                etCounterKg.text.clear()
                 saveAndUpdateBtn.setText(R.string.add)
                 saveAndUpdateBtn.setBackgroundResource(R.drawable.shape_serie_add_and_clean_btns)
                 deleteAndCleanBtn.setText(R.string.clean)
