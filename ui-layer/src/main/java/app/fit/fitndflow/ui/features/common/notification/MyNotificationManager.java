@@ -104,6 +104,16 @@ public class MyNotificationManager extends BroadcastReceiver {
 
     public static void scheduleNotification(Activity activity, long timeAlarm, int type) {
         if (checkNotificationPermission(activity)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                AlarmManager alarmManager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
+                if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                    activity.startActivity(intent);
+                    return;
+                }
+            }
+
             Intent intent = new Intent(activity, MyNotificationManager.class);
             intent.putExtra("title", getNotificationTitle(type, activity));
             intent.putExtra("text", getNotificationBody(type, activity));
