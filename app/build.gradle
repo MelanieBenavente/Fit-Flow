@@ -18,8 +18,8 @@ android {
         applicationId "com.fit.fitndflow"
         minSdk 26
         targetSdk 34
-        versionCode 7
-        versionName "1.5-2024-06-04-01"
+        versionCode 9
+        versionName "1.6-2024-07-26-01"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
