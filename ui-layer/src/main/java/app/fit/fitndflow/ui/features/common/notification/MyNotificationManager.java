@@ -47,7 +47,7 @@ public class MyNotificationManager extends BroadcastReceiver {
         String body = intent.getStringExtra("text");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("CHANNEL_ID", "Channel name", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("CHANNEL_ID", "FitChannel", NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
