@@ -11,6 +11,7 @@ class ModifyExerciseUseCase @Inject constructor(val fitnFlowRepository: FitnFlow
     override fun run(params: ExerciseModelInLanguages): Flow<List<ExerciseModel>> = flow {
         val exerciseModified = fitnFlowRepository.modifyExercise(params.exerciseId, params.exerciseName, params.language, params.categoryId)
         fitnFlowRepository.updateCurrentTrainingListCache()
+        fitnFlowRepository.removeCategoryListCache()
         emit(exerciseModified)
     }
 }

@@ -11,6 +11,7 @@ class AddExerciseUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRep
     override fun run(params: AddExerciseUseCaseParams): Flow<List<ExerciseModel>>  = flow {
         val newExercise = fitnFlowRepository.addNewExercise(params.name, params.language, params.categoryId)
         fitnFlowRepository.updateCurrentTrainingListCache()
+        fitnFlowRepository.removeCategoryListCache()
         emit(newExercise)
     }
 }

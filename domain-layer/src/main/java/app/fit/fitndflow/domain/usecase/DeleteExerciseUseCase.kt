@@ -9,9 +9,10 @@ import javax.inject.Inject
 
 class DeleteExerciseUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRepository) : UseCase<ExerciseToDeleteParams, List<ExerciseModel>>() {
     override fun run(params: ExerciseToDeleteParams): Flow<List<ExerciseModel>> = flow {
-        val exerciseToDelete = fitnFlowRepository.deleteExercise(params.exerciseId)
+        val exerciseList = fitnFlowRepository.deleteExercise(params.exerciseId)
         fitnFlowRepository.updateCurrentTrainingListCache()
-        emit(exerciseToDelete)
+        fitnFlowRepository.removeCategoryListCache()
+        emit(exerciseList)
     }
 }
 
