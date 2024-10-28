@@ -13,7 +13,7 @@ public interface FitnFlowRepository extends CommonRepository {
     List<CategoryModel> getCategoryList() throws Exception;
     List<CategoryModel> deleteCategory(Integer integer) throws Exception;
 
-    List<CategoryModel> getTrainingList(String date) throws Exception;
+    List<CategoryModel> getTrainingListAndUpdateCache(String date) throws Exception;
     List<CategoryModel> updateCurrentTrainingListCache() throws Exception;
     List<CategoryModel> addNewCategory(String categoryName, String language) throws Exception;
     List<CategoryModel> modifyCategory(String categoryName, String language, int categoryId, String imageUrl) throws Exception;
@@ -24,5 +24,6 @@ public interface FitnFlowRepository extends CommonRepository {
     ExerciseModel modifySerie(int serieId, int reps, double weight) throws Exception;
     List<SerieModel> getSerieListOfExerciseAdded(int exerciseid) throws Exception;
     ExerciseModel deleteSerie(int serieId) throws Exception;
+    void removeCategoryListCache();
 }
 
