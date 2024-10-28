@@ -10,7 +10,7 @@ import javax.inject.Inject
 class GetTrainingUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRepository) :
     UseCase<GetTrainingUseCaseParams, List<CategoryModel>>() {
     override fun run(params: GetTrainingUseCaseParams): Flow<List<CategoryModel>> = flow {
-        val getTrainingByDate = fitnFlowRepository.getTrainingList(params.date)
+        val getTrainingByDate = fitnFlowRepository.getTrainingListAndUpdateCache(params.date)
         fitnFlowRepository.updateCurrentTrainingListCache()
         emit(getTrainingByDate)
     }
