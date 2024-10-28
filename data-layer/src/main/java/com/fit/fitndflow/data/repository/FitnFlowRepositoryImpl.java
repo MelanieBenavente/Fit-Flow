@@ -9,6 +9,7 @@ import java.util.List;
 import com.fit.fitndflow.data.common.ApiInterface;
 import com.fit.fitndflow.data.common.SharedPrefs;
 import com.fit.fitndflow.data.common.model.ExcepcionApi;
+import com.fit.fitndflow.data.datasource.LocalDataSource;
 import com.fit.fitndflow.data.dto.StringInLanguagesDto;
 import com.fit.fitndflow.data.dto.UserDto;
 import com.fit.fitndflow.data.dto.categories.AddCategoryDto;
@@ -21,30 +22,34 @@ import com.fit.fitndflow.data.dto.mapper.StringInLanguagesMapperKt;
 import com.fit.fitndflow.data.dto.trainings.AddSerieRequestDto;
 import com.fit.fitndflow.data.dto.trainings.SerieDto;
 import com.fit.fitndflow.data.dto.trainings.SerieForAddSerieRequestDto;
+
 import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.ExerciseModel;
 import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.domain.model.UserModel;
+
 import com.fit.fitndflow.data.dto.mapper.CategoryModelMapperKt;
 import com.fit.fitndflow.data.dto.mapper.ExerciseModelMapperKt;
 import com.fit.fitndflow.data.dto.mapper.UserModelMapperKt;
+
 import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import retrofit2.Response;
 
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
-    private static FitnFlowRepositoryImpl instance;
-    private List<CategoryModel> availableCategoryListCachedResponse;
-    private HashMap<String, List<CategoryModel>> trainingResponseCacheByDate = new HashMap<>();
+    private LocalDataSource localDataSource;
+
     private Context mContext;
     private ApiInterface apiInterface;
-    private String currentDate;
-    public FitnFlowRepositoryImpl(Context context, ApiInterface apiInterface){
+
+
+    public FitnFlowRepositoryImpl(Context context, ApiInterface apiInterface, LocalDataSource localDataSource) {
         this.mContext = context;
         this.apiInterface = apiInterface;
+        this.localDataSource = localDataSource;
     }
 
-    private  void removeAllDataFromHashMapCache(){
-        trainingResponseCacheByDate.clear();
+    private void removeAllDataFromHashMapCache() {
+        localDataSource.getAvailableTrainingListCache().clear();
     }
 
     @Override
@@ -73,7 +78,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
     @Override
     public List<CategoryModel> getCategoryList() throws Exception {
-        if (availableCategoryListCachedResponse == null) {
+        if (localDataSource.getAvailableCategoryListCache() == null) {
             Response<List<CategoryDto>> response;
             try {
                 response = apiInterface.getCategoryDtoList().execute();
@@ -81,7 +86,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                     throw new ExcepcionApi(response.code());
                 }
                 if (response != null && response.body() != null) {
-                    availableCategoryListCachedResponse = CategoryModelMapperKt.toModel(response.body());
+                    localDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
                 } else {
                     return null;
                 }
@@ -90,8 +95,9 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                 throw new Exception(e);
             }
         }
-        return availableCategoryListCachedResponse;
+        return localDataSource.getAvailableCategoryListCache();
     }
+
     @Override
     public List<CategoryModel> addNewCategory(String categoryName, String language) throws Exception {
         StringInLanguagesDto stringInLanguages = StringInLanguagesMapperKt.convertToStringInLanguages(language, categoryName);
@@ -105,7 +111,8 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                 throw new ExcepcionApi(response.code());
             }
             if (response != null && response.body() != null) {
-                availableCategoryListCachedResponse = CategoryModelMapperKt.toModel(response.body());
+                localDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
+                updateCurrentTrainingListCache();
             } else {
                 return null;
             }
@@ -113,7 +120,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
-        return availableCategoryListCachedResponse;
+        return localDataSource.getAvailableCategoryListCache();
     }
 
     @Override
@@ -128,8 +135,9 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                 throw new ExcepcionApi(response.code());
             }
             if (response != null && response.body() != null) {
-                availableCategoryListCachedResponse = CategoryModelMapperKt.toModel(response.body());
+                localDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
                 removeAllDataFromHashMapCache();
+                updateCurrentTrainingListCache();
             } else {
                 return null;
             }
@@ -137,19 +145,21 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
-        return availableCategoryListCachedResponse;
+        return localDataSource.getAvailableCategoryListCache();
     }
+
     @Override
     public List<CategoryModel> deleteCategory(Integer categoryId) throws Exception {
 
         try {
-            Response <List<CategoryDto>> response = apiInterface.deleteCategory(categoryId).execute();
+            Response<List<CategoryDto>> response = apiInterface.deleteCategory(categoryId).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
             if (response != null && response.body() != null) {
-                availableCategoryListCachedResponse = CategoryModelMapperKt.toModel(response.body());
+                localDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
                 removeAllDataFromHashMapCache();
+                updateCurrentTrainingListCache();
             } else {
                 return null;
             }
@@ -157,13 +167,14 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
-        return availableCategoryListCachedResponse;
+        return localDataSource.getAvailableCategoryListCache();
     }
-   @Override
+
+    @Override
     public List<ExerciseModel> addNewExercise(String exerciseName, String language, int categoryId) throws Exception {
-       StringInLanguagesDto stringInLanguages = StringInLanguagesMapperKt.convertToStringInLanguages(language, exerciseName);
-       AddExerciseDto addExerciseDto = new AddExerciseDto(stringInLanguages, categoryId);
-       List<ExerciseModel> availableExerciseListResponse;
+        StringInLanguagesDto stringInLanguages = StringInLanguagesMapperKt.convertToStringInLanguages(language, exerciseName);
+        AddExerciseDto addExerciseDto = new AddExerciseDto(stringInLanguages, categoryId);
+        List<ExerciseModel> availableExerciseListResponse;
         try {
 
             Response<List<ExerciseDto>> response = apiInterface.addNewExercise(addExerciseDto).execute();
@@ -182,13 +193,14 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         }
         return availableExerciseListResponse;
     }
+
     @Override
     public List<ExerciseModel> modifyExercise(int exerciseId, String exerciseName, String language, int categoryId) throws Exception {
         StringInLanguagesDto stringInLanguages = StringInLanguagesMapperKt.convertToStringInLanguages(language, exerciseName);
         ModifyExerciseDto modifyExerciseDto = new ModifyExerciseDto(exerciseId, stringInLanguages, categoryId);
         List<ExerciseModel> availableExerciseListResponse;
         try {
-            Response <List<ExerciseDto>> response = apiInterface.modifyExercise(modifyExerciseDto).execute();
+            Response<List<ExerciseDto>> response = apiInterface.modifyExercise(modifyExerciseDto).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
@@ -204,11 +216,12 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         }
         return availableExerciseListResponse;
     }
+
     @Override
     public List<ExerciseModel> deleteExercise(Integer exerciseId) throws Exception {
         List<ExerciseModel> availableExerciseListResponse;
         try {
-            Response <List<ExerciseDto>> response = apiInterface.deleteExercise(exerciseId).execute();
+            Response<List<ExerciseDto>> response = apiInterface.deleteExercise(exerciseId).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
@@ -227,10 +240,10 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
     public ExerciseModel addNewSerie(int reps, double weight, int exerciseId) throws Exception {
         SerieForAddSerieRequestDto serieForAddSerieRequestDto = new SerieForAddSerieRequestDto(reps, weight, new ExerciseDto(exerciseId, null, null, null, null));
-        AddSerieRequestDto addSerieRequestDto = new AddSerieRequestDto(currentDate, serieForAddSerieRequestDto);
+        AddSerieRequestDto addSerieRequestDto = new AddSerieRequestDto(localDataSource.getCurrentDate(), serieForAddSerieRequestDto);
         ExerciseModel exerciseResponse;
-        try{
-            Response <ExerciseDto> response = apiInterface.addNewSerie(addSerieRequestDto).execute();
+        try {
+            Response<ExerciseDto> response = apiInterface.addNewSerie(addSerieRequestDto).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
@@ -240,7 +253,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             } else {
                 return null;
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new Exception(e);
         }
@@ -248,32 +261,33 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     @Override
-    public List<CategoryModel> getTrainingList(String date) throws Exception {
-        currentDate = date;
-        if(trainingResponseCacheByDate.get(date) == null){
+    public List<CategoryModel> getTrainingListAndUpdateCache(String date) throws Exception {
+        localDataSource.setCurrentDate(date);
+        if (localDataSource.getAvailableTrainingListCache().get(date) == null) {
             try {
                 Response<List<CategoryDto>> response = apiInterface.getCategoriesAndTrainings(date).execute();
-                if(response != null){
-                    trainingResponseCacheByDate.put(date, CategoryModelMapperKt.toModel(response.body()));}
+                if (response != null) {
+                    localDataSource.replaceAllDataFromTrainingCache(date, CategoryModelMapperKt.toModel(response.body()));
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new Exception(e);
             }
         }
-        return trainingResponseCacheByDate.get(date);
+        return localDataSource.getAvailableTrainingListCache().get(date);
     }
 
     @Override
     public List<CategoryModel> updateCurrentTrainingListCache() throws Exception {
-        return getTrainingList(currentDate);
+        return getTrainingListAndUpdateCache(localDataSource.getCurrentDate());
     }
 
     @Override
-    public ExerciseModel modifySerie(int serieId, int reps, double weight) throws Exception{
+    public ExerciseModel modifySerie(int serieId, int reps, double weight) throws Exception {
         SerieDto serieDto = new SerieDto(serieId, reps, weight);
         ExerciseModel exerciseResponse;
-        try{
+        try {
             Response<ExerciseDto> response = apiInterface.modifySerie(serieDto).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
@@ -291,10 +305,10 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
         return exerciseResponse;
     }
 
-    public List<SerieModel> getSerieListOfExerciseAdded(int exerciseId) throws Exception{
-        try{
-            List<CategoryModel> categoryList = trainingResponseCacheByDate.get(currentDate);
-            if(categoryList != null) {
+    public List<SerieModel> getSerieListOfExerciseAdded(int exerciseId) throws Exception {
+        try {
+            List<CategoryModel> categoryList = localDataSource.getAvailableTrainingListCache().get(localDataSource.getCurrentDate());
+            if (categoryList != null) {
                 for (int i = 0; i < categoryList.size(); i++) {
                     CategoryModel category = categoryList.get(i);
                     List<ExerciseModel> exerciseList = category.getExerciseList();
@@ -312,10 +326,11 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             throw new Exception(e);
         }
     }
-    public ExerciseModel deleteSerie(int serieId) throws Exception{
+
+    public ExerciseModel deleteSerie(int serieId) throws Exception {
         ExerciseModel exerciseResponse;
-        try{
-           Response<ExerciseDto> response = apiInterface.deleteSerie(serieId).execute();
+        try {
+            Response<ExerciseDto> response = apiInterface.deleteSerie(serieId).execute();
             if (response != null && !response.isSuccessful()) {
                 throw new ExcepcionApi(response.code());
             }
@@ -330,6 +345,10 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             throw new Exception(e);
         }
         return exerciseResponse;
-        }
     }
+
+    public void removeCategoryListCache() {
+        localDataSource.replaceAllDataFromCategoryListCache(null);
+    }
+}
 
