@@ -5,6 +5,7 @@ import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import app.fit.fitndflow.domain.repository.SharedPrefsRepository
 import com.fit.fitndflow.data.common.ApiInterface
 import com.fit.fitndflow.data.common.HeaderInterceptor
+import com.fit.fitndflow.data.datasource.LocalDataSource
 import com.fit.fitndflow.data.repository.FitnFlowRepositoryImpl
 import com.fit.fitndflow.data.repository.SharedPrefsRepositoryImpl
 import com.google.gson.GsonBuilder
@@ -26,8 +27,8 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
-    fun provideFitndFlowRepository(@ApplicationContext context: Context, apiInterface: ApiInterface): FitnFlowRepository {
-        return FitnFlowRepositoryImpl(context, apiInterface)
+    fun provideFitndFlowRepository(@ApplicationContext context: Context, apiInterface: ApiInterface, localDataSource: LocalDataSource): FitnFlowRepository {
+        return FitnFlowRepositoryImpl(context, apiInterface, localDataSource)
     }
 
     @Provides
@@ -40,6 +41,12 @@ class RepositoryModule {
     @Singleton
     fun provideApiInterface(retrofit: Retrofit): ApiInterface {
         return  retrofit.create(ApiInterface::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocalDataSource() : LocalDataSource {
+        return LocalDataSource()
     }
 
     @Provides
