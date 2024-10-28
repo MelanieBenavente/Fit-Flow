@@ -3,13 +3,13 @@ package com.fit.fitndflow.data.repository;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.fit.fitndflow.data.common.ApiInterface;
 import com.fit.fitndflow.data.common.SharedPrefs;
 import com.fit.fitndflow.data.common.model.ExcepcionApi;
-import com.fit.fitndflow.data.datasource.LocalDataSource;
+import com.fit.fitndflow.data.datasource.CategoriesAndExercisesLocalDataSource;
+import com.fit.fitndflow.data.datasource.TrainingLocalDataSource;
 import com.fit.fitndflow.data.dto.StringInLanguagesDto;
 import com.fit.fitndflow.data.dto.UserDto;
 import com.fit.fitndflow.data.dto.categories.AddCategoryDto;
@@ -36,20 +36,22 @@ import app.fit.fitndflow.domain.repository.FitnFlowRepository;
 import retrofit2.Response;
 
 public class FitnFlowRepositoryImpl implements FitnFlowRepository {
-    private LocalDataSource localDataSource;
+    private TrainingLocalDataSource trainingLocalDataSource;
+    private CategoriesAndExercisesLocalDataSource categoriesAndExercisesLocalDataSource;
 
     private Context mContext;
     private ApiInterface apiInterface;
 
 
-    public FitnFlowRepositoryImpl(Context context, ApiInterface apiInterface, LocalDataSource localDataSource) {
+    public FitnFlowRepositoryImpl(Context context, ApiInterface apiInterface, CategoriesAndExercisesLocalDataSource categoriesAndExercisesLocalDataSource, TrainingLocalDataSource trainingLocalDataSource) {
         this.mContext = context;
         this.apiInterface = apiInterface;
-        this.localDataSource = localDataSource;
+        this.categoriesAndExercisesLocalDataSource = categoriesAndExercisesLocalDataSource;
+        this.trainingLocalDataSource = trainingLocalDataSource;
     }
 
     private void removeAllDataFromHashMapCache() {
-        localDataSource.getAvailableTrainingListCache().clear();
+        trainingLocalDataSource.cleanCache();
     }
 
     @Override
@@ -78,7 +80,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
     @Override
     public List<CategoryModel> getCategoryList() throws Exception {
-        if (localDataSource.getAvailableCategoryListCache() == null) {
+        if (categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache() == null) {
             Response<List<CategoryDto>> response;
             try {
                 response = apiInterface.getCategoryDtoList().execute();
@@ -86,7 +88,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                     throw new ExcepcionApi(response.code());
                 }
                 if (response != null && response.body() != null) {
-                    localDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
+                    categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
                 } else {
                     return null;
                 }
@@ -95,7 +97,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                 throw new Exception(e);
             }
         }
-        return localDataSource.getAvailableCategoryListCache();
+        return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache();
     }
 
     @Override
@@ -111,7 +113,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                 throw new ExcepcionApi(response.code());
             }
             if (response != null && response.body() != null) {
-                localDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
+                categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
                 updateCurrentTrainingListCache();
             } else {
                 return null;
@@ -120,7 +122,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
-        return localDataSource.getAvailableCategoryListCache();
+        return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache();
     }
 
     @Override
@@ -135,7 +137,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                 throw new ExcepcionApi(response.code());
             }
             if (response != null && response.body() != null) {
-                localDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
+                categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
                 removeAllDataFromHashMapCache();
                 updateCurrentTrainingListCache();
             } else {
@@ -145,7 +147,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
-        return localDataSource.getAvailableCategoryListCache();
+        return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache();
     }
 
     @Override
@@ -157,7 +159,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                 throw new ExcepcionApi(response.code());
             }
             if (response != null && response.body() != null) {
-                localDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
+                categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
                 removeAllDataFromHashMapCache();
                 updateCurrentTrainingListCache();
             } else {
@@ -167,7 +169,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
-        return localDataSource.getAvailableCategoryListCache();
+        return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache();
     }
 
     @Override
@@ -240,7 +242,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
     public ExerciseModel addNewSerie(int reps, double weight, int exerciseId) throws Exception {
         SerieForAddSerieRequestDto serieForAddSerieRequestDto = new SerieForAddSerieRequestDto(reps, weight, new ExerciseDto(exerciseId, null, null, null, null));
-        AddSerieRequestDto addSerieRequestDto = new AddSerieRequestDto(localDataSource.getCurrentDate(), serieForAddSerieRequestDto);
+        AddSerieRequestDto addSerieRequestDto = new AddSerieRequestDto(trainingLocalDataSource.getCurrentDate(), serieForAddSerieRequestDto);
         ExerciseModel exerciseResponse;
         try {
             Response<ExerciseDto> response = apiInterface.addNewSerie(addSerieRequestDto).execute();
@@ -262,12 +264,12 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
     @Override
     public List<CategoryModel> getTrainingListAndUpdateCache(String date) throws Exception {
-        localDataSource.setCurrentDate(date);
-        if (localDataSource.getAvailableTrainingListCache().get(date) == null) {
+        trainingLocalDataSource.setCurrentDate(date);
+        if (trainingLocalDataSource.getTrainingsByDate(date) == null) {
             try {
                 Response<List<CategoryDto>> response = apiInterface.getCategoriesAndTrainings(date).execute();
                 if (response != null) {
-                    localDataSource.replaceAllDataFromTrainingCache(date, CategoryModelMapperKt.toModel(response.body()));
+                    trainingLocalDataSource.replaceAllDataFromTrainingCache(date, CategoryModelMapperKt.toModel(response.body()));
                 }
 
             } catch (Exception e) {
@@ -275,12 +277,12 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
                 throw new Exception(e);
             }
         }
-        return localDataSource.getAvailableTrainingListCache().get(date);
+        return trainingLocalDataSource.getTrainingsByDate(date);
     }
 
     @Override
     public List<CategoryModel> updateCurrentTrainingListCache() throws Exception {
-        return getTrainingListAndUpdateCache(localDataSource.getCurrentDate());
+        return getTrainingListAndUpdateCache(trainingLocalDataSource.getCurrentDate());
     }
 
     @Override
@@ -307,7 +309,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
 
     public List<SerieModel> getSerieListOfExerciseAdded(int exerciseId) throws Exception {
         try {
-            List<CategoryModel> categoryList = localDataSource.getAvailableTrainingListCache().get(localDataSource.getCurrentDate());
+            List<CategoryModel> categoryList = trainingLocalDataSource.getTrainingsByDate(trainingLocalDataSource.getCurrentDate());
             if (categoryList != null) {
                 for (int i = 0; i < categoryList.size(); i++) {
                     CategoryModel category = categoryList.get(i);
@@ -348,7 +350,7 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
     }
 
     public void removeCategoryListCache() {
-        localDataSource.replaceAllDataFromCategoryListCache(null);
+        categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(null);
     }
 }
 

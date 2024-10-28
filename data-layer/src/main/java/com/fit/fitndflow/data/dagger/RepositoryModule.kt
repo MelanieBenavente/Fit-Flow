@@ -5,7 +5,8 @@ import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import app.fit.fitndflow.domain.repository.SharedPrefsRepository
 import com.fit.fitndflow.data.common.ApiInterface
 import com.fit.fitndflow.data.common.HeaderInterceptor
-import com.fit.fitndflow.data.datasource.LocalDataSource
+import com.fit.fitndflow.data.datasource.CategoriesAndExercisesLocalDataSource
+import com.fit.fitndflow.data.datasource.TrainingLocalDataSource
 import com.fit.fitndflow.data.repository.FitnFlowRepositoryImpl
 import com.fit.fitndflow.data.repository.SharedPrefsRepositoryImpl
 import com.google.gson.GsonBuilder
@@ -27,8 +28,8 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
-    fun provideFitndFlowRepository(@ApplicationContext context: Context, apiInterface: ApiInterface, localDataSource: LocalDataSource): FitnFlowRepository {
-        return FitnFlowRepositoryImpl(context, apiInterface, localDataSource)
+    fun provideFitndFlowRepository(@ApplicationContext context: Context, apiInterface: ApiInterface, categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource): FitnFlowRepository {
+        return FitnFlowRepositoryImpl(context, apiInterface, categoriesAndExercisesLocalDataSource, trainingLocalDataSource)
     }
 
     @Provides
@@ -45,8 +46,14 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideLocalDataSource() : LocalDataSource {
-        return LocalDataSource()
+    fun providesTrainingLocalDataSource() : TrainingLocalDataSource {
+        return TrainingLocalDataSource()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCategoriesAndExercisesLocalDataSource() : CategoriesAndExercisesLocalDataSource {
+        return CategoriesAndExercisesLocalDataSource()
     }
 
     @Provides
