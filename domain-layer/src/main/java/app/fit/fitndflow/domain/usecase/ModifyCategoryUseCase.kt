@@ -10,7 +10,6 @@ import javax.inject.Inject
 class ModifyCategoryUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRepository) : UseCase<CategoryModelInLanguages, List<CategoryModel>>(){
     override fun run(params: CategoryModelInLanguages): Flow<List<CategoryModel>> = flow {
         val categoryModified = fitnFlowRepository.modifyCategory(params.name, params.language, params.id, params.imageUrl)
-        fitnFlowRepository.updateCurrentTrainingListCache()
         emit(categoryModified)
     }
 }

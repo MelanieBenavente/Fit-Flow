@@ -9,9 +9,8 @@ import javax.inject.Inject
 
 class DeleteCategoryUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRepository) : UseCase<GetCategoryToDeleteParams, List<CategoryModel>>() {
     override fun run(params: GetCategoryToDeleteParams): Flow<List<CategoryModel>> = flow {
-        val categoryToDelete = fitnFlowRepository.deleteCategory(params.categoryId)
-        fitnFlowRepository.updateCurrentTrainingListCache()
-        emit(categoryToDelete)
+        val categoryList = fitnFlowRepository.deleteCategory(params.categoryId)
+        emit(categoryList)
     }
 }
 data class GetCategoryToDeleteParams(val categoryId: Int)
