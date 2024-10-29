@@ -33,6 +33,7 @@ public class TrainingRepositoryImpl implements TrainingRepository {
         this.apiInterface = apiInterface;
         this.trainingLocalDataSource = trainingLocalDataSource;
     }
+
     @Override
     public List<SerieModel> getSerieListOfExerciseAdded(int exerciseId) throws Exception {
         try {
@@ -68,7 +69,8 @@ public class TrainingRepositoryImpl implements TrainingRepository {
             }
             if (response != null && response.body() != null) {
                 exerciseResponse = ExerciseModelMapperKt.toModel(response.body());
-                trainingLocalDataSource.cleanCache();            } else {
+                trainingLocalDataSource.cleanCache();
+            } else {
                 return null;
             }
         } catch (Exception e) {
@@ -89,7 +91,8 @@ public class TrainingRepositoryImpl implements TrainingRepository {
             }
             if (response != null && response.body() != null) {
                 exerciseResponse = ExerciseModelMapperKt.toModel(response.body());
-                trainingLocalDataSource.cleanCache();            } else {
+                trainingLocalDataSource.cleanCache();
+            } else {
                 return null;
             }
         } catch (Exception e) {
@@ -109,7 +112,8 @@ public class TrainingRepositoryImpl implements TrainingRepository {
             }
             if (response != null && response.body() != null) {
                 exerciseResponse = ExerciseModelMapperKt.toModel(response.body());
-                trainingLocalDataSource.cleanCache();            } else {
+                trainingLocalDataSource.cleanCache();
+            } else {
                 return null;
             }
         } catch (Exception e) {
@@ -118,6 +122,7 @@ public class TrainingRepositoryImpl implements TrainingRepository {
         }
         return exerciseResponse;
     }
+
     @Override
     public List<CategoryModel> getTrainingListAndUpdateCache(String date) throws Exception {
         trainingLocalDataSource.setCurrentDate(date);

@@ -1,13 +1,5 @@
 package app.fit.fitndflow.usecase
 
-import app.fit.fitndflow.domain.model.CategoryModel
-import app.fit.fitndflow.domain.repository.FitnFlowRepository
-import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase
-import io.mockk.coEvery
-import io.mockk.mockk
-import org.junit.Before
-import org.junit.Test
-
 //todo!!!!!!!!! pending to finish test
 //class GetCategoriesUseCaseTest {
 //
