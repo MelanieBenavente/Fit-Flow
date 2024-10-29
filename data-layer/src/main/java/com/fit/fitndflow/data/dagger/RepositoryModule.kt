@@ -1,14 +1,20 @@
 package com.fit.fitndflow.data.dagger
 
 import android.content.Context
+import app.fit.fitndflow.domain.repository.CategoriesRepository
+import app.fit.fitndflow.domain.repository.ExercisesRepository
 import app.fit.fitndflow.domain.repository.FitnFlowRepository
 import app.fit.fitndflow.domain.repository.SharedPrefsRepository
+import app.fit.fitndflow.domain.repository.TrainingRepository
 import com.fit.fitndflow.data.common.ApiInterface
 import com.fit.fitndflow.data.common.HeaderInterceptor
 import com.fit.fitndflow.data.datasource.CategoriesAndExercisesLocalDataSource
 import com.fit.fitndflow.data.datasource.TrainingLocalDataSource
+import com.fit.fitndflow.data.repository.CategoriesRepositoryImpl
+import com.fit.fitndflow.data.repository.ExercisesRepositoryImpl
 import com.fit.fitndflow.data.repository.FitnFlowRepositoryImpl
 import com.fit.fitndflow.data.repository.SharedPrefsRepositoryImpl
+import com.fit.fitndflow.data.repository.TrainingRepositoryImpl
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -28,10 +34,24 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
-    fun provideFitndFlowRepository(@ApplicationContext context: Context, apiInterface: ApiInterface, categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource): FitnFlowRepository {
-        return FitnFlowRepositoryImpl(context, apiInterface, categoriesAndExercisesLocalDataSource, trainingLocalDataSource)
+    fun provideFitndFlowRepository(@ApplicationContext context: Context, apiInterface: ApiInterface): FitnFlowRepository {
+        return FitnFlowRepositoryImpl(context, apiInterface)
     }
-
+    @Provides
+    @Singleton
+    fun provideCategoriesRepository(@ApplicationContext context: Context, apiInterface: ApiInterface, categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource): CategoriesRepository {
+        return CategoriesRepositoryImpl(context, apiInterface, categoriesAndExercisesLocalDataSource, trainingLocalDataSource)
+    }
+    @Provides
+    @Singleton
+    fun provideExercisesRepository(@ApplicationContext context: Context, apiInterface: ApiInterface, categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource): ExercisesRepository {
+        return ExercisesRepositoryImpl(context, apiInterface, categoriesAndExercisesLocalDataSource, trainingLocalDataSource)
+    }
+    @Provides
+    @Singleton
+    fun provideTrainingRepository(@ApplicationContext context: Context, apiInterface: ApiInterface, trainingLocalDataSource : TrainingLocalDataSource): TrainingRepository {
+        return TrainingRepositoryImpl(context, apiInterface, trainingLocalDataSource)
+    }
     @Provides
     @Singleton
     fun provideSharedPrefsRepository(@ApplicationContext context: Context): SharedPrefsRepository {
