@@ -2,9 +2,7 @@ package app.fit.fitndflow.domain.repository
 
 import app.fit.fitndflow.domain.common.repository.CommonRepository
 
-interface SharedPrefsRepository : CommonRepository {
-
-    fun getApiKey(): String?
+interface NotificationsRepository : CommonRepository {
 
     fun isNotificationShown(): Boolean
 
