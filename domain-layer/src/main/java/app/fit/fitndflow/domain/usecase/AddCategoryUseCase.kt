@@ -2,14 +2,14 @@ package app.fit.fitndflow.domain.usecase
 
 import app.fit.fitndflow.domain.common.usecase.UseCase
 import app.fit.fitndflow.domain.model.CategoryModel
-import app.fit.fitndflow.domain.repository.FitnFlowRepository
+import app.fit.fitndflow.domain.repository.CategoriesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class AddCategoryUseCase @Inject constructor(val fitnFlowRepository: FitnFlowRepository) : UseCase<AddCategoryUseCaseParams, List<CategoryModel>>(){
+class AddCategoryUseCase @Inject constructor(val categoriesRepository: CategoriesRepository) : UseCase<AddCategoryUseCaseParams, List<CategoryModel>>(){
     override fun run(params: AddCategoryUseCaseParams): Flow<List<CategoryModel>> = flow {
-         val newCategory = fitnFlowRepository.addNewCategory(params.categoryName, params.language)
+         val newCategory = categoriesRepository.addNewCategory(params.categoryName, params.language)
         emit(newCategory)
     }
 }
