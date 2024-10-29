@@ -3,30 +3,24 @@ package com.fit.fitndflow.data.repository;
 import android.content.Context;
 
 import com.fit.fitndflow.data.common.ApiInterface;
-import com.fit.fitndflow.data.common.SharedPrefs;
 import com.fit.fitndflow.data.common.model.ExcepcionApi;
-import com.fit.fitndflow.data.datasource.CategoriesAndExercisesLocalDataSource;
-import com.fit.fitndflow.data.datasource.TrainingLocalDataSource;
+import com.fit.fitndflow.data.datasource.SharedPrefsLocalDataSource;
 import com.fit.fitndflow.data.dto.UserDto;
-import com.fit.fitndflow.data.dto.categories.CategoryDto;
-import com.fit.fitndflow.data.dto.mapper.CategoryModelMapperKt;
 import com.fit.fitndflow.data.dto.mapper.UserModelMapperKt;
 
-import java.util.List;
-
-import app.fit.fitndflow.domain.model.CategoryModel;
 import app.fit.fitndflow.domain.model.UserModel;
-import app.fit.fitndflow.domain.repository.FitnFlowRepository;
+import app.fit.fitndflow.domain.repository.RegisterUserRepository;
 import retrofit2.Response;
 
-public class FitnFlowRepositoryImpl implements FitnFlowRepository {
+public class RegisterUserRepositoryImpl implements RegisterUserRepository {
     private Context mContext;
     private ApiInterface apiInterface;
+    private SharedPrefsLocalDataSource sharedPrefsLocalDataSource;
 
-
-    public FitnFlowRepositoryImpl(Context context, ApiInterface apiInterface) {
+    public RegisterUserRepositoryImpl(Context context, ApiInterface apiInterface, SharedPrefsLocalDataSource sharedPrefsLocalDataSource) {
         this.mContext = context;
         this.apiInterface = apiInterface;
+        this.sharedPrefsLocalDataSource = sharedPrefsLocalDataSource;
     }
 
     @Override
@@ -41,7 +35,8 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             }
             if (response != null && response.body() != null) {
                 UserModel userModelMapped = UserModelMapperKt.toModel(response.body());
-                SharedPrefs.saveApikeyToSharedPRefs(mContext, userModelMapped.getApiKey());
+                String apiKey = userModelMapped.getApiKey();
+                sharedPrefsLocalDataSource.saveApiKey(apiKey);
                 return userModelMapped;
             } else {
                 throw new Exception("Error register"); //si la respuesta es nula
@@ -51,6 +46,11 @@ public class FitnFlowRepositoryImpl implements FitnFlowRepository {
             e.printStackTrace();
             throw new Exception(e);
         }
+    }
+
+    @Override
+    public String getApikey() throws Exception {
+        return sharedPrefsLocalDataSource.getApiKey();
     }
 }
 

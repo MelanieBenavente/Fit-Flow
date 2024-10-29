@@ -3,17 +3,18 @@ package com.fit.fitndflow.data.dagger
 import android.content.Context
 import app.fit.fitndflow.domain.repository.CategoriesRepository
 import app.fit.fitndflow.domain.repository.ExercisesRepository
-import app.fit.fitndflow.domain.repository.FitnFlowRepository
-import app.fit.fitndflow.domain.repository.SharedPrefsRepository
+import app.fit.fitndflow.domain.repository.RegisterUserRepository
+import app.fit.fitndflow.domain.repository.NotificationsRepository
 import app.fit.fitndflow.domain.repository.TrainingRepository
 import com.fit.fitndflow.data.common.ApiInterface
 import com.fit.fitndflow.data.common.HeaderInterceptor
 import com.fit.fitndflow.data.datasource.CategoriesAndExercisesLocalDataSource
+import com.fit.fitndflow.data.datasource.SharedPrefsLocalDataSource
 import com.fit.fitndflow.data.datasource.TrainingLocalDataSource
 import com.fit.fitndflow.data.repository.CategoriesRepositoryImpl
 import com.fit.fitndflow.data.repository.ExercisesRepositoryImpl
-import com.fit.fitndflow.data.repository.FitnFlowRepositoryImpl
-import com.fit.fitndflow.data.repository.SharedPrefsRepositoryImpl
+import com.fit.fitndflow.data.repository.RegisterUserRepositoryImpl
+import com.fit.fitndflow.data.repository.NotificationsRepositoryImpl
 import com.fit.fitndflow.data.repository.TrainingRepositoryImpl
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -34,8 +35,8 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
-    fun provideFitndFlowRepository(@ApplicationContext context: Context, apiInterface: ApiInterface): FitnFlowRepository {
-        return FitnFlowRepositoryImpl(context, apiInterface)
+    fun provideRegisterUserRepository(@ApplicationContext context: Context, apiInterface: ApiInterface, sharedPrefsLocalDataSource: SharedPrefsLocalDataSource): RegisterUserRepository {
+        return RegisterUserRepositoryImpl(context, apiInterface, sharedPrefsLocalDataSource)
     }
     @Provides
     @Singleton
@@ -54,14 +55,20 @@ class RepositoryModule {
     }
     @Provides
     @Singleton
-    fun provideSharedPrefsRepository(@ApplicationContext context: Context): SharedPrefsRepository {
-        return SharedPrefsRepositoryImpl(context)
+    fun provideNotificationsRepository(sharedPrefsLocalDataSource: SharedPrefsLocalDataSource): NotificationsRepository {
+        return NotificationsRepositoryImpl(sharedPrefsLocalDataSource)
     }
 
     @Provides
     @Singleton
     fun provideApiInterface(retrofit: Retrofit): ApiInterface {
         return  retrofit.create(ApiInterface::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesSharedPrefsLocalDataSource(@ApplicationContext context: Context) : SharedPrefsLocalDataSource {
+        return SharedPrefsLocalDataSource(context)
     }
 
     @Provides
