@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import app.fit.fitndflow.domain.Utils
 import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.domain.model.ExerciseModel
-import app.fit.fitndflow.domain.usecase.SharedPrefsUseCase
+import app.fit.fitndflow.domain.usecase.NotificationsUseCase
 import app.fit.fitndflow.ui.R
 import app.fit.fitndflow.ui.databinding.MainListFragmentBinding
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment
@@ -31,7 +31,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment : CommonFragment(), ExerciseClickCallback {
     @Inject
-    lateinit var sharedPrefsUseCase: SharedPrefsUseCase
+    lateinit var notificationsUseCase: NotificationsUseCase
     private lateinit var binding: MainListFragmentBinding
     private val homeViewModel: HomeViewModel by activityViewModels()
     private var isShownNotificationConfiguration: Boolean = false
@@ -44,7 +44,7 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
         val myView = binding.root
         super.onCreateView(inflater, container, savedInstanceState)
         if (!isShownNotificationConfiguration) {
-            MyNotificationManager.askForPermissions(this, sharedPrefsUseCase)
+            MyNotificationManager.askForPermissions(this, notificationsUseCase)
             isShownNotificationConfiguration = true
         }
         scheduleNotification()

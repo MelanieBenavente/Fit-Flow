@@ -21,7 +21,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
-import app.fit.fitndflow.domain.usecase.SharedPrefsUseCase;
+import app.fit.fitndflow.domain.usecase.NotificationsUseCase;
 import app.fit.fitndflow.ui.R;
 import app.fit.fitndflow.ui.features.common.MainActivity;
 
@@ -139,20 +139,20 @@ public class MyNotificationManager extends BroadcastReceiver {
             return hasPermission;
     }
 
-    public static void askForPermissions(Fragment fragment, SharedPrefsUseCase sharedPrefsUseCase){
-        if(!checkNotificationPermission(fragment.requireActivity()) && !sharedPrefsUseCase.isNotificationShown()
+    public static void askForPermissions(Fragment fragment, NotificationsUseCase notificationsUseCase){
+        if(!checkNotificationPermission(fragment.requireActivity()) && !notificationsUseCase.isNotificationShown()
                 && !fragment.shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)){
 
-            sharedPrefsUseCase.saveNotificationShow(true);
+            notificationsUseCase.saveNotificationShow(true);
             requestPermission(fragment.requireActivity());
-        } else if (!checkNotificationPermission(fragment.requireActivity()) && sharedPrefsUseCase.isNotificationShown()
+        } else if (!checkNotificationPermission(fragment.requireActivity()) && notificationsUseCase.isNotificationShown()
                 && fragment.shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
 
             new NotificationPermissionDialog().show(fragment.getChildFragmentManager(), NotificationPermissionDialog.TAG);
 
-        } else if (!checkNotificationPermission(fragment.requireActivity()) && sharedPrefsUseCase.isNotificationShown()
+        } else if (!checkNotificationPermission(fragment.requireActivity()) && notificationsUseCase.isNotificationShown()
                 && !fragment.shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)
-                && !sharedPrefsUseCase.isDonShowNotification()){
+                && !notificationsUseCase.isDonShowNotification()){
              new NotificationConfigurationDialog().show(fragment.getChildFragmentManager(), NotificationConfigurationDialog.TAG);
 
         }

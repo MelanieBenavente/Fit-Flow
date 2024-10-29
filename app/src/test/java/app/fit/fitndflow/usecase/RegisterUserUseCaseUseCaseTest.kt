@@ -1,7 +1,7 @@
 package app.fit.fitndflow.usecase
 
 import app.fit.fitndflow.domain.model.UserModel
-import app.fit.fitndflow.domain.repository.FitnFlowRepository
+import app.fit.fitndflow.domain.repository.RegisterUserRepository
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCase
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCaseParams
 import io.mockk.coEvery
@@ -16,19 +16,19 @@ import org.junit.Test
 class RegisterUserUseCaseUseCaseTest : CommonUseCaseTest() {
 
     private lateinit var registerUserUseCase: RegisterUserUseCase
-    private lateinit var fitnFlowRepository: FitnFlowRepository
+    private lateinit var registerUserRepository: RegisterUserRepository
 
     @Before
     fun setUp() {
-        fitnFlowRepository = mockk()
-        registerUserUseCase = RegisterUserUseCase(fitnFlowRepository)
+        registerUserRepository = mockk()
+        registerUserUseCase = RegisterUserUseCase(registerUserRepository)
     }
 
     @Test
     fun `given registerUser() from repository returns userModel, when invoke useCase then returns expected result`() {
         //GIVEN
         val userModel: UserModel = mockk()
-        coEvery { fitnFlowRepository.registerUser(any(), any(), any()) } answers { userModel }
+        coEvery { registerUserRepository.registerUser(any(), any(), any()) } answers { userModel }
         //WHEN
         var result: UserModel? = null
         testCoroutineDispatcher.runTest {
@@ -37,7 +37,7 @@ class RegisterUserUseCaseUseCaseTest : CommonUseCaseTest() {
         //THEN
         checkNotNull(result)
         assert(result == userModel)
-        coVerify(exactly = 1) { fitnFlowRepository.registerUser(any(), any(), any()) }
+        coVerify(exactly = 1) { registerUserRepository.registerUser(any(), any(), any()) }
     }
 
 }

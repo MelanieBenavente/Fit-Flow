@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.fit.fitndflow.domain.Utils
 import app.fit.fitndflow.domain.model.CategoryModel
+import app.fit.fitndflow.domain.usecase.GetIsUserRegisteredUseCase
 import app.fit.fitndflow.domain.usecase.GetTrainingUseCase
 import app.fit.fitndflow.domain.usecase.GetTrainingUseCaseParams
-import app.fit.fitndflow.domain.usecase.SharedPrefsUseCase
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCase
 import app.fit.fitndflow.domain.usecase.RegisterUserUseCaseParams
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val registerUserUseCase: RegisterUserUseCase,
     private val getTrainingUseCase: GetTrainingUseCase,
-    private val sharedPrefsUseCase: SharedPrefsUseCase
+    private val getIsUserRegisteredUseCase: GetIsUserRegisteredUseCase
 
 ) : ViewModel() {
     private val _state = MutableSharedFlow<State>()
@@ -50,7 +50,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun isUserRegistered() = sharedPrefsUseCase.isUserRegistered()
+    fun isUserRegistered() = getIsUserRegisteredUseCase.isUserRegistered()
 
 
     fun emitDate() {

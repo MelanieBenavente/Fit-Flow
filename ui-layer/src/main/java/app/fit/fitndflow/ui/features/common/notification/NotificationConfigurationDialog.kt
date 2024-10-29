@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
-import app.fit.fitndflow.domain.usecase.SharedPrefsUseCase
+import app.fit.fitndflow.domain.usecase.NotificationsUseCase
 import app.fit.fitndflow.ui.databinding.DialogNotificationConfigurationBinding
 import app.fit.fitndflow.ui.features.common.BorderType
 import app.fit.fitndflow.ui.features.common.CommonDialogFragment
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NotificationConfigurationDialog : CommonDialogFragment() {
     @Inject
-     lateinit var sharedPrefsUseCase: SharedPrefsUseCase
+     lateinit var notificationsUseCase: NotificationsUseCase
 
     companion object {
         @JvmField
@@ -41,7 +41,7 @@ class NotificationConfigurationDialog : CommonDialogFragment() {
                 dismissAllowingStateLoss()
             }
             checkboxDontShowAgain.setOnCheckedChangeListener { buttonView, isChecked ->
-                sharedPrefsUseCase.saveDontShowNotification(isChecked)
+                notificationsUseCase.saveDontShowNotification(isChecked)
             }
         }
     }
