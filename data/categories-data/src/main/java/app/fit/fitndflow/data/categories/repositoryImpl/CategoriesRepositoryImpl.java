@@ -3,6 +3,8 @@ package app.fit.fitndflow.data.categories.repositoryImpl;
 import android.content.Context;
 
 
+import com.fit.fitndflow.app.domain.categories.repository.CategoriesRepository;
+import com.fit.fitndflow.app.domain.common.models.CategoryModel;
 
 import java.util.List;
 
@@ -16,8 +18,6 @@ import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesLocalDataS
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource;
 import app.fit.fitndflow.data.common.dto.StringInLanguagesDto;
 import app.fit.fitndflow.data.common.mapper.CategoryModelMapperKt;
-import app.fit.fitndflow.domain.model.CategoryModel;
-import app.fit.fitndflow.domain.repository.CategoriesRepository;
 import retrofit2.Response;
 
 public class CategoriesRepositoryImpl implements CategoriesRepository {
