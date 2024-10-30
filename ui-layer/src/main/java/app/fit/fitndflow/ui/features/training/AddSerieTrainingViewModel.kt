@@ -2,16 +2,16 @@ package app.fit.fitndflow.ui.features.training
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.fit.fitndflow.domain.model.SerieInfoWrapper
-import app.fit.fitndflow.domain.model.SerieModel
-import app.fit.fitndflow.domain.usecase.AddSerieUseCase
-import app.fit.fitndflow.domain.usecase.AddSerieUseCaseParams
-import app.fit.fitndflow.domain.usecase.DeleteSerieUseCase
-import app.fit.fitndflow.domain.usecase.GetSerieAddedParam
-import app.fit.fitndflow.domain.usecase.GetSerieAddedUseCase
-import app.fit.fitndflow.domain.usecase.GetSerieToDeleteParams
-import app.fit.fitndflow.domain.usecase.ModifySerieUseCaseParams
-import app.fit.fitndflow.domain.usecase.ModifyTrainingUseCase
+import com.fit.fitndflow.app.domain.common.models.SerieModel
+import com.fit.fitndflow.app.domain.trainings.TrainingUseCases.AddSerieUseCase
+import com.fit.fitndflow.app.domain.trainings.TrainingUseCases.AddSerieUseCaseParams
+import com.fit.fitndflow.app.domain.trainings.TrainingUseCases.DeleteSerieUseCase
+import com.fit.fitndflow.app.domain.trainings.TrainingUseCases.GetSerieAddedParam
+import com.fit.fitndflow.app.domain.trainings.TrainingUseCases.GetSerieAddedUseCase
+import com.fit.fitndflow.app.domain.trainings.TrainingUseCases.GetSerieToDeleteParams
+import com.fit.fitndflow.app.domain.trainings.TrainingUseCases.ModifySerieUseCaseParams
+import com.fit.fitndflow.app.domain.trainings.TrainingUseCases.ModifyTrainingUseCase
+import com.fit.fitndflow.app.domain.trainings.model.SerieInfoWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

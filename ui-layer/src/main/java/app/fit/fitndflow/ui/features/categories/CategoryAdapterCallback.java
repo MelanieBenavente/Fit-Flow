@@ -1,6 +1,7 @@
 package app.fit.fitndflow.ui.features.categories;
 
-import app.fit.fitndflow.domain.model.CategoryModel;
+
+import com.fit.fitndflow.app.domain.common.models.CategoryModel;
 
 public interface CategoryAdapterCallback {
 

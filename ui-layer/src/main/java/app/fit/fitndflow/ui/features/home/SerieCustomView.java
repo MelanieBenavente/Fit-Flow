@@ -4,7 +4,9 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import app.fit.fitndflow.domain.model.SerieModel;
+
+import com.fit.fitndflow.app.domain.common.models.SerieModel;
+
 import app.fit.fitndflow.ui.R;
 
 public class SerieCustomView extends LinearLayout {

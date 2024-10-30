@@ -9,10 +9,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import app.fit.fitndflow.domain.Utils
-import app.fit.fitndflow.domain.model.CategoryModel
-import app.fit.fitndflow.domain.model.ExerciseModel
-import app.fit.fitndflow.domain.usecase.NotificationsUseCase
 import app.fit.fitndflow.ui.R
 import app.fit.fitndflow.ui.databinding.MainListFragmentBinding
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment
@@ -20,6 +16,10 @@ import app.fit.fitndflow.ui.features.common.CommonFragment
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager.scheduleNotification
 import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment
+import com.fit.fitndflow.app.domain.common.models.CategoryModel
+import com.fit.fitndflow.app.domain.common.models.ExerciseModel
+import com.fit.fitndflow.app.domain.common.notifications.usecase.NotificationsUseCase
+import com.fit.fitndflow.app.domain.common.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

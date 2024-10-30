@@ -1,6 +1,6 @@
 package app.fit.fitndflow.ui.features.training;
 
-import app.fit.fitndflow.domain.model.SerieModel;
+import com.fit.fitndflow.app.domain.common.models.SerieModel;
 
 public interface TrainingCallback {
 

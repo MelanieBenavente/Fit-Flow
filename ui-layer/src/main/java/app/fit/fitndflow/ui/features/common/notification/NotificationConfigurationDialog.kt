@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
-import app.fit.fitndflow.domain.usecase.NotificationsUseCase
 import app.fit.fitndflow.ui.databinding.DialogNotificationConfigurationBinding
 import app.fit.fitndflow.ui.features.common.BorderType
 import app.fit.fitndflow.ui.features.common.CommonDialogFragment
+import com.fit.fitndflow.app.domain.common.notifications.usecase.NotificationsUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

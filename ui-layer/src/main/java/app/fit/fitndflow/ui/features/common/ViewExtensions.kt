@@ -3,9 +3,9 @@ package app.fit.fitndflow.ui.features.common
 import android.app.Activity
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
-import app.fit.fitndflow.domain.Utils.SPANISH
-import app.fit.fitndflow.domain.model.StringInLanguagesModel
 import app.fit.fitndflow.ui.R
+import com.fit.fitndflow.app.domain.common.models.StringInLanguagesModel
+import com.fit.fitndflow.app.domain.common.utils.Utils.SPANISH
 
 fun Activity.hideKeyBoard() {
     val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

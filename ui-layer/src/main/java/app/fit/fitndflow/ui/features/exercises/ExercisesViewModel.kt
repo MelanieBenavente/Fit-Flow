@@ -2,13 +2,13 @@ package app.fit.fitndflow.ui.features.exercises
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.fit.fitndflow.domain.model.ExerciseModel
-import app.fit.fitndflow.domain.usecase.AddExerciseUseCase
-import app.fit.fitndflow.domain.usecase.AddExerciseUseCaseParams
-import app.fit.fitndflow.domain.usecase.DeleteExerciseUseCase
-import app.fit.fitndflow.domain.usecase.ExerciseModelInLanguages
-import app.fit.fitndflow.domain.usecase.ExerciseToDeleteParams
-import app.fit.fitndflow.domain.usecase.ModifyExerciseUseCase
+import com.fit.fitndflow.app.domain.common.models.ExerciseModel
+import com.fit.fitndflow.app.domain.exercises.exercisesUseCases.AddExerciseUseCase
+import com.fit.fitndflow.app.domain.exercises.exercisesUseCases.AddExerciseUseCaseParams
+import com.fit.fitndflow.app.domain.exercises.exercisesUseCases.DeleteExerciseUseCase
+import com.fit.fitndflow.app.domain.exercises.exercisesUseCases.ExerciseModelInLanguages
+import com.fit.fitndflow.app.domain.exercises.exercisesUseCases.ExerciseToDeleteParams
+import com.fit.fitndflow.app.domain.exercises.exercisesUseCases.ModifyExerciseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

@@ -1,21 +1,19 @@
 package app.fit.fitndflow.ui.features.training;
 
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
+import com.fit.fitndflow.app.domain.common.models.SerieModel;
+
 import java.util.List;
 
-import app.fit.fitndflow.domain.model.SerieModel;
 import app.fit.fitndflow.ui.R;
 
 public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder> {

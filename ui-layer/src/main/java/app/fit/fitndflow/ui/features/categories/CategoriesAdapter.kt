@@ -8,9 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.ui.R
 import app.fit.fitndflow.ui.features.common.getTranslatedString
+import com.fit.fitndflow.app.domain.common.models.CategoryModel
 
 class CategoriesAdapter(private val categoryAdapterCallback: CategoryAdapterCallback) :
     RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {

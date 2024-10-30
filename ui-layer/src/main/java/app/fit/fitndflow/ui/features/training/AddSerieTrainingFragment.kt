@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import app.fit.fitndflow.domain.model.ExerciseModel
-import app.fit.fitndflow.domain.model.SerieModel
 import app.fit.fitndflow.ui.R
 import app.fit.fitndflow.ui.databinding.AddSerieTrainingFragmentBinding
 import app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment
@@ -18,6 +16,8 @@ import app.fit.fitndflow.ui.features.categories.DialogCallbackDelete
 import app.fit.fitndflow.ui.features.common.CommonFragment
 import app.fit.fitndflow.ui.features.common.getTranslatedString
 import app.fit.fitndflow.ui.features.common.hideKeyBoard
+import com.fit.fitndflow.app.domain.common.models.ExerciseModel
+import com.fit.fitndflow.app.domain.common.models.SerieModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -94,7 +94,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
 
                 hideLoading()
             }
-            is AddSerieTrainingViewModel.State.SerieListRecived -> {
+            is AddSerieTrainingViewModel.State. SerieListRecived -> {
                 instantiateSeriesAdapter(state.serieList)
                 printPRContainerIfRecordExists()
                 setScreenEditMode(false)

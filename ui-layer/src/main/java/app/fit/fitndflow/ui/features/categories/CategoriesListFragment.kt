@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import app.fit.fitndflow.domain.model.CategoryModel
-import app.fit.fitndflow.domain.model.ExerciseModel
 import app.fit.fitndflow.ui.R
 import app.fit.fitndflow.ui.databinding.FragmentCategoriesListBinding
 import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog.Companion.TYPE_CATEGORY
@@ -22,6 +20,8 @@ import app.fit.fitndflow.ui.features.exercises.ExerciseListFragment
 import app.fit.fitndflow.ui.features.exercises.ExercisesAdapter
 import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback
+import com.fit.fitndflow.app.domain.common.models.CategoryModel
+import com.fit.fitndflow.app.domain.common.models.ExerciseModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

@@ -21,7 +21,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
-import app.fit.fitndflow.domain.usecase.NotificationsUseCase;
+import com.fit.fitndflow.app.domain.common.notifications.usecase.NotificationsUseCase;
+
 import app.fit.fitndflow.ui.R;
 import app.fit.fitndflow.ui.features.common.MainActivity;
 

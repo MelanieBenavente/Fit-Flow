@@ -2,13 +2,13 @@ package app.fit.fitndflow.ui.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.fit.fitndflow.domain.Utils
-import app.fit.fitndflow.domain.model.CategoryModel
-import app.fit.fitndflow.domain.usecase.GetIsUserRegisteredUseCase
-import app.fit.fitndflow.domain.usecase.GetTrainingUseCase
-import app.fit.fitndflow.domain.usecase.GetTrainingUseCaseParams
-import app.fit.fitndflow.domain.usecase.RegisterUserUseCase
-import app.fit.fitndflow.domain.usecase.RegisterUserUseCaseParams
+import com.fit.fitndflow.app.domain.common.models.CategoryModel
+import com.fit.fitndflow.app.domain.common.utils.Utils
+import com.fit.fitndflow.app.domain.trainings.TrainingUseCases.GetTrainingUseCaseParams
+import com.fit.fitndflow.app.domain.user.userUseCases.RegisterUserUseCaseParams
+import com.fit.fitndflow.app.domain.trainings.TrainingUseCases.GetTrainingUseCase
+import com.fit.fitndflow.app.domain.user.userUseCases.GetIsUserRegisteredUseCase
+import com.fit.fitndflow.app.domain.user.userUseCases.RegisterUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

@@ -3,9 +3,9 @@ package app.fit.fitndflow.ui.features.home
 import android.content.Context
 import android.widget.LinearLayout
 import android.widget.TextView
-import app.fit.fitndflow.domain.model.CategoryModel
 import app.fit.fitndflow.ui.R
 import app.fit.fitndflow.ui.features.common.getTranslatedString
+import com.fit.fitndflow.app.domain.common.models.CategoryModel
 
 class CategoryCustomView(
     context: Context?,

@@ -2,14 +2,14 @@ package app.fit.fitndflow.ui.features.categories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.fit.fitndflow.domain.model.CategoryModel
-import app.fit.fitndflow.domain.usecase.AddCategoryUseCase
-import app.fit.fitndflow.domain.usecase.AddCategoryUseCaseParams
-import app.fit.fitndflow.domain.usecase.CategoryModelInLanguages
-import app.fit.fitndflow.domain.usecase.DeleteCategoryUseCase
-import app.fit.fitndflow.domain.usecase.GetCategoriesUseCase
-import app.fit.fitndflow.domain.usecase.GetCategoryToDeleteParams
-import app.fit.fitndflow.domain.usecase.ModifyCategoryUseCase
+import com.fit.fitndflow.app.domain.categories.categoriesUseCases.AddCategoryUseCase
+import com.fit.fitndflow.app.domain.categories.categoriesUseCases.AddCategoryUseCaseParams
+import com.fit.fitndflow.app.domain.categories.categoriesUseCases.CategoryModelInLanguages
+import com.fit.fitndflow.app.domain.categories.categoriesUseCases.DeleteCategoryUseCase
+import com.fit.fitndflow.app.domain.categories.categoriesUseCases.GetCategoriesUseCase
+import com.fit.fitndflow.app.domain.categories.categoriesUseCases.GetCategoryToDeleteParams
+import com.fit.fitndflow.app.domain.categories.categoriesUseCases.ModifyCategoryUseCase
+import com.fit.fitndflow.app.domain.common.models.CategoryModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -41,7 +41,11 @@ class CategoriesViewModel @Inject constructor(
     }
 
         fun addNewCategory(language: String, nameCategory: String) {
-            val params = AddCategoryUseCaseParams(nameCategory, language)
+            val params =
+                AddCategoryUseCaseParams(
+                    nameCategory,
+                    language
+                )
             viewModelScope.launch {
                 addCategoryUseCase(params)
                     .onStart { _state.emit(State.Loading) }
@@ -57,7 +61,13 @@ class CategoriesViewModel @Inject constructor(
         }
 
         fun modifyCategory(language: String, categoryName: String, categoryId: Int) {
-            val params = CategoryModelInLanguages(categoryId, categoryName, language, "")
+            val params =
+                CategoryModelInLanguages(
+                    categoryId,
+                    categoryName,
+                    language,
+                    ""
+                )
             viewModelScope.launch{
                 modifyCategoryUseCase(params)
                     .onStart { _state.emit(State.Loading) }
@@ -67,7 +77,10 @@ class CategoriesViewModel @Inject constructor(
         }
 
     fun deleteCategory(categoryId: Int) {
-        val params = GetCategoryToDeleteParams(categoryId)
+        val params =
+            GetCategoryToDeleteParams(
+                categoryId
+            )
         viewModelScope.launch {
             deleteCategoryUseCase(params)
                 .onStart { _state.emit(State.Loading) }
