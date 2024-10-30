@@ -60,9 +60,6 @@ android {
 
 dependencies {
 
-    //layout for splashActivity
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
     //modules
     implementation project (':ui-layer')
     implementation project (':domain-layer')
@@ -71,6 +68,9 @@ dependencies {
     implementation project(':data:exercises-data')
     implementation project(':data:trainings-data')
     implementation project(':data:user-data')
+    
+    //layout for splashActivity
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:32.1.0')
