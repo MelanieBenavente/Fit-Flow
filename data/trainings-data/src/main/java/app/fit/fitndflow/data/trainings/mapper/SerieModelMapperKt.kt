@@ -2,7 +2,7 @@ package app.fit.fitndflow.data.trainings.mapper
 
 import app.fit.fitndflow.data.common.dto.SerieDto
 import app.fit.fitndflow.data.trainings.dto.AddSerieResponseDto
-import app.fit.fitndflow.domain.model.SerieModel
+import com.fit.fitndflow.app.domain.common.models.SerieModel
 
 class SerieModelMapperKt {
     companion object {

@@ -1,27 +1,23 @@
 package app.fit.fitndflow.data.trainings.repositoryImpl;
 
 import android.content.Context;
-
-
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource;
 import app.fit.fitndflow.data.common.dto.CategoryDto;
 import app.fit.fitndflow.data.common.dto.ExerciseDto;
 import app.fit.fitndflow.data.common.dto.SerieDto;
 import app.fit.fitndflow.data.common.mapper.CategoryModelMapperKt;
 import app.fit.fitndflow.data.common.mapper.ExerciseModelMapperKt;
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 import app.fit.fitndflow.data.common.model.ExcepcionApi;
 import app.fit.fitndflow.data.trainings.dto.AddSerieRequestDto;
 import app.fit.fitndflow.data.trainings.dto.SerieForAddSerieRequestDto;
 import app.fit.fitndflow.data.trainings.model.TrainingsApiInterface;
-import app.fit.fitndflow.domain.model.CategoryModel;
-import app.fit.fitndflow.domain.model.ExerciseModel;
-import app.fit.fitndflow.domain.model.SerieModel;
-import app.fit.fitndflow.domain.repository.TrainingRepository;
+
+import com.fit.fitndflow.app.domain.common.models.CategoryModel;
+import com.fit.fitndflow.app.domain.common.models.ExerciseModel;
+import com.fit.fitndflow.app.domain.common.models.SerieModel;
+import com.fit.fitndflow.app.domain.trainings.repository.TrainingRepository;
 import retrofit2.Response;
 
 public class TrainingRepositoryImpl implements TrainingRepository {

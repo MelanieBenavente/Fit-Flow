@@ -4,7 +4,7 @@ import android.content.Context
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import app.fit.fitndflow.data.trainings.model.TrainingsApiInterface
 import app.fit.fitndflow.data.trainings.repositoryImpl.TrainingRepositoryImpl
-import app.fit.fitndflow.domain.repository.TrainingRepository
+import com.fit.fitndflow.app.domain.trainings.repository.TrainingRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
