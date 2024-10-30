@@ -2,9 +2,9 @@ package app.fit.fitndflow.data.common.mapper
 
 import app.fit.fitndflow.data.common.dto.CategoryDto
 import app.fit.fitndflow.data.common.dto.ExerciseDto
-import app.fit.fitndflow.domain.model.CategoryModel
-import app.fit.fitndflow.domain.model.ExerciseModel
-import app.fit.fitndflow.domain.model.SerieModel
+import com.fit.fitndflow.app.domain.common.models.CategoryModel
+import com.fit.fitndflow.app.domain.common.models.ExerciseModel
+import com.fit.fitndflow.app.domain.common.models.SerieModel
 
 class CategoryModelMapperKt {
 

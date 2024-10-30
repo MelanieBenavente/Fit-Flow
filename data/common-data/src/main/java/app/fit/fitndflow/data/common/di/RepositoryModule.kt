@@ -7,7 +7,7 @@ import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import app.fit.fitndflow.data.common.model.ApiInterface
 import app.fit.fitndflow.data.common.model.HeaderInterceptor
 import app.fit.fitndflow.data.common.notifications.repository.NotificationsRepositoryImpl
-import app.fit.fitndflow.domain.repository.NotificationsRepository
+import com.fit.fitndflow.app.domain.common.notifications.repository.NotificationsRepository
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides

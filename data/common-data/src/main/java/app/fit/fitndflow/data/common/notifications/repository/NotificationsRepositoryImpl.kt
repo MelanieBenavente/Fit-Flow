@@ -1,9 +1,10 @@
 package app.fit.fitndflow.data.common.notifications.repository
 
 import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
-import app.fit.fitndflow.domain.repository.NotificationsRepository
+import com.fit.fitndflow.app.domain.common.notifications.repository.NotificationsRepository
 
-class NotificationsRepositoryImpl(private val sharedPrefsLocalDataSource: SharedPrefsLocalDataSource) : NotificationsRepository  {
+class NotificationsRepositoryImpl(private val sharedPrefsLocalDataSource: SharedPrefsLocalDataSource) :
+    NotificationsRepository {
 
     override fun isNotificationShown(): Boolean {
         return sharedPrefsLocalDataSource.isNotificationShown()

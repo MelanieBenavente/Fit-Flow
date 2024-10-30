@@ -1,6 +1,7 @@
 package app.fit.fitndflow.data.common.datasource
 
-import app.fit.fitndflow.domain.model.CategoryModel
+import com.fit.fitndflow.app.domain.common.models.CategoryModel
+
 
 class TrainingLocalDataSource {
     private var trainingResponseCacheByDate : HashMap<String, List<CategoryModel>> = hashMapOf()
