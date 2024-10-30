@@ -5,7 +5,7 @@ import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesLocalDataS
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import app.fit.fitndflow.data.exercises.model.ExercisesApiInterface
 import app.fit.fitndflow.data.exercises.repositoryImpl.ExercisesRepositoryImpl
-import app.fit.fitndflow.domain.repository.ExercisesRepository
+import com.fit.fitndflow.app.domain.exercises.repository.ExercisesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

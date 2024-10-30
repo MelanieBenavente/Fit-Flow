@@ -13,8 +13,9 @@ import app.fit.fitndflow.data.common.model.ExcepcionApi;
 import app.fit.fitndflow.data.exercises.dto.AddExerciseDto;
 import app.fit.fitndflow.data.exercises.dto.ModifyExerciseDto;
 import app.fit.fitndflow.data.exercises.model.ExercisesApiInterface;
-import app.fit.fitndflow.domain.model.ExerciseModel;
-import app.fit.fitndflow.domain.repository.ExercisesRepository;
+
+import com.fit.fitndflow.app.domain.common.models.ExerciseModel;
+import com.fit.fitndflow.app.domain.exercises.repository.ExercisesRepository;
 import retrofit2.Response;
 
 public class ExercisesRepositoryImpl implements ExercisesRepository {
