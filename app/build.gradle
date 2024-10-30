@@ -67,6 +67,11 @@ dependencies {
     implementation project (':ui-layer')
     implementation project (':domain-layer')
     implementation project(':data-layer')
+    implementation project(':data:common-data')
+    implementation project(':data:categories-data')
+    implementation project(':data:exercises-data')
+    implementation project(':data:trainings-data')
+    implementation project(':data:user-data')
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:32.1.0')
