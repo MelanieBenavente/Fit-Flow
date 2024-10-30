@@ -35,7 +35,8 @@ android {
 dependencies {
     //modules
     implementation project(':data:common-data')
-    implementation project(':domain-layer')
+    implementation project(':domain:common-domain')
+    implementation project(':domain:exercises-domain')
 
     //Server calls
     implementation('com.squareup.retrofit2:retrofit:2.3.0')

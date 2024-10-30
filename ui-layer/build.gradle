@@ -55,7 +55,12 @@ android {
 
 dependencies {
     //module
-    implementation project(':domain-layer')
+    implementation project(':domain:common-domain')
+    implementation project(':domain:categories-domain')
+    implementation project(':domain:exercises-domain')
+    implementation project(':domain:trainings-domain')
+    implementation project(':domain:user-domain')
+
     //android ui
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.8.0'
