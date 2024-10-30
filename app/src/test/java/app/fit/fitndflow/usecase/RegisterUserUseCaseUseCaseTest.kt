@@ -1,9 +1,9 @@
 package app.fit.fitndflow.usecase
 
-import app.fit.fitndflow.domain.model.UserModel
-import app.fit.fitndflow.domain.repository.RegisterUserRepository
-import app.fit.fitndflow.domain.usecase.RegisterUserUseCase
-import app.fit.fitndflow.domain.usecase.RegisterUserUseCaseParams
+import com.fit.fitndflow.app.domain.user.model.UserModel
+import com.fit.fitndflow.app.domain.user.repository.RegisterUserRepository
+import app.fit.fitndflow.domain.usecase.userUseCases.RegisterUserUseCase
+import com.fit.fitndflow.app.domain.user.userUseCases.RegisterUserUseCaseParams
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
