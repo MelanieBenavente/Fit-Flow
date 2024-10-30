@@ -4,7 +4,7 @@ import android.content.Context
 import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
 import app.fit.fitndflow.data.user.model.UserApiInterface
 import app.fit.fitndflow.data.user.repositoryImpl.RegisterUserRepositoryImpl
-import app.fit.fitndflow.domain.repository.RegisterUserRepository
+import com.fit.fitndflow.app.domain.user.repository.RegisterUserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

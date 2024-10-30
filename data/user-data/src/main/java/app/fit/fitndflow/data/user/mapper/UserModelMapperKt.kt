@@ -1,7 +1,7 @@
 package app.fit.fitndflow.data.user.mapper
 
 import app.fit.fitndflow.data.user.dto.UserDto
-import app.fit.fitndflow.domain.model.UserModel
+import com.fit.fitndflow.app.domain.user.model.UserModel
 
 class UserModelMapperKt {
 

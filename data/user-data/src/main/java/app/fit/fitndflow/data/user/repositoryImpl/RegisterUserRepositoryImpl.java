@@ -7,8 +7,8 @@ import app.fit.fitndflow.data.common.model.ExcepcionApi;
 import app.fit.fitndflow.data.user.dto.UserDto;
 import app.fit.fitndflow.data.user.mapper.UserModelMapperKt;
 import app.fit.fitndflow.data.user.model.UserApiInterface;
-import app.fit.fitndflow.domain.model.UserModel;
-import app.fit.fitndflow.domain.repository.RegisterUserRepository;
+import com.fit.fitndflow.app.domain.user.model.UserModel;
+import com.fit.fitndflow.app.domain.user.repository.RegisterUserRepository;
 import retrofit2.Response;
 
 public class RegisterUserRepositoryImpl implements RegisterUserRepository {
