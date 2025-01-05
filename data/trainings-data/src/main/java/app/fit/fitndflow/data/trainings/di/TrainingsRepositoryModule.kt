@@ -2,6 +2,7 @@ package app.fit.fitndflow.data.trainings.di
 
 import android.content.Context
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
+import app.fit.fitndflow.data.trainings.datasource.remote.TrainingRemoteDataSource
 import app.fit.fitndflow.data.trainings.model.TrainingsApiInterface
 import app.fit.fitndflow.data.trainings.repositoryImpl.TrainingRepositoryImpl
 import com.fit.fitndflow.app.domain.trainings.repository.TrainingRepository
@@ -19,8 +20,14 @@ class TrainingsRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideTrainingRepository(@ApplicationContext context: Context, apiInterface: TrainingsApiInterface, trainingLocalDataSource : TrainingLocalDataSource): TrainingRepository {
-        return TrainingRepositoryImpl(context, apiInterface, trainingLocalDataSource)
+    fun provideTrainingRepository(@ApplicationContext context: Context, trainingRemoteDataSource: TrainingRemoteDataSource, trainingLocalDataSource : TrainingLocalDataSource): TrainingRepository {
+        return TrainingRepositoryImpl(context, trainingRemoteDataSource, trainingLocalDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTrainingRemoteDataSource(trainingsApiInterface: TrainingsApiInterface): TrainingRemoteDataSource {
+        return TrainingRemoteDataSource(trainingsApiInterface)
     }
 
     @Provides

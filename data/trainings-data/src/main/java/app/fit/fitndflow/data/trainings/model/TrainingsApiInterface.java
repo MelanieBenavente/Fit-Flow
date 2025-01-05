@@ -14,7 +14,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface TrainingsApiInterface {
-    String URL_BASE = "http://fitnflowapi-env.eba-8aaimaij.eu-west-3.elasticbeanstalk.com/";
     String KEY_PARAM_GET_DATE_TRAINING = "date";
     String KEY_PARAM_GET_ID = "id";
 

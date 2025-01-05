@@ -8,6 +8,7 @@ import com.fit.fitndflow.app.domain.common.models.CategoryModel;
 
 import java.util.List;
 
+import app.fit.fitndflow.data.categories.datasource.remote.CategoryRemoteDataSource;
 import app.fit.fitndflow.data.categories.dto.AddCategoryDto;
 import app.fit.fitndflow.data.common.dto.CategoryDto;
 import app.fit.fitndflow.data.categories.dto.ModifyCategoryDto;
@@ -23,11 +24,12 @@ import retrofit2.Response;
 public class CategoriesRepositoryImpl implements CategoriesRepository {
     private CategoriesAndExercisesLocalDataSource categoriesAndExercisesLocalDataSource;
     private TrainingLocalDataSource trainingLocalDataSource;
+    private CategoryRemoteDataSource categoryRemoteDataSource;
     private Context mContext;
-    private CategoriesApiInterface apiInterface;
-    public CategoriesRepositoryImpl(Context context, CategoriesApiInterface apiInterface, CategoriesAndExercisesLocalDataSource categoriesAndExercisesLocalDataSource, TrainingLocalDataSource trainingLocalDataSource) {
+
+    public CategoriesRepositoryImpl(Context context, CategoryRemoteDataSource categoryRemoteDataSource, CategoriesAndExercisesLocalDataSource categoriesAndExercisesLocalDataSource, TrainingLocalDataSource trainingLocalDataSource) {
         this.mContext = context;
-        this.apiInterface = apiInterface;
+        this.categoryRemoteDataSource = categoryRemoteDataSource;
         this.categoriesAndExercisesLocalDataSource = categoriesAndExercisesLocalDataSource;
         this.trainingLocalDataSource = trainingLocalDataSource;
     }
@@ -35,17 +37,10 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
     @Override
     public List<CategoryModel> getCategoryList() throws Exception {
         if (categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache() == null) {
-            Response<List<CategoryDto>> response;
+            List<CategoryDto> response;
             try {
-                response = apiInterface.getCategoryDtoList().execute();
-                if (response != null && !response.isSuccessful()) {
-                    throw new ExcepcionApi(response.code());
-                }
-                if (response != null && response.body() != null) {
-                    categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
-                } else {
-                    return null;
-                }
+                response = categoryRemoteDataSource.getCategoryList();
+                categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response));
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new Exception(e);
@@ -57,43 +52,25 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
     @Override
     public List<CategoryModel> addNewCategory(String categoryName, String language) throws Exception {
         StringInLanguagesDto stringInLanguages = StringInLanguagesMapperKt.convertToStringInLanguages(language, categoryName);
-        AddCategoryDto addCategoryDto = new AddCategoryDto(stringInLanguages);
-
+        List<CategoryDto> response;
         try {
-
-            Response<List<CategoryDto>> response = apiInterface.addNewCategory(addCategoryDto).execute();
-
-            if (response != null && !response.isSuccessful()) {
-                throw new ExcepcionApi(response.code());
-            }
-            if (response != null && response.body() != null) {
-                categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
-            } else {
-                return null;
-            }
+            response = categoryRemoteDataSource.addNewCategory(stringInLanguages);
+            categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response));
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception(e);
         }
         return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache();
     }
+
     @Override
     public List<CategoryModel> modifyCategory(String categoryName, String language, int categoryId, String imageUrl) throws Exception {
         StringInLanguagesDto stringInLanguages = StringInLanguagesMapperKt.convertToStringInLanguages(language, categoryName);
-        ModifyCategoryDto modifyCategoryDto = new ModifyCategoryDto(categoryId, stringInLanguages, "");
-
+        List<CategoryDto> response;
         try {
-            Response<List<CategoryDto>> response = apiInterface.modifyCategory(modifyCategoryDto).execute();
-
-            if (response != null && !response.isSuccessful()) {
-                throw new ExcepcionApi(response.code());
-            }
-            if (response != null && response.body() != null) {
-                categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
-                trainingLocalDataSource.cleanCache();
-            } else {
-                return null;
-            }
+            response = categoryRemoteDataSource.modifyCategory(stringInLanguages, categoryId, imageUrl);
+            categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response));
+            trainingLocalDataSource.cleanCache();
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception(e);
@@ -103,23 +80,15 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
 
     @Override
     public List<CategoryModel> deleteCategory(Integer categoryId) throws Exception {
-
+        List<CategoryDto> response;
         try {
-            Response<List<CategoryDto>> response = apiInterface.deleteCategory(categoryId).execute();
-            if (response != null && !response.isSuccessful()) {
-                throw new ExcepcionApi(response.code());
-            }
-            if (response != null && response.body() != null) {
-                categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response.body()));
-                trainingLocalDataSource.cleanCache();
-            } else {
-                return null;
-            }
+            response = categoryRemoteDataSource.deleteCategory(categoryId);
+            categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response));
+            trainingLocalDataSource.cleanCache();
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception(e);
         }
         return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache();
     }
-
 }

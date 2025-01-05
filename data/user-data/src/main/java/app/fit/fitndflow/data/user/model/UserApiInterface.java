@@ -6,7 +6,6 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface UserApiInterface {
-    String URL_BASE = "http://fitnflowapi-env.eba-8aaimaij.eu-west-3.elasticbeanstalk.com/";
 
     //LLAMADA USUARIO
     @POST("register/")

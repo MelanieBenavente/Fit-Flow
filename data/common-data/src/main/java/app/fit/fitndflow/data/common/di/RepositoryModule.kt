@@ -60,7 +60,7 @@ class RepositoryModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         val gson = GsonBuilder().setLenient().create()
-        return Retrofit.Builder().baseUrl(app.fit.fitndflow.data.common.model.ApiInterface.URL_BASE).client(client)
+        return Retrofit.Builder().baseUrl(ApiInterface.URL_BASE).client(client)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson)).build()
     }

@@ -12,7 +12,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ExercisesApiInterface {
-    String URL_BASE = "http://fitnflowapi-env.eba-8aaimaij.eu-west-3.elasticbeanstalk.com/";
 
     //LLAMADAS EJERCICIOS
     @POST("exercise/add")

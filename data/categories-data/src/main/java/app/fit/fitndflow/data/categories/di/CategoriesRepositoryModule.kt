@@ -1,6 +1,7 @@
 package app.fit.fitndflow.data.categories.di
 
 import android.content.Context
+import app.fit.fitndflow.data.categories.datasource.remote.CategoryRemoteDataSource
 import app.fit.fitndflow.data.categories.model.CategoriesApiInterface
 import app.fit.fitndflow.data.categories.repositoryImpl.CategoriesRepositoryImpl
 import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesLocalDataSource
@@ -20,10 +21,10 @@ class CategoriesRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideCategoriesRepository(@ApplicationContext context: Context, apiInterface: CategoriesApiInterface, categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource): com.fit.fitndflow.app.domain.categories.repository.CategoriesRepository {
+    fun provideCategoriesRepository(@ApplicationContext context: Context, categoryRemoteDataSource: CategoryRemoteDataSource, categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource): com.fit.fitndflow.app.domain.categories.repository.CategoriesRepository {
         return CategoriesRepositoryImpl(
             context,
-            apiInterface,
+            categoryRemoteDataSource,
             categoriesAndExercisesLocalDataSource,
             trainingLocalDataSource
         )
@@ -31,8 +32,13 @@ class CategoriesRepositoryModule {
 
     @Provides
     @Singleton
+    fun provideCategoryRemoteDataSource(categoryApiInterface: CategoriesApiInterface): CategoryRemoteDataSource {
+        return CategoryRemoteDataSource(categoryApiInterface)
+    }
+
+    @Provides
+    @Singleton
     fun provideApiInterface(retrofit: Retrofit): CategoriesApiInterface {
         return  retrofit.create(CategoriesApiInterface::class.java)
     }
-
 }
