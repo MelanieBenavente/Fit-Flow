@@ -10,6 +10,7 @@ import java.util.List;
 
 import app.fit.fitndflow.data.categories.datasource.remote.CategoryRemoteDataSource;
 import app.fit.fitndflow.data.categories.dto.AddCategoryDto;
+import app.fit.fitndflow.data.common.database.dao.CategoryDao;
 import app.fit.fitndflow.data.common.dto.CategoryDto;
 import app.fit.fitndflow.data.categories.dto.ModifyCategoryDto;
 import app.fit.fitndflow.data.categories.model.CategoriesApiInterface;
@@ -25,22 +26,29 @@ public class CategoriesRepositoryImpl implements CategoriesRepository {
     private CategoriesAndExercisesLocalDataSource categoriesAndExercisesLocalDataSource;
     private TrainingLocalDataSource trainingLocalDataSource;
     private CategoryRemoteDataSource categoryRemoteDataSource;
+    private CategoryDao categoryDao;
     private Context mContext;
+    private boolean isLocalMode = true;
 
-    public CategoriesRepositoryImpl(Context context, CategoryRemoteDataSource categoryRemoteDataSource, CategoriesAndExercisesLocalDataSource categoriesAndExercisesLocalDataSource, TrainingLocalDataSource trainingLocalDataSource) {
+    public CategoriesRepositoryImpl(Context context, CategoryRemoteDataSource categoryRemoteDataSource, CategoryDao categoryDao ,CategoriesAndExercisesLocalDataSource categoriesAndExercisesLocalDataSource, TrainingLocalDataSource trainingLocalDataSource) {
         this.mContext = context;
         this.categoryRemoteDataSource = categoryRemoteDataSource;
         this.categoriesAndExercisesLocalDataSource = categoriesAndExercisesLocalDataSource;
         this.trainingLocalDataSource = trainingLocalDataSource;
+        this.categoryDao = categoryDao;
     }
 
     @Override
     public List<CategoryModel> getCategoryList() throws Exception {
         if (categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache() == null) {
-            List<CategoryDto> response;
+            List<CategoryModel> response;
             try {
-                response = categoryRemoteDataSource.getCategoryList();
-                categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(CategoryModelMapperKt.toModel(response));
+                if (isLocalMode) {
+                    response = categoryDao.getAllCategories();
+                } else {
+                    response = categoryRemoteDataSource.getCategoryList();
+                }
+                categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(response);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new Exception(e);

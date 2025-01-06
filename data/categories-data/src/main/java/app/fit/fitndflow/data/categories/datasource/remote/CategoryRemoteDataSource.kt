@@ -6,15 +6,17 @@ import app.fit.fitndflow.data.categories.dto.ModifyCategoryDto
 import app.fit.fitndflow.data.categories.model.CategoriesApiInterface
 import app.fit.fitndflow.data.common.dto.CategoryDto
 import app.fit.fitndflow.data.common.dto.StringInLanguagesDto
+import app.fit.fitndflow.data.common.mapper.CategoryModelMapperKt
 import app.fit.fitndflow.data.common.model.ExcepcionApi
+import com.fit.fitndflow.app.domain.common.models.CategoryModel
 
 class CategoryRemoteDataSource(private val categoryApiInterface: CategoriesApiInterface) : CategoryDataSourceInterface {
-    override fun getCategoryList(): List<CategoryDto> {
+    override fun getCategoryList(): List<CategoryModel> {
         val response = categoryApiInterface.getCategoryDtoList().execute();
         if (response != null && !response.isSuccessful()) {
             throw ExcepcionApi(response.code())
         }
-        return response.body()?.toList().orEmpty()
+        return CategoryModelMapperKt.toModel(response.body()?.toList().orEmpty())
     }
 
     override fun addNewCategory(categoryName: StringInLanguagesDto): List<CategoryDto> {

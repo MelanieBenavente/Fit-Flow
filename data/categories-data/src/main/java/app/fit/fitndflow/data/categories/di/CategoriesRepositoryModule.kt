@@ -4,6 +4,7 @@ import android.content.Context
 import app.fit.fitndflow.data.categories.datasource.remote.CategoryRemoteDataSource
 import app.fit.fitndflow.data.categories.model.CategoriesApiInterface
 import app.fit.fitndflow.data.categories.repositoryImpl.CategoriesRepositoryImpl
+import app.fit.fitndflow.data.common.database.dao.CategoryDao
 import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesLocalDataSource
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import com.fit.fitndflow.app.domain.categories.repository.CategoriesRepository
@@ -21,10 +22,11 @@ class CategoriesRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideCategoriesRepository(@ApplicationContext context: Context, categoryRemoteDataSource: CategoryRemoteDataSource, categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource): com.fit.fitndflow.app.domain.categories.repository.CategoriesRepository {
+    fun provideCategoriesRepository(@ApplicationContext context: Context, categoryRemoteDataSource: CategoryRemoteDataSource, categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource, categoryDao: CategoryDao): CategoriesRepository {
         return CategoriesRepositoryImpl(
             context,
             categoryRemoteDataSource,
+            categoryDao,
             categoriesAndExercisesLocalDataSource,
             trainingLocalDataSource
         )
