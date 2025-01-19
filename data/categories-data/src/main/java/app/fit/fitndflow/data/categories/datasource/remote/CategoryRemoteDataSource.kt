@@ -31,7 +31,7 @@ class CategoryRemoteDataSource(private val categoryApiInterface: CategoriesApiIn
     override fun modifyCategory(
         categoryName: StringInLanguagesDto,
         categoryId: Int,
-        imageUrl: String
+        imageUrl: String?
     ): List<CategoryDto> {
         val modifyCategoryDto = ModifyCategoryDto(categoryId, categoryName, "")
         val response = categoryApiInterface.modifyCategory(modifyCategoryDto).execute()

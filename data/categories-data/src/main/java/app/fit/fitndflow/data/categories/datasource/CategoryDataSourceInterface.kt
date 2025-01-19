@@ -10,7 +10,7 @@ interface CategoryDataSourceInterface {
 
     fun addNewCategory(categoryName: StringInLanguagesDto) : List<CategoryDto>
 
-    fun modifyCategory(categoryName: StringInLanguagesDto, categoryId: Int, imageUrl: String) : List<CategoryDto>
+    fun modifyCategory(categoryName: StringInLanguagesDto, categoryId: Int, imageUrl: String?) : List<CategoryDto>
 
     fun deleteCategory(categoryId: Int) : List<CategoryDto>
 }
