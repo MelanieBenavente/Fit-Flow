@@ -23,7 +23,6 @@ class CategoriesRepositoryImpl(
 ) : CategoriesRepository {
     private val isLocalMode = true
 
-    @Throws(Exception::class)
     override suspend fun getCategoryList(): List<CategoryModel> {
         if (categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache() == null) {
             val response: List<CategoryModel>
@@ -42,12 +41,22 @@ class CategoriesRepositoryImpl(
         return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache().orEmpty()
     }
 
-    override suspend fun addNewCategory(categoryName: String, language: String): List<CategoryModel> {
+    override suspend fun addNewCategory(
+        categoryName: String,
+        language: String
+    ): List<CategoryModel> {
         val stringInLanguages = convertToStringInLanguages(language, categoryName)
         val response: List<CategoryModel>
         try {
             if (isLocalMode) {
-                categoryDao.insertAllCategories(listOf(CategoryEntity(nameEs = stringInLanguages.spanish.orEmpty(), nameEn = stringInLanguages.english.orEmpty())))
+                categoryDao.insertAllCategories(
+                    listOf(
+                        CategoryEntity(
+                            nameEs = stringInLanguages.spanish.orEmpty(),
+                            nameEn = stringInLanguages.english.orEmpty()
+                        )
+                    )
+                )
                 response = categoryDao.getAllCategories().map { it.toModel() }
             } else {
                 response = toModel(categoryRemoteDataSource.addNewCategory(stringInLanguages))
@@ -60,8 +69,6 @@ class CategoriesRepositoryImpl(
         return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache().orEmpty()
     }
 
-    //TODO crear Querys en categoryDao!!!!!!!!!!!!!!!!!!!!!!!!!
-
     override suspend fun modifyCategory(
         categoryName: String,
         language: String,
@@ -69,11 +76,25 @@ class CategoriesRepositoryImpl(
         imageUrl: String?
     ): List<CategoryModel> {
         val stringInLanguages = convertToStringInLanguages(language, categoryName)
-        val response: List<CategoryDto> // todo esta response será listado de categorymodel
+        val response: List<CategoryModel>
         try {
-            response =
-                categoryRemoteDataSource.modifyCategory(stringInLanguages, categoryId, imageUrl) //todo esta response debe mapearse en esta línea
-            categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(toModel(response)) //todo
+            if (isLocalMode) {
+                categoryDao.updateCategory(
+                    categoryId = categoryId,
+                    nameEs = stringInLanguages.spanish.orEmpty(),
+                    nameEn = stringInLanguages.english.orEmpty(),
+                )
+                response = categoryDao.getAllCategories().map { it.toModel() }
+            } else {
+                response = toModel(
+                    categoryRemoteDataSource.modifyCategory(
+                        stringInLanguages,
+                        categoryId,
+                        imageUrl
+                    )
+                )
+            }
+            categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(response)
             trainingLocalDataSource.cleanCache()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -83,14 +104,15 @@ class CategoriesRepositoryImpl(
     }
 
     override suspend fun deleteCategory(categoryId: Int): List<CategoryModel> {
-        val response: List<CategoryDto> // todo response será un categorymodel
+        val response: List<CategoryModel>
         try {
-            response = categoryRemoteDataSource.deleteCategory(categoryId)
-            categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(
-                toModel(
-                    response
-                )
-            )
+            if (isLocalMode) {
+                categoryDao.deleteCategory(categoryId)
+                response = categoryDao.getAllCategories().map { it.toModel() }
+            } else {
+                response = toModel(categoryRemoteDataSource.deleteCategory(categoryId))
+            }
+            categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(response)
             trainingLocalDataSource.cleanCache()
         } catch (e: Exception) {
             e.printStackTrace()
