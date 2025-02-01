@@ -3,6 +3,7 @@ package app.fit.fitndflow.data.common.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import app.fit.fitndflow.data.common.database.dao.CategoryDao
+import app.fit.fitndflow.data.common.database.dao.ExerciseDao
 import app.fit.fitndflow.data.common.database.entities.CategoryEntity
 import app.fit.fitndflow.data.common.database.entities.ExerciseEntity
 import app.fit.fitndflow.data.common.database.entities.SeriesEntity
@@ -11,4 +12,6 @@ import app.fit.fitndflow.data.common.database.entities.SeriesEntity
 abstract class DataBase : RoomDatabase() {
 
     abstract fun getCategoryDao() : CategoryDao
+
+    abstract fun getExerciseDao() : ExerciseDao
 }

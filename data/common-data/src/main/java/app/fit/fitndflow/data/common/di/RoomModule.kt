@@ -27,4 +27,8 @@ class RoomModule {
     @Singleton
     @Provides
     fun provideCategoryDao(dataBase: DataBase) = dataBase.getCategoryDao()
+
+    @Singleton
+    @Provides
+    fun provideExerciseDao(dataBase: DataBase) = dataBase.getExerciseDao()
 }

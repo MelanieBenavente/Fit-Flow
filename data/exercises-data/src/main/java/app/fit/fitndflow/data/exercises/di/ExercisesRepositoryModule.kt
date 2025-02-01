@@ -1,6 +1,7 @@
 package app.fit.fitndflow.data.exercises.di
 
 import android.content.Context
+import app.fit.fitndflow.data.common.database.dao.ExerciseDao
 import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesLocalDataSource
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import app.fit.fitndflow.data.exercises.datasource.remote.ExerciseRemoteDataSource
@@ -20,8 +21,20 @@ import javax.inject.Singleton
 class ExercisesRepositoryModule {
     @Provides
     @Singleton
-    fun provideExercisesRepository(@ApplicationContext context: Context, exerciseRemoteDataSource: ExerciseRemoteDataSource, categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource): ExercisesRepository {
-        return ExercisesRepositoryImpl(context, exerciseRemoteDataSource, categoriesAndExercisesLocalDataSource, trainingLocalDataSource)
+    fun provideExercisesRepository(
+        @ApplicationContext context: Context,
+        exerciseRemoteDataSource: ExerciseRemoteDataSource,
+        categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource,
+        trainingLocalDataSource: TrainingLocalDataSource,
+        exerciseDao: ExerciseDao
+    ): ExercisesRepository {
+        return ExercisesRepositoryImpl(
+            context,
+            exerciseRemoteDataSource,
+            exerciseDao,
+            categoriesAndExercisesLocalDataSource,
+            trainingLocalDataSource
+        )
     }
 
     @Provides
@@ -33,6 +46,6 @@ class ExercisesRepositoryModule {
     @Provides
     @Singleton
     fun provideApiInterface(retrofit: Retrofit): ExercisesApiInterface {
-        return  retrofit.create(ExercisesApiInterface::class.java)
+        return retrofit.create(ExercisesApiInterface::class.java)
     }
 }
