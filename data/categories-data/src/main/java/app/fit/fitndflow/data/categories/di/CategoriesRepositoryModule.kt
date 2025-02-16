@@ -20,7 +20,7 @@ class CategoriesRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideCategoriesRepository(@ApplicationContext context: Context, apiInterface: CategoriesApiInterface, categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource): com.fit.fitndflow.app.domain.categories.repository.CategoriesRepository {
+    fun provideCategoriesRepository(@ApplicationContext context: Context, apiInterface: CategoriesApiInterface, categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource): CategoriesRepository {
         return CategoriesRepositoryImpl(
             context,
             apiInterface,

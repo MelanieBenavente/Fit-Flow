@@ -13,7 +13,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface CategoriesApiInterface {
-    String URL_BASE = "http://fitnflowapi-env.eba-8aaimaij.eu-west-3.elasticbeanstalk.com/";
 
     //LLAMADAS CATEGORIA
     @GET("summary/categories/")
