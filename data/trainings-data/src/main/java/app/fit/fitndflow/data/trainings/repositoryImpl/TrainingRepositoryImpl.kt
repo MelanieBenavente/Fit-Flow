@@ -1,6 +1,10 @@
 package app.fit.fitndflow.data.trainings.repositoryImpl
 
 import android.content.Context
+import app.fit.fitndflow.data.common.database.dao.ExerciseDao
+import app.fit.fitndflow.data.common.database.dao.SerieDao
+import app.fit.fitndflow.data.common.database.entities.SerieEntity
+import app.fit.fitndflow.data.common.database.mapper.toModel
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import app.fit.fitndflow.data.common.dto.CategoryDto
 import app.fit.fitndflow.data.common.dto.ExerciseDto
@@ -15,88 +19,112 @@ import com.fit.fitndflow.app.domain.trainings.repository.TrainingRepository
 class TrainingRepositoryImpl(
     private val mContext: Context,
     private val trainingRemoteDataSource: TrainingRemoteDataSource,
-    private val trainingLocalDataSource: TrainingLocalDataSource
+    private val trainingLocalDataSource: TrainingLocalDataSource,
+    private val serieDao: SerieDao
 ) : TrainingRepository {
-    @Throws(Exception::class)
-    fun getSerieListOfExerciseAdded(exerciseId: Int): List<SerieModel>? {
-        try {
-            val categoryList = trainingLocalDataSource.getTrainingsByDate(
-                trainingLocalDataSource.currentDate!!
-            )
-            if (categoryList != null) {
-                for (i in categoryList.indices) {
-                    val category = categoryList[i]
-                    val exerciseList: List<ExerciseModel>? = category.exerciseList
-                    for (j in exerciseList!!.indices) {
-                        val exercise = exerciseList[j]
-                        if (exercise.id == exerciseId) {
-                            return exercise.serieList
-                        }
+    private val isLocalMode = true
+
+    override suspend fun getSerieListOfExerciseAdded(exerciseId: Int): List<SerieModel> {
+        return try {
+            val currentDate = trainingLocalDataSource.currentDate ?: return emptyList()
+            val categoryList = trainingLocalDataSource.getTrainingsByDate(currentDate)
+            categoryList?.forEach { category ->
+                category.exerciseList?.forEach { exercise ->
+                    if (exercise.id == exerciseId) {
+                        return exercise.serieList.toList()
                     }
                 }
             }
-            return ArrayList()
+            emptyList()
         } catch (e: Exception) {
             e.printStackTrace()
             throw Exception(e)
         }
     }
 
-    @Throws(Exception::class)
-    fun addNewSerie(reps: Int, weight: Double, exerciseId: Int): ExerciseModel {
-        val exerciseResponse: ExerciseModel
-        val response: ExerciseDto?
+    override suspend fun addNewSerie(reps: Int, weight: Double, exerciseId: Int): ExerciseModel? {
+        var response: ExerciseModel? = null
         try {
-            response = trainingRemoteDataSource.addNewSerie(
-                reps,
-                weight,
-                exerciseId,
-                trainingLocalDataSource.currentDate!!
-            )
-            exerciseResponse = toModel(response!!)
+            trainingLocalDataSource.currentDate?.let { currentDate ->
+                if (isLocalMode) {
+                    serieDao.insertSerie(
+                        SerieEntity(
+                            exerciseId = exerciseId,
+                            reps = reps,
+                            weight = weight,
+                            date = currentDate
+                        )
+                    )
+                    response =
+                        serieDao.getExerciseWithSeries(exerciseId, currentDate).first().toModel()
+                } else {
+                    trainingRemoteDataSource.addNewSerie(
+                        reps,
+                        weight,
+                        exerciseId,
+                        currentDate
+                    )?.let {
+                        response = toModel(it)
+                    }
+                }
+            }
             trainingLocalDataSource.cleanCache()
         } catch (e: Exception) {
             e.printStackTrace()
             throw Exception(e)
         }
-        return exerciseResponse
+        return response
     }
 
-    @Throws(Exception::class)
-    fun modifySerie(serieId: Int, reps: Int, weight: Double): ExerciseModel {
-        val exerciseResponse: ExerciseModel
-        val response: ExerciseDto?
+    override suspend fun modifySerie(serieId: Int, reps: Int, weight: Double): ExerciseModel? {
+        var response: ExerciseModel? = null
         try {
-            response = trainingRemoteDataSource.modifySerie(serieId, reps, weight)
-            exerciseResponse = toModel(response!!)
+            trainingLocalDataSource.currentDate?.let { currentDate ->
+                if (isLocalMode) {
+                    val exerciseId = serieDao.getSerie(serieId).exerciseId
+                    serieDao.updateSerie(
+                        serieId = serieId,
+                        reps = reps,
+                        weight = weight
+                    )
+                    response =
+                        serieDao.getExerciseWithSeries(exerciseId, currentDate).first().toModel()
+                } else {
+                    trainingRemoteDataSource.modifySerie(serieId, reps, weight)?.let { response = toModel(it) }
+                }
+            }
             trainingLocalDataSource.cleanCache()
         } catch (e: Exception) {
             e.printStackTrace()
             throw Exception(e)
         }
-        return exerciseResponse
+        return response
     }
 
-    @Throws(Exception::class)
-    fun deleteSerie(serieId: Int): ExerciseModel {
-        val exerciseResponse: ExerciseModel
-        val response: ExerciseDto?
+    override suspend fun deleteSerie(serieId: Int): ExerciseModel? {
+        var response: ExerciseModel? = null
         try {
-            response = trainingRemoteDataSource.deleteSerie(serieId)
-            exerciseResponse = toModel(response!!)
+            trainingLocalDataSource.currentDate?.let { currentDate ->
+                if (isLocalMode) {
+                    val exerciseId = serieDao.getSerie(serieId).exerciseId
+                    serieDao.deleteSerie(serieId)
+                    response = serieDao.getExerciseWithSeries(exerciseId,currentDate).first().toModel()
+                } else {
+                    trainingRemoteDataSource.deleteSerie(serieId)?.let { response = toModel(it) }
+                }
+            }
             trainingLocalDataSource.cleanCache()
         } catch (e: Exception) {
             e.printStackTrace()
             throw Exception(e)
         }
-        return exerciseResponse
+        return response
     }
 
-    @Throws(Exception::class)
-    fun getTrainingListAndUpdateCache(date: String?): List<CategoryModel>? {
+    override suspend fun getTrainingListAndUpdateCache(date: String): List<CategoryModel> {
         trainingLocalDataSource.currentDate = date
         val response: List<CategoryDto>
-        if (trainingLocalDataSource.getTrainingsByDate(date!!) == null) {
+        if (trainingLocalDataSource.getTrainingsByDate(date) == null) {
             try {
                 response = trainingRemoteDataSource.getTrainingListAndUpdateCache(date)
                 trainingLocalDataSource.replaceAllDataFromTrainingCache(date, toModel(response))
@@ -108,8 +136,7 @@ class TrainingRepositoryImpl(
         return trainingLocalDataSource.getTrainingsByDate(date)
     }
 
-    @Throws(Exception::class)
-    fun updateCurrentTrainingListCache(): List<CategoryModel>? {
-        return getTrainingListAndUpdateCache(trainingLocalDataSource.currentDate)
+    override suspend fun updateCurrentTrainingListCache(): List<CategoryModel> {
+        return getTrainingListAndUpdateCache(trainingLocalDataSource.currentDate) //todo si es diferente de nulo que devuelva esto y sino un emptylist
     }
 }
