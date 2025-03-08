@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
         entity = CategoryEntity::class,
         parentColumns = ["id"],
         childColumns = ["categoryId"],
-        onDelete = ForeignKey.CASCADE // Borra los ejercicios si se elimina su categoría
+        onDelete = ForeignKey.CASCADE
     )],
     indices = [Index("categoryId")]
 )

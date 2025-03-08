@@ -8,7 +8,6 @@ import com.fit.fitndflow.app.domain.common.models.SerieModel
 
 class CategoryModelMapperKt {
 
-    //transforma de DTO A MODEL
     companion object {
         @JvmStatic
         fun toModel(categoryDtoList: List<CategoryDto>): List<CategoryModel> {
@@ -30,7 +29,7 @@ class CategoryModelMapperKt {
                         exerciseDto.serieList?.map { serieDto ->
                             val isRecord = serieDto.reps == record?.reps && serieDto.weight == record?.kg
                             SerieModel(serieDto.serieId, serieDto.reps, serieDto.weight, isRecord)
-                        }?.toMutableList(),
+                        }?.toMutableList() ?: mutableListOf(),
                         lastFirstSerie,
                         record
                     )
