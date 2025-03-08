@@ -257,9 +257,9 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
     private fun printPRContainerIfRecordExists() {
         if(exercise.record != null){
             binding.personalRecord.visibility = VISIBLE
-            exercise.record!!.reps?.let { binding.repsEdTxt.text = it.toString() }
+            exercise.record?.reps?.let { binding.repsEdTxt.text = it.toString() }
             binding.tvReps.setText("Reps")
-            exercise.record!!.kg?.let { binding.kgEdTxt.text = it.toString() }
+            exercise.record?.kg?.let { binding.kgEdTxt.text = it.toString() }
             binding.tvKg.text = "Kg"
         } else {
             binding.personalRecord.visibility = INVISIBLE

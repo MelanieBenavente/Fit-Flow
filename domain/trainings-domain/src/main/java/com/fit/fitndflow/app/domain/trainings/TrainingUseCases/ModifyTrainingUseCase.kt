@@ -15,7 +15,7 @@ class ModifyTrainingUseCase @Inject constructor(val trainingRepository: Training
         params.record?.let {
             isRecord = (params.record.kg != null && params.record.reps != null) && (params.weight > params.record.kg!! || (params.weight >= params.record.kg!! && params.reps > params.record.reps!!))
         }
-            emit(SerieInfoWrapper(exercise.serieList!!.toList(), isRecord, exercise.record))
+            emit(SerieInfoWrapper(exercise?.serieList?.toList() ?: emptyList() , isRecord, exercise?.record))
     }
 }
 data class ModifySerieUseCaseParams(val serieId: Int, val reps: Int, val weight: Double, val record: SerieModel?)
