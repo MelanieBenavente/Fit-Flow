@@ -1,4 +1,8 @@
 package app.fit.fitndflow.data.common.database.entities
 
-class ExerciseWithSeriesEntity {
-}
+import androidx.room.Embedded
+
+data class ExerciseWithSeriesEntity (
+    @Embedded val exercise: ExerciseEntity,
+    val series: List<SerieEntity>
+)
