@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
     )],
     indices = [Index("exerciseId")]
 )
-data class SeriesEntity(
+data class SerieEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo val id: Int = 0,
     @ColumnInfo val exerciseId: Int,
