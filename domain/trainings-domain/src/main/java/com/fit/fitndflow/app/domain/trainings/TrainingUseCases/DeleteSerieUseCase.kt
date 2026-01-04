@@ -10,7 +10,7 @@ import javax.inject.Inject
 class DeleteSerieUseCase @Inject constructor(val trainingRepository: TrainingRepository): UseCase<GetSerieToDeleteParams, SerieInfoWrapper>(){
     override fun run(params: GetSerieToDeleteParams): Flow<SerieInfoWrapper> = flow {
         val exercise = trainingRepository.deleteSerie(params.serieId)
-        emit(SerieInfoWrapper(exercise?.serieList?.toList() ?: emptyList(), false, exercise.record))
+        emit(SerieInfoWrapper(exercise?.serieList?.toList() ?: emptyList(), false, exercise?.record))
     }
 }
 

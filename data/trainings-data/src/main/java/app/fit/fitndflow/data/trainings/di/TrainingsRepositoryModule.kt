@@ -3,6 +3,7 @@ package app.fit.fitndflow.data.trainings.di
 import android.content.Context
 import app.fit.fitndflow.data.common.database.dao.ExerciseDao
 import app.fit.fitndflow.data.common.database.dao.SerieDao
+import app.fit.fitndflow.data.common.database.dao.TrainingDao
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import app.fit.fitndflow.data.trainings.datasource.remote.TrainingRemoteDataSource
 import app.fit.fitndflow.data.trainings.model.TrainingsApiInterface
@@ -27,9 +28,10 @@ class TrainingsRepositoryModule {
         trainingRemoteDataSource: TrainingRemoteDataSource,
         trainingLocalDataSource: TrainingLocalDataSource,
         serieDao: SerieDao,
-        exerciseDao: ExerciseDao
+        exerciseDao: ExerciseDao,
+        trainingDao: TrainingDao
     ): TrainingRepository {
-        return TrainingRepositoryImpl(context, trainingRemoteDataSource, trainingLocalDataSource, serieDao)
+        return TrainingRepositoryImpl(context, trainingRemoteDataSource, trainingLocalDataSource, serieDao, trainingDao)
     }
 
     @Provides

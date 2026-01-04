@@ -23,5 +23,3 @@ data class ExerciseEntity(
     @ColumnInfo val nameEn: String,
     @ColumnInfo val nameEs: String,
 )
-
-//todo CREAR DAO DE EJERCICIOS

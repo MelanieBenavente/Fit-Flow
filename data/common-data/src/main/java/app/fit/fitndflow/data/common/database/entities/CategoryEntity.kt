@@ -11,5 +11,3 @@ data class CategoryEntity(
     @ColumnInfo(name = "nameEs") val nameEs: String,
     @ColumnInfo(name = "nameEn") val nameEn: String
 )
-
-//todo CREAR DAO DE CATEGORIAS ---->  SEGUIR VIENDO VIDEO ROOM ARISTDEV -> https://www.youtube.com/watch?v=lYBb4QedYH8

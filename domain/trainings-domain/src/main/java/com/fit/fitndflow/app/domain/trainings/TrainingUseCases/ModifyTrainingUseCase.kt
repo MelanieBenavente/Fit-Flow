@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class ModifyTrainingUseCase @Inject constructor(val trainingRepository: TrainingRepository) : UseCase<ModifySerieUseCaseParams, SerieInfoWrapper>() {
+class ModifyTrainingUseCase @Inject constructor(private val trainingRepository: TrainingRepository) : UseCase<ModifySerieUseCaseParams, SerieInfoWrapper>() {
     override fun run(params: ModifySerieUseCaseParams): Flow<SerieInfoWrapper> = flow {
         val exercise = trainingRepository.modifySerie(params.serieId, params.reps, params.weight)
         var isRecord = false

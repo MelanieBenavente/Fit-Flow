@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class ModifyExerciseUseCase @Inject constructor(val exercisesRepository: ExercisesRepository) : UseCase<ExerciseModelInLanguages, List<ExerciseModel>>() {
+class ModifyExerciseUseCase @Inject constructor(private val exercisesRepository: ExercisesRepository) : UseCase<ExerciseModelInLanguages, List<ExerciseModel>>() {
     override fun run(params: ExerciseModelInLanguages): Flow<List<ExerciseModel>> = flow {
         val exerciseModified = exercisesRepository.modifyExercise(params.exerciseId, params.exerciseName, params.language, params.categoryId)
         emit(exerciseModified)

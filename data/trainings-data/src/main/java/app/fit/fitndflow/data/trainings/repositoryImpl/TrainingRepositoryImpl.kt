@@ -1,9 +1,12 @@
 package app.fit.fitndflow.data.trainings.repositoryImpl
 
 import android.content.Context
+import app.fit.fitndflow.data.common.database.dao.CategoryDao
 import app.fit.fitndflow.data.common.database.dao.ExerciseDao
 import app.fit.fitndflow.data.common.database.dao.SerieDao
+import app.fit.fitndflow.data.common.database.dao.TrainingDao
 import app.fit.fitndflow.data.common.database.entities.SerieEntity
+import app.fit.fitndflow.data.common.database.entities.filterTrainingByDate
 import app.fit.fitndflow.data.common.database.mapper.toModel
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import app.fit.fitndflow.data.common.dto.CategoryDto
@@ -20,7 +23,8 @@ class TrainingRepositoryImpl(
     private val mContext: Context,
     private val trainingRemoteDataSource: TrainingRemoteDataSource,
     private val trainingLocalDataSource: TrainingLocalDataSource,
-    private val serieDao: SerieDao
+    private val serieDao: SerieDao,
+    private val trainingDao: TrainingDao
 ) : TrainingRepository {
     private val isLocalMode = true
 
@@ -56,7 +60,7 @@ class TrainingRepositoryImpl(
                         )
                     )
                     response =
-                        serieDao.getExerciseWithSeries(exerciseId, currentDate).first().toModel()
+                        serieDao.getExerciseWithSeriesByDate(exerciseId, currentDate).toModel()
                 } else {
                     trainingRemoteDataSource.addNewSerie(
                         reps,
@@ -123,20 +127,24 @@ class TrainingRepositoryImpl(
 
     override suspend fun getTrainingListAndUpdateCache(date: String): List<CategoryModel> {
         trainingLocalDataSource.currentDate = date
-        val response: List<CategoryDto>
+        val response: List<CategoryModel>
         if (trainingLocalDataSource.getTrainingsByDate(date) == null) {
             try {
-                response = trainingRemoteDataSource.getTrainingListAndUpdateCache(date)
-                trainingLocalDataSource.replaceAllDataFromTrainingCache(date, toModel(response))
+                if (isLocalMode){
+                    response = filterTrainingByDate(trainingDao.getFullTraining(), date).map { it.toModel() }
+                } else {
+                    response = toModel(trainingRemoteDataSource.getTrainingListAndUpdateCache(date))
+                }
+                    trainingLocalDataSource.replaceAllDataFromTrainingCache(date, response)
             } catch (e: Exception) {
                 e.printStackTrace()
                 throw Exception(e)
             }
         }
-        return trainingLocalDataSource.getTrainingsByDate(date)
+        return trainingLocalDataSource.getTrainingsByDate(date).orEmpty()
     }
 
     override suspend fun updateCurrentTrainingListCache(): List<CategoryModel> {
-        return getTrainingListAndUpdateCache(trainingLocalDataSource.currentDate) //todo si es diferente de nulo que devuelva esto y sino un emptylist
+        return getTrainingListAndUpdateCache(trainingLocalDataSource.currentDate.orEmpty())
     }
 }

@@ -36,4 +36,8 @@ class RoomModule {
     @Provides
     fun provideSerieDao(dataBase: DataBase) = dataBase.getSerieDao()
 
+    @Singleton
+    @Provides
+    fun provideTrainingDao(dataBase: DataBase) = dataBase.getTrainingDao()
+
 }

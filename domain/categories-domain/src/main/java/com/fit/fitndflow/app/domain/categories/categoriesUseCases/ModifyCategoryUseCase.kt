@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class ModifyCategoryUseCase @Inject constructor(val categoriesRepository: CategoriesRepository) : UseCase<CategoryModelInLanguages, List<CategoryModel>>(){
+class ModifyCategoryUseCase @Inject constructor(private val categoriesRepository: CategoriesRepository) : UseCase<CategoryModelInLanguages, List<CategoryModel>>(){
     override fun run(params: CategoryModelInLanguages): Flow<List<CategoryModel>> = flow {
         val categoryModified = categoriesRepository.modifyCategory(params.name, params.language, params.id, params.imageUrl)
         emit(categoryModified)

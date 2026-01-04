@@ -24,5 +24,3 @@ data class SerieEntity(
     @ColumnInfo val weight: Double?,
     @ColumnInfo val date: String
 )
-
-//todo CREAR DAO DE SERIES
