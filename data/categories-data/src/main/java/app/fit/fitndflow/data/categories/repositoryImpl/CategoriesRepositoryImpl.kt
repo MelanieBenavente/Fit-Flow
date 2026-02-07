@@ -5,26 +5,24 @@ import app.fit.fitndflow.data.categories.datasource.remote.CategoryRemoteDataSou
 import app.fit.fitndflow.data.common.database.dao.CategoryDao
 import app.fit.fitndflow.data.common.database.entities.CategoryEntity
 import app.fit.fitndflow.data.common.database.mapper.toModel
-import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesLocalDataSource
+import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesCacheLocalDataSource
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
-import app.fit.fitndflow.data.common.dto.CategoryDto
 import app.fit.fitndflow.data.common.mapper.CategoryModelMapperKt.Companion.toModel
 import app.fit.fitndflow.data.common.mapper.convertToStringInLanguages
 import com.fit.fitndflow.app.domain.categories.repository.CategoriesRepository
 import com.fit.fitndflow.app.domain.common.models.CategoryModel
-import com.fit.fitndflow.app.domain.common.models.StringInLanguagesModel
 
 class CategoriesRepositoryImpl(
     private val mContext: Context,
     private val categoryRemoteDataSource: CategoryRemoteDataSource,
     private val categoryDao: CategoryDao,
-    private val categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource,
+    private val categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource,
     private val trainingLocalDataSource: TrainingLocalDataSource
 ) : CategoriesRepository {
     private val isLocalMode = true
 
     override suspend fun getCategoryList(): List<CategoryModel> {
-        if (categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache() == null) {
+        if (categoriesAndExercisesCacheLocalDataSource.getAvailableCategoryListCache() == null) {
             val response: List<CategoryModel>
             try {
                 if (isLocalMode) {
@@ -32,13 +30,13 @@ class CategoriesRepositoryImpl(
                 } else {
                     response = categoryRemoteDataSource.getCategoryList()
                 }
-                categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(response)
+                categoriesAndExercisesCacheLocalDataSource.replaceAllDataFromCategoryListCache(response)
             } catch (e: Exception) {
                 e.printStackTrace()
                 throw Exception(e)
             }
         }
-        return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache().orEmpty()
+        return categoriesAndExercisesCacheLocalDataSource.getAvailableCategoryListCache().orEmpty()
     }
 
     override suspend fun addNewCategory(
@@ -61,12 +59,12 @@ class CategoriesRepositoryImpl(
             } else {
                 response = toModel(categoryRemoteDataSource.addNewCategory(stringInLanguages))
             }
-            categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(response)
+            categoriesAndExercisesCacheLocalDataSource.replaceAllDataFromCategoryListCache(response)
         } catch (e: Exception) {
             e.printStackTrace()
             throw Exception(e)
         }
-        return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache().orEmpty()
+        return categoriesAndExercisesCacheLocalDataSource.getAvailableCategoryListCache().orEmpty()
     }
 
     override suspend fun modifyCategory(
@@ -94,13 +92,13 @@ class CategoriesRepositoryImpl(
                     )
                 )
             }
-            categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(response)
+            categoriesAndExercisesCacheLocalDataSource.replaceAllDataFromCategoryListCache(response)
             trainingLocalDataSource.cleanCache()
         } catch (e: Exception) {
             e.printStackTrace()
             throw Exception(e)
         }
-        return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache().orEmpty()
+        return categoriesAndExercisesCacheLocalDataSource.getAvailableCategoryListCache().orEmpty()
     }
 
     override suspend fun deleteCategory(categoryId: Int): List<CategoryModel> {
@@ -112,12 +110,12 @@ class CategoriesRepositoryImpl(
             } else {
                 response = toModel(categoryRemoteDataSource.deleteCategory(categoryId))
             }
-            categoriesAndExercisesLocalDataSource.replaceAllDataFromCategoryListCache(response)
+            categoriesAndExercisesCacheLocalDataSource.replaceAllDataFromCategoryListCache(response)
             trainingLocalDataSource.cleanCache()
         } catch (e: Exception) {
             e.printStackTrace()
             throw Exception(e)
         }
-        return categoriesAndExercisesLocalDataSource.getAvailableCategoryListCache().orEmpty()
+        return categoriesAndExercisesCacheLocalDataSource.getAvailableCategoryListCache().orEmpty()
     }
 }

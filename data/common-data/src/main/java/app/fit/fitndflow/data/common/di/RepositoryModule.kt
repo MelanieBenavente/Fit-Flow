@@ -1,7 +1,7 @@
 package app.fit.fitndflow.data.common.di
 
 import android.content.Context
-import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesLocalDataSource
+import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesCacheLocalDataSource
 import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import app.fit.fitndflow.data.common.model.ApiInterface
@@ -40,8 +40,8 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideCategoriesAndExercisesLocalDataSource() : CategoriesAndExercisesLocalDataSource {
-        return CategoriesAndExercisesLocalDataSource()
+    fun provideCategoriesAndExercisesLocalDataSource() : CategoriesAndExercisesCacheLocalDataSource {
+        return CategoriesAndExercisesCacheLocalDataSource()
     }
 
     @Provides

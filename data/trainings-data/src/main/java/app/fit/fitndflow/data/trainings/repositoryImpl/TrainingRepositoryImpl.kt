@@ -24,7 +24,8 @@ class TrainingRepositoryImpl(
     private val trainingRemoteDataSource: TrainingRemoteDataSource,
     private val trainingLocalDataSource: TrainingLocalDataSource,
     private val serieDao: SerieDao,
-    private val trainingDao: TrainingDao
+    private val trainingDao: TrainingDao,
+    private val exerciseDao: ExerciseDao
 ) : TrainingRepository {
     private val isLocalMode = true
 
@@ -59,8 +60,9 @@ class TrainingRepositoryImpl(
                             date = currentDate
                         )
                     )
+                    val record = exerciseDao.getExercise(exerciseId).firstOrNull()?.record
                     response =
-                        serieDao.getExerciseWithSeriesByDate(exerciseId, currentDate).toModel()
+                        serieDao.getExerciseWithSeriesByDate(exerciseId, currentDate).toModel(record)
                 } else {
                     trainingRemoteDataSource.addNewSerie(
                         reps,

@@ -4,9 +4,8 @@ import android.content.Context
 import app.fit.fitndflow.data.common.database.dao.ExerciseDao
 import app.fit.fitndflow.data.common.database.entities.ExerciseEntity
 import app.fit.fitndflow.data.common.database.mapper.toModel
-import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesLocalDataSource
+import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesCacheLocalDataSource
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
-import app.fit.fitndflow.data.common.dto.ExerciseDto
 import app.fit.fitndflow.data.common.mapper.ExerciseModelMapperKt.Companion.toModel
 import app.fit.fitndflow.data.common.mapper.convertToStringInLanguages
 import app.fit.fitndflow.data.exercises.datasource.remote.ExerciseRemoteDataSource
@@ -17,7 +16,7 @@ class ExercisesRepositoryImpl(
     private val mContext: Context,
     private val exerciseRemoteDataSource: ExerciseRemoteDataSource,
     private val exerciseDao: ExerciseDao,
-    private val categoriesAndExercisesLocalDataSource: CategoriesAndExercisesLocalDataSource,
+    private val categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource,
     private val trainingLocalDataSource: TrainingLocalDataSource
 ) : ExercisesRepository {
     private val isLocalMode = true
@@ -78,7 +77,7 @@ class ExercisesRepositoryImpl(
                 )
             }
             trainingLocalDataSource.cleanCache()
-            categoriesAndExercisesLocalDataSource.cleanCache()
+            categoriesAndExercisesCacheLocalDataSource.cleanCache()
         } catch (e: Exception) {
             e.printStackTrace()
             throw Exception(e)
@@ -97,7 +96,7 @@ class ExercisesRepositoryImpl(
                 response = toModel(exerciseRemoteDataSource.deleteExercise(exerciseId))
             }
             trainingLocalDataSource.cleanCache()
-            categoriesAndExercisesLocalDataSource.cleanCache()
+            categoriesAndExercisesCacheLocalDataSource.cleanCache()
         } catch (e: Exception) {
             e.printStackTrace()
             throw Exception(e)
