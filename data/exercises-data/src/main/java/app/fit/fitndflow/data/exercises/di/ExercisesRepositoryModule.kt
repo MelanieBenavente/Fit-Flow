@@ -3,6 +3,7 @@ package app.fit.fitndflow.data.exercises.di
 import android.content.Context
 import app.fit.fitndflow.data.common.database.dao.ExerciseDao
 import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesCacheLocalDataSource
+import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import app.fit.fitndflow.data.exercises.datasource.remote.ExerciseRemoteDataSource
 import app.fit.fitndflow.data.exercises.model.ExercisesApiInterface
@@ -26,14 +27,16 @@ class ExercisesRepositoryModule {
         exerciseRemoteDataSource: ExerciseRemoteDataSource,
         categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource,
         trainingLocalDataSource: TrainingLocalDataSource,
-        exerciseDao: ExerciseDao
+        exerciseDao: ExerciseDao,
+        sharedPrefsLocalDataSource: SharedPrefsLocalDataSource
     ): ExercisesRepository {
         return ExercisesRepositoryImpl(
             context,
             exerciseRemoteDataSource,
             exerciseDao,
             categoriesAndExercisesCacheLocalDataSource,
-            trainingLocalDataSource
+            trainingLocalDataSource,
+            sharedPrefsLocalDataSource
         )
     }
 

@@ -1,11 +1,14 @@
 package app.fit.fitndflow.data.categories.di
 
 import android.content.Context
+import app.fit.fitndflow.data.categories.datasource.local.InitialExercisesCreatorHelper
 import app.fit.fitndflow.data.categories.datasource.remote.CategoryRemoteDataSource
 import app.fit.fitndflow.data.categories.model.CategoriesApiInterface
 import app.fit.fitndflow.data.categories.repositoryImpl.CategoriesRepositoryImpl
 import app.fit.fitndflow.data.common.database.dao.CategoryDao
+import app.fit.fitndflow.data.common.database.dao.ExerciseDao
 import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesCacheLocalDataSource
+import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import com.fit.fitndflow.app.domain.categories.repository.CategoriesRepository
 import dagger.Module
@@ -22,15 +25,21 @@ class CategoriesRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideCategoriesRepository(@ApplicationContext context: Context, categoryRemoteDataSource: CategoryRemoteDataSource, categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource, categoryDao: CategoryDao): CategoriesRepository {
+    fun provideCategoriesRepository(categoryRemoteDataSource: CategoryRemoteDataSource, categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource, categoryDao: CategoryDao, initialExercisesCreatorHelper: InitialExercisesCreatorHelper, sharedPrefsLocalDataSource: SharedPrefsLocalDataSource
+    ): CategoriesRepository {
         return CategoriesRepositoryImpl(
-            context,
             categoryRemoteDataSource,
             categoryDao,
             categoriesAndExercisesCacheLocalDataSource,
-            trainingLocalDataSource
+            trainingLocalDataSource,
+            initialExercisesCreatorHelper,
+            sharedPrefsLocalDataSource
         )
     }
+
+    @Provides
+    @Singleton
+    fun provideInitialExercisesCreatorHelper(categoryDao: CategoryDao, exerciseDao: ExerciseDao): InitialExercisesCreatorHelper = InitialExercisesCreatorHelper(categoryDao = categoryDao, exerciseDao = exerciseDao)
 
     @Provides
     @Singleton

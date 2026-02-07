@@ -59,8 +59,8 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
     }
 
     private fun requestRegisterOrRequestTraining(){
-        if (!homeViewModel.isUserRegistered()) {
-            homeViewModel.requestRegisterEmptyUser()
+        if (!homeViewModel.isUserRegistered() && !homeViewModel.isInitialDataCreated()) {
+            homeViewModel.createInitialDataIfNeeded()
         } else {
             homeViewModel.requestTrainingFromModel()
         }

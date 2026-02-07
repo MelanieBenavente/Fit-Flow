@@ -16,6 +16,9 @@ interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllCategories(categories: List<CategoryEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCategory(category: CategoryEntity):Long
+
     @Query("UPDATE categories_table SET nameEs = :nameEs, nameEn = :nameEn WHERE id = :categoryId")
     suspend fun updateCategory(categoryId: Int, nameEs: String, nameEn: String)
 

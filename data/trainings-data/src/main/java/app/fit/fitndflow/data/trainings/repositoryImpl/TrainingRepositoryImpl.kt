@@ -8,6 +8,7 @@ import app.fit.fitndflow.data.common.database.dao.TrainingDao
 import app.fit.fitndflow.data.common.database.entities.SerieEntity
 import app.fit.fitndflow.data.common.database.entities.filterTrainingByDate
 import app.fit.fitndflow.data.common.database.mapper.toModel
+import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import app.fit.fitndflow.data.common.dto.CategoryDto
 import app.fit.fitndflow.data.common.dto.ExerciseDto
@@ -25,9 +26,11 @@ class TrainingRepositoryImpl(
     private val trainingLocalDataSource: TrainingLocalDataSource,
     private val serieDao: SerieDao,
     private val trainingDao: TrainingDao,
-    private val exerciseDao: ExerciseDao
+    private val exerciseDao: ExerciseDao,
+    private val sharedPrefsLocalDataSource: SharedPrefsLocalDataSource
 ) : TrainingRepository {
-    private val isLocalMode = true
+    private val isLocalMode
+        get() = sharedPrefsLocalDataSource.getIsLocal()
 
     override suspend fun getSerieListOfExerciseAdded(exerciseId: Int): List<SerieModel> {
         return try {

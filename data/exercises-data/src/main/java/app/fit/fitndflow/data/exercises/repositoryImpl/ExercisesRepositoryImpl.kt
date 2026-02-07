@@ -5,6 +5,7 @@ import app.fit.fitndflow.data.common.database.dao.ExerciseDao
 import app.fit.fitndflow.data.common.database.entities.ExerciseEntity
 import app.fit.fitndflow.data.common.database.mapper.toModel
 import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesCacheLocalDataSource
+import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
 import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
 import app.fit.fitndflow.data.common.mapper.ExerciseModelMapperKt.Companion.toModel
 import app.fit.fitndflow.data.common.mapper.convertToStringInLanguages
@@ -17,9 +18,11 @@ class ExercisesRepositoryImpl(
     private val exerciseRemoteDataSource: ExerciseRemoteDataSource,
     private val exerciseDao: ExerciseDao,
     private val categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource,
-    private val trainingLocalDataSource: TrainingLocalDataSource
+    private val trainingLocalDataSource: TrainingLocalDataSource,
+    private val sharedPrefsLocalDataSource: SharedPrefsLocalDataSource
 ) : ExercisesRepository {
-    private val isLocalMode = true
+    private val isLocalMode
+        get() = sharedPrefsLocalDataSource.getIsLocal()
 
     override suspend fun addNewExercise(
         exerciseName: String,
@@ -34,7 +37,8 @@ class ExercisesRepositoryImpl(
                     ExerciseEntity(
                         categoryId = categoryId,
                         nameEs = stringInLanguages.spanish.orEmpty(),
-                        nameEn = stringInLanguages.english.orEmpty()
+                        nameEn = stringInLanguages.english.orEmpty(),
+                        record = 0.0
                     )
                 )
                 response = exerciseDao.getAllExercisesByCategory(categoryId).map { it.toModel() }

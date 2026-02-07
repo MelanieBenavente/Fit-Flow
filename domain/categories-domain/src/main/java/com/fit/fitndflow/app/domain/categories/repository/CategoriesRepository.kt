@@ -13,4 +13,8 @@ interface CategoriesRepository : CommonRepository {
         imageUrl: String?
     ): List<CategoryModel>
     suspend fun deleteCategory(integer: Int): List<CategoryModel>
+
+    suspend fun createInitialData()
+
+    fun isInitialDataCreated(): Boolean
 }

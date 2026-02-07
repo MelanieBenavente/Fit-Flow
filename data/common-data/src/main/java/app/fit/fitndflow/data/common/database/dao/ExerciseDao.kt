@@ -17,6 +17,9 @@ interface ExerciseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExercise(exercise: ExerciseEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertExercises(exercise: List<ExerciseEntity>)
+
     @Query("UPDATE exercises_table SET nameEs = :nameEs, nameEn = :nameEn, categoryId = :categoryId WHERE id = :exerciseId")
     suspend fun updateExercise(exerciseId: Int, nameEs: String, nameEn: String, categoryId: Int)
 

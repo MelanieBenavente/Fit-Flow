@@ -2,7 +2,6 @@ package app.fit.fitndflow.data.user.di
 
 import android.content.Context
 import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
-import app.fit.fitndflow.data.user.model.UserApiInterface
 import app.fit.fitndflow.data.user.repositoryImpl.RegisterUserRepositoryImpl
 import com.fit.fitndflow.app.domain.user.repository.RegisterUserRepository
 import dagger.Module
@@ -19,14 +18,8 @@ class UserRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideRegisterUserRepository(@ApplicationContext context: Context, apiInterface: UserApiInterface, sharedPrefsLocalDataSource: SharedPrefsLocalDataSource): RegisterUserRepository {
-        return RegisterUserRepositoryImpl(context, apiInterface, sharedPrefsLocalDataSource)
-    }
-
-    @Provides
-    @Singleton
-    fun provideApiInterface(retrofit: Retrofit): UserApiInterface {
-        return  retrofit.create(UserApiInterface::class.java)
+    fun provideRegisterUserRepository(@ApplicationContext context: Context, sharedPrefsLocalDataSource: SharedPrefsLocalDataSource): RegisterUserRepository {
+        return RegisterUserRepositoryImpl(context, sharedPrefsLocalDataSource)
     }
 
 }
