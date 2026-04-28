@@ -59,10 +59,10 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
     }
 
     private fun requestRegisterOrRequestTraining(){
-        if (!homeViewModel.isUserRegistered() && !homeViewModel.isInitialDataCreated()) {
-            homeViewModel.createInitialDataIfNeeded()
-        } else {
-            homeViewModel.requestTrainingFromModel()
+        when {
+            homeViewModel.isUserRegistered() -> homeViewModel.initLocalMigration()
+            homeViewModel.isInitialDataCreated() -> homeViewModel.requestTrainingFromModel()
+            else -> homeViewModel.createInitialDataIfNeeded()
         }
     }
 
@@ -170,6 +170,7 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
                     printExercises(categories)
                 }
             }
+            State.MigrationFinished -> requestRegisterOrRequestTraining()
         }
     }
 

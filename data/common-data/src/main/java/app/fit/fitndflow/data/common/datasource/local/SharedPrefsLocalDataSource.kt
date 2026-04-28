@@ -8,7 +8,7 @@ class SharedPrefsLocalDataSource(private var mcontext: Context) {
     fun getApiKey(): String? {
         return SharedPrefs.getApikeyFromSharedPRefs(mcontext)
     }
-    fun saveApiKey(apiKey: String) {
+    fun saveApiKey(apiKey: String?) {
         SharedPrefs.saveApikeyToSharedPRefs(mcontext, apiKey)
     }
     fun isNotificationShown(): Boolean {

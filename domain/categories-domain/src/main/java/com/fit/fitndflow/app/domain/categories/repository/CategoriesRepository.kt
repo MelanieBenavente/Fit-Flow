@@ -14,6 +14,8 @@ interface CategoriesRepository : CommonRepository {
     ): List<CategoryModel>
     suspend fun deleteCategory(integer: Int): List<CategoryModel>
 
+    suspend fun migrateToLocal()
+
     suspend fun createInitialData()
 
     fun isInitialDataCreated(): Boolean

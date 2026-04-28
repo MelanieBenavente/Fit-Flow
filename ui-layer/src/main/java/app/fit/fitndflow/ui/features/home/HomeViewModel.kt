@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fit.fitndflow.app.domain.categories.categoriesUseCases.CreateInitialCategoriesAndExercisesIfNeeded
 import com.fit.fitndflow.app.domain.categories.categoriesUseCases.IsInitialDataCreatedUseCase
+import com.fit.fitndflow.app.domain.categories.categoriesUseCases.MigrateToLocalUseCase
 import com.fit.fitndflow.app.domain.common.models.CategoryModel
 import com.fit.fitndflow.app.domain.common.utils.Utils
 import com.fit.fitndflow.app.domain.trainings.TrainingUseCases.GetTrainingUseCaseParams
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getTrainingUseCase: GetTrainingUseCase,
+    private val migrateToLocalUseCase: MigrateToLocalUseCase,
     private val getIsUserRegisteredUseCase: GetIsUserRegisteredUseCase,
     private val isInitialDataCreatedUseCase: IsInitialDataCreatedUseCase,
     private val createInitialCategoriesAndExercisesIfNeeded: CreateInitialCategoriesAndExercisesIfNeeded
@@ -77,12 +79,22 @@ class HomeViewModel @Inject constructor(
                 .collect{_state.emit(State.TrainingListRecived(it))}
         }
     }
+
+    fun initLocalMigration() {
+        viewModelScope.launch {
+            migrateToLocalUseCase()
+                .onStart { _state.emit(State.Loading) }
+                .catch { _state.emit(State.FullScreenError) }
+                .collect{_state.emit(State.MigrationFinished)}
+        }
+    }
 }
 
 sealed class State {
-    object Loading : State()
-    object RegisterCompleted : State()
-    object FullScreenError : State()
+    data object Loading : State()
+    data object RegisterCompleted : State()
+    data object FullScreenError : State()
+    data object MigrationFinished : State()
     data class CurrentDateChanged(val date: Date) : State()
     data class TrainingListRecived(val categoryList: List<CategoryModel>) : State()
 }

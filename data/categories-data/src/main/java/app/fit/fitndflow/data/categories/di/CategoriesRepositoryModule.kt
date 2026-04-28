@@ -23,11 +23,12 @@ class CategoriesRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideCategoriesRepository(categoryRemoteDataSource: CategoryRemoteDataSource, categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource, trainingCacheLocalDataSource : TrainingCacheLocalDataSource, categoryDao: CategoryDao, initialExercisesCreatorHelper: InitialExercisesCreatorHelper, sharedPrefsLocalDataSource: SharedPrefsLocalDataSource
+    fun provideCategoriesRepository(categoryRemoteDataSource: CategoryRemoteDataSource, exerciseDao: ExerciseDao, categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource, trainingCacheLocalDataSource : TrainingCacheLocalDataSource, categoryDao: CategoryDao, initialExercisesCreatorHelper: InitialExercisesCreatorHelper, sharedPrefsLocalDataSource: SharedPrefsLocalDataSource
     ): CategoriesRepository {
         return CategoriesRepositoryImpl(
             categoryRemoteDataSource,
             categoryDao,
+            exerciseDao,
             categoriesAndExercisesCacheLocalDataSource,
             trainingCacheLocalDataSource,
             initialExercisesCreatorHelper,

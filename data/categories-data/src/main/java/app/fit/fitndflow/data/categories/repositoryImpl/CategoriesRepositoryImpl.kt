@@ -2,8 +2,11 @@ package app.fit.fitndflow.data.categories.repositoryImpl
 
 import app.fit.fitndflow.data.categories.datasource.local.InitialExercisesCreatorHelper
 import app.fit.fitndflow.data.categories.datasource.remote.CategoryRemoteDataSource
+import app.fit.fitndflow.data.common.database.DataBase
 import app.fit.fitndflow.data.common.database.dao.CategoryDao
+import app.fit.fitndflow.data.common.database.dao.ExerciseDao
 import app.fit.fitndflow.data.common.database.entities.CategoryEntity
+import app.fit.fitndflow.data.common.database.entities.ExerciseEntity
 import app.fit.fitndflow.data.common.database.mapper.toModel
 import app.fit.fitndflow.data.common.datasource.local.CategoriesAndExercisesCacheLocalDataSource
 import app.fit.fitndflow.data.common.datasource.local.SharedPrefsLocalDataSource
@@ -16,10 +19,11 @@ import com.fit.fitndflow.app.domain.common.models.CategoryModel
 class CategoriesRepositoryImpl(
     private val categoryRemoteDataSource: CategoryRemoteDataSource,
     private val categoryDao: CategoryDao,
+    private val exerciseDao: ExerciseDao,
     private val categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource,
     private val trainingCacheLocalDataSource: TrainingCacheLocalDataSource,
     private val initialExercisesCreatorHelper: InitialExercisesCreatorHelper,
-    private val sharedPrefsLocalDataSource: SharedPrefsLocalDataSource
+    private val sharedPrefsLocalDataSource: SharedPrefsLocalDataSource,
 ) : CategoriesRepository {
     private val isLocalMode
         get() = sharedPrefsLocalDataSource.getIsLocal()
@@ -122,6 +126,43 @@ class CategoriesRepositoryImpl(
             throw Exception(e)
         }
         return categoriesAndExercisesCacheLocalDataSource.getAvailableCategoryListCache().orEmpty()
+    }
+
+    override suspend fun migrateToLocal() {
+        val remoteCategories = categoryRemoteDataSource.getCategoryList()
+
+        val categoryEntities = remoteCategories.mapNotNull { category ->
+            category.id?.let { id ->
+                CategoryEntity(
+                    id = id,
+                    nameEs = category.name.spanish,
+                    nameEn = category.name.english
+                )
+            }
+        }
+
+        val exerciseEntities = remoteCategories.flatMap { category ->
+            val categoryId = category.id ?: return@flatMap emptyList()
+            category.exerciseList.orEmpty().mapNotNull { exercise ->
+                exercise.id?.let { exerciseId ->
+                    ExerciseEntity(
+                        id = exerciseId,
+                        categoryId = categoryId,
+                        nameEs = exercise.name.spanish,
+                        nameEn = exercise.name.english,
+                        record = exercise.record?.kg ?: 0.0
+                    )
+                }
+            }
+        }
+        categoryDao.insertAllCategories(categoryEntities)
+        exerciseDao.insertExercises(exerciseEntities)
+
+        categoriesAndExercisesCacheLocalDataSource.cleanCache()
+        trainingCacheLocalDataSource.cleanCache()
+        sharedPrefsLocalDataSource.saveIsLocal()
+        sharedPrefsLocalDataSource.saveInitialDataCreated()
+        sharedPrefsLocalDataSource.saveApiKey(null)
     }
 
     override suspend fun createInitialData() {
