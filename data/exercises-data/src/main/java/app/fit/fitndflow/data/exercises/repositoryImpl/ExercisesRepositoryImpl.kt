@@ -1,12 +1,11 @@
 package app.fit.fitndflow.data.exercises.repositoryImpl
 
-import android.content.Context
 import app.fit.fitndflow.data.common.database.dao.ExerciseDao
 import app.fit.fitndflow.data.common.database.entities.ExerciseEntity
 import app.fit.fitndflow.data.common.database.mapper.toModel
-import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesCacheLocalDataSource
-import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
-import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.CategoriesAndExercisesCacheLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.SharedPrefsLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.TrainingCacheLocalDataSource
 import app.fit.fitndflow.data.common.mapper.ExerciseModelMapperKt.Companion.toModel
 import app.fit.fitndflow.data.common.mapper.convertToStringInLanguages
 import app.fit.fitndflow.data.exercises.datasource.remote.ExerciseRemoteDataSource
@@ -14,11 +13,10 @@ import com.fit.fitndflow.app.domain.common.models.ExerciseModel
 import com.fit.fitndflow.app.domain.exercises.repository.ExercisesRepository
 
 class ExercisesRepositoryImpl(
-    private val mContext: Context,
     private val exerciseRemoteDataSource: ExerciseRemoteDataSource,
     private val exerciseDao: ExerciseDao,
     private val categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource,
-    private val trainingLocalDataSource: TrainingLocalDataSource,
+    private val trainingCacheLocalDataSource: TrainingCacheLocalDataSource,
     private val sharedPrefsLocalDataSource: SharedPrefsLocalDataSource
 ) : ExercisesRepository {
     private val isLocalMode
@@ -80,7 +78,7 @@ class ExercisesRepositoryImpl(
                     )
                 )
             }
-            trainingLocalDataSource.cleanCache()
+            trainingCacheLocalDataSource.cleanCache()
             categoriesAndExercisesCacheLocalDataSource.cleanCache()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -99,7 +97,7 @@ class ExercisesRepositoryImpl(
             } else {
                 response = toModel(exerciseRemoteDataSource.deleteExercise(exerciseId))
             }
-            trainingLocalDataSource.cleanCache()
+            trainingCacheLocalDataSource.cleanCache()
             categoriesAndExercisesCacheLocalDataSource.cleanCache()
         } catch (e: Exception) {
             e.printStackTrace()

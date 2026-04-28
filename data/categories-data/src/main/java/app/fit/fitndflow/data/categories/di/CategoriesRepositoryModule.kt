@@ -1,20 +1,18 @@
 package app.fit.fitndflow.data.categories.di
 
-import android.content.Context
 import app.fit.fitndflow.data.categories.datasource.local.InitialExercisesCreatorHelper
 import app.fit.fitndflow.data.categories.datasource.remote.CategoryRemoteDataSource
 import app.fit.fitndflow.data.categories.model.CategoriesApiInterface
 import app.fit.fitndflow.data.categories.repositoryImpl.CategoriesRepositoryImpl
 import app.fit.fitndflow.data.common.database.dao.CategoryDao
 import app.fit.fitndflow.data.common.database.dao.ExerciseDao
-import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesCacheLocalDataSource
-import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
-import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.CategoriesAndExercisesCacheLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.SharedPrefsLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.TrainingCacheLocalDataSource
 import com.fit.fitndflow.app.domain.categories.repository.CategoriesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -25,13 +23,13 @@ class CategoriesRepositoryModule {
 
     @Provides
     @Singleton
-    fun provideCategoriesRepository(categoryRemoteDataSource: CategoryRemoteDataSource, categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource, trainingLocalDataSource : TrainingLocalDataSource, categoryDao: CategoryDao, initialExercisesCreatorHelper: InitialExercisesCreatorHelper, sharedPrefsLocalDataSource: SharedPrefsLocalDataSource
+    fun provideCategoriesRepository(categoryRemoteDataSource: CategoryRemoteDataSource, categoriesAndExercisesCacheLocalDataSource: CategoriesAndExercisesCacheLocalDataSource, trainingCacheLocalDataSource : TrainingCacheLocalDataSource, categoryDao: CategoryDao, initialExercisesCreatorHelper: InitialExercisesCreatorHelper, sharedPrefsLocalDataSource: SharedPrefsLocalDataSource
     ): CategoriesRepository {
         return CategoriesRepositoryImpl(
             categoryRemoteDataSource,
             categoryDao,
             categoriesAndExercisesCacheLocalDataSource,
-            trainingLocalDataSource,
+            trainingCacheLocalDataSource,
             initialExercisesCreatorHelper,
             sharedPrefsLocalDataSource
         )

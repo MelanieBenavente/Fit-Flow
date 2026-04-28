@@ -1,17 +1,13 @@
 package app.fit.fitndflow.data.user.repositoryImpl;
 
-import android.content.Context;
-
-import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource;
-
 import com.fit.fitndflow.app.domain.user.repository.RegisterUserRepository;
 
+import app.fit.fitndflow.data.common.datasource.local.SharedPrefsLocalDataSource;
+
 public class RegisterUserRepositoryImpl implements RegisterUserRepository {
-    private Context mContext;
     private SharedPrefsLocalDataSource sharedPrefsLocalDataSource;
 
-    public RegisterUserRepositoryImpl(Context context, SharedPrefsLocalDataSource sharedPrefsLocalDataSource) {
-        this.mContext = context;
+    public RegisterUserRepositoryImpl(SharedPrefsLocalDataSource sharedPrefsLocalDataSource) {
         this.sharedPrefsLocalDataSource = sharedPrefsLocalDataSource;
     }
 

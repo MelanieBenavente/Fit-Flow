@@ -1,4 +1,4 @@
-package app.fit.fitndflow.data.common.datasource
+package app.fit.fitndflow.data.common.datasource.local
 
 import com.fit.fitndflow.app.domain.common.models.CategoryModel
 

@@ -1,4 +1,4 @@
-package app.fit.fitndflow.data.common.datasource
+package app.fit.fitndflow.data.common.datasource.local
 
 import android.content.Context
 import app.fit.fitndflow.data.common.model.SharedPrefs

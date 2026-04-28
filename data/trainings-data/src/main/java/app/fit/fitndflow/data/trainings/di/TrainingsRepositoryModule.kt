@@ -4,8 +4,8 @@ import android.content.Context
 import app.fit.fitndflow.data.common.database.dao.ExerciseDao
 import app.fit.fitndflow.data.common.database.dao.SerieDao
 import app.fit.fitndflow.data.common.database.dao.TrainingDao
-import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
-import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.SharedPrefsLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.TrainingCacheLocalDataSource
 import app.fit.fitndflow.data.trainings.datasource.remote.TrainingRemoteDataSource
 import app.fit.fitndflow.data.trainings.model.TrainingsApiInterface
 import app.fit.fitndflow.data.trainings.repositoryImpl.TrainingRepositoryImpl
@@ -27,13 +27,13 @@ class TrainingsRepositoryModule {
     fun provideTrainingRepository(
         @ApplicationContext context: Context,
         trainingRemoteDataSource: TrainingRemoteDataSource,
-        trainingLocalDataSource: TrainingLocalDataSource,
+        trainingCacheLocalDataSource: TrainingCacheLocalDataSource,
         serieDao: SerieDao,
         exerciseDao: ExerciseDao,
         trainingDao: TrainingDao,
         sharedPrefsLocalDataSource: SharedPrefsLocalDataSource
     ): TrainingRepository {
-        return TrainingRepositoryImpl(context, trainingRemoteDataSource, trainingLocalDataSource, serieDao, trainingDao, exerciseDao, sharedPrefsLocalDataSource)
+        return TrainingRepositoryImpl(context, trainingRemoteDataSource, trainingCacheLocalDataSource, serieDao, trainingDao, exerciseDao, sharedPrefsLocalDataSource)
     }
 
     @Provides
