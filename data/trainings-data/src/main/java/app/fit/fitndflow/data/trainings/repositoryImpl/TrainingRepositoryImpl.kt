@@ -52,7 +52,7 @@ class TrainingRepositoryImpl(
         try {
             trainingCacheLocalDataSource.currentDate?.let { currentDate ->
                 if (isLocalMode) {
-                    if(getSerieListOfExerciseAdded(exerciseId).isEmpty()) exerciseDao.updateExercise()
+                    if(getSerieListOfExerciseAdded(exerciseId).isEmpty()) exerciseDao.updateFirstSerie(exerciseId, reps, weight)
 
                     serieDao.insertSerie(
                         SerieEntity(

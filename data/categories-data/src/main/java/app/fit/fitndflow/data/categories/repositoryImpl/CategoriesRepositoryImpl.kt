@@ -151,7 +151,9 @@ class CategoriesRepositoryImpl(
                         nameEs = exercise.name.spanish,
                         nameEn = exercise.name.english,
                         recordHeight = exercise.record?.kg ?: 0.0,
-                        recordReps = exercise.record?.reps ?: 0
+                        recordReps = exercise.record?.reps ?: 0,
+                        firstReps = exercise.lastFirstSerie?.reps ?: 0,
+                        firstWeight = exercise.lastFirstSerie?.kg ?: 0.0
                     )
                 }
             }

@@ -26,6 +26,9 @@ interface ExerciseDao {
     @Query("UPDATE exercises_table SET recordHeight = :recordHeight, recordReps = :recordReps WHERE id = :exerciseId")
     suspend fun updateRecord(exerciseId: Int, recordHeight: Double, recordReps: Int)
 
+    @Query("UPDATE exercises_table SET firstReps = :firstReps, firstWeight = :firstWeight WHERE id = :exerciseId")
+    suspend fun updateFirstSerie(exerciseId: Int, firstReps: Int, firstWeight: Double)
+
     @Query("DELETE FROM exercises_table WHERE id = :exerciseId")
     suspend fun deleteExercise(exerciseId: Int)
 

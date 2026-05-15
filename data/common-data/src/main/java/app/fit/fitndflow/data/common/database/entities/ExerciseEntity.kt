@@ -24,4 +24,6 @@ data class ExerciseEntity(
     @ColumnInfo val nameEs: String,
     @ColumnInfo val recordHeight: Double,
     @ColumnInfo(defaultValue = "0") val recordReps: Int = 0,
+    @ColumnInfo(defaultValue = "0") val firstReps: Int = 0,
+    @ColumnInfo(defaultValue = "0.0") val firstWeight: Double = 0.0,
 )

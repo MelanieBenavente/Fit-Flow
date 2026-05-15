@@ -36,6 +36,8 @@ interface SerieDao {
         e.id AS exerciseId,
         e.nameEn AS exerciseNameEn,
         e.nameEs AS exerciseNameEs,
+        e.firstReps AS firstReps,
+        e.firstWeight AS firstWeight,
         s.reps,
         s.weight,
         s.date

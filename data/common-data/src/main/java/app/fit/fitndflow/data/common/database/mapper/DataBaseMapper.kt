@@ -19,13 +19,20 @@ private fun recordToModel(recordHeight: Double, recordReps: Int): SerieModel? =
         SerieModel(reps = recordReps, kg = recordHeight, isRecord = true)
     }
 
+private fun firstSerieToModel(firstReps: Int, firstWeight: Double): SerieModel? =
+    if (firstReps == 0 && firstWeight == 0.0) {
+        null
+    } else {
+        SerieModel(reps = firstReps, kg = firstWeight)
+    }
+
 fun CategoryEntity.toModel() = CategoryModel(id, StringInLanguagesModel(nameEs, nameEn))
 fun ExerciseEntity.toModel() =
     ExerciseModel(
         id,
         StringInLanguagesModel(nameEs, nameEn),
         mutableListOf(),
-        null,
+        firstSerieToModel(firstReps, firstWeight),
         recordToModel(recordHeight, recordReps)
     )
 
@@ -40,7 +47,7 @@ fun ExerciseWithSeriesEntity.toModel() = ExerciseModel(
     exercise.id,
     StringInLanguagesModel(exercise.nameEs, exercise.nameEn),
     series.map { it.toModel() }.toMutableList(),
-    null,
+    firstSerieToModel(exercise.firstReps, exercise.firstWeight),
     recordToModel(exercise.recordHeight, exercise.recordReps)
 )
 
@@ -61,7 +68,7 @@ fun List<ExerciseSerieFlat>.toModel(record: SerieModel?): ExerciseModel {
         name = StringInLanguagesModel(first().exerciseNameEs, first().exerciseNameEn),
         serieList = exerciseList,
         record = record,
-        lastFirstSerie = null
+        lastFirstSerie = firstSerieToModel(first().firstReps, first().firstWeight)
     )
 
 
