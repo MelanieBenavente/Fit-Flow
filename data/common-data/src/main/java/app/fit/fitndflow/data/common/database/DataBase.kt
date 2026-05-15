@@ -10,7 +10,7 @@ import app.fit.fitndflow.data.common.database.entities.CategoryEntity
 import app.fit.fitndflow.data.common.database.entities.ExerciseEntity
 import app.fit.fitndflow.data.common.database.entities.SerieEntity
 
-@Database(entities = [CategoryEntity::class, ExerciseEntity::class, SerieEntity::class], version = 1)
+@Database(entities = [CategoryEntity::class, ExerciseEntity::class, SerieEntity::class], version = 2)
 abstract class DataBase : RoomDatabase() {
 
     abstract fun getCategoryDao() : CategoryDao

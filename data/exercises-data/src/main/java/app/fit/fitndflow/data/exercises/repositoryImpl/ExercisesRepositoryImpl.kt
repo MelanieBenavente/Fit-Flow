@@ -36,7 +36,8 @@ class ExercisesRepositoryImpl(
                         categoryId = categoryId,
                         nameEs = stringInLanguages.spanish.orEmpty(),
                         nameEn = stringInLanguages.english.orEmpty(),
-                        record = 0.0
+                        recordHeight = 0.0,
+                        recordReps = 0
                     )
                 )
                 response = exerciseDao.getAllExercisesByCategory(categoryId).map { it.toModel() }

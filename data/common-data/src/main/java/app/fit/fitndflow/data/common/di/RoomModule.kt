@@ -3,6 +3,7 @@ package app.fit.fitndflow.data.common.di
 import android.content.Context
 import androidx.room.Room
 import app.fit.fitndflow.data.common.database.DataBase
+import app.fit.fitndflow.data.common.database.migrations.DatabaseMigrations
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,9 +21,12 @@ class RoomModule {
 
     @Singleton
     @Provides
-    fun provideRoom(@ApplicationContext context: Context) = Room.databaseBuilder(context, DataBase::class.java,
-        Companion.DATABASE_NAME
-    ).build()
+    fun provideRoom(@ApplicationContext context: Context) =
+        Room.databaseBuilder(
+            context,
+            DataBase::class.java,
+            Companion.DATABASE_NAME
+        ).addMigrations(*DatabaseMigrations.ALL).build()
 
     @Singleton
     @Provides

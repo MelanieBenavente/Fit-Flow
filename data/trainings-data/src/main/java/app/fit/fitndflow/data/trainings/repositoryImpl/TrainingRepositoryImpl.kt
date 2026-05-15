@@ -52,6 +52,8 @@ class TrainingRepositoryImpl(
         try {
             trainingCacheLocalDataSource.currentDate?.let { currentDate ->
                 if (isLocalMode) {
+                    if(getSerieListOfExerciseAdded(exerciseId).isEmpty()) exerciseDao.updateExercise()
+
                     serieDao.insertSerie(
                         SerieEntity(
                             exerciseId = exerciseId,
@@ -60,9 +62,22 @@ class TrainingRepositoryImpl(
                             date = currentDate
                         )
                     )
-                    val record = exerciseDao.getExercise(exerciseId).firstOrNull()?.record
+                    val exercise = exerciseDao.getExercise(exerciseId).firstOrNull()
+                    val currentRecord = exercise
+                        ?.takeUnless { it.recordHeight == 0.0 && it.recordReps == 0 }
+                        ?.let { SerieModel(reps = it.recordReps, kg = it.recordHeight, isRecord = true) }
+                    val isRecord = currentRecord == null ||
+                        weight > (currentRecord.kg ?: 0.0) ||
+                        (weight >= (currentRecord.kg ?: 0.0) && reps > (currentRecord.reps ?: 0))
+                    val lastRecord = if (isRecord) {
+                        SerieModel(reps = reps, kg = weight, isRecord = true)
+                    } else {
+                        currentRecord
+                    }
+                    if (isRecord) { exerciseDao.updateRecord(exerciseId, weight, reps) }
                     response =
-                        serieDao.getExerciseWithSeriesByDate(exerciseId, currentDate).toModel(record)
+                        serieDao.getExerciseWithSeriesByDate(exerciseId, currentDate)
+                            .toModel(lastRecord)
                 } else {
                     trainingRemoteDataSource.addNewSerie(
                         reps,

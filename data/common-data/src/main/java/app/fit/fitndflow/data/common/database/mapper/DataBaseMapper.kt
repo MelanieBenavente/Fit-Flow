@@ -12,9 +12,22 @@ import com.fit.fitndflow.app.domain.common.models.ExerciseModel
 import com.fit.fitndflow.app.domain.common.models.SerieModel
 import com.fit.fitndflow.app.domain.common.models.StringInLanguagesModel
 
+private fun recordToModel(recordHeight: Double, recordReps: Int): SerieModel? =
+    if (recordHeight == 0.0 && recordReps == 0) {
+        null
+    } else {
+        SerieModel(reps = recordReps, kg = recordHeight, isRecord = true)
+    }
+
 fun CategoryEntity.toModel() = CategoryModel(id, StringInLanguagesModel(nameEs, nameEn))
 fun ExerciseEntity.toModel() =
-    ExerciseModel(id, StringInLanguagesModel(nameEs, nameEn), mutableListOf(), null, null)
+    ExerciseModel(
+        id,
+        StringInLanguagesModel(nameEs, nameEn),
+        mutableListOf(),
+        null,
+        recordToModel(recordHeight, recordReps)
+    )
 
 fun CategoryWithExercisesEntity.toModel() = CategoryModel(
     category.id,
@@ -22,27 +35,34 @@ fun CategoryWithExercisesEntity.toModel() = CategoryModel(
     exercises.map { it.toModel() }.toMutableList()
 )
 
-fun SerieEntity.toModel() = SerieModel(id, reps, weight, false) //todo record
+fun SerieEntity.toModel() = SerieModel(id, reps, weight)
 fun ExerciseWithSeriesEntity.toModel() = ExerciseModel(
     exercise.id,
     StringInLanguagesModel(exercise.nameEs, exercise.nameEn),
     series.map { it.toModel() }.toMutableList(),
     null,
-    null
-) //todo record
+    recordToModel(exercise.recordHeight, exercise.recordReps)
+)
 
 fun CategoryWithExercisesAndSeriesEntity.toModel() =
     category.toModel().copy(exerciseList = exercises.map { it.toModel() }.toMutableList())
 
-fun List<ExerciseSerieFlat>.toModel(record: Double?) = ExerciseModel(
-    id = first().exerciseId,
-    name = StringInLanguagesModel(first().exerciseNameEs, first().exerciseNameEn),
-    serieList = map {
+fun List<ExerciseSerieFlat>.toModel(record: SerieModel?): ExerciseModel {
+    val exerciseList = map { serie ->
         SerieModel(
-            reps = it.reps, kg = it.weight, isRecord = (it.weight
-                ?: 0.0) > (record ?: 0.0)
+            reps = serie.reps,
+            kg = serie.weight,
+            isRecord = record != null && serie.weight == record.kg && serie.reps == record.reps
         )
-    }.toMutableList(),
-    record = null,
-    lastFirstSerie = null
-)
+    }.toMutableList()
+
+    return ExerciseModel(
+        id = first().exerciseId,
+        name = StringInLanguagesModel(first().exerciseNameEs, first().exerciseNameEn),
+        serieList = exerciseList,
+        record = record,
+        lastFirstSerie = null
+    )
+
+
+}

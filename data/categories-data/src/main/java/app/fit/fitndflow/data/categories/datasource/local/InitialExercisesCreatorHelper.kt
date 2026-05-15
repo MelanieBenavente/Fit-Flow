@@ -13,7 +13,14 @@ class InitialExercisesCreatorHelper(
     private val exerciseDao: ExerciseDao,
 ) {
     private fun CategoryModel.toEntity() = CategoryEntity(nameEs = name.spanish, nameEn = name.english)
-    private fun ExerciseModel.toEntity(categoryId: Int, record: Double = 0.0) = ExerciseEntity(categoryId = categoryId, nameEs = name.spanish, nameEn = name.english, record = record)
+    private fun ExerciseModel.toEntity(categoryId: Int, recordHeight: Double = 0.0, recordReps: Int = 0) =
+        ExerciseEntity(
+            categoryId = categoryId,
+            nameEs = name.spanish,
+            nameEn = name.english,
+            recordHeight = recordHeight,
+            recordReps = recordReps
+        )
 
     private fun createExercise(es: String, en: String) = ExerciseModel(
         name = StringInLanguagesModel(spanish = es, english = en),

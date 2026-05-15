@@ -150,7 +150,8 @@ class CategoriesRepositoryImpl(
                         categoryId = categoryId,
                         nameEs = exercise.name.spanish,
                         nameEn = exercise.name.english,
-                        record = exercise.record?.kg ?: 0.0
+                        recordHeight = exercise.record?.kg ?: 0.0,
+                        recordReps = exercise.record?.reps ?: 0
                     )
                 }
             }
