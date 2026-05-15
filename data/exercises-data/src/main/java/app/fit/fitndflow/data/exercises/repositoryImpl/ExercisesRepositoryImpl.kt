@@ -45,7 +45,6 @@ class ExercisesRepositoryImpl(
                 response =
                     toModel(exerciseRemoteDataSource.addNewExercise(stringInLanguages, categoryId))
             }
-            //TODO OJO! Aquí no se está limpiando caché
         } catch (e: Exception) {
             e.printStackTrace()
             throw Exception(e)
