@@ -15,6 +15,7 @@ import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog.Comp
 import app.fit.fitndflow.ui.features.common.AccessibilityInterface
 import app.fit.fitndflow.ui.features.common.AccessibilityUtils
 import app.fit.fitndflow.ui.features.common.CommonFragment
+import app.fit.fitndflow.ui.features.common.applyStatusBarMargin
 import app.fit.fitndflow.ui.features.common.getTranslatedString
 import app.fit.fitndflow.ui.features.exercises.ExerciseListFragment
 import app.fit.fitndflow.ui.features.exercises.ExercisesAdapter
@@ -48,6 +49,7 @@ class CategoriesListFragment : CommonFragment(),
         binding = FragmentCategoriesListBinding.inflate(layoutInflater)
         val myView = binding.root
         super.onCreateView(inflater, container, savedInstanceState)
+        binding.recyclerTitle.applyStatusBarMargin()
         instantiateCategoriesAdapter()
         setOnClickListeners()
         initAccessibility()
@@ -60,6 +62,8 @@ class CategoriesListFragment : CommonFragment(),
         attachObservers()
         categoriesViewModel.requestCategoriesFromModel()
     }
+
+    override fun useBlackIcons(): Boolean = true
 
     private fun attachObservers() {
         categoriesViewModel.state.onEach(::handleState).launchIn(viewLifecycleOwner.lifecycleScope)

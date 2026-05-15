@@ -14,6 +14,7 @@ import app.fit.fitndflow.ui.databinding.AddSerieTrainingFragmentBinding
 import app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment
 import app.fit.fitndflow.ui.features.categories.DialogCallbackDelete
 import app.fit.fitndflow.ui.features.common.CommonFragment
+import app.fit.fitndflow.ui.features.common.applyStatusBarPadding
 import app.fit.fitndflow.ui.features.common.getTranslatedString
 import app.fit.fitndflow.ui.features.common.hideKeyBoard
 import com.fit.fitndflow.app.domain.common.models.ExerciseModel
@@ -57,6 +58,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
         binding = AddSerieTrainingFragmentBinding.inflate(layoutInflater)
         val myView = binding.root
         super.onCreateView(inflater, container, savedInstanceState)
+        binding.calendBar.applyStatusBarPadding()
         binding.exerciseNameTitle.setText(exercise.name.getTranslatedString(requireContext()))
         initListeners()
         return myView

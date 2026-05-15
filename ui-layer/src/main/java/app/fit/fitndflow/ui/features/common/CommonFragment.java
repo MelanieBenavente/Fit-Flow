@@ -1,9 +1,25 @@
 package app.fit.fitndflow.ui.features.common;
 
+import android.os.Bundle;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 public abstract class CommonFragment extends Fragment {
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setStatusBarIcons();
+    }
+
+    public boolean useBlackIcons() {
+        return false;
+    }
+
     public void addFragment(Fragment fragment) {
         ((CommonActivity) getActivity()).addFragment(fragment);
     }
@@ -17,6 +33,10 @@ public abstract class CommonFragment extends Fragment {
         if (commonActivity != null){
             commonActivity.showLoadingFromActivity();
         }
+    }
+
+    private void setStatusBarIcons() {
+        ((CommonActivity) getActivity()).configureSystemBarsAppearance(useBlackIcons());
     }
 
     public void hideLoading(){
