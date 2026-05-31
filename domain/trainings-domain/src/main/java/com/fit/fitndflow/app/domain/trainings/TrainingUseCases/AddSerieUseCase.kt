@@ -9,14 +9,14 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 
-class AddSerieUseCase @Inject constructor(val trainingRepository: TrainingRepository) : UseCase<AddSerieUseCaseParams, SerieInfoWrapper>(){
+class AddSerieUseCase @Inject constructor(private val trainingRepository: TrainingRepository) : UseCase<AddSerieUseCaseParams, SerieInfoWrapper>(){
     override fun run(params: AddSerieUseCaseParams): Flow<SerieInfoWrapper> = flow {
         val exercise = trainingRepository.addNewSerie(params.reps, params.weight, params.exerciseId)
         var isRecord = false
         params.record?.let {
             isRecord = (params.record.kg != null && params.record.reps != null) && (params.weight > params.record.kg!! || (params.weight >= params.record.kg!! && params.reps > params.record.reps!!))
         }
-        emit(SerieInfoWrapper(exercise.serieList!!.toList(), isRecord, exercise.record!!))
+        emit(SerieInfoWrapper(exercise?.serieList?.toList() ?: emptyList(), isRecord, exercise?.record))
     }
 }
 

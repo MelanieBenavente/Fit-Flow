@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetTrainingUseCase @Inject constructor(val trainingRepository: TrainingRepository) :
+class GetTrainingUseCase @Inject constructor(private val trainingRepository: TrainingRepository) :
     UseCase<GetTrainingUseCaseParams, List<CategoryModel>>() {
     override fun run(params: GetTrainingUseCaseParams): Flow<List<CategoryModel>> = flow {
         val getTrainingByDate = trainingRepository.getTrainingListAndUpdateCache(params.date)

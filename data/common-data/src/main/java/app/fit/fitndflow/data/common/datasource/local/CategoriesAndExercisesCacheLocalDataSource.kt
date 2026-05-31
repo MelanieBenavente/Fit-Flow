@@ -1,9 +1,9 @@
-package app.fit.fitndflow.data.common.datasource
+package app.fit.fitndflow.data.common.datasource.local
 
 import com.fit.fitndflow.app.domain.common.models.CategoryModel
 
 
-class CategoriesAndExercisesLocalDataSource {
+class CategoriesAndExercisesCacheLocalDataSource {
     private var categoryListCachedResponse : List<CategoryModel>? = null
 
     fun replaceAllDataFromCategoryListCache(categoryList: List<CategoryModel>) {

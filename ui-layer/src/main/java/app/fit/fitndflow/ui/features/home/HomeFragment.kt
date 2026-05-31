@@ -13,6 +13,7 @@ import app.fit.fitndflow.ui.R
 import app.fit.fitndflow.ui.databinding.MainListFragmentBinding
 import app.fit.fitndflow.ui.features.categories.CategoriesListFragment
 import app.fit.fitndflow.ui.features.common.CommonFragment
+import app.fit.fitndflow.ui.features.common.applyStatusBarPadding
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager
 import app.fit.fitndflow.ui.features.common.notification.MyNotificationManager.scheduleNotification
 import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment
@@ -43,6 +44,7 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
         binding = MainListFragmentBinding.inflate(layoutInflater)
         val myView = binding.root
         super.onCreateView(inflater, container, savedInstanceState)
+        binding.calendBar.applyStatusBarPadding()
         if (!isShownNotificationConfiguration) {
             MyNotificationManager.askForPermissions(this, notificationsUseCase)
             isShownNotificationConfiguration = true
@@ -59,10 +61,10 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
     }
 
     private fun requestRegisterOrRequestTraining(){
-        if (!homeViewModel.isUserRegistered()) {
-            homeViewModel.requestRegisterEmptyUser()
-        } else {
-            homeViewModel.requestTrainingFromModel()
+        when {
+            homeViewModel.isUserRegistered() -> homeViewModel.initLocalMigration()
+            homeViewModel.isInitialDataCreated() -> homeViewModel.requestTrainingFromModel() //fixme is initial data created cna be replaced by isLocal
+            else -> homeViewModel.createInitialDataIfNeeded()
         }
     }
 
@@ -170,6 +172,7 @@ class HomeFragment : CommonFragment(), ExerciseClickCallback {
                     printExercises(categories)
                 }
             }
+            State.MigrationFinished -> requestRegisterOrRequestTraining()
         }
     }
 

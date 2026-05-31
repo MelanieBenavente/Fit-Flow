@@ -14,6 +14,7 @@ import app.fit.fitndflow.ui.databinding.AddSerieTrainingFragmentBinding
 import app.fit.fitndflow.ui.features.categories.ConfirmationDialogFragment
 import app.fit.fitndflow.ui.features.categories.DialogCallbackDelete
 import app.fit.fitndflow.ui.features.common.CommonFragment
+import app.fit.fitndflow.ui.features.common.applyStatusBarPadding
 import app.fit.fitndflow.ui.features.common.getTranslatedString
 import app.fit.fitndflow.ui.features.common.hideKeyBoard
 import com.fit.fitndflow.app.domain.common.models.ExerciseModel
@@ -57,6 +58,7 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
         binding = AddSerieTrainingFragmentBinding.inflate(layoutInflater)
         val myView = binding.root
         super.onCreateView(inflater, container, savedInstanceState)
+        binding.calendBar.applyStatusBarPadding()
         binding.exerciseNameTitle.setText(exercise.name.getTranslatedString(requireContext()))
         initListeners()
         return myView
@@ -257,9 +259,9 @@ class AddSerieTrainingFragment : CommonFragment(), TrainingCallback, DialogCallb
     private fun printPRContainerIfRecordExists() {
         if(exercise.record != null){
             binding.personalRecord.visibility = VISIBLE
-            exercise.record!!.reps?.let { binding.repsEdTxt.text = it.toString() }
+            exercise.record?.reps?.let { binding.repsEdTxt.text = it.toString() }
             binding.tvReps.setText("Reps")
-            exercise.record!!.kg?.let { binding.kgEdTxt.text = it.toString() }
+            exercise.record?.kg?.let { binding.kgEdTxt.text = it.toString() }
             binding.tvKg.text = "Kg"
         } else {
             binding.personalRecord.visibility = INVISIBLE

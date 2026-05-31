@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class AddCategoryUseCase @Inject constructor(val categoriesRepository: CategoriesRepository) : UseCase<AddCategoryUseCaseParams, List<CategoryModel>>(){
+class AddCategoryUseCase @Inject constructor(private val categoriesRepository: CategoriesRepository) : UseCase<AddCategoryUseCaseParams, List<CategoryModel>>(){
     override fun run(params: AddCategoryUseCaseParams): Flow<List<CategoryModel>> = flow {
          val newCategory = categoriesRepository.addNewCategory(params.categoryName, params.language)
         emit(newCategory)

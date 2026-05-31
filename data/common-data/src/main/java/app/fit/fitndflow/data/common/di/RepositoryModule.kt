@@ -1,9 +1,9 @@
 package app.fit.fitndflow.data.common.di
 
 import android.content.Context
-import app.fit.fitndflow.data.common.datasource.CategoriesAndExercisesLocalDataSource
-import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
-import app.fit.fitndflow.data.common.datasource.TrainingLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.CategoriesAndExercisesCacheLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.SharedPrefsLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.TrainingCacheLocalDataSource
 import app.fit.fitndflow.data.common.model.ApiInterface
 import app.fit.fitndflow.data.common.model.HeaderInterceptor
 import app.fit.fitndflow.data.common.notifications.repository.NotificationsRepositoryImpl
@@ -34,14 +34,14 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesTrainingLocalDataSource() : TrainingLocalDataSource {
-        return TrainingLocalDataSource()
+    fun providesTrainingLocalDataSource() : TrainingCacheLocalDataSource {
+        return TrainingCacheLocalDataSource()
     }
 
     @Provides
     @Singleton
-    fun provideCategoriesAndExercisesLocalDataSource() : CategoriesAndExercisesLocalDataSource {
-        return CategoriesAndExercisesLocalDataSource()
+    fun provideCategoriesAndExercisesLocalDataSource() : CategoriesAndExercisesCacheLocalDataSource {
+        return CategoriesAndExercisesCacheLocalDataSource()
     }
 
     @Provides

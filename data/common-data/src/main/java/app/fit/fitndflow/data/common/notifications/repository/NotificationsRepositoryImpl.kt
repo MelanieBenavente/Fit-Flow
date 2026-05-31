@@ -1,6 +1,6 @@
 package app.fit.fitndflow.data.common.notifications.repository
 
-import app.fit.fitndflow.data.common.datasource.SharedPrefsLocalDataSource
+import app.fit.fitndflow.data.common.datasource.local.SharedPrefsLocalDataSource
 import com.fit.fitndflow.app.domain.common.notifications.repository.NotificationsRepository
 
 class NotificationsRepositoryImpl(private val sharedPrefsLocalDataSource: SharedPrefsLocalDataSource) :

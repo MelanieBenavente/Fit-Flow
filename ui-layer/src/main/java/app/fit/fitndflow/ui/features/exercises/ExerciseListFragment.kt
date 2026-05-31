@@ -16,6 +16,7 @@ import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog
 import app.fit.fitndflow.ui.features.categories.CreationOrModifyInputDialog.Companion.TYPE_EXERCISE
 import app.fit.fitndflow.ui.features.categories.DialogCallbackDelete
 import app.fit.fitndflow.ui.features.common.CommonFragment
+import app.fit.fitndflow.ui.features.common.applyStatusBarPadding
 import app.fit.fitndflow.ui.features.common.getTranslatedString
 import app.fit.fitndflow.ui.features.training.AddSerieTrainingFragment
 import app.fit.fitndflow.ui.features.training.SerieAdapterCallback
@@ -53,6 +54,7 @@ class ExerciseListFragment : CommonFragment(), SerieAdapterCallback, DialogCallb
         binding = FragmentExercisesListBinding.inflate(layoutInflater)
         val myView = binding.root
         super.onCreateView(inflater, container, savedInstanceState)
+        binding.calendBar.applyStatusBarPadding()
         setOnClickListeners()
         addTextWatcher()
         return myView

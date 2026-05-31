@@ -1,9 +1,9 @@
-package app.fit.fitndflow.data.common.datasource
+package app.fit.fitndflow.data.common.datasource.local
 
 import com.fit.fitndflow.app.domain.common.models.CategoryModel
 
 
-class TrainingLocalDataSource {
+class TrainingCacheLocalDataSource {
     private var trainingResponseCacheByDate : HashMap<String, List<CategoryModel>> = hashMapOf()
     var currentDate: String? = null
 

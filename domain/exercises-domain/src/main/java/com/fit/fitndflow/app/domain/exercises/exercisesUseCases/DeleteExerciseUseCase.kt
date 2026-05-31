@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class DeleteExerciseUseCase @Inject constructor(val exercisesRepository: ExercisesRepository) : UseCase<ExerciseToDeleteParams, List<ExerciseModel>>() {
+class DeleteExerciseUseCase @Inject constructor(private val exercisesRepository: ExercisesRepository) : UseCase<ExerciseToDeleteParams, List<ExerciseModel>>() {
     override fun run(params: ExerciseToDeleteParams): Flow<List<ExerciseModel>> = flow {
         val exerciseList = exercisesRepository.deleteExercise(params.exerciseId)
         emit(exerciseList)

@@ -13,15 +13,8 @@ public class SharedPrefs {
     private static final String PREFS_NAME = "MRBEP_PREFS";
     private static final String IS_NOTIFICATION_SHOWN = "NOTIFICATION_SHOWN";
     private static final String DONT_SHOW_NOTIFICATIONS_AGAIN = "DONT_SHOW_NOTIFICATIONS_AGAIN";
-
-
-    public void logOut() {
-        SharedPreferences.Editor editor = mPrefs.edit();
-        editor.putBoolean(IS_NOTIFICATION_SHOWN, false);
-        editor.putBoolean(DONT_SHOW_NOTIFICATIONS_AGAIN, false);
-        editor.apply();
-    }
-
+    private static final String INITIAL_DATA_CREATED = "INITIAL_DATA_CREATED";
+    private static final String USE_LOCAL = "LOCAL";
 
     public static void saveApikeyToSharedPRefs(Context context, String value){
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
@@ -33,12 +26,24 @@ public class SharedPrefs {
         return getSharedPreferences(context).getString(KEY_APIKEY, null);
     }
 
-    public static void removeAllUserData(Context context){
-        getSharedPreferences(context).edit().clear().commit();
-    }
-
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getApplicationContext().getSharedPreferences(FILE_NAME, 0); // 0 - for private mode
+    }
+
+    public void saveLocal(boolean local){
+        saveBoolean(USE_LOCAL, local);
+    }
+
+    public boolean isLocal(){
+        return mPrefs.getBoolean(USE_LOCAL, false);
+    }
+
+    public void saveInitialDataCreated(boolean initialDataCreated){
+        saveBoolean(INITIAL_DATA_CREATED, initialDataCreated);
+    }
+
+    public boolean isInitialDataCreated(){
+        return mPrefs.getBoolean(INITIAL_DATA_CREATED, false);
     }
 
     public void saveDontShowNotification(boolean dontShowNotification){

@@ -10,6 +10,10 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.LayoutRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import app.fit.fitndflow.ui.R;
@@ -18,18 +22,48 @@ public abstract class CommonActivity extends AppCompatActivity {
     private RelativeLayout savedContainer;
     private RelativeLayout errorContainer;
     private FrameLayout loadingLottie;
+    private FrameLayout mainContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(getResLayout());
         bindViews();
+        applySystemInsets();
     }
 
     private void bindViews() {
+        mainContainer = findViewById(R.id.MainActContainer);
         savedContainer = findViewById(R.id.savedContainer);
         errorContainer = findViewById(R.id.errorContainer);
         loadingLottie = findViewById(R.id.lottieContainer);
+    }
+
+    private void applySystemInsets() {
+        if (mainContainer == null) {
+            return;
+        }
+        final int initialPaddingBottom = mainContainer.getPaddingBottom();
+
+        ViewCompat.setOnApplyWindowInsetsListener(mainContainer, (view, windowInsets) -> {
+            view.setPadding(
+                    view.getPaddingLeft(),
+                    view.getPaddingTop(),
+                    view.getPaddingRight(),
+                    initialPaddingBottom + windowInsets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+            );
+            return windowInsets;
+        });
+        ViewCompat.requestApplyInsets(mainContainer);
+    }
+
+    public void configureSystemBarsAppearance(boolean blackIcons) {
+        WindowInsetsControllerCompat insetsController =
+                WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        if (insetsController != null) {
+            insetsController.setAppearanceLightStatusBars(blackIcons);
+        }
     }
 
     public abstract @LayoutRes int getResLayout();
